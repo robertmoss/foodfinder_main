@@ -1,0 +1,3074 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<kml xmlns='http://www.opengis.net/kml/2.2'>
+	<Document>
+		<name>Master BBQ Map</name>
+		<Placemark>
+			<name>Grady's Barbecue</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-77.959816,35.265163,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>B's Barbecue</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-77.417259,35.621086,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Brown's Bar-B-Que</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-79.812378,33.710972,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Cooper's Country Store Inc</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-79.822289,33.58139,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>McCabes Bar-B-Que</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.207253,33.707134,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Scott's BBQ</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-79.475021,33.74337,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Shuler's Bar-B-Que</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-79.478043,34.312656,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Sweatman's Barbeque</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.381233,33.36145,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Wilber's Barbecue</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-77.922401,35.350624,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Skylight Inn BBQ</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-77.423325,35.461159,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Bum's Restaurant</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-77.416878,35.470894,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Allen and Son BBQ</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-79.071655,35.991871,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Parker's Barbecue</name>
+			<description><![CDATA[2514 Old U.S. 301Wilson, NC 27893]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-77.937004,35.697464,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Big T Bar-B-Q</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.769928,33.874153,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Jackie Hite's BBQ</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.547127,33.908115,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Maurice's BBQ Piggie Park</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.077225,33.970638,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Bessinger's Barbecue</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.011581,32.786888,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Stameys Barbecue</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-79.828072,36.059105,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Red Bridges Barbecue Lodge INC</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.480888,35.265778,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>The Pit Authentic Barbecue</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-78.644768,35.776035,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Short Sugar's Pit Bar-B-Q</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-79.664536,36.344242,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Fuzzy's Bar-B-Que</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-79.969254,36.392406,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Little Richard's BBQ</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.34271200000002,36.082882,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Hill's Lexington Barbecue Inc</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.252075,36.158272,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Lexington Barbecue</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.267464,35.83403,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Bar-B-Q Center</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.244217,35.831478,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Cook's Barbecue</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.273636,35.708836000000005,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Tarheel Q</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.381767,35.857544,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Smiley's Lexington BBQ</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.253532,35.838486,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Richard's Bar-B-Que</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.464828,35.671497,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Wink's King Barbeque &amp; Seafood</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.458382,35.648079,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Carolina Bar-B-Q</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.879883,35.785583,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Wise Bar-B-Q House</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.720795,34.35157400000001,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Speedy Lohr's BBQ of Arcadia</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.308441,35.946911,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>The Smokin Pig</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-82.76766200000002,34.610111,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Circle MBBQ</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-82.682861,34.693951,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Creekside Bar-be-que</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-82.686714,34.553505,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Henry's Smokehouse</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-82.384056,34.862957,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Mike &amp; Jeff's BBQ</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-82.415459,34.876652,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Big T Bar-B-Q</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.769928,33.874153,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Little Pigs Barbecue</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.906921,34.064587,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Maurice's BBQ Piggie Park</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.077225,33.970638,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>John D Hite &amp; Son</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.092949,33.978283,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Shealy's Bar-B-Que House</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.515327,33.914772,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Fiery Ron's Home Team BBQ</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-79.997635,32.796982,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Cannons BBQ &amp; More</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.395081,34.197655,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Midway BBQ</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.658875,34.724201,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Melvin's Legendary Bar- B-Q</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-79.890121,32.803638,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Dukes Bar-B-Que</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.8424,33.490307,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Dukes Barbecue Chestnut St</name>
+			<description><![CDATA[<img src="https://cbks0.google.com/cbk?output=thumbnail&w=90&h=68&ll=33.507742,-80.852115&thumb=0" height="200" width="auto" /><br><br>789 Chestnut StOrangeburg, SC 29115]]></description>
+			<styleUrl>#icon-61</styleUrl>
+			<ExtendedData>
+				<Data name='gx_media_links'>
+					<value>https://cbks0.google.com/cbk?output=thumbnail&amp;w=90&amp;h=68&amp;ll=33.507742,-80.852115&amp;thumb=0</value>
+				</Data>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.852112,33.507744,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>True BBQ</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.072784,33.983727,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Bluffton Barbeque</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.861008,32.238384,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>PO Pigs BBQ</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.324677,32.578186,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Belly's Southern Pride</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.311134,33.979679,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Cock Pit Barbeque</name>
+			<styleUrl>#icon-959-7CCFA9-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.022591,33.973476,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Price's Bar-B-Que</name>
+			<styleUrl>#icon-959-7CCFA9-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.401466,34.023766,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Ronnie's Ribs</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.78698,34.172661,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Carolina Bar-B-Que</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.685127,33.417736,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Little Pigs Barbeque-Anderson</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-82.654671,34.51545,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Duke's Bar-B-Q</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.687248,33.46373,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Fuller's Old Fashion Bar-B-Q</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-79.01915,34.651253,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Bunn's Barbecue</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-76.947151,35.999371,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Scott's Barbecue</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-77.987129,35.397842,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>JB's Smokeshack</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.07003,32.726955,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>The Beacon Drive-In</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.94323,34.940277,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>The Southern Belly BBQ</name>
+			<description><![CDATA[<img src="https://cbks0.google.com/cbk?output=thumbnail&w=90&h=68&ll=33.982393,-81.019807&thumb=0" height="200" width="auto" /><br><br>1332 Rosewood DrColumbia, SC 29201]]></description>
+			<styleUrl>#icon-61</styleUrl>
+			<ExtendedData>
+				<Data name='gx_media_links'>
+					<value>https://cbks0.google.com/cbk?output=thumbnail&amp;w=90&amp;h=68&amp;ll=33.982393,-81.019807&amp;thumb=0</value>
+				</Data>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.019806,33.982391,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>12 Bones Smokehouse</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-82.566963,35.584568,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Hubba Hubba Smokehouse</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-82.441055,35.270836,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Ed Mitchells Que</name>
+			<styleUrl>#icon-1169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-78.903938,35.992722,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Johnny Harris Restaurant</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.07400999999999,32.044586,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Fresh Air Barbecue</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-83.92301900000001,33.28016600000001,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Harold's Barbecue</name>
+			<styleUrl>#icon-1169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-84.38264200000003,33.71777,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Wiley's Championship BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.00641100000001,32.04444,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>chicken comer</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-84.954388,32.533097,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Jim's Smokin' Que</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-83.903976,34.821886,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Joe's BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-84.32234399999999,34.866693,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Fox Bros. Bar-B-Q</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-84.34757000000002,33.761009,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Community Q BBQ</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-84.304959,33.792656,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Grand Champion BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-84.42202700000001,34.028546,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Swallow at the Hollow</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-84.36033800000003,34.027892,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Bouldercrest House of Ribs</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-84.33034499999998,33.719103,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Bone Lick BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-84.42551100000003,33.789759,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Dean's Barbeque</name>
+			<styleUrl>#icon-959-7CCFA9-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-84.34184800000003,33.496699,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Old Brick Pit Barbeque</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-84.32026300000003,33.880575,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Paul's Bar-B-Q</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-83.10955200000001,33.8687649,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Pink Pig</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-84.38385599999998,34.78888700000001,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Southern Soul Barbeque</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.38793499999998,31.159629,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Archibald Drive Inn</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-87.57176700000002,33.2282,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Big Bob Gibson Bar-B-Q, Inc.</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.97872100000001,34.579475,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Bob Sykes Barbeque Inc</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.96265,33.405168,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Car-Lot BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-87.814548,33.930104,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Chuck's Bar-B-Que</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-85.37698699999999,32.64231,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Demetri's BBQ</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.789355,33.480915,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Golden Rule Bar-B-Q and Grill</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.69714199999999,33.536448,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Green Top Cafe</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-87.01371599999999,33.729249,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Saw's BBQ</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.80828500000003,33.47386900000001,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>B's Cracklin' BBQ</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.14808640000001,31.9462498,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Heavys Barbeque</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-82.91223000000002,33.511164,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Old Clinton Barbecue House</name>
+			<styleUrl>#icon-959-7CCFA9-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-83.561736,32.99383600000001,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Top Hat Barbecue</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.799395,33.930053,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Dreamland Bar-B-Que</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-87.51665100000002,33.15647500000001,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Jim 'N Nick's Bar-B-Q</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.79726700000005,33.500465,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Stroud's Barbeque</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.880829,35.94695,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Whitt's Barbecue</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.95368000000002,34.819123,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>The Brick Pit</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-88.16889500000002,30.689905,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Spencer B's BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-85.12823100000003,34.921414,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Hot Thomas' Barbeque</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-83.34610399999997,33.806418,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Zeb's Bar-B-Que</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-83.19888100000003,34.199768,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Scott's Bar-B-Que</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-83.35859299999998,32.409929,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Fincher's Barbecue</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-83.65454899999997,32.79489000000001,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Miss Myra's Pit Bar-B-Q</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.726165,33.454156,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Sprayberry's Barbecue</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-84.800141,33.393055,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Freeman's Bar-B-Que</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.90309100000002,33.437074,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Martin's Bar-B-Que Joint</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.67240099999998,35.960943,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Peg Leg Porker BBQ</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.78114700000003,36.151722,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Whitts Barbecue</name>
+			<styleUrl>#icon-959-7CCFA9-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.683986,36.070802,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Carl's Perfect Pig</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-87.207558,36.103979,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>J I Baldwin &amp; Son Pit Barbecue</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.88363900000002,36.501541,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Hog Heaven</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.812276,36.146353,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Jack's Bar-B-Que</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.77441020000002,36.1615794,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Center Point Barbecue</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.66661999999997,36.309634,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Mary's Old Fashion Barbeque</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.79753900000003,36.172039,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Slick Pig BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.359669,35.840807,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Ridgewood Barbecue</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-82.26573100000002,36.433935,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Heirloom Market BBQ</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-84.447183,33.898588,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Pierce's</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-76.717379,37.338988,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Richard's Bar-B-Q</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-88.99221799999998,35.256848,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Scott'S-Parker's Barbeque</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-88.42515900000001,35.660774,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Charles Vergo's Rendezvous</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-90.05169799999999,35.143425,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Cozy Corner Restaurant</name>
+			<description><![CDATA[Closed by fire, but supposedly opening up in temporary digs at the Encore Cafe http://www.memphisflyer.com/HungryMemphis/archives/2015/03/12/get-your-cozy-corner-at-encore-cafe]]></description>
+			<styleUrl>#icon-1199</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-90.03422799999998,35.15502,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Sugar's Ribs</name>
+			<styleUrl>#icon-959-7CCFA9-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-85.27189799999996,35.013375,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Helen's Bar BQ</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-89.259724,35.60444,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Pardner's Bar-B-Que &amp; Steak Restaurant</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-82.30203399999999,36.439765,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Dixie Barbecue</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-82.39207899999997,36.362585,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Full Service BBQ</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-83.96662100000003,35.759522,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Barrel House BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.37266199999999,35.282129,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Shuford's Smokehouse</name>
+			<styleUrl>#icon-959-7CCFA9-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-85.33154200000001,35.1034,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>HILLBILLY WILLYS B-B-Q</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-85.36614099999998,35.021702,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>A&amp;R Bar-B-Que</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-90.01764700000001,35.095971000000006,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Willie's Deli</name>
+			<styleUrl>#icon-959-7CCFA9-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-84.78675800000002,35.258882,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Old Plantation Barbeque</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-85.26032399999997,35.05411900000001,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Couch Barbecue</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-85.093096,35.073794,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Bunyan's Bar-B-Que</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-87.68673000000001,34.794434,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Bozo's Hot Pit Bar-B-Q</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-89.53994699999998,35.410278,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Bar B Cutie</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.829567,35.916155,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Payne's Bar-B-Que</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-90.003106,35.118252,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Jim Neely's Interstate Bar-B-Q</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-90.05722800000001,35.085541,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Leonard's Pit Barbecue</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-89.881416,35.07404,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Moonlite Bar-B-Q Inn</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-87.14873899999998,37.756552,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Old Hickory Bar-B-Que</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-87.11313000000001,37.751288,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Sam's Bar-B-Q</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.25602300000003,32.38505,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>McClard's Bar-B-Q Restaurant</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-93.07476200000002,34.496119,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Edley's Bar-B-Que</name>
+			<styleUrl>#icon-959-7CCFA9-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.78990699999997,36.122831,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>17th Street BBQ</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-89.341613,37.765006,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Loveless Cafe</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.97200900000001,36.035156,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Marion Pit Barbecue</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-88.08285400000001,37.322195,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Knoth's Bar-B-Que</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-88.23193100000003,37.029364,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Thomason's Barbecue</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-87.57975599999997,37.822385,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Frances BBQ Frances Barbecue</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-85.688898,36.700561,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>R&amp;S Barbecue</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-85.6980438,36.6999822,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Back Yard Barbeque</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-85.69847099999998,36.741149,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Peak Brothers Bar-B-Que Restaurant</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-87.80875800000001,37.71085,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Dave's Sticky Pig</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-87.47779200000002,37.321537000000006,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Southern Reds BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-88.72215299999999,36.546518,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Leigh's Barbecue</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-88.802706,37.062989,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Bar-B-Q Shack</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-87.41424,36.814912,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Prince Pit</name>
+			<description><![CDATA[100 Elm Street, Bardwell, KY]]></description>
+			<styleUrl>#icon-169</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-89.01074829999999,36.8728299,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>The Wood Shed Bar-B-Q &amp; Restaurant</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-87.51071100000001,36.879629,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Hill Country Barbecue Market</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-73.990455,40.7442,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Country's Barbecue</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-84.94613300000003,32.480135,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Porky's Pit BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.07832300000001,35.481719,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Mutts BBQ Restaurant</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-82.23636399999998,34.920846,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Jim's Bar-B-Que</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-82.246423,29.407023999999996,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Pierce's</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-76.717379,37.338988,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Black's Smokehouse</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-82.99211200000002,34.708733,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>BarBQ King</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.88913000000002,35.224479,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Old Hickory House BBQ Restaurant</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.76581099999999,35.277934,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Freedmen's</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-97.74819400000001,30.288458000000002,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Black's Barbecue</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-97.67292099999997,29.885885999999996,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Louie Mueller Barbecue</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-97.41109599999999,30.568869999999997,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>La Barbecue</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-97.735165,30.261063,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Franklin Barbecue</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-97.73127,30.270118000000004,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Troutman's Barbecue</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.55312900000001,35.37644,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>DCity Smokehouse</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-77.009479,38.910817,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Smoke &amp; Barrel</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-77.04222800000002,38.922279,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Kangaroo Boxing Club</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-77.02847099999997,38.93215,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Garden District</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-77.03149200000001,38.914311,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Kenny's BBQ Smokehouse</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-76.99511000000001,38.895612,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Pork Barrel BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-77.05893700000001,38.826647,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Sam's Bar-B-Q</name>
+			<description><![CDATA[500 W Main St]]></description>
+			<styleUrl>#icon-61</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-88.92668429999998,35.8191279,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Woodstock Store &amp; Deli</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-89.97916600000002,35.29158,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Papa Kayjoe's Bar-B-Que</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-87.46533199999999,35.774855,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Siler's Old Time BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-88.53980200000001,35.466887,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Ray's Bar-B-Que</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-90.12798299999997,35.147584,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Bar-B-Q Shop Restaurant</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-90.00171,35.13811,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Morris Grocery</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-89.70932099999999,35.158158,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Showboat Barbecue</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-89.86538100000001,35.061478,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Three Little Pigs Bar-B-Q</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-89.89047700000003,35.08879,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Central BBQ</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-89.987034,35.12566,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Tom's Barbecue &amp; Deli</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-89.937457,35.036988,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Coletta's Italian Restaurant</name>
+			<description><![CDATA[Home of the barbecue pizza]]></description>
+			<styleUrl>#icon-169</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-90.02703400000001,35.109379,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Shorty's Bar-B-Q</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.38171799999998,25.73255,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>The Lamar Lounge</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-89.51104399999997,34.379592,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Jones's Bar-B-Q Diner</name>
+			<description><![CDATA[219 W Louisiana St ]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-90.7647086,34.7686212,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Pecan Lodge</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-96.78382999999997,32.783667,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Kreuz Market</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-97.67184399999996,29.889857,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Craigs Bar-B-Que</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-92.80225300000001,34.363941,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Barbeque Exchange</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-78.18654200000003,38.132528,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Pearl Country Store &amp; Barbecue</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-82.27974599999999,29.511514,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Blue Smoke</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-73.98374999999999,40.742278,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Johnson's Boucaniere</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-92.02261900000002,30.221232,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Smitty's Market</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-97.670974,29.883627,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Southside Market &amp; BBQ Inc</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-97.38594499999999,30.350069,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>L C's Bar-B-Q</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-94.51746600000001,39.034823,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Arthur Bryant's Barbeque</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-94.55612300000001,39.091479,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Joe's Kansas City Barbecue</name>
+			<description><![CDATA[Formerly Oklahoma Joe's]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-94.620723,39.044449,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Rosedale Barbeque</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-94.616218,39.065849,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Jack Stack Barbecue - Freight House</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-94.58581500000003,39.087252,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Luella's Bar-B-Que</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-82.55462999999997,35.615269,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Gatlin's BBQ</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-95.42098900000002,29.80285,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Virgie's BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-95.54547100000002,29.847684000000005,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Killen's Barbecue</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-95.28227700000002,29.56408,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Patillo's Bar-B-Q</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-94.11396200000001,30.05558,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>City Market</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-97.647675,29.681505,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Coopers Old Time Pit BBQ</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-98.682188,30.759242,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>John Mueller Meat Co</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-97.71447,30.259018000000005,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Lockhart Smokehouse BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-96.828418,32.749368,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Snow's BBQ</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-97.00964499999998,30.413371,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Stanley's Famous Pit Bar-B-Q</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-95.29401899999999,32.344069,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Pappy's Smokehouse</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-90.22400199999998,38.634994,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Taylor Cafe</name>
+			<styleUrl>#icon-959-009D57-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-97.40969799999999,30.567834000000005,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Stiles Switch</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-97.721387,30.334545,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>The Granary 'Cue &amp; Brew</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-98.479556,29.441110000000002,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>City Meat Market</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-96.937462,30.183195999999995,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Gates Bar-B-Q</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-94.58507800000001,39.06897,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Slap's BBQ</name>
+			<description><![CDATA[Ribs are the recommendation]]></description>
+			<styleUrl>#icon-169</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-94.624435,39.102483,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Mighty Quinn's Barbeque</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-73.988676,40.727586,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Arrogant Swine</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-73.93361600000003,40.710075,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Opie's Barbecue</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-98.15853400000003,30.461592,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Micklethwait Craft Meats</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-97.72513600000002,30.268562,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Valentina's Tex Mex BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-97.74856899999997,30.269871,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Sonny Bryan's Smokehouse</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-96.840735,32.817219,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Brown's BBQ</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-97.76701700000001,30.249511000000002,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Smoke Shack BBQ Food Truck</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-98.45290599999998,29.515349,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>The Salt Lick</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-98.01310999999998,30.131557,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>BBQ @ Legal Beans</name>
+			<description><![CDATA[Cebu-style Filipino lechon]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-74.05182000000002,40.725844,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Salvage BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-70.27798899999999,43.654149,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Smoki O's</name>
+			<description><![CDATA[Snoots!]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-90.18622900000003,38.640927,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>B.B.'s Lawnside BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-94.57461799999999,38.972797,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Slow Bone</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-96.834224,32.796337,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Ricky Scott's BBQ</name>
+			<description><![CDATA[33.591687, -79.706593]]></description>
+			<styleUrl>#icon-22</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-79.706593,33.591687,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Ward's Bar-B-Q</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.32940200000002,33.920507,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Brooks Barbecue</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-87.67385999999999,34.757353,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Johnson Family Barbecue</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-78.79327,35.977093,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Grayson Barbeque</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-93.03178000000003,31.823292000000002,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Sam's BBQ1</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-84.40635500000002,33.965567,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Smoke</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-96.837291,32.769276,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Dead End BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-83.980072,35.946682,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Captains BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.20389799999998,29.615861,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Buck's Smokehouse</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.50487499999998,30.394521,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Reubens Smoke House</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.87241899999998,26.572279,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Abe's Bar-B-Q</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-90.56337300000001,34.194771,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Hot Iron Brand BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-86.65825699999999,32.877048,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Sconyers Bar-B-Que</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-82.03379300000002,33.409643,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Cleve Edmunds Bar-B-Que</name>
+			<styleUrl>#icon-61-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-82.101114,33.510535,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Black Oak BBQ</name>
+			<description><![CDATA[Located inside Chickie Wah Wah bar]]></description>
+			<styleUrl>#icon-169</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-90.08964000000003,29.966704999999997,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Hillbilly BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-90.208438,29.972551,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>4505 Burgers &amp; BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-122.43825200000002,37.776205,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>The Joint</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-90.03554700000001,29.961322,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>McClure's Barbecue</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-90.106403,29.920299000000004,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>NOLA Smokehouse</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-90.07431400000002,29.927192999999995,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Papa's Backyard BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-89.780124,30.261584,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Walker's BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-89.97884099999999,30.051581,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>King's Taste Barbecue</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.67128000000004,28.857682,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Harry &amp; Larry's Bar-B-Que</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.58647000000002,28.565333000000003,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Cecil's Texas Style Bar-B-Q</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.3766789,28.5107382,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Bubbalou's Bodacious Bar-B-Que</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-81.36787800000002,28.606226,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Shiver's BBQ</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.439168,25.506049,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Virgil's</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-73.985143,40.75679800000001,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>H.B.'S BAR-B-Q</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-92.33410300000004,34.694176,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Dixie Pig</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-89.910278,35.933484,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Q39</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-94.59820800000001,39.057415,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Plowboys BBQ</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-94.274024,38.98857,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Johnny's B-B-Q</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-94.665232,39.020756000000006,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Barrel and Ashes</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-118.38919599999997,34.14218,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Ramey's Bar B Que</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-88.12237299999998,35.638221,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Liz's Bar B-Q</name>
+			<styleUrl>#icon-22-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-88.64230800000001,35.43489700000001,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Music Man's Bar-B-Que</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-80.00457799999998,33.191984,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Dinosaur Bar-B-Que</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-73.96085299999999,40.818137,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Fette Sau</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-73.95649000000003,40.713888,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>BrisketTown</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-73.96290399999998,40.711476,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Daisy May's BBQ USA</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-73.99681900000002,40.763383,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>John Brown Smokehouse</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-73.95008200000001,40.748853,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Fletcher's Brooklyn Barbecue</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-73.990073,40.672246,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Schoolhouse Bar-B-Que</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-79.74580900000001,33.923636,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Roger's Bar-B-Q House</name>
+			<styleUrl>#icon-169-nodesc</styleUrl>
+			<ExtendedData>
+			</ExtendedData>
+			<Point>
+				<coordinates>-79.802826,34.17169200000001,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Style id='icon-1169-nodesc-normal'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/1169-crisis-poison-gas.png</href>
+				</Icon>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+			<BalloonStyle>
+				<text><![CDATA[<h3>$[name]</h3>]]></text>
+			</BalloonStyle>
+		</Style>
+		<Style id='icon-1169-nodesc-highlight'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/1169-crisis-poison-gas.png</href>
+				</Icon>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+			<BalloonStyle>
+				<text><![CDATA[<h3>$[name]</h3>]]></text>
+			</BalloonStyle>
+		</Style>
+		<StyleMap id='icon-1169-nodesc'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-1169-nodesc-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-1169-nodesc-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Style id='icon-1199-normal'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/1199-fac-help.png</href>
+				</Icon>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+		</Style>
+		<Style id='icon-1199-highlight'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/1199-fac-help.png</href>
+				</Icon>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+		</Style>
+		<StyleMap id='icon-1199'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-1199-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-1199-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Style id='icon-169-normal'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/169-ltblue-dot.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+		</Style>
+		<Style id='icon-169-highlight'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/169-ltblue-dot.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+		</Style>
+		<StyleMap id='icon-169'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-169-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-169-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Style id='icon-169-nodesc-normal'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/169-ltblue-dot.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+			<BalloonStyle>
+				<text><![CDATA[<h3>$[name]</h3>]]></text>
+			</BalloonStyle>
+		</Style>
+		<Style id='icon-169-nodesc-highlight'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/169-ltblue-dot.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+			<BalloonStyle>
+				<text><![CDATA[<h3>$[name]</h3>]]></text>
+			</BalloonStyle>
+		</Style>
+		<StyleMap id='icon-169-nodesc'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-169-nodesc-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-169-nodesc-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Style id='icon-22-normal'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/22-blue-dot.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+		</Style>
+		<Style id='icon-22-highlight'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/22-blue-dot.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+		</Style>
+		<StyleMap id='icon-22'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-22-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-22-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Style id='icon-22-nodesc-normal'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/22-blue-dot.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+			<BalloonStyle>
+				<text><![CDATA[<h3>$[name]</h3>]]></text>
+			</BalloonStyle>
+		</Style>
+		<Style id='icon-22-nodesc-highlight'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/22-blue-dot.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+			<BalloonStyle>
+				<text><![CDATA[<h3>$[name]</h3>]]></text>
+			</BalloonStyle>
+		</Style>
+		<StyleMap id='icon-22-nodesc'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-22-nodesc-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-22-nodesc-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Style id='icon-61-normal'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/61-green-dot.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+		</Style>
+		<Style id='icon-61-highlight'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/61-green-dot.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+		</Style>
+		<StyleMap id='icon-61'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-61-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-61-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Style id='icon-61-nodesc-normal'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/61-green-dot.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+			<BalloonStyle>
+				<text><![CDATA[<h3>$[name]</h3>]]></text>
+			</BalloonStyle>
+		</Style>
+		<Style id='icon-61-nodesc-highlight'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/61-green-dot.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+			<BalloonStyle>
+				<text><![CDATA[<h3>$[name]</h3>]]></text>
+			</BalloonStyle>
+		</Style>
+		<StyleMap id='icon-61-nodesc'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-61-nodesc-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-61-nodesc-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Style id='icon-959-009D57-nodesc-normal'>
+			<IconStyle>
+				<color>ff579D00</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/959-wht-circle-blank.png</href>
+				</Icon>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+			<BalloonStyle>
+				<text><![CDATA[<h3>$[name]</h3>]]></text>
+			</BalloonStyle>
+		</Style>
+		<Style id='icon-959-009D57-nodesc-highlight'>
+			<IconStyle>
+				<color>ff579D00</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/959-wht-circle-blank.png</href>
+				</Icon>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+			<BalloonStyle>
+				<text><![CDATA[<h3>$[name]</h3>]]></text>
+			</BalloonStyle>
+		</Style>
+		<StyleMap id='icon-959-009D57-nodesc'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-959-009D57-nodesc-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-959-009D57-nodesc-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Style id='icon-959-7CCFA9-nodesc-normal'>
+			<IconStyle>
+				<color>ffA9CF7C</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/959-wht-circle-blank.png</href>
+				</Icon>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+			<BalloonStyle>
+				<text><![CDATA[<h3>$[name]</h3>]]></text>
+			</BalloonStyle>
+		</Style>
+		<Style id='icon-959-7CCFA9-nodesc-highlight'>
+			<IconStyle>
+				<color>ffA9CF7C</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/959-wht-circle-blank.png</href>
+				</Icon>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+			<BalloonStyle>
+				<text><![CDATA[<h3>$[name]</h3>]]></text>
+			</BalloonStyle>
+		</Style>
+		<StyleMap id='icon-959-7CCFA9-nodesc'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-959-7CCFA9-nodesc-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-959-7CCFA9-nodesc-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+	</Document>
+</kml>

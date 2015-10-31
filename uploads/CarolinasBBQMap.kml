@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.2">
+<Document>
+  <name>Carolinas BBQ Map</name>
+  <description><![CDATA[For BBQ Lovers' Guide to the Carolinas]]></description>
+  <Style id="style54">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Placemark>
+    <name>Grady&#39;s Barbecue</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-77.959816,35.265163,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>B&#39;s Barbecue</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-77.417259,35.621086,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Brown&#39;s Bar-B-Que</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-79.812378,33.710972,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Cooper&#39;s Country Store Inc</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-79.822289,33.581390,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>McCabes Bar-B-Que</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.207253,33.707134,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Scott&#39;s BBQ</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style41</styleUrl>
+    <Point>
+      <coordinates>-79.475021,33.743370,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Shuler&#39;s Bar-B-Que</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-79.478043,34.312656,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Sweatman&#39;s Barbeque</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.381233,33.361450,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Wilber&#39;s Barbecue</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-77.922401,35.350624,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Skylight Inn BBQ</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-77.423325,35.461159,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Bum&#39;s Restaurant</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-77.416878,35.470894,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Allen and Son BBQ</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-79.071655,35.991871,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Parker&#39;s Barbecue</name>
+    <description><![CDATA[<div><font face="arial" size="2">2514 Old U.S. 301</font></div><font face="arial" size="2">Wilson, NC 27893</font><br>]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-77.937004,35.697464,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Big T Bar-B-Q</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.769928,33.874153,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Goodland BBQ</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-81.275864,33.498531,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Jackie Hite&#39;s BBQ</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-81.547127,33.908115,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Maurice&#39;s BBQ Piggie Park</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-81.077225,33.970638,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Bessinger&#39;s Barbecue</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.011581,32.786888,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>D &amp; H Bar-B-Que</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.211967,33.688995,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Stameys Barbecue</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-79.828072,36.059105,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Red Bridges Barbecue Lodge INC</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-81.480888,35.265778,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>The Pit Authentic Barbecue</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-78.644768,35.776035,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Short Sugar&#39;s Pit Bar-B-Q</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-79.664536,36.344242,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Fuzzy&#39;s Bar-B-Que</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-79.969254,36.392406,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Little Richard&#39;s BBQ</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.342712,36.082882,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Hill&#39;s Lexington Barbecue Inc</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.252075,36.158272,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Lexington Barbecue</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.267464,35.834030,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Bar-B-Q Center</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.244217,35.831478,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Cook&#39;s Barbecue</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.273636,35.708836,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Cook&#39;s Barbecue</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.273636,35.708836,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Tarheel Q</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.381767,35.857544,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Smiley&#39;s Lexington BBQ</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.253532,35.838486,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Richard&#39;s Bar-B-Que</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.464828,35.671497,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Wink&#39;s King Barbeque &amp; Seafood</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.458382,35.648079,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Carolina Bar-B-Q</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.879883,35.785583,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Wise Bar-B-Q House</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-81.720795,34.351574,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Speedy Lohr&#39;s BBQ of Arcadia</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.308441,35.946911,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>The Smokin Pig</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-82.767662,34.610111,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Circle MBBQ</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-82.682861,34.693951,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Creekside Bar-be-que</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-82.686714,34.553505,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Henry&#39;s Smokehouse</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-82.384056,34.862957,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Mike &amp; Jeff&#39;s BBQ</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-82.415459,34.876652,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>12 Bones Smokehouse</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-82.566864,35.584553,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Big T Bar-B-Q</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.769928,33.874153,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Little Pigs Barbecue</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.906921,34.064587,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Maurice&#39;s BBQ Piggie Park</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-81.077225,33.970638,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Maurice&#39;s BBQ Piggie Park</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-81.077225,33.970638,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>John D Hite &amp; Son</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-81.092949,33.978283,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Shealy&#39;s Bar-B-Que House</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-81.515327,33.914772,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Fiery Ron&#39;s Home Team BBQ</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-79.997635,32.796982,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Cannons BBQ &amp; More</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-81.395081,34.197655,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Midway BBQ</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-81.658875,34.724201,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Melvin&#39;s Legendary Bar- B-Q</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-79.890121,32.803638,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Dukes Bar-B-Que</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.842400,33.490307,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Dukes Barbecue Chestnut St</name>
+    <description><![CDATA[<div><font face="arial" size="2">789 Chestnut St</font></div><font face="arial" size="2">Orangeburg, SC 29115</font><br><font face="arial" size="2"><img src="https://cbks0.google.com/cbk?output=thumbnail&amp;w=90&amp;h=68&amp;ll=33.507742,-80.852115&amp;thumb=0"></font>]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.852112,33.507744,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>True BBQ</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-81.072784,33.983727,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Bluffton Barbeque</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.861008,32.238384,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Bluffton Barbeque</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.861008,32.238384,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>PO Pigs BBQ</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.324677,32.578186,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Belly&#39;s Southern Pride</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-81.311134,33.979679,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Cock Pit Barbeque</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-81.022591,33.973476,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Price&#39;s Bar-B-Que</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-81.401466,34.023766,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Q2U BBQ PIT AND CATERING</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-81.042679,35.109745,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Ronnie&#39;s Ribs</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.786980,34.172661,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Carolina Bar-B-Que</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-81.685127,33.417736,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Little Pigs Barbeque-Anderson</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-82.654671,34.515450,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>B &amp; D Bar-B-Que</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.917656,33.110470,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Duke&#39;s Bar-B-Q</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-81.687248,33.463730,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Fuller&#39;s Old Fashion Bar-B-Q</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-79.019150,34.651253,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Bill Spoon&#39;s Barbecue</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.876564,35.160187,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Bunn&#39;s Barbecue</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-76.947151,35.999371,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Bunn&#39;s Barbecue</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-76.947151,35.999371,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Scott&#39;s Barbecue</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-77.987129,35.397842,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>JB&#39;s Smokeshack</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-80.070030,32.726955,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>The Beacon Drive-In</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-81.943230,34.940277,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>The Southern Belly BBQ</name>
+    <description><![CDATA[<div><font face="arial" size="2">1332 Rosewood Dr</font></div><font face="arial" size="2">Columbia, SC 29201</font><br><font face="arial" size="2"><img src="https://cbks0.google.com/cbk?output=thumbnail&amp;w=90&amp;h=68&amp;ll=33.982393,-81.019807&amp;thumb=0"></font>]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-81.019806,33.982391,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>12 Bones Smokehouse</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-82.566963,35.584568,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Hubba Hubba Smokehouse</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-82.441055,35.270836,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Freeman&#39;s Bar-B-Que</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-81.903091,33.437073,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Ed Mitchells Que</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style54</styleUrl>
+    <Point>
+      <coordinates>-78.903938,35.992722,0.000000</coordinates>
+    </Point>
+  </Placemark>
+</Document>
+</kml>

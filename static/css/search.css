@@ -1,0 +1,4 @@
+/* this isn't get set properly for some reason when showing edit modal */
+#locationEditModal {
+	overflow-y: scroll;
+}

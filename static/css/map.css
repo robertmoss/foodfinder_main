@@ -1,0 +1,117 @@
+/* css for pages with maps
+ * 
+ * 
+ */
+
+html, body {
+	height: 100%;
+}
+
+#footer {
+	min-height: 20px;
+	padding: 5px;
+	position: fixed;
+	left: 0px;
+	bottom: 0px;
+	width: 100%;
+	background-color: #ffffff;
+	text-align: left;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+
+}
+
+.mapcontent img {
+	max-width: 100%;
+	margin: auto;
+	}
+
+
+.searchPanel input {
+		font-size:16px;
+	}
+	
+.searchPanel .btn {
+		margin-top: 5px;
+	}
+
+@media screen and (min-width: 640px) {
+	#mapwrapper, #mapcanvas {
+		width: 100%;
+		}
+	
+	.searchPanel {
+		text-align: center;
+		margin-left: auto;
+		margin-right: auto;
+	}
+		
+	.searchPanel input {
+		min-width:400px;
+		font-size:inherit;
+	}
+	
+	.searchPanel .btn {
+		margin-top: 0px;
+	}
+	
+	.mapcontent {
+		width: 450px;
+	}
+	
+	
+
+}
+
+@media screen and (min-width: 1024px) {
+ 	
+
+	#mapwrapper {
+		height: 95%;
+		width: 100%;
+		margin: 0px 0px;
+		position: static;
+		}
+	
+	#mapcanvas {
+		height: 100%;
+		width: 100%;
+		min-height: 100%;
+	}
+	
+	#listNav {
+		top: 0px;
+		width: 310px;
+		height: 40px;
+		background-color: #337ab7;
+		color: #ffffff;
+		margin-left: -15px;
+		margin-right: -15px;
+	}
+	
+	#listNav button {
+		margin-top: 2px;
+		margin-left: 2px;
+	}
+	
+	.mapcontent {
+		position: absolute;
+		bottom: 10px;
+		left: 10px;
+		width: 310px;
+		overflow-y: auto;
+		max-height: 85%;
+	}
+	
+	.searchPanel {
+		position: absolute;
+    	top: 80px;
+    	left: 330px;
+		max-width: 660px;
+		min-width: 500px;
+	}
+	
+}
+	
+
+

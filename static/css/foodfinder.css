@@ -1,0 +1,315 @@
+/* Overrides to core styles.css  */
+
+ {
+	margin-left:20px;
+	background-image: url('../../img/ff_logo.png');
+	background-repeat: no-repeat;
+	width: 100%;
+	height: 80px;
+	padding: 10px 0px 10px 0px;
+}
+
+
+
+#main {
+	padding: 0px;
+}
+
+#maincontent {
+	background-color: #ffffff;
+}
+
+#outer {
+	border: none;
+}
+
+#header #logo {
+	background-image: url('../../img/ff_logo.png');
+	background-repeat: no-repeat;
+	width: 100%;
+	height: 100px;
+	}
+	
+
+
+
+#mapheading {
+	text-align:left;
+}
+
+
+@media screen and (max-width: 520px) {
+	
+	#header {
+		min-height: 30px;
+		
+	}
+	
+	#mapwrapper, #mapcanvas {
+		min-height: 300px;
+	}
+	
+	#header #logo {
+	background-image: url('../../img/ff_logo_sm.png');
+	background-repeat: no-repeat;
+	width: 100%;
+	height: 30px;
+	}
+	
+	.searchText {
+		display: none;
+	}
+}
+
+
+#menu_bar {
+	background-color: #195C4B;
+	margin-top: 15px;
+}
+
+@media screen and (max-width: 520px) {
+ 	#menu_bar {
+ 	display: none;
+ 	}
+}
+
+/* overrides to Bootstrap */
+.navbar {
+	margin-bottom: 0px; 
+}
+
+/* Foodfinder-specific styles */
+
+
+#location_anchor {
+	min-height: 200px;
+}
+
+.loc-panel {
+	min-height: 200px;
+}
+
+.loc-panel .caption {
+	overflow: hidden;
+}
+
+.loc-image {
+		overflow: hidden;
+		border: solid 1px #aaaaaa;
+		text-align: center;
+	}
+
+@media (min-width: 768px) {
+	
+	
+	.loc-image {
+		height: 300px;
+		overflow: hidden;
+		vertical-align: middle;
+		border: solid 1px #aaaaaa;
+	}
+}
+
+.loc-panel h3 {
+	margin-top: 5px;
+}
+
+
+.location_info {
+	background: white;
+	margin: auto;
+	border: none;
+	width: 600px;
+	overflow:auto;
+	min-height: 400px;
+	position: relative;
+}
+
+.location_info h2 {
+		-webkit-margin-before: 0em;
+	-webkit-margin-after: 0em;
+	color: #0a84c1;
+}
+
+.location_info .contact_info  {
+	float: left;
+}
+
+.location_info .contact_info p {
+	margin: 0px;
+}
+
+.location_info .contact_info .category {
+	 font-weight: bold;
+	 color: #195C4B;	 
+	 font-size: 15px;
+	margin-bottom: 10px;
+}
+
+
+.location_info .figure {
+	 float: right;
+	 margin-left: 10px;
+}
+
+.location_info .description  {
+	  	margin-top: 10px;
+	  	float: left;
+}
+
+.location_info .figure img {
+	 max-width: 300px; 	
+}
+
+.location_info .row  {
+	  	/*border: solid 1px;*/
+}
+
+.location_info .links {
+	clear: both;
+	margin-top: 20px;
+}
+
+.location_info .links .row {
+	  	margin-bottom: 10px;
+	  	
+}
+
+@media screen and (max-width: 520px) {
+ 	.location_info {
+ 		width: 98%;	
+ 	}
+ 	
+    .location_info .figure img  {
+    max-width: 100px;
+    } 
+    
+    .location_info .description  {
+	  	float: none;
+	}
+	
+	.location_info .figure {
+		 float: none;
+		 margin-left: 10px;
+}
+
+    
+}
+
+.switcher {
+	
+}
+
+.switcher .switch {
+	text-decoration: underline;
+}
+
+
+.formPanel {
+	padding: 10px 10px;
+	position: relative;
+	max-width: 800px;
+}
+
+.formPanel .close {
+	position: absolute;
+	right: 5px;
+	bottom: 0px;
+	text-transform: uppercase;
+	color: blue;
+	background: url('../../img/icons/collapse.png') center right no-repeat;
+	background-color: white;
+	height: 30px;
+	width 30px;
+}
+
+
+.routeSummary .origin, .routeSummary .destination {
+	font-weight: bold;
+}
+
+.routeSummary .link {
+	float: right;
+	cursor: pointer;
+	text-transform: uppercase;
+	color: blue;
+	background-image: url('../../img/icons/expand.png');
+	background-repeat: no-repeat;
+}
+
+.locationProfile {
+	text-align: left;
+}
+
+.locationModal {
+	min-height: 100px;
+	padding-top:20px;
+	padding-bottom:20px;
+}
+
+.locationModal img {
+	max-width: 100%;
+	margin-bottom:10px;
+}
+
+.locationModalImage {
+	text-align: center;
+}
+
+.locationModalImage img {
+	max-width:100%;
+	max-height: 500px;
+}
+
+.tripNav {
+	margin: auto;
+	max-width: 350px;
+	
+}
+
+.alert {
+	text-align: center;
+}
+
+.progress-wrapper {
+	padding: 15px 10px 15px 10px;
+	border: solid 1px #ddd;
+	border-radius: 4px 4px 0 0;	
+}
+
+.centered {
+	max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.toggle {
+	float:right;
+}
+
+.list-label {
+	font-weight: bold;
+}
+
+.align-left {
+	float: left;
+	text-align: left;
+}
+
+/* bootstrap modals don't work well on iPhones (scroll issues) 
+ so these properties show/hide links that drive mobile-specific behavior */
+.non-mobile {
+	display: none;
+}
+
+@media only screen and (min-width: 480px) {
+	.mobile-only {
+		display: none;
+	}
+	
+	.non-mobile {
+		display: block;
+	}
+}
+
+

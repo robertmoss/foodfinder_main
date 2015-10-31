@@ -1,0 +1,55 @@
+@media screen and (min-width: 520px) {
+ 	
+	#mapwrapper {
+		height: 600px;
+		width: 90%;
+		margin: 0px auto;
+		position: static;
+		}
+	
+	#mapcanvas {
+		height: 100%;
+		width: 100%;
+		min-height: 100%;
+	}
+	
+	
+}
+
+.toppad {
+	padding-top: 10px;
+}
+
+.directions-start {
+	font-size: 20px;
+	font-weight: bold;
+    margin-bottom: 20px;
+    color: green;
+}
+
+.directions-end {
+	font-size: 20px;
+	font-weight: bold;
+    margin-top: 20px;
+    color: red;
+}
+
+.routeSummary {
+	float: left;
+	max-width: 70%;
+}
+
+.toggle {
+	margin-bottom: 10px;
+}
+
+.formPanel input {
+	font-size: 16px;
+	}
+	
+@media screen and (min-width: 520px) {
+	.formPanel input {
+		font-size: inherit;
+	} 
+}
+

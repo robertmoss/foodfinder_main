@@ -1,0 +1,116 @@
+<?php
+
+include dirname(__FILE__) . '/../partials/pageCheck.php';
+include_once dirname(__FILE__) . '/../classes/database.php';
+include_once dirname(__FILE__) . '/../classes/utility.php';
+
+//session_start();
+
+$tenantID = $_SESSION['tenantID'];
+if ($_SERVER['REQUEST_METHOD']=="GET") {
+	
+	echo "Unsupported HTTP method.";	
+
+	}
+elseif ($_SERVER['REQUEST_METHOD']=="POST")
+	{
+		$json = file_get_contents('php://input');
+		$data = json_decode($json);
+		
+		// currently we ignore type. If we need additional kinds of endorsements in future will add.
+		// right now, just location endorsements
+		
+		$id = $data->{'id'};
+		if ($id==0) {
+			// this is a new record: insert
+			
+			$errMessage = '';
+			
+			// perform data validations
+			if (strlen($data->{'link'})<=0) {
+				$errMessage .= 'link is required. ';
+			}
+
+			if (strlen($data->{'title'})<=0) {
+				$errMessage .= 'title is required. ';
+			}
+			
+			if (strlen($data->{'locationid'})<=0) {
+				$errMessage .= 'Locationid is required. ';
+			}
+			
+			if (strlen($errMessage)>0) {
+				echo 'Unable to save link: ' . $errMessage;
+				header(' ', true, 400);
+				die();
+			}
+			
+			Utility::debug('Adding link', 5);
+			
+			$query = "call addLocationLink(" . Database::queryNumber($data->{'locationid'});
+			$query .= "," . Database::queryString($data->{'link'});
+			$query .= "," . Database::queryString($data->{'title'});
+			$query .= "," . Database::queryString($data->{'author'});
+			$query .= "," . Database::queryString($data->{'publication'});
+			$query .= ')';
+			
+			$result = Database::executeQuery($query);
+			
+			if (!$result) {
+				echo 'Unable to save link.';
+				header(' ', true, 500);
+			}
+			else 
+			{
+				$newID=0;
+				while ($r = mysqli_fetch_array($result))
+					{
+					$newID=$r[0];
+					}
+				$response = '{"id":' . json_encode($newID) . "}";
+				Utility::debug('Endorsement added: ID=' . $newID, 5);
+				header('Content-Type: application/json');
+				echo $response; 
+			}
+			
+		}
+		else {
+				
+			// this is an existing record: update	
+			// to do: add data validations
+			
+			Utility::debug('Updating link', 5);
+		
+			echo 'Unable to uodate link: method is not yet implemented';
+			header(' ', true, 500);
+			
+			}
+
+	}
+elseif ($_SERVER['REQUEST_METHOD']=="DELETE") 
+	{
+		$json = file_get_contents('php://input');
+		$data = json_decode($json);
+		
+		// to do: got to figure out how to secure this sucker
+
+		$id = $data->{'id'};
+		if (!$id>0) {
+			echo 'Unable to delete link: an ID is required';
+			header(' ', true, 400);
+			die();
+		}
+		
+		Utility::debug('Deleting link id=' . $id, 5);
+			
+		$query = "call deleteLocationLink(" . Database::queryNumber($id);
+		$query .= "," . Database::queryNumber($tenantID);
+		$query .= ')';
+			
+		$result = Database::executeQuery($query);
+		
+	} 
+else
+	{
+		echo "Unsupported HTTP method.";
+	}
