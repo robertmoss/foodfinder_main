@@ -1,4 +1,5 @@
 <?php 
+	
 	include dirname(__FILE__) . '/partials/pageCheck.php';
 	$thisPage = 'admin';
 	
