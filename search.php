@@ -18,7 +18,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Find a Location</div>
 				<div class="panel-body">
-					<form id="searchForm" action="#">
+					<form id="searchForm" onsubmit="retrieveResults();return false;">
   						<div class="form-group">
   							<div class="col-lg-6">
 							    <div class="input-group">

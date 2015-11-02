@@ -451,11 +451,15 @@ function setInfoWindow(map, marker, contentString, location) {
 			infoWindow = new google.maps.InfoWindow({content: contentString});
 			infoWindow.open(map,marker);
 			
-			// scroll to proper spot in list
-			var targetDiv = document.getElementById('loc'+id);
-			if (targetDiv)	{
-				document.getElementById('mapcontent').scrollTop = targetDiv.offsetTop;
-				}		
+			// set location summary & current location index
+			var template = getLocationSummaryTemplate();
+			renderTemplate(template,location,'resultSpan',false);
+			for (var i=0;i<locations.length;i++) {
+				if (locations[i].id == location.id) {
+					locationIndex=i;
+					break;
+				}
+			}		
 			});
 }
 

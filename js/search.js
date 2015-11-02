@@ -12,7 +12,7 @@ function retrieveResults() {
 		var serviceURL = "service/entitiesService.php?type=location&name=" + criteria;
 		var template = getLocationListTemplate();
 		showElement('results');
-		getAndRenderJSON(serviceURL,template,'results','retrieving locations',callback);
+		retrieveLocations(serviceURL,template,'results','retrieving locations',callback);
 	}	
 	else {
 		alert('Invalid criteria.');

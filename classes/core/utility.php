@@ -20,7 +20,7 @@ class Utility{
 	
 	public static function debug($message,$level) {
 		// for now, we just inserting into a debug database. May update this to be more sophisticated in the future
-		Utility::logToFile($message);
+
 		if ($level >= Config::$debugLevel) {
 			$message = str_replace("'","''",$message);
 			$message = $message . ' [' . __FILE__ . ']';

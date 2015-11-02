@@ -100,7 +100,7 @@ html, body {
 		left: 10px;
 		width: 310px;
 		overflow-y: auto;
-		max-height: 85%;
+		height: 600px;
 	}
 	
 	.searchPanel {

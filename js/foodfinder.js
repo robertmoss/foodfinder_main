@@ -253,6 +253,34 @@ function lookupLatLng() {
 	alert('Yeah, we\'re kinda still working on that one.');
 }
 
+function retrieveLocations(serviceURL,template,anchor,working,callback) {
+		if (working && working.length>0)
+			{
+				document.getElementById(anchor).innerHTML = working;
+			}
+		if (window.XMLHttpRequest)
+		  {// code for IE7+, Firefox, Chrome, Opera, Safari
+		  xmlhttp=new XMLHttpRequest();
+		  }
+		else
+		  {// code for IE6, IE5
+		  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		  }
+		xmlhttp.onreadystatechange=function() {
+		  if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+		    var view = JSON.parse(xmlhttp.responseText);
+		    locations = view.locations;
+			renderTemplate(template,view,anchor);
+			if (callback) {
+				callback(view.count);
+			}
+		   }
+		 };
+		xmlhttp.open("GET",serviceURL,true);
+		xmlhttp.send();
+		}
+
+
 function loadLocation(id) {
 	
 	var location = getLocationById(id);
