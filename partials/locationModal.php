@@ -15,9 +15,12 @@
 				      	<div class="checkbox align-left"><label><input id="chkVisited" type="checkbox" value="" onclick="setVisited();"> I've visited this place</label></div>
 				      	<?php } ?>
 				      	<?php if(Utility::userAllowed($user, 'location', 'edit', $tenantID)) {?>
+				      	<button type="button" class="btn btn-default" onclick="window.location.href='entityPage.php?type=location&id='+	document.getElementById('locationid').innerText + '&mode=view';">
+				      		View Master Record
+				      	</button>
 				      	<button type="button" class="btn btn-default" onclick="editLocation();">
 				      		<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
-				      		</button>
+				      	</button>
 				      	 <?php } ?>
 				        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Close</button>
 			      	</form>

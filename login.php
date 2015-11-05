@@ -4,6 +4,47 @@
 	include_once dirname(__FILE__) . '/classes/core/database.php';
 	include_once dirname(__FILE__) . '/classes/core/utility.php';
 	include_once dirname(__FILE__) . '/classes/core/user.php';
+	
+	Utility::debug("login.php: logging in user.",5);
+	$username = '';
+	$password = '';
+	$remember_choice = false;
+	$successURL = 'index.php';
+	if (isset($_POST['username'])) {
+		$username = trim(htmlspecialchars($_POST['username']));
+	}
+	if (isset($_POST['password'])) {
+    	$password = trim(htmlspecialchars($_POST['password']));
+	}
+	if (isset($_POST['remember_me'])) {
+		$remember_choice = trim($_POST["remember_me"]);
+		}
+	if (isset($_POST['successURL'])) {
+		$successURL = $_POST['successURL'];
+	}
+
+	$errorMessage = '';    	
+	// attempt to login user;
+	if (strlen($username)<=0 || strlen($password)<=0) {
+		$errorMessage = "You must enter both a username and password.";	
+	}
+	else {
+		// try to create a new user object
+		try {
+			$user = new User(0);
+			$user->validateUser($username, $password, $tenantID);
+			Utility::debug('User ' . $user->name . 'logged in succesfully.',5);
+			
+			// initiate new user session
+			$_SESSION['userID'] = $user->id;
+			$_SESSION['user_screenname'] = $user->name;
+			header( 'Location: ' . $successURL);
+			}
+		catch (Exception $e) {	
+			$errorMessage = $e->getMessage();
+			Utility::debug('Login failed: ' . $errorMessage,5);
+		}
+	}
 
 ?>
 <!DOCTYPE html>
@@ -19,49 +60,6 @@
 		<script src="js/core.js"></script>
     </head>
     <body>
-    	<?php 
-    		Utility::debug("login.php: logging in user.",5);
-    		$username = '';
-			$password = '';
-			$remember_choice = false;
-			$successURL = 'index.php';
-    		if (isset($_POST['username'])) {
-    			$username = trim(htmlspecialchars($_POST['username']));
-    		}
-    		if (isset($_POST['password'])) {
-    	    	$password = trim(htmlspecialchars($_POST['password']));
-			}
-			if (isset($_POST['remember_me'])) {
-				$remember_choice = trim($_POST["remember_me"]);
-				}
-			if (isset($_POST['successURL'])) {
-				$successURL = $_POST['successURL'];
-			}
-
-			$errorMessage = '';    	
-    		// attempt to login user;
-    		if (strlen($username)<=0 || strlen($password)<=0) {
-    			$errorMessage = "You must enter both a username and password.";	
-    		}
-			else {
-				// try to create a new user object
-				try {
-					$user = new User(0);
-					$user->validateUser($username, $password, $tenantID);
-					Utility::debug('User ' . $user->name . 'logged in succesfully.',5);
-					
-					// initiate new user session
-					$_SESSION['userID'] = $user->id;
-					$_SESSION['user_screenname'] = $user->name;
-					header( 'Location: ' . $successURL);
-					}
-				catch (Exception $e) {	
-					$errorMessage = $e->getMessage();
-					Utility::debug('Login failed: ' . $errorMessage,5);
-				}
-			}
-    
-    	?>
     	<hr/>
     	<?php if(strlen($errorMessage)>0) { ?>
     		<div class="edit">

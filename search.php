@@ -38,7 +38,11 @@
 			</div>
     	</div>
 	    <?php include("partials/locationModal.php")?>
-		<?php include("partials/locationEditModal.php")?>	
+		<?php
+			if (Utility::userAllowed($user, 'location', 'edit', $tenantID)) { 
+				include("partials/locationEditModal.php");
+				}
+		?>	
         <?php include("footer.php")?>     		
     </body>
 </html>

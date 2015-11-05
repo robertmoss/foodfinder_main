@@ -15,7 +15,7 @@ interface iDataEntity {
 	public function getJavaScript();
 	public function getCustomValue($fieldname,$currentvalue,$operationtype);
 	public function getCustomEditControl($fieldname,$currentvalue,$tenantID);
-	public function getCustomFormControl($fieldname, $tenantid);
+	public function getCustomFormControl($fieldname, $tenantid, $entity);
 	public function getEntityCount($tenantid, $filters, $userid);
 	public function hasProperties();
 	public function hasOwner();
@@ -43,6 +43,7 @@ abstract class DataEntity implements iDataEntity {
 		 * 			           custom: handling of field is deferred to the entity subclass for special treatment 
 		 *  		   image: an image file that gets uploaded to content server with url stored in database
 		 *        properties: a dummy placeholder that lets you specify where on forms to place user-defined properties
+		 * 			  custom: core classes don't know what to do with this, so must be handled custom by child
 		 * 
 		 *  [2] max length: maxium length of the field (in characters for text, digits for numbers)
 		 *         0 or not set indictes no max
@@ -81,6 +82,11 @@ abstract class DataEntity implements iDataEntity {
 			// override to specify what fields are required for the child object
 			// by default, id is only required field
 			return ($fieldName=='id');
+		}
+		
+		public function isClickableUrl($fieldName) {
+			// override if you wish a field to be 'clickable' - opening in new window w/ field value as url 
+			return false;
 		}
 		
 		public function friendlyName($fieldName) {
@@ -231,18 +237,18 @@ abstract class DataEntity implements iDataEntity {
 			
 			// evaluate required fields
 			
-			Utility::debug('dataentity.validateData called',9);
+			Utility::debug('dataentity.validateData called',1);
 			
 			$fieldarray = $this->getFields();	
 			foreach ($fieldarray as $field) {
-				Utility::debug('Validating ' . $field[0],9);
+				Utility::debug('Validating ' . $field[0],1);
 				if (!property_exists($data,$field[0])||$data->{$field[0]}=='') {
 					if ($this->isRequiredField($field[0])) {
 						throw new Exception($field[0] . ' is required.');
 						}
 					}
 			}
-			Utility::debug('dataentity.validateData validated successfully.',9);
+			Utility::debug('dataentity.validateData validated successfully.',1);
 			return true;
 		}
 		
@@ -545,10 +551,10 @@ abstract class DataEntity implements iDataEntity {
 		public function getCustomEditControl($fieldname, $currentvalue, $tenantID) {
 			// type is add, update, etc.
 			// override to tell the dataentity the value to use for this field
-			return '<p>Custom edit field for ' . $fieldname . ' not defined: ' . $currentvalue . '</p>';
+			return '<p>Custom edit field for ' . $fieldname . ' not defined. Field value=' . $currentvalue . '</p>';
 		}
 		
-		public function getCustomFormControl($fieldname, $tenantid) {
+		public function getCustomFormControl($fieldname, $tenantid, $entity) {
 			// by default does nothing
 			// if you need a custom control for you entity (e.g. the Google Places lookup for Locations)
 			// override this method and return the markup for the control, which will be rendered immediately after the default form fields
@@ -582,7 +588,7 @@ abstract class DataEntity implements iDataEntity {
 			$tablename = lcfirst($this->getName()) . 'Property';
 
 			$query = 'delete from ' . $tablename . ' where id in (';
-			$query .= ' select * from (select T.id from ' . $tablename . ' T where';
+			$query .= ' select * from (select distinct T.id from ' . $tablename . ' T where';
 			$query .= ' T.' . lcfirst($this->getName()) . 'id=' . Database::queryNumber($id) . ') as list);';
 
 			return Database::executeQuery($query);

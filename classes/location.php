@@ -9,7 +9,7 @@
 		
 		public function getFields() {
 			$fields = array(
-				array("name","string"),
+				array("name","string",100),
 				array("address","string"),
 				array("city","string"),
 				array("state","picklist",2,"states"),
@@ -18,7 +18,7 @@
 				array("imageurl","string"),
 				array("latitude","number",20),
 				array("longitude","number",20),
-				array("shortdesc","string",500),
+				array("shortdesc","string",1000),
 				array("googleReference","string"),
 				array("googlePlacesId","string"),
 				array("status","picklist",20,"locationStatus"),
@@ -34,6 +34,10 @@
 		public function isRequiredField($fieldName) {
 			// override
 			return ($fieldName=='id'||$fieldName=='name');
+		}
+		
+		public function isClickableUrl($fieldName) {
+			return ($fieldName=='url'||$fieldName=='imageurl');
 		}
 		
 		public function friendlyName($fieldName) {
@@ -61,6 +65,7 @@
 			// overrides parent class to enrich entity with display elements
 			$location = parent::getEntity($id, $tenantid, $userid);
 			$location = Utility::addDisplayElements($location);
+			$location["images"] = ''; // blank for now; may want some other value here depending upon how it gets used
 			
 			return $location;	
 			}
@@ -88,7 +93,9 @@
 			return array(); 
 		}
 		
-		public function getCustomFormControl($fieldname,$tenantid) {
+		
+		
+		public function getCustomFormControl($fieldname,$tenantid,$entity) {
 			// philosophical question: should we be merging UI with dataentity logic in the same class?
 			// potential is to add a UI helper class to put these UI type functions in
 			$control = '';	
@@ -107,7 +114,9 @@
 		}
 		
 		public function getJavaScript(){
- 			return '		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>';
+ 			return '		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+ 							<script type="text/javascript" src="js/imagehandler.js"></script>
+ 							';
  		}		
 		
 		public function getEntitiesQuery($tenantid,$filters,$userid,$return,$offset) {
@@ -198,6 +207,15 @@
 						</div>
 					';
 				}
+				
+				// images
+				echo '	<div class="panel panel-info">
+							<div class="panel-body">
+							<p>images to go here.</p>
+							<button class="btn btn-default" onclick="uploadImages();"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Images</button> 
+							</div>
+						</div>
+							';
 								
 			echo '</div>
 				    ';

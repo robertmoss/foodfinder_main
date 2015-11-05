@@ -229,20 +229,31 @@ class Utility{
 			$hasImage = false;
 			foreach ($fieldarray as $field) {
 			    	$value='';
+					if ($id>0 && isset($entity[$field[0]])) {$value = $entity[$field[0]];}
 					$required = $class->isRequiredField($field[0]) ? 'required' : '';
 					$default_label = '<label class="col-sm-2 control-label" for="txt' . $field[0] . '">' . $class->friendlyName($field[0]) .':</label>';
-					if ($id>0 && isset($entity[$field[0]])) {$value = $entity[$field[0]];}
+					if ($class->isClickableUrl($field[0])) {
+						// add link to label
+						$url = 'getElementById(\'txt' . $class->getName() . ucfirst($field[0]) . '\').value';
+						$default_label ='<a onclick="window.open('. $url . ');" target="_blank">' . $default_label . '</a>';						
+					}
+					
 					switch ($field[1]) {
 						case "string":	
 			        		echo '<div class="form-group">';
+							$maxlen = '';
+							if (count($field)>2) {
+								// add a max-length validator
+								$maxlen = 'maxlength="' . $field[2] . '"';
+							}
 							echo $default_label;
 			        		echo '	<div class="col-sm-6">';
 							if (count($field)>2 && $field[2]>200) {
-								echo '     <textarea rows="4" cols="100" id="txt' . $class->getName() . ucfirst($field[0]) . '" name="' . $field[0] . '"  class="form-control" placeholder="'. $field[0] .'" ' . $required . '>';
+								echo '     <textarea rows="4" cols="100" id="txt' . $class->getName() . ucfirst($field[0]) . '" name="' . $field[0] . '"  class="form-control" placeholder="'. $field[0] .'" ' . $maxlen . ' ' . $required . '>';
 								echo $value . '</textarea>';
 							}
 							else {
-			        			echo '     <input id="txt' . $class->getName() . ucfirst($field[0]) . '" name="' . $field[0] . '" type="text" class="form-control" placeholder="'. $field[0] .'" value="' . $value . '" ' . $required . '/>';
+			        			echo '     <input id="txt' . $class->getName() . ucfirst($field[0]) . '" name="' . $field[0] . '" type="text" class="form-control" placeholder="'. $field[0] .'" value="' . $value . '" ' . $maxlen . ' ' . $required . '/>';
 							}
 			        		echo '  </div>';
 			        		echo '  <div class="help-block with-errors"></div>';
@@ -398,10 +409,20 @@ class Utility{
 						default:
 							echo '<p>Unknown field type:' . $field[1];
 							}
-						echo $class->getCustomFormControl($field[0],$tenantID);
+						echo $class->getCustomFormControl($field[0],$tenantID,$entity);
 			        	}
 
 
+		}
+
+		public static function renderMultifileUpload($url,$prompt,$buttonText) {
+				
+			echo '<form action="' . $url .'" method="post" enctype="multipart/form-data">';
+  			echo $prompt;
+  			echo '<input name="userfile[]" type="file" multiple/><br />';
+  			echo '<input type="submit" value="' . $buttonText . '" />';
+			echo '</form>';
+			
 		}
 
 		public static function renderChildModal($class) {

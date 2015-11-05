@@ -59,6 +59,9 @@ function getLocationTemplate() {
 		template += '	<div class=\"panel-heading\">Read More</div>';
 		template += '	<div class=\"panel-body\">{{#links}}<p><a href=\"{{url}}\" target=\"_blank\">{{name}}</a></p>{{/links}}</div>';
 		template += '</div>{{/links.length}}';
+		/*template += '<div class=\"panel panel-info\">';
+		template += '	<div class=\"panel-body\"><p>Image list will go here</p></div>';
+		template += '</div>';*/
 		template += "</div></div>";
 	
 	return template;

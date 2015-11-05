@@ -17,8 +17,8 @@
 		$type=$_GET["type"];
 	}
 	else {
-		echo 'Type is required';
 		header(' ', true, 400);
+		echo 'Type is required';
 		die();
 	}
 	
