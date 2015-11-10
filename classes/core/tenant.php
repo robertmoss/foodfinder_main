@@ -25,14 +25,14 @@ class Tenant extends DataEntity {
 	}	
 	
 	// Overrides to parent methods
-	protected function getEntitiesQuery($tenantid, $filters, $userid, $return, $offset) {
+	protected function getEntitiesQuery($filters, $return, $offset) {
 		// override default since we don't need tenantID on this one.
 				
-			$query = 'call getTenants(' . Database::queryNumber($userid) . ', ' . Database::queryNumber($return). ', ' . Database::queryNumber($offset) . ');';				
+			$query = 'call getTenants(' . Database::queryNumber($this->userid) . ', ' . Database::queryNumber($return). ', ' . Database::queryNumber($offset) . ');';				
 			return $query;	
 	}
 	
-	protected function getEntityCountQuery($tenantid, $filters, $userid) {
+	protected function getEntityCountQuery($filters) {
 			$query = 'select count(*) from ' . strtolower($this->getName());
 			return $query;
 		}

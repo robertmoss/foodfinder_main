@@ -3,26 +3,22 @@
 include dirname(__FILE__) . '/../partials/pageCheck.php';
 include_once dirname(__FILE__) . '/../classes/core/database.php';
 include_once dirname(__FILE__) . '/../classes/core/utility.php';
+include_once dirname(__FILE__) . '/../classes/core/service.php';
 
 
 	if (isset($_GET["type"])) {
 		$type=$_GET["type"];
 	}
 	else {
-		header(' ', true, 400);
-		echo 'Type is required.';
-		die();
+		Service::returnError('Type is required.');
 	}
 	
-	Utility::debug('entity service invoked for type:' . $type . ', method=' . $_SERVER['REQUEST_METHOD'], 9);
+	Utility::debug('entity service invoked for type:' . $type . ', method=' . $_SERVER['REQUEST_METHOD'], 5);
 	
-
-	$knowntypes = array('tenant','location','link');
+	$knowntypes = array('tenant','location','link','media');
 	if(!in_array($type,$knowntypes,false)) {
 		// unrecognized type requested can't do much from here.
-		header(' ', true, 400);
-		echo 'Unknown type: ' . $type;
-		die();
+		Service::returnError('Unknown type: ' . $type);
 	}
 	
 	$classpath = '/../classes/'; 
@@ -35,14 +31,12 @@ include_once dirname(__FILE__) . '/../classes/core/utility.php';
 	// include appropriate dataEntity class & then instantiate it
 	$classfile = dirname(__FILE__) . $classpath . $type . '.php';
 	if (!file_exists($classfile)) {
-		header(' ', true, 500);
-		Utility::debug('Unable to instantiate class for ' . $type . ' Classfile does not exist.', 1);
-		echo 'Internal error. Unable to process entity.';
-		die();
+		Utility::debug('Unable to instantiate class for ' . $type . ' Classfile does not exist.', 9);
+		Service::returnError('Internal error. Unable to process entity.');
 	}
 	include_once $classfile;
 	$classname = ucfirst($type); 	// class names start with uppercase
-	$class = new $classname;	
+	$class = new $classname($userID,$tenantID);	
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
 	
@@ -61,9 +55,7 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
 		$entity = $class->getEntity($id,$tenantID,$userID);
 	}
 	catch(Exception $ex) {
-		header(' ', true, 500);
-		echo 'Unable to retrive requested ' . $type . '. Internal error.';
-		die();
+		Service::returnError('Unable to retrive requested ' . $type . '. Internal error.');
 	}
 	
 	$set = json_encode($entity);

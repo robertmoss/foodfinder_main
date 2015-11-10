@@ -15,7 +15,7 @@
 	
 	Utility::debug('Form service invoked for type:' . $type . ', method=' . $_SERVER['REQUEST_METHOD'], 9);
 	
-	$knowntypes = array('location','link');
+	$knowntypes = array('location','link','media');
 	if(!in_array($type,$knowntypes,false)) {
 		// unrecognized type requested can't do much from here.
 		header(' ', true, 400);
@@ -40,7 +40,7 @@
 	}
 	include_once $classfile;
 	$classname = ucfirst($type); 	// class names start with uppercase
-	$class = new $classname;
+	$class = new $classname($userID,$tenantID);
 	
 	$id=0; 
 	if (isset($_GET["id"])) {

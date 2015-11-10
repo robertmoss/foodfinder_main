@@ -6,24 +6,32 @@ interface iDataEntity {
 	public function getPluralName();
 	public function getDataServiceURL();
 	public function getFields();
-	public function getEntity($id,$tenantid,$userid);
-	public function getEntities($tenantid, $filters, $userid, $return, $offset);
+	public function getEntity($id);
+	public function getEntities($filters, $return, $offset);
 	public function validateData($data);
-	public function addEntity($data,$tenantid,$userid);
-	public function updateEntity($id,$data,$tenantid,$userid);
-	public function renderView($entity,$userid,$returnurl);
+	public function addEntity($data);
+	public function updateEntity($id,$data);
+	public function renderView($entity,$returnurl);
 	public function getJavaScript();
 	public function getCustomValue($fieldname,$currentvalue,$operationtype);
-	public function getCustomEditControl($fieldname,$currentvalue,$tenantID);
-	public function getCustomFormControl($fieldname, $tenantid, $entity);
-	public function getEntityCount($tenantid, $filters, $userid);
+	public function getCustomEditControl($fieldname,$currentvalue);
+	public function getCustomFormControl($fieldname, $entity);
+	public function getEntityCount($filters);
 	public function hasProperties();
 	public function hasOwner();
-	public function getPropertyKeys($tenantid);
+	public function getPropertyKeys();
 	
 }
 
 abstract class DataEntity implements iDataEntity {
+		
+		protected $userid;
+		protected $tenantid;
+				
+		public function __construct($userid,$tenantid) {
+			$this->userid = $userid;
+			$this->tenantid = $tenantid;
+		}
 				
 		public abstract function getName();
 		
@@ -83,6 +91,12 @@ abstract class DataEntity implements iDataEntity {
 			// by default, id is only required field
 			return ($fieldName=='id');
 		}
+        
+       public function isUpdatableField($fieldName) {
+            // and updatable field can be set on a new entity but after that cannot be updated through the API
+            // override and return true for any field needing such handling
+            return true;
+        }
 		
 		public function isClickableUrl($fieldName) {
 			// override if you wish a field to be 'clickable' - opening in new window w/ field value as url 
@@ -94,10 +108,10 @@ abstract class DataEntity implements iDataEntity {
 			return ucfirst($fieldName);
 		}
 		
-		public function getEntity($id, $tenantid, $userid) {
+		public function getEntity($id) {
 			// returns an object graph representing the entity
 			
-			$query = $this->getEntityQuery($id,$tenantid,$userid);
+			$query = $this->getEntityQuery($id);
 			
 			$data = Database::executeQuery($query);
 			$entity = '';
@@ -117,7 +131,7 @@ abstract class DataEntity implements iDataEntity {
 			
 			// add user-defined properties, if supported
 			if ($this->hasProperties()) {
-				$query = $this->getPropertyQuery($id,$tenantid);			
+				$query = $this->getPropertyQuery($id);			
 				$data = Database::executeQuery($query);
 				$properties = array();
 				while ($r = mysqli_fetch_assoc($data))
@@ -135,7 +149,7 @@ abstract class DataEntity implements iDataEntity {
 			foreach ($fieldarray as $field) {
 				if ($field[1]=='childentities') {
 					// add .
-					$query = "call get" . ucfirst($field[0]) . "By" . $this->getName() . "ID(" . $id . "," . $tenantid . "," . $userid . ")";
+					$query = "call get" . ucfirst($field[0]) . "By" . $this->getName() . "ID(" . $id . "," . $this->tenantid . "," . $this->userid . ")";
 					$data = Database::executeQuery($query);
 					if ($data->num_rows>0) {
 						$subs = array();
@@ -154,7 +168,14 @@ abstract class DataEntity implements iDataEntity {
 			return $entity;			 
 		}
 
-		public function getEntities($tenantid, $filters, $userid, $return, $offset) {
+		public function getEntities($filters, $return, $offset) {
+			// in the future, may split out the "collection" class from the core class
+			// but don't want to over-OO this thing. Right now the idea is that the entity
+			// class knows everything about its entity and how to manipulate it, including
+			// data (singular and plural) as well as forms/rendering (UI)
+			// want to keep it lightweight and not load up a bunch of classes with data when
+			// all we really need is to return an object graph back to calling coding 
+			
 			// base class doesn't know enough handle filters in a sophisticated way
 			// must override if you want filter capability or to return child entities
 			// base class simply does an unfiltered query with start and offset
@@ -164,7 +185,7 @@ abstract class DataEntity implements iDataEntity {
 			if (is_null($return)||$return<=0) {
 				$return = 50;
 			}
-			$query = $this->getEntitiesQuery($tenantid,$filters,$userid,$return,$offset);
+			$query = $this->getEntitiesQuery($filters,$return,$offset);
 			
 						
 			$data = Database::executeQuery($query);
@@ -185,34 +206,34 @@ abstract class DataEntity implements iDataEntity {
 			return $entities;		
 		}
 
-		protected function getEntityQuery($id, $tenantid, $userid) {
+		protected function getEntityQuery($id) {
 			// returns the SQL query used to retrieve multiple entities.
 			// by default, all data entities should have a GET stored procedure named get<Entity>ById with params id, userid and tenantid
 			// Override if you wish to have a non-standard stored proc or query
-			$query = 'call get' . $this->getName() . 'ById(' . Database::queryNumber($id) . ', ' . Database::queryNumber($tenantid). ', ' . Database::queryNumber($userid) . ');';
+			$query = 'call get' . $this->getName() . 'ById(' . Database::queryNumber($id) . ', ' . Database::queryNumber($this->tenantid). ', ' . Database::queryNumber($this->userid) . ');';
 			return $query;
 		}
 		
-		protected function getPropertyQuery($id,$tenantid) {
-			$query = 'call getPropertiesBy' . $this->getName() . 'Id(' . Database::queryNumber($id) . ', ' . Database::queryNumber($tenantid). ');';
+		protected function getPropertyQuery($id) {
+			$query = 'call getPropertiesBy' . $this->getName() . 'Id(' . Database::queryNumber($id) . ', ' . Database::queryNumber($this->tenantid). ');';
 			return $query;
 		}
 
-		protected function getEntitiesQuery($tenantid, $filters, $userid, $return, $offset) {
+		protected function getEntitiesQuery($filters, $return, $offset) {
 			// returns the SQL query used to retrieve multiple entities.
 			// Override if you wish to have a non-standard stored proc or query
-			$query = 'call get' . $this->getPluralName() . '(' . Database::queryNumber($userid) . ', ' . Database::queryNumber($return). ', ' . Database::queryNumber($offset) . ', ' . Database::queryNumber($tenantid) . ');';				
+			$query = 'call get' . $this->getPluralName() . '(' . Database::queryNumber($this->userid) . ', ' . Database::queryNumber($return). ', ' . Database::queryNumber($offset) . ', ' . Database::queryNumber($this->tenantid) . ');';				
 			return $query;
 		}
 		
-		public function getEntityCount($tenantid, $filters, $userid) {
+		public function getEntityCount($filters) {
 			// returns the total number of entities matching specified filter
 			// assumes table has same name as entity and has a tenantid column
 			// currently, the base class isn't smart enough to know how to filter entities, so it returns a count of all entities
 			// override if you need different/smarter behavior (or just overwrite getEntityCountQuery method)
 			
 			// 
-			$query=$this->getEntityCountQuery($tenantid, $filters, $userid);
+			$query=$this->getEntityCountQuery($filters);
 			$data = Database::executeQuery($query);
 			
 			if ($data->num_rows==0)	{
@@ -226,8 +247,8 @@ abstract class DataEntity implements iDataEntity {
 			}				
 		}
 		
-		protected function getEntityCountQuery($tenantid, $filters, $userid) {
-			$query = 'select count(*) from ' . strtolower($this->getName()) . ' where tenantid=' . $tenantid;
+		protected function getEntityCountQuery($filters) {
+			$query = 'select count(*) from ' . strtolower($this->getName()) . ' where tenantid=' . $this->tenantid;
 			return $query;
 		}
 		
@@ -252,7 +273,7 @@ abstract class DataEntity implements iDataEntity {
 			return true;
 		}
 		
-		public function addEntity($data,$tenantid,$userid) {
+		public function addEntity($data) {
 			
 			// this does a very basic add based upon common pattern
 			// override to add custom save functionality
@@ -276,6 +297,9 @@ abstract class DataEntity implements iDataEntity {
 				switch ($field[1]) {
 					case "string":
 						$query .= $separator . Database::queryString($value);
+						break;
+					case "json":
+						$query .= $separator . Database::queryJSON($value);
 						break;
 					case "date":
 						$query .= $separator . Database::queryDate($value);
@@ -311,12 +335,12 @@ abstract class DataEntity implements iDataEntity {
 					$separator = ", ";
 					}
 			// assume tenantid is always needed
-			$query .= $separator . Database::queryNumber($tenantid);
+			$query .= $separator . Database::queryNumber($this->tenantid);
 			$separator = ", ";
 			
 			// add userid if object hasOwner 
 			if ($this->hasOwner()) {
-				$query .= $separator . Database::queryNumber($userid);
+				$query .= $separator . Database::queryNumber($this->userid);
 			}
 			$query .= ')';
 			
@@ -337,7 +361,7 @@ abstract class DataEntity implements iDataEntity {
 			// next, handle user-defined properties
 			if ($this->hasProperties()) {
 				// get array of properties configured for this entity & tenant
-				$keys = $this->getPropertyKeys($tenantid);
+				$keys = $this->getPropertyKeys();
 				foreach($keys as $key) {
 					if (property_exists($data,'PROP-' . $key[0])) {
 							// only save if not empty - that's the MO for now
@@ -360,7 +384,7 @@ abstract class DataEntity implements iDataEntity {
 		
 		}
 		
-		public function updateEntity($id,$data,$tenantid,$userid) {
+		public function updateEntity($id,$data) {
 			
 			// this does a very basic update based upon common pattern
 			// override to add custom save functionality
@@ -377,10 +401,20 @@ abstract class DataEntity implements iDataEntity {
 			$fieldarray = $this->getFields();
 			$separator = ",";
 			foreach ($fieldarray as $field) {
+			     if (!property_exists($data,$field[0])) {
+			        // assume all required fields already validated, so do what?
+			        $data->{$field[0]} = null;
+			    }
 				switch ($field[1]) {
 					case "string":
 						$query .= $separator . Database::queryString($data->{$field[0]});
 						break;
+					case "json":
+						$query .= $separator . Database::queryJSON($data->{$field[0]});
+						break;
+                    case "boolean":
+                        $query .= $separator . Database::queryBoolean($data->{$field[0]});
+                        break;
 					case "number":
 						$query .= $separator . Database::queryNumber($data->{$field[0]});
 						break;
@@ -395,12 +429,12 @@ abstract class DataEntity implements iDataEntity {
 						break;
 					case "childentities":
 						$procname = $this->getRemoveChildrenProcName($field[0]);
-						array_push($followOnQueries,'call ' . $procname . '('. $id . ',' . $tenantid . ');');
+						array_push($followOnQueries,'call ' . $procname . '('. $id . ',' . $this->tenantid . ');');
 						if (is_array($data->{$field[0]})) {
 							$children = $data->{$field[0]};
 	 						foreach ($children as $c) {
 								$procname = $this->getAddChildProcName($field[2]);
-								array_push($followOnQueries,'call ' . $procname . '('. $id . ',' . $c->id . ',' . $tenantid . ');');
+								array_push($followOnQueries,'call ' . $procname . '('. $id . ',' . $c->id . ',' . $this->tenantid . ');');
 							}
 						}
 						break;
@@ -410,12 +444,12 @@ abstract class DataEntity implements iDataEntity {
 					$separator = ", ";
 					}
 			// assume tenantid is always needed and is last parameter (or 2nd to last if user required)
-			$query .= $separator . Database::queryNumber($tenantid);
+			$query .= $separator . Database::queryNumber($this->tenantid);
 			$separator = ", ";
 			
 			// add userid if object hasOwner 
 			if ($this->hasOwner()) {
-				$query .= $separator . Database::queryNumber($userid);
+				$query .= $separator . Database::queryNumber($this->userid);
 			}
 			
 			$query .= ')';
@@ -433,7 +467,7 @@ abstract class DataEntity implements iDataEntity {
 					$this->deleteProperties($id);
 						
 					// get array of properties allowed for this entity & tenant
-					$keys = $this->getPropertyKeys($tenantid);
+					$keys = $this->getPropertyKeys();
 					foreach($keys as $key) {
 						// determine whether data contains a value for this key - field will be prepended with PROP
 						if (property_exists($data,'PROP-' . $key[0])) {
@@ -468,14 +502,14 @@ abstract class DataEntity implements iDataEntity {
 			return $proc;
 		}
 
-		public function deleteEntity($id,$userid,$tenantid) {
+		public function deleteEntity($id) {
 			
 			// this does a very basic delete based upon common pattern
 			// override to add custom delete functionality
 			
 			$query = "call delete" . $this->getName() . "(" . $id;
 			// assume tenantid is always needed and is last parameter
-			$query .= ',' . Database::queryNumber($tenantid);
+			$query .= ',' . Database::queryNumber($this->tenantid);
 			$query .= ')';
 			
 			$result = Database::executeQuery($query);
@@ -497,7 +531,7 @@ abstract class DataEntity implements iDataEntity {
 			return $currentvalue;
 		}
 		
-		public function getAvailableChildren($fieldname,$tenantid) {
+		public function getAvailableChildren($fieldname) {
 			// for childentities type fields, override to return a list of eligible child entities that can be linked to this object
 			// if no list is returned (i.e. empty array), controlling code will assume children cannot be added
 			// no need to override if you don't want to specify a specific set of allowable children
@@ -507,7 +541,7 @@ abstract class DataEntity implements iDataEntity {
 		
 		// produces a very basic display of an entity's fields. Override to create your
 		// own stylized views
-		public function renderView ($entity,$userid,$returnurl) {
+		public function renderView ($entity,$returnurl) {
 						
 			$fieldarray = $this->getFields();
 			$entityid = $entity["id"];
@@ -548,13 +582,13 @@ abstract class DataEntity implements iDataEntity {
 			echo '</div>';
 		}
 
-		public function getCustomEditControl($fieldname, $currentvalue, $tenantID) {
+		public function getCustomEditControl($fieldname, $currentvalue) {
 			// type is add, update, etc.
 			// override to tell the dataentity the value to use for this field
 			return '<p>Custom edit field for ' . $fieldname . ' not defined. Field value=' . $currentvalue . '</p>';
 		}
 		
-		public function getCustomFormControl($fieldname, $tenantid, $entity) {
+		public function getCustomFormControl($fieldname, $entity) {
 			// by default does nothing
 			// if you need a custom control for you entity (e.g. the Google Places lookup for Locations)
 			// override this method and return the markup for the control, which will be rendered immediately after the default form fields
@@ -569,10 +603,10 @@ abstract class DataEntity implements iDataEntity {
 			return false;
 		}
 		
-		public function getPropertyKeys($tenantid) {
+		public function getPropertyKeys() {
 			// return an array of the user-defined property keys allowed for this tenant for this entity
 			// by default will assume we can query based on entity name; override if you need special handling
-			$query = 'call getTenantPropertiesByEntity(' . $tenantid . ',' . Database::queryString($this->getName()) . ')';
+			$query = 'call getTenantPropertiesByEntity(' . $this->tenantid . ',' . Database::queryString($this->getName()) . ')';
 			$result = Database::executeQuery($query);
 			
 			$keys=array();

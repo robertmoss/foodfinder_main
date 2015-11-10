@@ -5,7 +5,7 @@
 include dirname(__FILE__) . '/../partials/pageCheck.php';
 include_once dirname(__FILE__) . '/../classes/core/database.php';
 include_once dirname(__FILE__) . '/../classes/core/utility.php';
-
+include_once dirname(__FILE__) . '/../classes/core/service.php';
 include_once dirname(__FILE__) . '/../partials/checkAPIKey.php';
 
 
@@ -27,7 +27,7 @@ if ($numToReturn>100) {
 }
 $offset = Utility::getRequestVariable('offset', 0);
 
-$knowntypes = array("user","location","tenant");
+$knowntypes = array("user","location","tenant","media");
 if(!in_array($type,$knowntypes,false)) {
 	// unrecognized type requested can't do much from here.
 	echo 'Unknown type: ' . $type;
@@ -45,25 +45,23 @@ if(in_array($type,$coretypes,false)) {
 // include appropriate dataEntity class & then instantiate it
 include_once dirname(__FILE__) . $classpath . $type . '.php';
 $classname = ucfirst($type); 	// class names start with uppercase
-$class = new $classname;	
+$class = new $classname($userID,$tenantID);	
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
 	
-	$filters='';
-	$totalEntities = $class->getEntityCount($tenantID,$filters,$userID);	
+	$totalEntities = $class->getEntityCount($_GET);	
 
 	try {
 		// we pass the entire _GET collection in so object classes can extract relevant filters
-		$entities = $class->getEntities($tenantID,$_GET,$userID,$numToReturn,$offset);
+		$entities = $class->getEntities($_GET,$numToReturn,$offset);
 		
 		//$set = json_encode($entity);
 		$set = '{"count": ' . $totalEntities; 
 		$set .= ', "' . strtolower($class->getPluralName()) . '": ' . json_encode($entities) . '}';
 	}
 	catch (Exception $ex) {
-		echo 'Unable to retrieve ' . $type . ': ' . $ex->getMessage();
-		header(' ', true, 400);
-		die();
+		$message= 'Unable to retrieve ' . $type . ': ' . $ex->getMessage();
+		Service::returnError($message);
 	}
 
 	header("Access-Control-Allow-Origin: *");	

@@ -12,25 +12,7 @@
 	date_default_timezone_set('America/New_York');
 	$user = null; 
 	
-	if (!isset($_SESSION['userID'])) {
-		// set ID to 0 to indicate unauthenticated user
-		$userID = 0;
-	}
-	else {
-		$userID=$_SESSION['userID'];
-		$user = new User($userID);
-	}
 	
-	/*if (isset($_SESSION['tenantID'])) {
-		// we have a good tenant
-		$tenantID = $_SESSION['tenantID'];
-	}
-	else {
-		// no tenant set, so we shouldn't be here.
-		$_SESSION['errorMessage'] = 'Location.php accessed without a valid tenantID set.';
-		header("Location: error.php");
-		die();
-	}*/
 	
 	//  set tenant for this application. Will default to 0
 	if (!isset($_SESSION['tenantID'])) {
@@ -44,8 +26,17 @@
 			$_SESSION['tenantID'] = 3;
 			}
 		}
-	
 	$tenantID = $_SESSION['tenantID'];
+	
+	if (!isset($_SESSION['userID'])) {
+		// set ID to 0 to indicate unauthenticated user
+		$userID = 0;
+	}
+	else {
+		$userID=$_SESSION['userID'];
+		$user = new User($userID,$tenantID);
+	}
+	
 	if ($user && !$user->canAccessTenant($tenantID)) {
 		header('HTTP/1.0 403 Forbidden');
 		echo '<p>You are not allowed to access this resource.</p>';

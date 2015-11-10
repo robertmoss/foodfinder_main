@@ -11,6 +11,28 @@ class User extends DataEntity {
 	public $email = null;
 	public $twitterHandle = null;
 	
+	function __construct($id,$tenantid) {
+		if ($id>0) {
+			// retrieve user from database
+			$query = 'SELECT id, name, email, twitterHandle FROM user where id=' . Database::queryNumber($id);
+			Utility::debug('Creating user object for id=' . $id, 5);
+			$result = Database::executeQuery($query);
+			$row = mysqli_fetch_assoc($result);
+			if (is_null($row)) {
+				throw new Exception("User not found.");
+			}
+			else {
+				$this->tenantid = $tenantid;
+				$this->id = $row["id"];
+				$this->name = $row["name"];
+				$this->email = $row["email"];
+				$this->twitterHandle = $row["twitterHandle"];
+				Utility::debug('User object created.' .$id, 1);
+			}
+		
+		}
+	}
+	
 	public function getName() {
 			return "User";
 		}
@@ -27,11 +49,12 @@ class User extends DataEntity {
 	}
 	
 	public function isRequiredField($fieldName) {
-		
-		return ($fieldName=='id'||$fieldname=='name'||$fieldname=='password');
+		// note: password is not required — for an update, you can change name, etc. w/o changing password
+		// passwords cannot be set: they can only be reset to a tempoarry value
+		return ($fieldName=='id'||$fieldName=='name');
 	}
 		
-	public function getEntity($id, $tenantid, $userid) {
+	public function getEntity($id) {
 		
 		// because our constructor queries DB and builds object we just need to return field values
 		$entity	= array(
@@ -55,41 +78,20 @@ class User extends DataEntity {
 	}
 	
 	
-	function __construct($id) {
-		if ($id>0) {
-			// retrieve user from database
-			$query = 'SELECT id, name, email, twitterHandle FROM user where id=' . Database::queryNumber($id);
-			Utility::debug('Creating user object for id=' . $id, 5);
-			$result = Database::executeQuery($query);
-			$row = mysqli_fetch_assoc($result);
-			if (is_null($row)) {
-				throw new Exception("User not found.");
-			}
-			else {
-				$this->id = $row["id"];
-				$this->name = $row["name"];
-				$this->email = $row["email"];
-				$this->twitterHandle = $row["twitterHandle"];
-				Utility::debug('User object created.' .$id, 1);
-			}
-		
-		}
-	}
-	
-	public function addEntity($data,$tenantid,$userid) {
+	public function addEntity($data) {
 		
 		// before save: salt & hash password and perform user-specific validation
 		$pass = Utility::generateHash($data->{"password"});
 		$data->{"password"}=$pass;
 		
-		$newid=parent::addEntity($data,$tenantid);
+		$newid=parent::addEntity($data,$this->tenantid);
 		return $newid;
 	}
 	
 
-	public function validateUser($username,$password,$tenantID) {
+	public function validateUser($username) {
 		
-		Utility::debug('Validating user ' .$username . ', tenantID=' . $tenantID, 9);
+		Utility::debug('Validating user ' .$username . ', tenantID=' . $this->tenantID, 9);
 		
 		if (strlen($username)==0 || strlen($password)==0)
 			{
@@ -154,7 +156,7 @@ class User extends DataEntity {
 
 	}
 	
-	public function canRead($entityType, $tenantID) {
+	public function canRead($entityType,$id) {
 		
 		// to do: add mechanism for resolving entity/role permissions
 		// for now, any authenticated user can do any thing
@@ -166,8 +168,8 @@ class User extends DataEntity {
 		}
 	}
 	
-	public function canEdit($entityType, $tenantID) {
-		
+	public function canEdit($entityType,$id) {
+
 		// to do: add mechanism for resolving entity/role permissions
 		// for now, any authenticated user can do any thing
 		if ($this->id==0) {
@@ -179,7 +181,7 @@ class User extends DataEntity {
 		
 	}
 	
-	public function canAdd($entityType, $tenantID) {
+	public function canAdd($entityType,$id) {
 		
 		// to do: add mechanism for resolving entity/role permissions
 		// for now, any user can add any entity
@@ -191,7 +193,7 @@ class User extends DataEntity {
 		}
 	}
 		
-	public function canDelete($entityType, $tenantID) {
+	public function canDelete($entityType) {
 		
 		// to do: add mechanism for resolving entity/role permissions
 		// for now, no user can delete entities
@@ -205,7 +207,7 @@ class User extends DataEntity {
 	
 	public function canAccessTenant($tenantID) {
 		
-		$query = 'select count(*) from tenantUser where userid=' . $this->id . ' and tenantid=' . $tenantID;
+		$query = 'select count(*) from tenantUser where userid=' . $this->id . ' and tenantid=' . $this->tenantid;
 		$result = Database::executeQuery($query);
 		if ($arr = mysqli_fetch_array($result)) {
 			return ($arr[0]>0);

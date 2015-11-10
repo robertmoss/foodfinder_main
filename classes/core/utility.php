@@ -2,16 +2,10 @@
 
 include_once 'database.php';
 include_once 'config.php';
+include_once 'log.php';
 
 class Utility{
-	
-	private static $server = "localhost";
-	private static $user = "appuser";
-	private static $password = "Password1";
-	private static $database = "food";
-	private static $debug_filename = "/Library/WebServer/Logs/debug.log";
-
-	
+		
 	public static function errorRedirect($errorMessage) {
 		$_SESSION['errorMessage'] = $errorMessage;
 		header("Location: error.php");
@@ -19,37 +13,11 @@ class Utility{
 	}
 	
 	public static function debug($message,$level) {
-		// for now, we just inserting into a debug database. May update this to be more sophisticated in the future
-
-		if ($level >= Config::$debugLevel) {
-			$message = str_replace("'","''",$message);
-			$message = $message . ' [' . __FILE__ . ']';
-			if (Config::$log_mode=='file'||Config::$log_mode=='both') {
-				Utility::logToFile($message);
-			}
-			$query = "insert into debug.debug (message,level) values ('". $message . "'," . $level .")";
-			try {
-				$con = mysqli_connect(self::$server,self::$user,self::$password, self::$database);
-			}
-			catch(Exception $e) {
-				// do what on an error? Just eat debug?
-				Utility::logToFile('unable to connect to database for debug:' . $e->getMessage());
-			}
-			if ($con) {
-				mysqli_query($con,$query);
-			}
-			else 
-				{
-				Utility::logToFile('unable to connect to database for debug: no connection returned.');
-				}
-		}		
+		// originally logging functions were in Utility, so retaining wrapper method to not break old code.
+		// Just passes through to the Log class now. Use Log class instead of Utility going forward
+		Log::debug($message, $level);
 	}
 	
-	private static function logToFile($message) {
-		// may make this more sophisticated in the future; for now, just dump to file
-		date_default_timezone_set('UTC');
-		file_put_contents(self::$debug_filename, date('Y-m-d h:i:sa') . ' ' . $message . "\n", FILE_APPEND);
-	}
 	
 	public static function getSessionVariable($varname,$default) {
 		if (isset($_SESSION[$varname])) {
@@ -98,6 +66,7 @@ class Utility{
 		return $salt . sha1($salt . $plainText);
 	}
 	
+
 	public static function getList($listID,$tenantID,$userID) {
 		
 		// putting this into the Utility class as a future wrapper
@@ -231,6 +200,11 @@ class Utility{
 			    	$value='';
 					if ($id>0 && isset($entity[$field[0]])) {$value = $entity[$field[0]];}
 					$required = $class->isRequiredField($field[0]) ? 'required' : '';
+                    $readonly='';
+                    if (!$class->isUpdatableField($field[0])) {
+                        $readonly = ' readonly';
+                    } 
+                    
 					$default_label = '<label class="col-sm-2 control-label" for="txt' . $field[0] . '">' . $class->friendlyName($field[0]) .':</label>';
 					if ($class->isClickableUrl($field[0])) {
 						// add link to label
@@ -248,13 +222,14 @@ class Utility{
 							}
 							echo $default_label;
 			        		echo '	<div class="col-sm-6">';
-							if (count($field)>2 && $field[2]>200) {
-								echo '     <textarea rows="4" cols="100" id="txt' . $class->getName() . ucfirst($field[0]) . '" name="' . $field[0] . '"  class="form-control" placeholder="'. $field[0] .'" ' . $maxlen . ' ' . $required . '>';
-								echo $value . '</textarea>';
-							}
-							else {
-			        			echo '     <input id="txt' . $class->getName() . ucfirst($field[0]) . '" name="' . $field[0] . '" type="text" class="form-control" placeholder="'. $field[0] .'" value="' . $value . '" ' . $maxlen . ' ' . $required . '/>';
-							}
+                            if (count($field)>2 && $field[2]>200) {
+    							echo '     <textarea rows="4" cols="100" id="txt' . $class->getName() . ucfirst($field[0]) . '" name="' . $field[0] . '"  class="form-control" placeholder="'. $field[0] .'" ' . $maxlen . ' ' . $required . '>';
+    							echo $value . '</textarea>';
+    							}
+    						else {
+    			        		echo '     <input id="txt' . $class->getName() . ucfirst($field[0]) . '" name="' . $field[0] . '" type="text" class="form-control" placeholder="'. $field[0] .'" value="' . $value . '" ' . $maxlen . ' ' . $required .  $readonly . '/>';
+    							}
+                                
 			        		echo '  </div>';
 			        		echo '  <div class="help-block with-errors"></div>';
 			        		echo '</div>';

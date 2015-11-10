@@ -17,16 +17,16 @@ if ($_SERVER['REQUEST_METHOD']=="GET") 	{
 
 	if ($id==0)
 		{
-			echo "No user ID specified.";
 			header(' ', true, 400);
+			echo "No user ID specified.";
 			die();
 		}
 	try {
-		$requestedUser = new User($id);
+		$requestedUser = new User($id,$tenantID);
 	}
 	catch(Exception $e) {
-			echo $e->getMessage();
 			header(' ', true, 400);
+			echo $e->getMessage();
 			die();
 	}
 
@@ -43,7 +43,7 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST")
 		$json = file_get_contents('php://input');
 		$data = json_decode($json);
 		$id = $data->{'id'};
-		$class = new User($id);
+		$class = new User($id,$tenantID);
 		$type = 'user';
 		
 		// validate data
@@ -52,8 +52,8 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST")
 			}
 			catch (Exception $ex)
 			{
-				echo 'Unable to save ' . $type . ': ' . $ex->getMessage();
 				header(' ', true, 400);
+				echo 'Unable to save ' . $type . ': ' . $ex->getMessage();
 				die();
 			}
 		
@@ -66,14 +66,14 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST")
 			}
 			catch (Exception $ex)
 			{
-				echo 'Unable to save ' . $type . ':' . $ex->getMessage();
 				header(' ', true, 500);
+				echo 'Unable to save ' . $type . ':' . $ex->getMessage();
 				die();
 			}
 			
 			if ($newID==0) {
-				echo 'Unable to save ' . $type . ' (returned 0 for id)';
 				header(' ', true, 500);
+				echo 'Unable to save ' . $type . ' (returned 0 for id)';
 			}
 			else 
 			{
@@ -93,13 +93,13 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST")
 			}
 			catch (Exception $ex)
 			{
-				echo 'Unable to save ' . $type . ':' . $ex->getMessage();
 				header(' ', true, 500);
+				echo 'Unable to save ' . $type . ':' . $ex->getMessage();
 				die();
 			}
 			if (!$result) {
-				echo 'Unable to save ' . $type;
 				header(' ', true, 500);
+				echo 'Unable to save ' . $type;
 			}
 			else 
 			{
@@ -129,8 +129,8 @@ elseif ($_SERVER['REQUEST_METHOD']=="DELETE")
 
 	if ($id==0)
 		{
-			echo "No user ID specified.";
 			header(' ', true, 400);
+			echo "No user ID specified.";
 			die();
 		}
 	
@@ -141,8 +141,8 @@ elseif ($_SERVER['REQUEST_METHOD']=="DELETE")
 		}
 	catch (Exception $ex)
 		{
-		echo 'Unable to delete user:' . $ex->getMessage();
 		header(' ', true, 500);
+		echo 'Unable to delete user:' . $ex->getMessage();
 		die();
 		}
 	
@@ -155,7 +155,7 @@ elseif ($_SERVER['REQUEST_METHOD']=="DELETE")
 	} 
 else
 	{
-	echo "Unsupported HTTP method.";
 	header(' ', true, 400);
+	echo "Unsupported HTTP method.";
 	die();
 	}

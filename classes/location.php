@@ -61,18 +61,18 @@
 			return $name;
 		}
 		
-		public function getEntity($id, $tenantid, $userid) {
+		public function getEntity($id) {
 			// overrides parent class to enrich entity with display elements
-			$location = parent::getEntity($id, $tenantid, $userid);
+			$location = parent::getEntity($id, $this->tenantid, $this->userid);
 			$location = Utility::addDisplayElements($location);
 			$location["images"] = ''; // blank for now; may want some other value here depending upon how it gets used
 			
 			return $location;	
 			}
 		
-		public function getAvailableChildren($fieldname,$tenantid) {
+		public function getAvailableChildren($fieldname) {
 			if ($fieldname=='categories') {
-				$query = 'call getCategoriesByType(\'location\',' . $tenantid . ');';	
+				$query = 'call getCategoriesByType(\'location\',' . $this->tenantid . ');';	
 				$data = Database::executeQuery($query);
 			
 				if ($data->num_rows==0)	{
@@ -93,9 +93,7 @@
 			return array(); 
 		}
 		
-		
-		
-		public function getCustomFormControl($fieldname,$tenantid,$entity) {
+		public function getCustomFormControl($fieldname,$entity) {
 			// philosophical question: should we be merging UI with dataentity logic in the same class?
 			// potential is to add a UI helper class to put these UI type functions in
 			$control = '';	
@@ -114,34 +112,34 @@
 		}
 		
 		public function getJavaScript(){
- 			return '		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
- 							<script type="text/javascript" src="js/imagehandler.js"></script>
- 							';
+ 			return '<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+ 			<script type="text/javascript" src="js/imagehandler.js"></script>
+ 					';
  		}		
 		
-		public function getEntitiesQuery($tenantid,$filters,$userid,$return,$offset) {
+		public function getEntitiesQuery($filters,$return,$offset) {
 			
 			$query='';
 			$name=Utility::getRequestVariable('name', '');
 			if (strlen($name)>0) {
-				$query = "call getLocationsBySearchCriteria(" . $tenantid . ", " . Database::queryString($name) . ", " . $return . ", " . $offset . ");";
+				$query = "call getLocationsBySearchCriteria(" . $this->tenantid . ", " . Database::queryString($name) . ", " . $return . ", " . $offset . ");";
 			}
 			else {
-				$query = parent::getEntitiesQuery($tenantid, $filters, $userid, $return, $offset);	
+				$query = parent::getEntitiesQuery($filters, $return, $offset);	
 			}
 			
 			return $query;
 			
 		}
 		
-		protected function getEntityCountQuery($tenantid, $filters, $userid) {
+		protected function getEntityCountQuery($filters) {
 			$query='';
 			$name=Utility::getRequestVariable('name', '');
 			if (strlen($name)>0) {
-				$query = "call countLocationsBySearchCriteria(" . $tenantid . "," . Database::queryString($name) . ")";
+				$query = "call countLocationsBySearchCriteria(" . $this->tenantid . "," . Database::queryString($name) . ")";
 				}
 			else {
-				$query = parent::getEntityCountQuery($tenantid, $filters, $userid);	
+				$query = parent::getEntityCountQuery($filters);	
 			}
 			return $query;
 		}
@@ -150,7 +148,7 @@
 			return true;
 		}
 		
-		public function renderView($entity,$userid,$return) {
+		public function renderView($entity,$return) {
 				
 				echo '
 					<div>
@@ -211,8 +209,16 @@
 				// images
 				echo '	<div class="panel panel-info">
 							<div class="panel-body">
-							<p>images to go here.</p>
-							<button class="btn btn-default" onclick="uploadImages();"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Images</button> 
+								<div id="imageStrip"><p>Loading . . .</p></div>
+								<form id="uploadForm" action="service/files.php" method="post" enctype="multipart/form-data" role="form">
+					        		<input id="imageLocationId" name="locationid" type="hidden" value="'. $entity["id"] . '"/> 
+					        		<div class="form-group">
+					        			<label for="importFile">Choose files to upload:</label>
+					        			<input id="importFile" type="file" name = "importFile[]" multiple="multiple"/>
+					        		</div>
+									<button id="uploadSubmit" type="submit" class="btn btn-default" onclick="uploadImages();"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Upload</button> 
+				        		</form>
+
 							</div>
 						</div>
 							';

@@ -1,8 +1,40 @@
 $(document).ready(function() {
 	$('#entityForm').validator({disable: true});
+	
+	// this is hardwired to provide special handling for image strip—pretty hacky, but not sure where else to put it yet
+	var type=document.getElementById('type').value;
+	if (type=='location') {
+		loadMediaForLocation(document.getElementById('id').value);
+	}
 });
 
+function loadMediaForLocation(locationid) {
+	serviceUrl = 'service/entitiesService.php?type=media&locationid=' + locationid;
+	getAndRenderJSON(serviceUrl, getImageStripTemplate(),'imageStrip');
+}
 
+function editMedia(mediaid) {
+	
+	document.getElementById('childEditHeader').innerText = 'Edit Media';
+	hideElement('childMessageDiv');
+	document.getElementById('childType').value="media"; 
+	$('#childEditModal').modal();
+	
+	var serviceURL = "service/formService.php?type=media";
+	serviceURL += "&id=" + mediaid;
+	
+	getAndRenderHTML(serviceURL,'childEditContainer','',prepareEdit);
+}
+
+function prepareEdit(status) {
+	hideElement('childEditLoading');
+	document.getElementById('childEditSaveButton').disabled=false;
+}
+
+function deleteMedia(mediaid) {
+	alert('Delete media' + mediaid);
+	
+}
 
 function submitSubForm(formID,formDiv,messageDiv,messageSpan,selectID)
 {

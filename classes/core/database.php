@@ -14,6 +14,17 @@ class Database {
 		return "'" . $value . "'";
 	}
 	
+	public static function queryJSON($value) {
+		// still a work in progress
+		if (strlen($value)==0) {
+			return 'null';
+		}
+		else {
+			return "'" . $value . "'";			
+		}
+
+	}
+	
 	public static function queryDate($value) {
 		
 		

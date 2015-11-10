@@ -15,7 +15,7 @@ $count = 0;
 
 Utility::debug('Importing file ' . $workingFile, 5);
 
-Utility::debug("file type:" . $fileExtension,9);
+Utility::debug("file type:" . $fileExtension, 1);
  
 
 // Check file size - right now, limiting to 5MB
