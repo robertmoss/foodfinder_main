@@ -35,7 +35,12 @@
 			// override
 			return ($fieldName=='id'||$fieldName=='name');
 		}
-		
+        
+        public function fieldAllowsSingleUpdates($fieldName) {
+            // Can use entityService to update imageurl one-off
+            return ($fieldName=='imageurl');
+        }
+
 		public function isClickableUrl($fieldName) {
 			return ($fieldName=='url'||$fieldName=='imageurl');
 		}
@@ -114,6 +119,8 @@
 		public function getJavaScript(){
  			return '<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
  			<script type="text/javascript" src="js/imagehandler.js"></script>
+ 			<script type="text/javascript" src="js/workingPanel.js"></script>
+ 			<script type="text/javascript" src="js/jquery.form.min.js"></script>
  					';
  		}		
 		
@@ -165,7 +172,7 @@
 					';	
 					}		
 				echo '		<p><span class="list-label">Status: </span>' . $entity['status'] . '</p>
-							<img src="' . $entity['imageurl'] . '" />
+							<div class="locationModalImage"><img id="primaryImage" src="' . $entity['imageurl'] . '" /></div>
 							<address> ' . $entity['address'] . '<br/>' . $entity['city'] . ', ' . $entity['state'] . '<br/>';
 				if (array_key_exists('displayurl',$entity)) {
 					echo '<a href="' . $entity['url'] . '" target="_blank">' . $entity['displayurl'] . '</a><br/>';
@@ -209,17 +216,19 @@
 				// images
 				echo '	<div class="panel panel-info">
 							<div class="panel-body">
-								<div id="imageStrip"><p>Loading . . .</p></div>
-								<form id="uploadForm" action="service/files.php" method="post" enctype="multipart/form-data" role="form">
+								<div id="imageStrip"><p>Loading . . .</p></div>';
+								 include("partials/workingPanel.php");
+                if ($this->userid>0) {                         
+				echo '			<form id="uploadForm" action="service/files.php" method="post" enctype="multipart/form-data" role="form">
 					        		<input id="imageLocationId" name="locationid" type="hidden" value="'. $entity["id"] . '"/> 
 					        		<div class="form-group">
 					        			<label for="importFile">Choose files to upload:</label>
 					        			<input id="importFile" type="file" name = "importFile[]" multiple="multiple"/>
 					        		</div>
-									<button id="uploadSubmit" type="submit" class="btn btn-default" onclick="uploadImages();"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Upload</button> 
-				        		</form>
-
-							</div>
+									<button id="uploadSubmit" type="button" class="btn btn-default" onclick="uploadForm();"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Upload</button> 
+				        		</form>';
+                }
+                echo '      </div>
 						</div>
 							';
 								

@@ -11,6 +11,8 @@ interface iDataEntity {
 	public function validateData($data);
 	public function addEntity($data);
 	public function updateEntity($id,$data);
+    public function updateFields($id,$data);
+    public function deleteEntity($id);
 	public function renderView($entity,$returnurl);
 	public function getJavaScript();
 	public function getCustomValue($fieldname,$currentvalue,$operationtype);
@@ -69,6 +71,18 @@ abstract class DataEntity implements iDataEntity {
 		 * 				  [4] - true/false: whether user should be able to delete childentities			  	
 		 */
 
+		public function getFieldType($fieldName) {
+		    // returns the type of the specified field
+		    $fields = $this->getFields();
+		    for ($i=0;$i<count($fields); $i++) {
+		        if ($fields[$i][0]==$fieldName) {
+		            return $fields[$i][1];
+                    break;
+		        }
+		    }
+            return "unknown fieldName";
+		}
+		
 		public function getPluralName() {
 			// overrride for classes with funky plurals
 			return $this->getName() . 's';
@@ -93,9 +107,17 @@ abstract class DataEntity implements iDataEntity {
 		}
         
        public function isUpdatableField($fieldName) {
-            // and updatable field can be set on a new entity but after that cannot be updated through the API
-            // override and return true for any field needing such handling
+            // a non-updatable field can be set on a new entity but after that cannot be updated through the API
+            // override and return false for any field needing such handling
             return true;
+        }
+       
+        public function fieldAllowsSingleUpdates($fieldName) {
+            // By default, you cannot update an individual field on an entity; you must update the entire entity with all
+            // field values via the updateEntity method. Override this method to return true for fields that you wish the entityService
+            // to be updated in isolation from the rest of the entity fields. Useful, for example, to let a service call set a "status" field on
+            // an entity
+            return false;
         }
 		
 		public function isClickableUrl($fieldName) {
@@ -501,6 +523,67 @@ abstract class DataEntity implements iDataEntity {
 			$proc = 'add' . ucfirst($this->getName()) . ucfirst($childsinglename); 
 			return $proc;
 		}
+        
+        public function updateFields($id,$data) {
+            // updates just the specified field on the specified entity (fields not included in $data object graph will be left
+            // unchanged in the database )
+            // by default, individual fields can't be updated unless the underlying class allows it
+            if (!$id>0) {
+                throw new Exception('Invalid ID: ' . $id. '.');
+            }
+            
+            $fields = get_object_vars($data);
+            $updateString = '';
+            $separator = '';
+            while ($field = current($fields)) {
+                $fieldname = key($fields);
+                if ($fieldname !='id') {   
+                    if (!$this->fieldAllowsSingleUpdates($fieldname)) {
+                        throw new Exception('Single updates not allowed for ' . $fieldname . '.');
+                        }
+                    $updateString .= $separator . $fieldname . '=' . $this->getFieldUpdateString($fieldname, $field); 
+                    $separator = ', ';
+                }
+                next($fields);   
+                }
+            
+           if (strlen($updateString)==0) {
+               throw new Exception('No valid values available for updating.');
+           }
+           $query = 'update ' . lcfirst($this->getName()) . ' set ';
+           $query .= $updateString;
+           $query .= ' where id = ' . Database::queryNumber($id) . ';';
+           
+           return Database::executeQuery($query);
+            
+        }
+
+        protected function getFieldUpdateString($fieldname,$value) {
+            $fieldType = $this->getFieldType($fieldname);
+            $output = '';
+            switch ($fieldType) {
+                    case "string":
+                        $output = Database::queryString($value);
+                        break;
+                    case "json":
+                        $output = Database::queryJSON($value);
+                        break;
+                    case "boolean":
+                        $output = Database::queryBoolean($value);
+                        break;
+                    case "number":
+                        $output = Database::queryNumber($value);
+                        break;
+                    case "date":
+                        $output = Database::queryDate($value);
+                        break;
+                    case "picklist":
+                        $output = Database::queryString($value);
+                        break;
+            }
+            return $output;
+        }
+
 
 		public function deleteEntity($id) {
 			
@@ -508,8 +591,9 @@ abstract class DataEntity implements iDataEntity {
 			// override to add custom delete functionality
 			
 			$query = "call delete" . $this->getName() . "(" . $id;
-			// assume tenantid is always needed and is last parameter
+			// assume tenantid and userid are always needed and are last parameters
 			$query .= ',' . Database::queryNumber($this->tenantid);
+			$query .= ',' . Database::queryNumber($this->userid);
 			$query .= ')';
 			
 			$result = Database::executeQuery($query);

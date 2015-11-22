@@ -31,7 +31,7 @@
 	else {
 		// try to create a new user object
 		try {
-			$user = new User(0);
+			$user = new User(0,$tenantID);
 			$user->validateUser($username, $password, $tenantID);
 			Utility::debug('User ' . $user->name . 'logged in succesfully.',5);
 			

@@ -89,6 +89,7 @@
 		<?php include("partials/includes.php"); ?>
 		<script type="text/javascript" src="js/validator.js"></script>
         <script type="text/javascript" src="js/jquery.form.min.js"></script>
+		<script src="js/modalDialog.js"></script>
 		<script src="js/entityPage.js"></script>
 		<?php echo $class->getJavaScript(); ?>
 		
@@ -108,7 +109,7 @@
 				    <div class="container">
 				    	<?php echo $class->renderView($entity,$userID,$returnurl)?><button class="btn btn-default" type="button" onclick="history.back();" ><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back</button>
 						<?php if($user && $user->canEdit($type, $tenantID)) {?>
-							<button class="btn btn-default" type="button" onclick="setMode('edit');" ><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</button>
+							<button id="editEntity" class="btn btn-default" type="button" onclick="setMode('edit');" ><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</button>
 						<?php } ?>
 					</div>
     				<?php }	
@@ -146,6 +147,7 @@
 					
     				?>
                     <?php include("partials/childEditModal.php")?>
+                    <?php include("partials/modalDialog.php")?>
 				</div>	
         		<?php include dirname(__FILE__) . '/footer.php';?>    		
         	</div>

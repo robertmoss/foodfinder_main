@@ -8,9 +8,14 @@ $(document).ready(function() {
 	}
 });
 
+function isEditable() {
+	// returns true if user is able to edit the current entity; we depend upon present of edit button (set Server side) for that
+	return ($('#editEntity').length>0);
+}
+
 function loadMediaForLocation(locationid) {
 	serviceUrl = 'service/entitiesService.php?type=media&locationid=' + locationid;
-	getAndRenderJSON(serviceUrl, getImageStripTemplate(),'imageStrip');
+	getAndRenderJSON(serviceUrl, getImageStripTemplate(isEditable()),'imageStrip');
 }
 
 function editMedia(mediaid) {
@@ -32,9 +37,47 @@ function prepareEdit(status) {
 }
 
 function deleteMedia(mediaid) {
-	alert('Delete media' + mediaid);
 	
+	showModalDialog('Are you sure you want to permanently delete this media file?','Delete Image File','OK','Cancel',
+		function() {
+			showWorkingPanel('Deleting file...','media'+mediaid,true);
+			var serviceURL = "service/entityService.php?type=media&id=" + mediaid;
+			callDeleteService(serviceURL,null,deleteMediaCallback);
+		}
+		);
 }
+
+function deleteMediaCallback(status,response) {
+	var message;
+	var result;
+	if (status==200) {
+		message="Media file successfully deleted.";
+		result="success";
+	}
+	else {
+		message = "Unable to delete media fie: " + response;
+		result='error';
+	}
+	showWorkingPanelResults(message,result,"imageStrip",false);
+	locationid = $("#id").val();
+	loadMediaForLocation(locationid);
+}
+
+function setMediaAsPrimary(id) {
+	var serviceUrl = 'service/entityService.php?type=location&action=fieldUpdate';
+	var imageurl = document.getElementById('media'+id).getElementsByTagName("img")[0].src;
+	var locationid = document.getElementById('locationid').innerText;
+	var data = {
+		id: locationid,
+		imageurl: imageurl
+	};
+	postData(serviceUrl,data,null,null,function(success) {
+		if (success) {
+			document.getElementById('primaryImage').src=imageurl;
+		}
+	});
+}
+
 
 function submitSubForm(formID,formDiv,messageDiv,messageSpan,selectID)
 {

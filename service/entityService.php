@@ -15,6 +15,10 @@ include_once dirname(__FILE__) . '/../classes/core/service.php';
 	
 	Utility::debug('entity service invoked for type:' . $type . ', method=' . $_SERVER['REQUEST_METHOD'], 5);
 	
+    if ($userID==0) {
+        Service::returnError('Service must be invoked by an authenticated user.');
+    }
+    
 	$knowntypes = array('tenant','location','link','media');
 	if(!in_array($type,$knowntypes,false)) {
 		// unrecognized type requested can't do much from here.
@@ -52,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
 	}
 	
 	try {
-		$entity = $class->getEntity($id,$tenantID,$userID);
+		$entity = $class->getEntity($id);
 	}
 	catch(Exception $ex) {
 		Service::returnError('Unable to retrive requested ' . $type . '. Internal error.');
@@ -69,75 +73,125 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST")
 	{
 		$json = file_get_contents('php://input');
 		$data = json_decode($json);
+		if (!$data || !array_key_exists('id', $data)) {
+		  Service::returnError('ID must be specified for an update.');   
+		}
 		$id = $data->{'id'};
-		
-		// validate data
+        
+        $action = Utility::getRequestVariable('action', '');
+        
+        // specifying 'action=fieldUpdate' on GET string will cause service to update just the submitted field (if specified)
+        // for this usage, the data payload should be a JSON object containing the id of the entity and the values of the fields to be updated
+        // Underlying data object must allow each specified field to be updated singly
+        // Though typically used to update just a single field, this function will allow multiple fields to be updated in a single call 
+        if ($action=='fieldUpdate' && $id>0) {
+                
+                Utility::debug('Updating ' . $type . ' record with id=' . $id . ' via single field updates.', 5);
+                try {
+                    $class->updateFields($id,$data);
+                }
+                catch (Exception $ex)
+                {
+                    Service::returnError('Unable to update ' . $type . ': ' . $ex->getMessage());
+                }
+            }
+        else {
+            // full entity add or update
+
+            // validate data
 			try {
 				$class->validateData($data);
 			}
-			catch (Exception $ex)
-			{
-				header(' ', true, 400);
-				echo 'Unable to save ' . $type . ': ' . $ex->getMessage();
-				die();
+			catch (Exception $ex) {
+			    Service::returnError('Unable to save ' . $type . ': ' . $ex->getMessage());
 			}
 		
-		if ($id==0) {
-			// this is a new record: insert
-									
-			Utility::debug('Saving new ' . $type, 5);
-			
-			try {
-				$newID = $class->addEntity($data,$tenantID,$userID);
-			}
-			catch (Exception $ex)
-			{
-				header(' ', true, 500);
-				echo 'Unable to save ' . $type . ':' . $ex->getMessage();
-				die();
-			}
-			
-			if ($newID==0) {
-				header(' ', true, 500);
-				echo 'Unable to save ' . $type;
-			}
-			else 
-			{
-				$response = '{"id":' . json_encode($newID) . "}";
-				Utility::debug($type . ' record added: ID=' . $newID, 5);
-				header('Content-Type: application/json');
-				echo $response; 
-			}
-			
-		}
-		else {
-				
-			// this is an existing record: update
-			Utility::debug('Saving ' . $type . ' record with id=' . $id, 5);
-			$result = false;
-			try {
-				$result=$class->updateEntity($id,$data,$tenantID,$userID);
-			}
-			catch (Exception $ex)
-			{
-				header(' ', true, 500);
-				echo 'Unable to save ' . $type . ':' . $ex->getMessage();
-				die();
-			}
+    		if ($id==0) {
+    			// this is a new record: insert
+    									
+    			Utility::debug('Saving new ' . $type, 5);
+    			
+    			try {
+    				$newID = $class->addEntity($data,$tenantID,$userID);
+    			}
+    			catch (Exception $ex)
+    			{
+    				header(' ', true, 500);
+    				echo 'Unable to save ' . $type . ':' . $ex->getMessage();
+    				die();
+    			}
+    			
+    			if ($newID==0) {
+    				header(' ', true, 500);
+    				echo 'Unable to save ' . $type;
+    			}
+    			else 
+    			{
+    				$response = '{"id":' . json_encode($newID) . "}";
+    				Utility::debug($type . ' record added: ID=' . $newID, 5);
+    				header('Content-Type: application/json');
+    				echo $response; 
+    			}
+    			
+    		}
+    		else {
+    				
+    			// this is an existing record: update
+                // full entity update
+    			Utility::debug('Saving ' . $type . ' record with id=' . $id, 5);
+    			$result = false;
+    			try {
+    				$result=$class->updateEntity($id,$data);
+    			}
+    			catch (Exception $ex)
+    			{
+    				header(' ', true, 500);
+    				echo 'Unable to save ' . $type . ':' . $ex->getMessage();
+    				die();
+    			}
+                
+    
+    			if (!$result) {
+                    Service::returnError('Unable to save ' . $type);
+    			}
+    			else 
+    			{
+    				Utility::debug($type . ' updated.' , 5);
+    				$response = '{"id":' . json_encode($id) . "}";
+    				header('Content-Type: application/json');
+    				echo $response; 
+    			}
+    		}
+    	}
+	}
+elseif ($_SERVER['REQUEST_METHOD']=="DELETE") {
 
-			if (!$result) {
-				header(' ', true, 500);
-				echo 'Unable to save ' . $type;
-			}
-			else 
-			{
-				Utility::debug($type . ' updated.' , 5);
-				$response = '{"id":' . json_encode($id) . "}";
-				header('Content-Type: application/json');
-				echo $response; 
-			}
-		}
-	}  
+    $supportedtypes = array('media');
+    if(!in_array($type,$supportedtypes,false)) {
+        // delete method not supported from all types
+        Service::returnError('Method not supported for type: ' . $type);
+    }
+    // retrive required parameters
+    $id = Utility::getRequestVariable('id', 0);
+    if ($id==0) {
+        Service::returnError("id is required parameter and must be non-zero.");
+    }
+    
+    try {
+        $entity = $class->deleteEntity($id);
+    }
+    catch(Exception $ex) {
+        Service::returnError('Unable to delete requested ' . $type . '. Internal error.');
+    }
+    $set = json_encode(array('deleted'=> $id));
+
+    header("Access-Control-Allow-Origin: *");   
+    header('Content-Type: application/json');
+
+    echo $set;
+
+
+}  
 else
 	{
 		header(' ', true, 400);

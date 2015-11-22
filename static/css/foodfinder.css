@@ -253,7 +253,7 @@
 }
 
 .locationModalImage {
-	text-align: center;
+	text-align: left;
 }
 
 .locationModalImage img {
@@ -328,5 +328,24 @@
 	.hover-controls .close {
 		font-size: 14px;
 	}
+}
+
+.workingPanel {
+    	position: fixed;
+    	top: 10px;
+   }
+
+@media only screen and (min-width: 750px) {
+	.workingPanel {
+    	position: relative;
+   }
+}
+
+.overlap {
+	position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: .8;
 }
 

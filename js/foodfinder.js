@@ -88,14 +88,17 @@ function getLocationSummaryTemplate() {
 	return template;
 }
 
-function getImageStripTemplate() {
+function getImageStripTemplate(editable) {
 	var template =  '<div class="row">';
 		template +=	'	{{#media}}<div class="col-sm-2">';
-		template +=	'		<a href="#" class="thumbnail"><img src="{{url}}" alt="image"></a>';
-		template += '		<div class="hover-controls">';
-		template += '			<button type="button" class="close" onclick="deleteMedia({{id}});"><span aria-hidden="true" class="glyphicon glyphicon-remove"></span><span class="sr-only">Delete</span></button>';
-		template += '			<button type="button" class="close" onclick="editMedia({{id}});"><span aria-hidden="true" class="glyphicon glyphicon-pencil"></span><span class="sr-only">Edit</span></button>';
-		template += '		</div>';
+		template +=	'		<span><a href="#"><div id="media{{id}}" class="thumbnail"><img src="{{url}}" alt="image"></div></a></span>';
+		if (editable) {
+			template += '		<div class="hover-controls">';
+			template += '			<button type="button" class="close" onclick="deleteMedia({{id}});" data-toggle="tooltip" title="Delete media"><span aria-hidden="true" class="glyphicon glyphicon-remove"></span><span class="sr-only">Delete</span></button>';
+			template += '			<button type="button" class="close" onclick="editMedia({{id}});" data-toggle="tooltip" title="Edit info"><span aria-hidden="true" class="glyphicon glyphicon-pencil"></span><span class="sr-only">Edit</span></button>';
+			template += '			<button type="button" class="close" onclick="setMediaAsPrimary({{id}});" data-toggle="tooltip" title="Set as primary image"><span aria-hidden="true" class="glyphicon glyphicon-star"></span><span class="sr-only">Set as Primary</span></button>';
+			template += '		</div>';
+		}
 		template += '	</div>{{/media}}';
 		template += '</div>';
 		
@@ -299,26 +302,28 @@ function retrieveLocations(serviceURL,template,anchor,working,callback) {
 
 function loadLocation(id) {
 	
-	var location = getLocationById(id);
 	
 	setElementHTML('locationBody','<div class="ajaxLoading">Loading location . . .</div>');
-	setElementHTML('locationHeader',location.name);
 	var serviceURL = "service/entityService.php?type=location";
 	serviceURL += "&id=" + id;
-	var template = getLocationTemplate();
-	
-	chkVisit = document.getElementById('chkVisited');
-	if (chkVisit) {
-		chkVisit.checked=(location.uservisits>0); 
-	}
 	
 	$("#locationModal").modal({
  	   backdrop: 'static',
     	keyboard: false
 		});
+	getJSON(serviceURL,null,null,loadLocationCallback);
+		
+}
+
+function loadLocationCallback(location) {
 	
-	getAndRenderJSON(serviceURL,template,'locationBody','Retrieving location info . . .');
-	
+	setElementHTML('locationHeader',location.name);
+	var template = getLocationTemplate();
+	renderTemplate(template,location,'locationBody',false);
+	chkVisit = document.getElementById('chkVisited');
+	if (chkVisit) {
+		chkVisit.checked=(location.uservisits>0); 
+	}	
 }
 
 function editLocation() {
@@ -371,6 +376,10 @@ function saveComplete(success) {
 		var name=document.getElementById('locationname').innerHTML;
 		loadLocation(id,name);
 	}
+}
+
+function setLocationPrimaryImage(url) {
+	
 }
 
 function getIconForLocation(location) {
@@ -486,9 +495,8 @@ function visitedUpdated(success) {
 	
 }
 
+
 // CONFIG - configuration functions
-
-
 function showConfig() {
 	$('#configModal').modal();
 }

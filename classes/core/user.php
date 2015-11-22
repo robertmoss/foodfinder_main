@@ -89,9 +89,9 @@ class User extends DataEntity {
 	}
 	
 
-	public function validateUser($username) {
+	public function validateUser($username,$password) {
 		
-		Utility::debug('Validating user ' .$username . ', tenantID=' . $this->tenantID, 9);
+		Utility::debug('Validating user ' .$username . ', tenantID=' . $this->tenantid, 9);
 		
 		if (strlen($username)==0 || strlen($password)==0)
 			{
@@ -108,7 +108,7 @@ class User extends DataEntity {
 			//echo Utility::saltAndHash($password);
 			$query = 'call validateUser(' . Database::queryString($username);
 			$query .= ',' . Database::queryString($saltedPassword);
-			$query .= ',' . Database::queryNumber($tenantID) . ');';
+			$query .= ',' . Database::queryNumber($this->tenantid) . ');';
 					
 			$result = Database::executeQuery($query);
 			if (!$result) {
@@ -156,7 +156,7 @@ class User extends DataEntity {
 
 	}
 	
-	public function canRead($entityType,$id) {
+	public function canRead($entityType,$tenantid,$id) {
 		
 		// to do: add mechanism for resolving entity/role permissions
 		// for now, any authenticated user can do any thing
@@ -168,7 +168,7 @@ class User extends DataEntity {
 		}
 	}
 	
-	public function canEdit($entityType,$id) {
+	public function canEdit($entityType,$tenantid,$id) {
 
 		// to do: add mechanism for resolving entity/role permissions
 		// for now, any authenticated user can do any thing
@@ -181,7 +181,7 @@ class User extends DataEntity {
 		
 	}
 	
-	public function canAdd($entityType,$id) {
+	public function canAdd($entityType,$tenantid) {
 		
 		// to do: add mechanism for resolving entity/role permissions
 		// for now, any user can add any entity
@@ -193,7 +193,7 @@ class User extends DataEntity {
 		}
 	}
 		
-	public function canDelete($entityType) {
+	public function canDelete($entityType,$tenantid,$id) {
 		
 		// to do: add mechanism for resolving entity/role permissions
 		// for now, no user can delete entities

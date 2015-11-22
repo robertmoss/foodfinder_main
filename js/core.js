@@ -1,4 +1,33 @@
-var success; // used to pass around success for async functions
+
+/* retrieves JSON from a web service 
+ * Returns the parsed object retrieved from service
+ */
+function getJSON(serviceURL,anchor,working,callback)
+		{
+		if (working && working.length>0)
+			{
+				document.getElementById(anchor).innerHTML = working;
+			}
+		if (window.XMLHttpRequest)
+		  {// code for IE7+, Firefox, Chrome, Opera, Safari
+		  xmlhttp=new XMLHttpRequest();
+		  }
+		else
+		  {// code for IE6, IE5
+		  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		  }
+		xmlhttp.onreadystatechange=function() {
+		  if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+		    var obj = JSON.parse(xmlhttp.responseText);
+			if (callback) {
+				callback(obj);
+			}
+		   }
+		 };
+		xmlhttp.open("GET",serviceURL,true);
+		xmlhttp.send();
+		}
+
 
 /* retrieves JSON from a web service and renders it within specified anchor using 
  * the submitted mustache template
@@ -76,6 +105,34 @@ function getAndRenderHTML(serviceURL,anchor,working,callback) {
 		xmlhttp.send();
 	}
 
+/*
+ * Calls the specified service using delete method
+ * If callback specified, calls it passing in the responseText from the service call
+ */
+function callDeleteService(serviceURL,working,callback) {
+		if (working && working.length>0)
+			{
+				document.getElementById(anchor).innerHTML = working;
+			}
+		if (window.XMLHttpRequest)
+		  {// code for IE7+, Firefox, Chrome, Opera, Safari
+		  xmlhttp=new XMLHttpRequest();
+		  }
+		else
+		  {// code for IE6, IE5
+		  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		  }
+		xmlhttp.onreadystatechange=function() {
+		  if (xmlhttp.readyState==4) {
+			if (callback) {
+				callback(xmlhttp.status,xmlhttp.responseText);
+			}
+		   }
+		 };
+		xmlhttp.open("DELETE",serviceURL,true);
+		xmlhttp.send();
+	}
+
 function log(msg){
   if (window.console && console.log) {
     console.log(msg); //for firebug
@@ -150,6 +207,7 @@ function submitForm(formID,messageDiv,messageSpan,reloadOnSuccess,idElement,call
 	request.setRequestHeader('Content-Type','application/json; charset=UTF8');
 	request.onreadystatechange=function() {
 		 if (request.readyState==4) {
+		 	var success;
 		 	if (request.status==200) {
 		 		var response = JSON.parse(request.responseText);
 		 		if (idElement && idElement.length>0) {
@@ -180,6 +238,46 @@ function submitForm(formID,messageDiv,messageSpan,reloadOnSuccess,idElement,call
 		   		success=false;
 		   	}
 		   	callback(success);
+		  }  
+		};
+	request.send(JSON.stringify(data));
+}
+
+/*
+ * Converts the specified data (object graph) into JSON and 
+ * posts as payload to the specified service via AJAX calls
+ */
+function postData(serviceUrl,data,messageDiv,messageSpan,callback)
+{
+		
+	if(messageDiv && messageDiv.length>0) {
+		hideElement(messageDiv);
+	}
+	
+	var request = new XMLHttpRequest();
+	request.open("POST",serviceUrl,true);
+	request.setRequestHeader('Content-Type','application/json; charset=UTF8');
+	request.onreadystatechange=function() {
+		 if (request.readyState==4) {
+		 	var success;
+		 	if (request.status==200) {
+		 		if (request.responseText.length>0) {
+			 		var response = JSON.parse(request.responseText);
+			 		if(messageDiv && messageDiv.length>0) {
+				    	 setMessage('Record (id=' + response.id + ') saved successfully.',messageDiv,messageSpan,true);
+				    	}
+				   }
+			    success=true;	
+		    	}
+		   	else {
+		   		if(messageDiv && messageDiv.length>0) {
+		   			setMessage('Save failed: ' + request.responseText,messageDiv,messageSpan,false);
+		   		}
+		   		success=false;
+		   	}
+		   	if (callback) {
+			   	callback(success);
+			   }
 		  }  
 		};
 	request.send(JSON.stringify(data));
@@ -273,6 +371,13 @@ function setElementHTML(ID,html) {
 	var element = document.getElementById(ID);
 	if (element) {
 		element.innerHTML = html;
+	}
+}
+
+function setElementText(ID,text) {
+	var element = document.getElementById(ID);
+	if (element) {
+		element.innerText = text;
 	}
 }
 
