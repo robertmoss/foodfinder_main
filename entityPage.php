@@ -108,7 +108,7 @@
 				    <input type="hidden" id="type" name="type" value="<?php echo $type; ?>"/>
 				    <div class="container">
 				    	<?php echo $class->renderView($entity,$userID,$returnurl)?><button class="btn btn-default" type="button" onclick="history.back();" ><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back</button>
-						<?php if($user && $user->canEdit($type, $tenantID)) {?>
+						<?php if($user && $user->canEdit($type, $tenantID,$id)) {?>
 							<button id="editEntity" class="btn btn-default" type="button" onclick="setMode('edit');" ><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</button>
 						<?php } ?>
 					</div>

@@ -14,7 +14,7 @@ include_once dirname(__FILE__) . '/../classes/core/service.php';
 include_once dirname(__FILE__) . '/../classes/media.php';
 include_once dirname(__FILE__) . '/../' . Config::$cdn_classfile;
 
-
+Utility::Debug('files.php invoked ',5);
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
 	Service::returnError('Method not supported.');
@@ -27,7 +27,7 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST") {
 	
 	// if a locationid is included on post, all files submitted will be linked to specified location
 	$locationid = Utility::getRequestVariable('locationid', 0);
-	if ($locationid>0 & !$user->canEdit('location', $locationid)) {
+	if ($locationid>0 & !$user->canEdit('location', $tenantID, $locationid)) {
 		Service::returnError('User does not have permission to edit specified location',401);
 	}
 	
@@ -63,12 +63,21 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST") {
 	
 	
 	// 3. store in CDN
-	
-	$cdn = new Config::$cdn_classname($userID,$tenantID);
+	try {
+    	$cdn = new Config::$cdn_classname($userID,$tenantID);
+    }
+    catch (Exception $ex) {
+        Service::returnError('Unable to save media file. Unable to create interface to CDN.');
+    }
 	for ($i=0;$i<count($files);$i++) {
 		$sourcefile = $files[$i]["tmp_name"];	
 		$key = $files[$i]["name"];
-		$files[$i]["url"] = $cdn->putContent($sourcefile,$key,'');
+        try {
+    		$files[$i]["url"] = $cdn->putContent($sourcefile,$key,'');
+        }
+        catch(Exception $ex) {
+            Service::returnError('Unable to store file in CDN: ' . $ex->getMessage());
+        }
 	}
 	
 	

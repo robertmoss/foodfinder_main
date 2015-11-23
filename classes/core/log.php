@@ -12,7 +12,7 @@
 
 		if ($level >= Config::$debugLevel) {
 			$message = str_replace("'","''",$message);
-			$message = $message . ' [' . __FILE__ . ']';
+			// $message = $message . ' [' . __FILE__ . ']';
 			if (Config::$log_mode=='file'||Config::$log_mode=='both') {
 				 Log::logToFile($message);
 			}
