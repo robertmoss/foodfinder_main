@@ -21,6 +21,10 @@
 				        	?>
 							</div>
 				        </div>
+				        <div class="form-group">
+				            <label for="numToDisplay"># of Locations to Return</label>
+				            <input id="numToDisplay" type="text" class="form-control" value="10"/>
+				        </div>
 				     </form>
 			      </div>
 			      <div class="modal-footer">

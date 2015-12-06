@@ -66,8 +66,10 @@
 	
 	private function makePath($path) {
 		if (!file_exists($path)) {
-			mkdir($path,0777);
+		    Log::debug('creating new folder in local CDN:' . $path . '...', 5);
+		    mkdir($path,0777);
 		}
+
 	}
 	
  }
