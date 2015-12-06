@@ -65,8 +65,6 @@ function initializeMap(anchor)
 	// default to Mt. Pleasant SC
 	currentLatLong = new google.maps.LatLng(33.856453, -79.80855799999999);
 	
-	
-	
 	var async = false;
 	var mapOptions = {
 		center: currentLatLong,
@@ -95,6 +93,8 @@ function initializeMap(anchor)
 		navigator.geolocation.getCurrentPosition(function(position) {
 			var pos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
 			currentLatLong = pos;
+			// save this so we don't geodetect on each page load
+			postCurrentLocation(currentLatLong.lat(),currentLatLong.lng());
 			map.setCenter(pos);
 			var marker = dropMarker(map,pos,"Current Location","img/icons/arrow.png",0);
 			map.setCenter(marker.getPosition());

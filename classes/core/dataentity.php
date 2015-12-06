@@ -82,6 +82,19 @@ abstract class DataEntity implements iDataEntity {
 		    }
             return "unknown fieldName";
 		}
+        
+        public function hasField($fieldName) {
+            // returns true if the specified entity has the named field; false otherwise
+            $fields = $this->getFields();
+            $hasField = false;
+            for ($i=0;$i<count($fields); $i++) {
+                if ($fields[$i][0]==$fieldName) {
+                    $hasField = true;
+                    break;
+                }
+            }
+            return $hasField;
+        }
 		
 		public function getPluralName() {
 			// overrride for classes with funky plurals

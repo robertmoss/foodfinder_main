@@ -168,29 +168,20 @@
 					  <div class="modal-dialog">
 					    <!-- Modal content-->
 					    <div class="modal-content">
-					      <div class="modal-header">
-					        <button type="button" class="close" data-dismiss="modal">&times;</button>
-					        <h4 id="userHeader" class="modal-title">Edit Tenant</h4>
-					      </div>
-					      <form id="tenantForm" action="service/entityService.php?type=tenant" method="post" role="form" >
-						      <div id="tenantBody" class="modal-body">
-					        	<input type="hidden" class="form-control" id="tenant-id" name="id"></input>
-					        	<div class="form-group">
-					        		<label for="tenant-name">Name</label>
-					        		<input type="text" class="form-control" id="tenant-name" name="name" required></input>
-					        		<div class="help-block with-errors"></div>
-					        	</div>
-						      </div>
-						      <div class="modal-footer">
-								<div id="tenant-message" class="alert alert-danger hidden">
-			        				<a class="close_link" href="#" onclick="hideElement('message');"></a>
-			        				<span id='tenant-message_text'>Message goes here.</span>
-			        			</div>
-						        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-						        <button type="button" class="btn btn-default" onclick="resetForm();">Reset</button>
-						        <button id="userSave" type="submit" class="btn btn-default">Save</button>
-						      </div>
-					      </form>
+    					      <div class="modal-header">
+    					        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    					        <h4 id="tenantHeader" class="modal-title">Edit Tenant</h4>
+    					      </div>
+    					      <div id="tenantFormAnchor" class="modal-body">Loading form . . .</div>
+    					      <div class="modal-footer">
+                                    <div id="tenant-message" class="alert alert-danger hidden">
+                                        <a class="close_link" href="#" onclick="hideElement('message');"></a>
+                                        <span id='tenant-message_text'>Message goes here.</span>
+                                    </div>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-default" onclick="resetForm();">Reset</button>
+                                    <button id="userSave" type="button" class="btn btn-default" onclick="saveTenant();">Save</button>
+                             </div>
 					    </div>
 					  </div>
 					</div>

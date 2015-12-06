@@ -10,7 +10,7 @@ class Config {
 
 	
 	// 9 is highest, meaningly only most urgent (level 10) messages will be logged; 0 means all messages will be logged regardless of level
-	public static $debugLevel = "5"; 
+	public static $debugLevel = "0"; 
 	
 	// database, file, or both - if database, will write to log file only if database cannot be accessed
 	public static $log_mode = 'database'; 

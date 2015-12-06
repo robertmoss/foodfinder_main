@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],'title') ?></title>
+        <title><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'title') ?></title>
 		<?php include("partials/includes.php"); ?>
     </head>
     <body>
@@ -18,8 +18,8 @@
 			<?php include("header.php"); ?>
 			<div class="jumbotron">
       				<div class="container">
-        			<h1><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],'title') ?></h1>
-			        <p><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],'welcome') ?><p><a class="btn btn-primary btn-lg" href="about.php" role="button">Learn more &raquo;</a></p>
+        			<h1><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'title') ?></h1>
+			        <p><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'welcome') ?><p><a class="btn btn-primary btn-lg" href="about.php" role="button">Learn more &raquo;</a></p>
       			</div>
 
 	  			<div class="container">

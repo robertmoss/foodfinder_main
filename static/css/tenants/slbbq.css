@@ -1,0 +1,91 @@
+#maincontent {
+	background-color: #ffffff;
+	}
+	
+#header #logo {
+	background-image: url('../../img/bbq.png');
+}
+
+
+body {
+	font-family: Arial;
+	color: black;
+}
+
+a {
+	color: #bb2325;
+}
+
+a:visited {
+	color: #bb2325;
+}
+
+
+/* Navbar styles */
+.navbar {
+	font: 1.2em georgia,serif;
+	text-transform: uppercase;
+}
+
+.navbar-default .navbar-brand {
+	color: #bb2325;
+}
+
+.nav-pills > li.active > a {
+	    background-color: #bb2325;
+}
+
+.nav-pills > li.active > a:hover, 
+.nav-pills > li.active > a:focus {
+	    background-color: #bb2325;
+}
+
+
+/* Button Styles */
+.btn-primary {
+	background-color: #bb2325;
+    border-color: #bb2325;
+}
+
+.btn-info, .btn-info:active, .btn-info:active:focus, .btn-info.active, .btn-info:focus {
+	background-color: #e74c3c;
+    border-color: #e74c3c;
+    box-shadow: none;
+    outline: none !important;
+}
+
+.btn-info:hover {
+	background-color: #bb2325;
+    border-color: #bb2325;
+    outline: none !important;
+}
+
+
+/* Specific page element styles */
+#listNav {
+	background-color: #bb2325 !important;
+}
+
+.mapInfoWindow a {
+    color: #bb2325;
+}
+.mapInfoWindow a:visited {
+    color: #bb2325;
+}
+
+.mapInfoWindow .flag {
+	background-color: #bb2325;
+}
+
+.ribbon-green {
+	background-color: #e74c3c;
+	color: #fff;	
+}
+
+.label-success {
+	background-color: #bb2325;	
+}
+
+.label-info {
+	background-color: #bb2325;
+}

@@ -1,5 +1,9 @@
 <?php 
 
+echo '<p>' . $_SERVER['DOCUMENT_ROOT'];
+
+echo '<p>' . $_SERVER['SERVER_NAME'];
+
 phpinfo();
 
 // send a test message
@@ -11,7 +15,7 @@ $message = "This is a test message\r\nLine 2\r\nLine 3";
 $message = wordwrap($message, 70, "\r\n");
 
 // Send
-mail('mossr19@gmail.com', 'Message from PHP Test', $message);
+//mail('mossr19@gmail.com', 'Message from PHP Test', $message);
 
 						
 	

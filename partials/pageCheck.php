@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * pageCheck is an essential routine. It should be included on every page in the application. 
+ * It verifies we have a session, sets the tenantid & userid in memory 
+ */
+
 	ini_set('display_errors', 'On'); // switch to off for production deployment
 
 	include_once dirname(__FILE__) . '/../classes/core/user.php';
@@ -11,8 +16,6 @@
 	session_start();
 	date_default_timezone_set('America/New_York');
 	$user = null; 
-	
-	
 	
 	//  set tenant for this application. Will default to 0
 	if (!isset($_SESSION['tenantID'])) {

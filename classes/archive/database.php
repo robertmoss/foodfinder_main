@@ -24,6 +24,9 @@ class Database {
 		}
 	}
 	
+    /*
+     * Executes a query against the database, returning a mysqli_result class is successful (or TRUE for queries not returning results)
+     */
 	public static function executeQuery($query)
 	{
 		// connect to database

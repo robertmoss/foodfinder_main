@@ -7,12 +7,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],'title') ?>: Plan a Trip</title>
+        <title><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'title') ?>: Plan a Trip</title>
         <link rel="stylesheet" type="text/css" href="static/css/styles.css" />
         <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css" />	
         <link rel="stylesheet" type="text/css" href="static/css/foodfinder.css" />
         <link rel="stylesheet" type="text/css" href="static/css/trip.css" />
-        <link rel="stylesheet" type="text/css" href="<?php echo Utility::getCSSForTenant($applicationID, $_SESSION['tenantID']) ?>" />	
+        <link rel="stylesheet" type="text/css" href="<?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'css'); ?>" />	
     
 		<script src="js/jquery-1.10.2.js"></script>
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9Zbt86U4kbMR534s7_gtQbx-0tMdL0QA&sensor=true&libraries=places"></script>	
@@ -65,7 +65,7 @@
 					        			</div>
 				    					<div class="form-group">
 				    						<label for="tripSubmit" class="col-sm-3 control-label"></label>
-				    						<button id="tripSubmit" class="btn btn-primary" onclick="getRoute();">Find Me Some <?php echo ucfirst(Utility::getTenantProperty($applicationID, $tenantID, 'finditem')); ?></button>
+				    						<button id="tripSubmit" class="btn btn-primary" onclick="getRoute();">Find Me Some <?php echo ucfirst(Utility::getTenantProperty($applicationID, $tenantID, $userID,'finditem')); ?></button>
 				    						<button type="button" class="btn btn-default" onclick="showConfig();"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></button>
 				    					</div>
 				    					<input id="txtCurrentLatitude" type="hidden" value=""/>

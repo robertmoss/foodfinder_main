@@ -1,7 +1,7 @@
         <link rel="stylesheet" type="text/css" href="static/css/styles.css" />
         <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css" />	
         <link rel="stylesheet" type="text/css" href="static/css/foodfinder.css" />
-        <link rel="stylesheet" type="text/css" href="<?php echo Utility::getCSSForTenant($applicationID, $_SESSION['tenantID']) ?>" />	
+        <link rel="stylesheet" type="text/css" href="<?php echo Utility::getTenantProperty($applicationID, $tenantID, $userID, 'css'); ?>" />	
     
 		<script src="js/jquery-1.10.2.js"></script>
 		<script src="js/mustache.js"></script>

@@ -11,7 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],'title') ?>: About</title>
+        <title><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'title') ?>: About</title>
         <?php include("partials/includes.php"); ?>
 		
     </head>
@@ -20,8 +20,8 @@
  			<?php include('header.php');?>
  			<div id="main" class="container">
 	    		<div class="jumbotron">
-	    			<h2>About <?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],'title') ?></h2>
-	    			<p><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],'title') ?>: is a prototype site built on 
+	    			<h2>About <?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'title') ?></h2>
+	    			<p><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'title') ?>: is a prototype site built on 
 	    				Palmetto New Media's Foodfinder platform.</p>
 	    			<p><a class="btn btn-primary" href="mailto:mossr19@gmail.com">Contact Us</a></p>
 	    		</div>

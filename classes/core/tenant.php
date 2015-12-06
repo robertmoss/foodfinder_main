@@ -15,16 +15,30 @@ class Tenant extends DataEntity {
 	
 	public function getFields() {
 		$fields = array(
-			array("name","string"),
+			array("name","string",100),
+			array("title","string",100),
+			array("welcome","string",10000),
+			array("finditem","string",100),
+			array("css","string",200),
 		);		
 		return $fields;
 	}
 	
 	public function isRequiredField($fieldName) {
-		return ($fieldname=='name');
+		return ($fieldName=='name');
 	}	
 	
 	// Overrides to parent methods
+	
+	public function friendlyName($fieldName) {
+            if ($fieldName=='css') {
+                return 'CSS';
+            }
+            else {
+                return ucfirst($fieldName);
+            }
+        }
+	
 	protected function getEntitiesQuery($filters, $return, $offset) {
 		// override default since we don't need tenantID on this one.
 				

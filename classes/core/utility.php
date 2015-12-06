@@ -3,6 +3,8 @@
 include_once 'database.php';
 include_once 'config.php';
 include_once 'log.php';
+include_once 'cache.php';
+include_once 'tenant.php';
 
 class Utility{
 		
@@ -450,58 +452,32 @@ class Utility{
 	/* 
 	 * multi-tenant functions
 	 */
-	public static function getCSSForTenant($applicationID, $tenantID) {
-		
-		// does it make sense to hit the database everytime to get CSS?
-		// for now, dumbly hardwiring
-		$css='static/css/tenant' . $tenantID . '.css';
-		
-		/*$css = '';
-		$query = 'SELECT css FROM application_tenant where applicationid=' . $applicationID . ' AND tenantid=' . $tenantID . ' limit 1;';
-		$result = Database::executeQuery($query);
-		while ($row = mysqli_fetch_array($result)) {
-			$css = $row[0];
-		}*/
-		return $css;
-	}
 	
-	public static function getTenantProperty($applicationID, $tenantID, $property) {
-		
-		// does it make sense to hit the database everytime to get these?
-		// for now, dumbly hardwiring till we add a cache 
-		$value='';
-		
-		switch ($property) {
-			case "title":
-				switch ($tenantID) {
-					case 3:
-						$value='BBQ Hub';
-						break;
-					default:
-					$value="Food Finder";		
-				}				
-				break;
-			case "welcome":
-				switch ($tenantID) {
-					case 3:
-						$value='Welcome to the prototype BBQ Hub!';
-						break;
-					default:
-					$value="Welcome to the prototype Food Finder site.";		
-				}				
-				break;
-			case "finditem":
-				switch ($tenantID) {
-					case 3:
-						$value='barbecue';
-						break;
-					default:
-					$value="food";		
-				}				
-				break;
-		}
-		
-		return $value;
+	public static function getTenantProperty($applicationID, $tenantID, $userID, $property) {
+	    
+        Log::debug('retrieving tenant property ' . $property . " for tenant ID=" . $tenantID, 1);
+        
+		$property = strtolower($property);
+		$class = new Tenant($userID,$tenantID);
+        
+		if (!$class->hasField($property)) {
+            throw new Exception($property . ' is not a valid tenant property.');
+        }
+        
+		$key = $applicationID . ":" . $tenantID . ":" . $property;
+		$value = Cache::getValue($key);
+        if (!$value) {
+            // cache miss. Need to retrieve from tenant
+            $query = 'select ' . $property . ' from tenant where id=' . $tenantID;
+            $data = Database::executeQuery($query);
+            if ($data) {
+                if ($row=$data->fetch_row()) {
+                    $value = $row[0];
+                    Cache::putValue($key,$value);
+                }                
+            }   
+        } 
+        return $value;
 	}
 	
 	public static function userAllowed($user,$entityType,$operation,$tenantID) {

@@ -7,7 +7,7 @@
 	        	<span class="icon-bar"></span>
 	        	<span class="icon-bar"></span>
       		</button>
-			<a class="navbar-brand" href="index.php"><?php echo ucfirst(Utility::getTenantProperty($applicationID, $tenantID, 'title')); ?></a>
+			<a class="navbar-brand" href="index.php"><?php echo ucfirst(Utility::getTenantProperty($applicationID, $tenantID, $userID,'title')); ?></a>
 		</div>
 		<div class="collapse navbar-collapse" id="navbar1">
 			<ul class="nav navbar-nav">

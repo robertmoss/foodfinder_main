@@ -92,10 +92,15 @@ function getAndRenderHTML(serviceURL,anchor,working,callback) {
 		  }
 		xmlhttp.onreadystatechange=function() {
 		  if (xmlhttp.readyState==4) {
+		  		var status=xmlhttp.status;
+		  		var markup = '';
 		  		if (xmlhttp.status==200) {
-		    		var markup = xmlhttp.responseText;
-					document.getElementById(anchor).innerHTML=markup;
+		    		markup = xmlhttp.responseText;
 		   			}
+		   		else {
+		   			markup = 'Unable to load form: ' + xmlhttp.responseText;
+		   		}
+		   		document.getElementById(anchor).innerHTML=markup;
 		   		if (callback) {
 		   			callback(status);
 		   		}

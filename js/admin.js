@@ -318,23 +318,27 @@ function deleteUser(id) {
 }
 
 function addTenant() {
-	document.getElementById("tenantForm").reset();
-	document.getElementById("tenant-id").value=null;
+	editTenant(0);
+}
+
+function editTenant(id) {
+	var headerText= (id>0) ? 'Edit Tenant' : "Add New Tenant";
+	setElementText('tenantHeader',headerText);
+	var serviceURL = "service/formService.php?type=tenant";
+	serviceURL += "&id=" + id;
+	
+	getAndRenderHTML(serviceURL,'tenantFormAnchor','',prepareTenantEdit);
 	hideElement("tenant-message");
 	$('#tenantModal').modal();
 }
 
-function editTenant(id) {
-	document.getElementById("tenantForm").reset();
-	hideElement("tenant-message");
-	serviceURL = "service/entityService.php?type=tenant&id=" + id;
-	getAndRenderForm(serviceURL,'tenantForm','tenant-');
-	$('#tenantModal').modal();
+function prepareTenantEdit(status) {
+	
 }
 
 function saveTenant() {
 	try {
-		submitForm('tenantForm','tenant-message','tenant-message_text',false,'tenant-id',onTenantSave);
+		submitForm('tenantForm','tenant-message','tenant-message_text',false,'tenantid',onTenantSave);
 		}
 		catch(ex) {
 			// do nothing for now - message set in submitForm
