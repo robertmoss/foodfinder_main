@@ -2,7 +2,7 @@
 /* retrieves JSON from a web service 
  * Returns the parsed object retrieved from service
  */
-function getJSON(serviceURL,anchor,working,callback)
+function getJSON(serviceURL,anchor,working,callback,errorCallback)
 		{
 		if (working && working.length>0)
 			{
@@ -17,11 +17,16 @@ function getJSON(serviceURL,anchor,working,callback)
 		  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 		  }
 		xmlhttp.onreadystatechange=function() {
-		  if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-		    var obj = JSON.parse(xmlhttp.responseText);
-			if (callback) {
-				callback(obj);
+		  if (xmlhttp.readyState==4) {
+		  	if (xmlhttp.status==200) {
+			    var obj = JSON.parse(xmlhttp.responseText);
+				if (callback) {
+					callback(obj);
+				}
 			}
+			else if (errorCallback) {
+					errorCallback(xmlhttp.responseText);
+				}
 		   }
 		 };
 		xmlhttp.open("GET",serviceURL,true);
@@ -31,7 +36,7 @@ function getJSON(serviceURL,anchor,working,callback)
 
 /* retrieves JSON from a web service and renders it within specified anchor using 
  * the submitted mustache template
- * Returns count of rows retrieved, -1 if error
+ * Returns too callback function count of rows retrieved, -1 if error
  */
 function getAndRenderJSON(serviceURL,template,anchor,working,callback)
 		{

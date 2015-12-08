@@ -99,6 +99,7 @@
     		<div id="outer">
 	    		<?php include dirname(__FILE__) . '/header.php';?>
     			<div id="main">
+                    <input type="hidden" id="mode" name="mode" value="<?php echo $mode; ?>"/>
     				<?php if ($id>0 && count($entity)==0) {?>
     					<h1>Not found.</h1>
     					<p>The <?php echo $type ?> requested was not found.</p>

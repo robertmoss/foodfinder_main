@@ -302,7 +302,6 @@ function retrieveLocations(serviceURL,template,anchor,working,callback) {
 
 function loadLocation(id) {
 	
-	
 	setElementHTML('locationBody','<div class="ajaxLoading">Loading location . . .</div>');
 	var serviceURL = "service/entityService.php?type=location";
 	serviceURL += "&id=" + id;
@@ -311,7 +310,7 @@ function loadLocation(id) {
  	   backdrop: 'static',
     	keyboard: false
 		});
-	getJSON(serviceURL,null,null,loadLocationCallback);
+	getJSON(serviceURL,null,null,loadLocationCallback,loadLocationError);
 		
 }
 
@@ -324,6 +323,10 @@ function loadLocationCallback(location) {
 	if (chkVisit) {
 		chkVisit.checked=(location.uservisits>0); 
 	}	
+}
+
+function loadLocationError(message) {
+	setElementText('locationBody','Unable to load location information: ' + message);
 }
 
 function editLocation() {

@@ -20,6 +20,7 @@ class Tenant extends DataEntity {
 			array("welcome","string",10000),
 			array("finditem","string",100),
 			array("css","string",200),
+			array("allowAnonAccess","boolean")
 		);		
 		return $fields;
 	}
@@ -31,12 +32,16 @@ class Tenant extends DataEntity {
 	// Overrides to parent methods
 	
 	public function friendlyName($fieldName) {
-            if ($fieldName=='css') {
-                return 'CSS';
+            $return =  ucfirst($fieldName);   
+            switch ($fieldName) {
+                case 'css':
+                    $return="CSS";
+                    break;
+                case 'allowAnonAccess':
+                    $return = 'Allow Anonymous Access';
+                    break; 
             }
-            else {
-                return ucfirst($fieldName);
-            }
+            return $return;
         }
 	
 	protected function getEntitiesQuery($filters, $return, $offset) {

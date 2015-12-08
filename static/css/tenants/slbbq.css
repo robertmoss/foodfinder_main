@@ -42,10 +42,40 @@ a:visited {
 
 
 /* Button Styles */
-.btn-primary {
+.btn-default, .btn-default:active:focus, .btn-default.active, .btn-default:focus {
+	background-color: #ffffff;
+    border-color: #bb2325;
+    color: #bb2325;
+	outline: none !important;
+}
+
+.btn-default a, .btn-default a:visited {
+    color: #bb2325;
+}
+
+
+.btn-primary, .btn-primary:active:focus, .btn-primary.active, .btn-primary:focus {
 	background-color: #bb2325;
     border-color: #bb2325;
+    color: #ffffff !important;
+	outline: none !important;
 }
+
+.btn-primary a {
+    color: #ffffff !important;
+}
+
+.btn-primary a:visited {
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+	background-color: #e74c3c;
+    border-color:#e74c3c;
+    outline: none !important;
+}
+
+
 
 .btn-info, .btn-info:active, .btn-info:active:focus, .btn-info.active, .btn-info:focus {
 	background-color: #e74c3c;
@@ -59,6 +89,18 @@ a:visited {
     border-color: #bb2325;
     outline: none !important;
 }
+
+/* Panels */
+
+.panel-info {
+    border-color: #777;
+}
+
+.panel-info > .panel-heading {
+    color: #bb2325;
+    background-color: #cccccc;
+    border-color: #777;
+}   
 
 
 /* Specific page element styles */
@@ -75,6 +117,7 @@ a:visited {
 
 .mapInfoWindow .flag {
 	background-color: #bb2325;
+	color: #ffffff;
 }
 
 .ribbon-green {

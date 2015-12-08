@@ -1,3 +1,9 @@
+<?php
+    $numToLoad = Utility::getRequestVariable('numToLoad', 10);
+    $categories =   Utility::getRequestVariable('categories', '10');
+   
+?>
+
 			<div id="configModal" class="modal fade" role="dialog">
 			  <div class="modal-dialog">
 			    <!-- Modal content-->
@@ -7,15 +13,24 @@
 			        <h4 id="configHeader" class="modal-title">Settings</h4>
 			      </div>
 			      <div id="configBody" class="modal-body">
-			      	<form id="settingsForm">
+			         <form id="settingsForm">
 			      		<div class="panel panel-default">
 					      	<div class="panel-heading">Show locations in the following categories:</div>
 					      	<div id="categoryList" class="panel-body">
 					        <?php
 					        	/* to do: add logic to remember users settings across page loads */
+                                 if (strlen($categories)>0) {
+                                    $cat_array=explode(',',$categories);
+                                    }
 					        	foreach(Utility::getList('categories',$tenantID,$userID) as $category) {
+					        	    $selected = ''; 
+					        	    if (strlen($categories)>0) {
+                                        if (in_array($category['id'],$cat_array,false)) {
+                                            $selected = ' checked';
+                                        }
+                                    }
 					        		echo '<div class="checkbox">';
-					        		echo '	<label><input type="checkbox" class="categoryInput" value="' . $category['id'] . '" name="' . $category['name'] . '" > ' . $category['name'] . '</label>';
+					        		echo '	<label><input type="checkbox" class="categoryInput" value="' . $category['id'] . '" name="' . $category['name'] . '"' . $selected . '> ' . $category['name'] . '</label>';
 									echo '</div>';
 					        	}
 				        	?>
@@ -23,7 +38,7 @@
 				        </div>
 				        <div class="form-group">
 				            <label for="numToDisplay"># of Locations to Return</label>
-				            <input id="numToDisplay" type="text" class="form-control" value="10"/>
+				            <input id="numToDisplay" type="text" class="form-control" value="<?php echo $numToLoad?>">
 				        </div>
 				     </form>
 			      </div>

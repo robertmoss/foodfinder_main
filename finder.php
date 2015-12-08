@@ -1,7 +1,10 @@
 <?php
 	include dirname(__FILE__) . '/partials/pageCheck.php';
 	include_once dirname(__FILE__) . '/classes/core/utility.php';
-	$thisPage="finder";	
+	$thisPage="finder";
+    
+    $zoom = Utility::getRequestVariable('zoom', 0);
+
  ?>
 
 <!DOCTYPE html>
@@ -39,7 +42,8 @@
 	        			</div>
 						<input id="txtTenantID" type="hidden" value="<?php echo($_SESSION['tenantID']); ?>"/>
 						<input id="txtCurrentLatitude" type="hidden" value="<?php echo Utility::getSessionVariable('latitude', ''); ?>"/>
-						<input id="txtCurrentLongitude" type="hidden" value="<?php echo Utility::getSessionVariable('longitude', '');; ?>"/>
+						<input id="txtCurrentLongitude" type="hidden" value="<?php echo Utility::getSessionVariable('longitude', ''); ?>"/>
+                        <input id="txtZoom" type="hidden" value="<?php echo $zoom; ?>"/>
         		</form> 
         		<div id="message" class="alert alert-danger hidden">
         			<a class="close_link" href="#" onclick="hideElement('message');"></a>

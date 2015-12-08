@@ -4,6 +4,7 @@
 	include_once dirname(__FILE__) . '/classes/core/database.php';
 	include_once dirname(__FILE__) . '/classes/core/utility.php';
 	include_once dirname(__FILE__) . '/classes/core/user.php';
+    $thisPage="login";
 	
 	Utility::debug("login.php: logging in user.",5);
 	$username = '';
@@ -53,17 +54,16 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Food Finder: Login</title>
-        <link rel="stylesheet" type="text/css" href="static/css/styles.css" />	
-    
-		<script src="js/jquery-1.10.2.js"></script>		
-		<script src="js/mustache.js"></script>
-		<script src="js/core.js"></script>
+        <?php include("partials/includes.php"); ?>  
     </head>
     <body>
-    	<hr/>
+    	<?php 
+                    include('header.php');
+
+                ?>
     	<?php if(strlen($errorMessage)>0) { ?>
     		<div class="edit">
-    			<div class="message">
+    			<div class="alert alert-danger">
     				<?php echo $errorMessage; ?>
     			</div>
     		</div>
@@ -76,8 +76,8 @@
 						Password: <input id="txtPassword" name="password" type="password" placeholder="Password"></input>								
 					</div>
 					<div class="panel">
-						<input type="submit" class="btn primary_button" value="Submit"/>
-						<input type="button" class="btn" value="Cancel" onclick="hideElement('topnav_login');"/>	
+						<input type="button" class="btn btn-default" value="Cancel" onclick="hideElement('topnav_login');"/>	
+                        <input type="submit" class="btn btn-primary" value="Submit"/>
 					</div>
 				</form>
 			</div>

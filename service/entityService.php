@@ -16,7 +16,15 @@ include_once dirname(__FILE__) . '/../classes/core/service.php';
 	Utility::debug('entity service invoked for type:' . $type . ', method=' . $_SERVER['REQUEST_METHOD'], 5);
 	
     if ($userID==0) {
-        Service::returnError('Service must be invoked by an authenticated user.');
+        if ($_SERVER['REQUEST_METHOD']=="GET") {
+            // if a GET, check whether anonymous access is allowed by tenant
+            if (!Utility::getTenantProperty($applicationID, $tenantID, $userID, 'allowAnonAccess')) {
+                Service::returnError('Service must be invoked by an authenticated user.' );
+            }
+        }
+        else {
+            Service::returnError('Service must be invoked by an authenticated user.');
+        }
     }
     
 	$knowntypes = array('tenant','location','link','media');

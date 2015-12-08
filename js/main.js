@@ -35,15 +35,25 @@ var map;
 var geocoder;
 var currentLatLong;
 var locationIndex=0;
-var numToLoad=50;
+var numToLoad=10;
 var infoWindow;
 var lastMarker;
 var lastScroll=0;
 var offlineMode=false;
+var zoomSetBy='none';
 
 function initializeMap(anchor)
 {
 	showElement('loading');
+	
+	numToLoad = getElementValue('numToDisplay');
+	zoom = parseInt(getElementValue('txtZoom'));
+	if (!zoom || zoom==0) {
+		zoom = 13;
+	}
+	else {
+		zoomSetBy='user';
+	}
 	
 	try {
 		geocoder = new google.maps.Geocoder();
@@ -68,7 +78,7 @@ function initializeMap(anchor)
 	var async = false;
 	var mapOptions = {
 		center: currentLatLong,
-		zoom: 13,
+		zoom: zoom,
 		mapTypeControl: false,
     	panControlOptions: {
     	    position: google.maps.ControlPosition.TOP_RIGHT,
@@ -105,6 +115,7 @@ function initializeMap(anchor)
 	}
 	
 	map = new google.maps.Map(document.getElementById("mapcanvas"), mapOptions);
+
 	if (!async) {
 		// use either default or user set location
 		map.setCenter(currentLatLong);
@@ -114,7 +125,17 @@ function initializeMap(anchor)
 		addInfoWindow(marker,contentString);		
 		loadLocations(currentLatLong.lat(),currentLatLong.lng(),anchor);
 	}
-	
+	map.addListener('zoom_changed',mapZoomChanged);
+}
+
+function mapZoomChanged() {
+	if (zoomSetBy=='script') {
+		zoomSetBy='none';
+	}
+	else {
+		// if we didn't set it, must be the user
+		zoomSetBy = 'user';
+	}
 }
 
 function setCurrentAddress(address,anchor)
@@ -339,8 +360,12 @@ function loadLocations(currentLat, currentLng, anchor, ret, start) {
 				}
 				
 				// PROBLEM: This wipes out earlier locations when adding to list. Need to append, not set
-				locations = view.locations; // save for later use	
-					
+				if (locations) {
+					locations = locations.concat(view.locations); // save for later use	
+				}
+				else {
+					locations = view.locations;
+				}
 				displayLocationSummary(0);
 				
 				// populate map and wire events on location DIVs
@@ -383,8 +408,12 @@ function loadLocations(currentLat, currentLng, anchor, ret, start) {
 				}
 				
 				hideElement('list-loader');
-				resizeMap(map,farthestPointToShow);
-				map.setCenter(currentLatLong);
+				if (zoomSetBy!='user') {
+					// only set map size if user hasn't changed the zoom level
+					zoomSetBy='script';
+					resizeMap(map,farthestPointToShow);
+				}
+				//centerMap(locid);
 				log('Locations loaded.');
 				}
 			else {
@@ -470,6 +499,7 @@ function applyNewSettings() {
 	clearMarkers();
 	var pos = currentLatLong;
 	marker = dropMarker(map,pos,"Current Location","img/icons/arrow.png",0);
+	numToLoad = document.getElementById('numToDisplay').value;
 	loadLocations(pos.lat(),pos.lng(),'mapcontent');
 	
 }
@@ -477,17 +507,19 @@ function applyNewSettings() {
 function loadPrevLocation() {
 	if (locationIndex>0) {
 		locationIndex--;
+		log('loading location ' + locationIndex);
 		displayLocationSummary(locationIndex);
 		centerMap(locations[locationIndex].id);
 	}
 }
 
 function loadNextLocation() {
-	if (locationIndex>=locations.length) {
-		alert('Load more!');
+	locationIndex++;
+	log('loading location ' + locationIndex);
+	if (locationIndex>=(locations.length)) {
+		loadLocations(currentLatLong.lat(),currentLatLong.lng(),'resultSpan',numToLoad,locationIndex+1);
 	}
 	else {
-		locationIndex++;
 		displayLocationSummary(locationIndex);
 		centerMap(locations[locationIndex].id);
 		}	

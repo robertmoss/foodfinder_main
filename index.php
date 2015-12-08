@@ -1,7 +1,8 @@
 <?php
 	include dirname(__FILE__) . '/partials/pageCheck.php';
 	include_once dirname(__FILE__) . '/classes/core/utility.php';
-	$thisPage="index";	
+	$thisPage="index";
+    $finditem = Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'finditem');
  ?>
 
 <!DOCTYPE html>
@@ -24,19 +25,14 @@
 
 	  			<div class="container">
 			      <div class="row">
-			        <div class="col-md-4 homePanel">
-			          <h2>Daily South BBQ</h2>
-			          <p>Get the latest tales, primers, and inside scroop from the world of Southern barbecue</p>
-			          <p><a class="btn btn-default" href="http://thedailysouth.southernliving.com/category/barbecue/" target="_blank" role="button">Go &raquo;</a></p>
-			        </div>
 			        <div class="col-md-4 homePanel" >
-			          <h2>Find BBQ</h2>
-			          <p>Looking to find the best barbecue near you? Our BBQ Finder will map it out for you. </p>
+			          <h2>Find <?php echo ucfirst($finditem) ?></h2>
+			          <p>Looking to find the best <?php echo $finditem ?> near you? Our <?php echo ucfirst($finditem) ?> Finder will map it out for you. </p>
 			          <p><a class="btn btn-default" href="finder.php" role="button">Go &raquo;</a></p>
 			       </div>
 			        <div class="col-md-4 homePanel">
 			          <h2>Plan a Trip</h2>
-			          <p>Heading out on a trip and looking to find great barbecue along the way? Use our trip planner to map out your route.</p>
+			          <p>Heading out on a trip and looking to find great <?php echo $finditem ?> along the way? Use our trip planner to map out your route.</p>
 			          <p><a class="btn btn-default" href="trip.php" role="button">Go &raquo;</a></p>
 			        </div>
 			      </div>

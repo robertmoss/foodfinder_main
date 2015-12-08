@@ -359,7 +359,7 @@ abstract class DataEntity implements iDataEntity {
 	 						foreach ($children as $c) {
 	 							Utility::Debug('Childentity mark 3' . $c->id,1);
 								$procname = $this->getAddChildProcName($field[2]);
-								array_push($followOnQueries,'call ' . $procname . '([[ID]],' . $c->id . ',' . $tenantid . ');');
+								array_push($followOnQueries,'call ' . $procname . '([[ID]],' . $c->id . ',' . $this->tenantid . ');');
 							}
 						}
 						break;

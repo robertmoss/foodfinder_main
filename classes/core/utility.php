@@ -207,7 +207,7 @@ class Utility{
                         $readonly = ' readonly';
                     } 
                     
-					$default_label = '<label class="col-sm-2 control-label" for="txt' . $field[0] . '">' . $class->friendlyName($field[0]) .':</label>';
+					$default_label = '<label class="col-sm-4 control-label" for="txt' . $field[0] . '">' . $class->friendlyName($field[0]) .':</label>';
 					if ($class->isClickableUrl($field[0])) {
 						// add link to label
 						$url = 'getElementById(\'txt' . $class->getName() . ucfirst($field[0]) . '\').value';
@@ -457,7 +457,6 @@ class Utility{
 	    
         Log::debug('retrieving tenant property ' . $property . " for tenant ID=" . $tenantID, 1);
         
-		$property = strtolower($property);
 		$class = new Tenant($userID,$tenantID);
         
 		if (!$class->hasField($property)) {
@@ -468,7 +467,7 @@ class Utility{
 		$value = Cache::getValue($key);
         if (!$value) {
             // cache miss. Need to retrieve from tenant
-            $query = 'select ' . $property . ' from tenant where id=' . $tenantID;
+            $query = 'select ' . $property . ' from tenant where id=' . Database::queryNumber($tenantID);
             $data = Database::executeQuery($query);
             if ($data) {
                 if ($row=$data->fetch_row()) {

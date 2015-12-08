@@ -3,7 +3,8 @@ $(document).ready(function() {
 	
 	// this is hardwired to provide special handling for image strip—pretty hacky, but not sure where else to put it yet
 	var type=document.getElementById('type').value;
-	if (type=='location') {
+	var mode=document.getElementById('mode').value;
+	if (type=='location' && mode!='edit') {
 		loadMediaForLocation(document.getElementById('id').value);
 	}
 });

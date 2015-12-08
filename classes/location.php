@@ -104,12 +104,12 @@
 			$control = '';	
 			if ($fieldname=='name') {
 				$control = '<div class="form-group">';
-				$control .= '    <div class="col-sm-2 col-sm-offset-2"><button type="button" class="btn btn-info" onclick="checkGooglePlaces(\'Location\');">Check Google Places</button></div>';
+				$control .= '    <div class="col-sm-2 col-sm-offset-2"><button type="button" class="btn btn-primary" onclick="checkGooglePlaces(\'Location\');">Check Google Places</button></div>';
 				$control .= '</div>';
 			}
 			elseif ($fieldname=='longitude') {
 				$control = '<div class="form-group">';
-				$control .= '    <div class="col-sm-2 col-sm-offset-2"><button type="button" class="btn btn-info" onclick="lookupLatLng(\'Location\');">Resolve From Address</button></div>';
+				$control .= '    <div class="col-sm-2 col-sm-offset-2"><button type="button" class="btn btn-primary" onclick="lookupLatLng(\'Location\');">Resolve From Address</button></div>';
 				$control .= '</div>';
 			}
 				

@@ -861,6 +861,11 @@ edit .row span.date_input {
 	pointer-events: auto;
 }
 
+/* Bootstrap Overrides & Fixes */
+.modal {
+    overflow-y: scroll;
+   }
+
 
 
 .modaldialog .modalinner {
