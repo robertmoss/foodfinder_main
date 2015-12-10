@@ -4,6 +4,7 @@ interface iDataEntity {
 	
 	public function getName();
 	public function getPluralName();
+    public function getFriendlyName();
 	public function getDataServiceURL();
 	public function getFields();
 	public function getEntity($id);
@@ -37,6 +38,11 @@ abstract class DataEntity implements iDataEntity {
 				
 		public abstract function getName();
 		
+        // override if you want your entity to be displayed with a different name than underlies the data store
+        public function getFriendlyName() {
+            return $this->getName();
+        }
+        
 		// should return an array defining available fields on the object
 		public abstract function getFields();
 		/* returns array with this format
@@ -47,10 +53,17 @@ abstract class DataEntity implements iDataEntity {
 		 * 			date: date
 		 *       boolean: a true/false value (1=true/0=false)
 		 * 			viewonly: won't be rendered on edit forms or submitted to database on insert/update
+         *            hidden: won't be displayed on forms but will be submitted to database on insert/update and 
+         *                      included in get service requests. Assumed to be numeric: use for parents and other keys
 		 * 			picklist: pick from a static list of values, using Utility object's getList method
-		 * 		linkedentity:
-		 * 	    childentities: children to this entity which should be displayed in list
-		 * 			           custom: handling of field is deferred to the entity subclass for special treatment 
+		 * 		linkedentity: represents a many-to-one linkage - this field links the current entity to one (and only one) other entity 
+         *                      (e.g. order linked to a specified customer, a customer may have multiple orders but an order only has one customer)
+         *    linkedentities: represents a many-to-many linkage - this entity has a collection of sub-entities (potential many sub-entities) linked to it, 
+         *                      and those sub-entities may be linked to other entities, too (e.g. order linked to multiple products, and those products can be 
+         *                      used on other orders) 
+		 * 	    childentities: represents one-to-many relationship: a collection of sub-entities to this entity, and those sub-entities are used
+         *                      only on this particular entity (e.g. the line items on an order)
+		 * 			  custom: handling of field is deferred to the entity subclass for special treatment 
 		 *  		   image: an image file that gets uploaded to content server with url stored in database
 		 *        properties: a dummy placeholder that lets you specify where on forms to place user-defined properties
 		 * 			  custom: core classes don't know what to do with this, so must be handled custom by child
@@ -65,10 +78,12 @@ abstract class DataEntity implements iDataEntity {
 		 * 				  [4] - same as picklist #4
 		 * 				  [5] - (optional) the class name of the linked entity
 		 * 				  [6] - (optional) index of the hidden or viewonly field in the field array to be used to as label for the linked entity 
-		 * 		childentities
-		 * 				  [2] - name of the childentity
-		 * 				  [3] - true/false: whether user should be allowed to dynamically add new childentities (if false, user can only select from a defined list)
-		 * 				  [4] - true/false: whether user should be able to delete childentities			  	
+		 * 		linkedentities
+		 * 				  [2] - name of the linked entity
+		 * 				  [3] - true/false: whether user should be allowed to dynamically create new entities to be linked (if false, user can only select from a defined list of existing entities)
+		 * 				  [4] - true/false: whether user should be able to delete a linked entities or just de-link the entity from parent 
+         *      childentities
+         *                [2] - name of the childentity
 		 */
 
 		public function getFieldType($fieldName) {
@@ -103,7 +118,7 @@ abstract class DataEntity implements iDataEntity {
 		
 		
 		public function getDataServiceURL() {
-			return "service/entityService.php?type=" . strtolower($this->getName());
+			return "service/entityService.php?type=" . lcfirst($this->getName());
 		}
 		
 		public function getJavaScript() {
@@ -124,6 +139,14 @@ abstract class DataEntity implements iDataEntity {
             // override and return false for any field needing such handling
             return true;
         }
+       
+       public function isParentId($fieldName) {
+           // override and return true for fields that are Parent IDs for the entity - that is, links to the entity's parent
+           // doing so drives the automatic linking of subentities to parent entities in forms, etc.
+           // Note: parentids are used for 1 to N parent relationships
+           //       childentity data types are used for N to N parent relationships
+           return false;
+       }
        
         public function fieldAllowsSingleUpdates($fieldName) {
             // By default, you cannot update an individual field on an entity; you must update the entire entity with all
@@ -182,7 +205,7 @@ abstract class DataEntity implements iDataEntity {
 			$fieldarray = $this->getFields();
 			$separator = "";
 			foreach ($fieldarray as $field) {
-				if ($field[1]=='childentities') {
+				if ($field[1]=='childentities'||$field[1]=='linkedentities') {
 					// add .
 					$query = "call get" . ucfirst($field[0]) . "By" . $this->getName() . "ID(" . $id . "," . $this->tenantid . "," . $this->userid . ")";
 					$data = Database::executeQuery($query);
@@ -340,6 +363,7 @@ abstract class DataEntity implements iDataEntity {
 						$query .= $separator . Database::queryDate($value);
 						break;
 					case "number":
+                    case "hidden":
 						$query .= $separator . Database::queryNumber($value);
 						break;
 					case "boolean":
@@ -351,13 +375,10 @@ abstract class DataEntity implements iDataEntity {
 					case "linkedentity":
 						$query .= $separator . Database::queryNumber($value);
 						break;
-					case "childentities":
-						Utility::Debug('Childentity mark 1',1);
+					case "linkedentities":
 						if (is_array($data->{$field[0]})) {
-							Utility::Debug('Childentity mark 2' . $field[0] ,1);
 							$children = $data->{$field[0]};
 	 						foreach ($children as $c) {
-	 							Utility::Debug('Childentity mark 3' . $c->id,1);
 								$procname = $this->getAddChildProcName($field[2]);
 								array_push($followOnQueries,'call ' . $procname . '([[ID]],' . $c->id . ',' . $this->tenantid . ');');
 							}
@@ -451,6 +472,7 @@ abstract class DataEntity implements iDataEntity {
                         $query .= $separator . Database::queryBoolean($data->{$field[0]});
                         break;
 					case "number":
+                    case "hidden":
 						$query .= $separator . Database::queryNumber($data->{$field[0]});
 						break;
 					case "date":
@@ -462,7 +484,7 @@ abstract class DataEntity implements iDataEntity {
 					case "linkedentity":
 						$query .= $separator . Database::queryNumber($data->{$field[0]});
 						break;
-					case "childentities":
+					case "linkedentities":
 						$procname = $this->getRemoveChildrenProcName($field[0]);
 						array_push($followOnQueries,'call ' . $procname . '('. $id . ',' . $this->tenantid . ');');
 						if (is_array($data->{$field[0]})) {
@@ -585,6 +607,7 @@ abstract class DataEntity implements iDataEntity {
                         $output = Database::queryBoolean($value);
                         break;
                     case "number":
+                    case "hidden":
                         $output = Database::queryNumber($value);
                         break;
                     case "date":

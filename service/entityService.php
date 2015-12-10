@@ -27,14 +27,14 @@ include_once dirname(__FILE__) . '/../classes/core/service.php';
         }
     }
     
-	$knowntypes = array('tenant','location','link','media');
+	$knowntypes = array('tenant','location','link','media','tenantSetting');
 	if(!in_array($type,$knowntypes,false)) {
 		// unrecognized type requested can't do much from here.
 		Service::returnError('Unknown type: ' . $type);
 	}
 	
 	$classpath = '/../classes/'; 
-	$coretypes = array("tenant");
+	$coretypes = array('tenant','tenantSetting');
 	if(in_array($type,$coretypes,false)) {
 		// core types will be in core subfolder
 		$classpath .= 'core/';
@@ -174,7 +174,7 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST")
 	}
 elseif ($_SERVER['REQUEST_METHOD']=="DELETE") {
 
-    $supportedtypes = array('media');
+    $supportedtypes = array('media','tenantSetting');
     if(!in_array($type,$supportedtypes,false)) {
         // delete method not supported from all types
         Service::returnError('Method not supported for type: ' . $type);

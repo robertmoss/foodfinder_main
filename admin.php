@@ -164,7 +164,7 @@
 					    </div>
 					  </div>
 					</div>
-					<div id="tenantModal" class="modal fade" role="dialog">
+					<div id="tenantEditModal" class="modal fade" role="dialog">
 					  <div class="modal-dialog">
 					    <!-- Modal content-->
 					    <div class="modal-content">
@@ -185,7 +185,8 @@
 					    </div>
 					  </div>
 					</div>
-		        </div>	
+		        </div>
+                <?php include("partials/childEditModal.php")?>	
         		<?php include("footer.php")?>     		
         	</div>
         </div>

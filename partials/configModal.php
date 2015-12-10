@@ -1,6 +1,6 @@
 <?php
     $numToLoad = Utility::getRequestVariable('numToLoad', 10);
-    $categories =   Utility::getRequestVariable('categories', '10');
+    $categories =   Utility::getRequestVariable('categories', '');
    
 ?>
 

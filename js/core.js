@@ -119,10 +119,14 @@ function getAndRenderHTML(serviceURL,anchor,working,callback) {
  * Calls the specified service using delete method
  * If callback specified, calls it passing in the responseText from the service call
  */
-function callDeleteService(serviceURL,working,callback) {
-		if (working && working.length>0)
-			{
-				document.getElementById(anchor).innerHTML = working;
+function callDeleteService(serviceURL,workingDiv,workingMessage,callback) {
+		if (workingDiv)
+			{	
+				if (!workingMessage || workingMessage.length==0) {
+					workingMessage = "Deleting";
+				}
+				document.getElementById(workingDiv).innerHTML = workingMessage;
+				showElement(workingDiv);
 			}
 		if (window.XMLHttpRequest)
 		  {// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -134,6 +138,9 @@ function callDeleteService(serviceURL,working,callback) {
 		  }
 		xmlhttp.onreadystatechange=function() {
 		  if (xmlhttp.readyState==4) {
+		 	if (workingDiv) {
+		 		hideElement(workingDiv);
+		 	}
 			if (callback) {
 				callback(xmlhttp.status,xmlhttp.responseText);
 			}

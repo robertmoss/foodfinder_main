@@ -265,7 +265,7 @@ class Utility{
 							echo $default_label;
 							$size = $field[2]<4 ? 'col-sm-2' : 'col-sm-6';
 			        		echo '<div class="' . $size . '"><select id="txt' . $class->getName() . ucfirst($field[0]) . '" name="' . $field[0] . '" class="form-control">';
-							$list = Utility::getList($field[3],$tenantID);
+							$list = Utility::getList($field[3],$tenantID,0);
 							foreach ($list as $r) {
 								$selected = "";
 								if ($id>0 && $r[0]==$entity[$field[0]]) {
@@ -310,51 +310,79 @@ class Utility{
 			        		echo '</div>';
 							break;
 						case "hidden":
+                            if ($class->isParentId($field[0])) {
+                                $value = $parentid;
+                            }
+                            echo '<input type="hidden" id="txt' . $field[0] . '" name="' . $field[0] . '" value="' . $value . '"/>';
+                            break;
 						case "childentities":
-							// need to render special handling for childentities, differing depending on whether user can add or not when editing parent entity
 							echo '<div class="panel panel-info">';
 							echo '   <div class="panel-heading"><div class="col-sm-2">'. ucfirst($field[0]) . '</div>';
 							$subform='';
-							if (!$field[3]) {
-								$child_array = $class->getAvailableChildren($field[0],$tenantID);
-								$selectName = '';
-								$options='';
-								foreach($child_array as $c) {
-									$options .= '<option value="'. $c['id'] .'">'. $c['name'] .'</option>';
-									}
-								$selectName = 'add' . $field[0];
-								echo '<div class="col-sm-3"><select name="' . $selectName . '" class="form-control">' . $options . '</select></div>';
-								echo '&nbsp;<button type="button" class="btn btn-default" onclick="addChildEntity('. $selectName .','. $field[0] .');">';
-								echo '<span title="add" class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</button>';							
-								}
-							else {
-									// add model form to allow user to create new child entities
-									//$subform = Utility::renderChildModal($field[2]);
-									// This will be handled afterwords so forms don't get nested
-									echo '&nbsp;<button type="button" class="btn btn-default" onclick="createChildEntity(\''. $field[2] .'\');">';
-									echo '<span title="add" class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</button>';	
-							}	
+							echo '&nbsp;<button type="button" class="btn btn-default" onclick="createChildEntity(\''. $field[2] .'\');">';
+                            echo '<span title="add" class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</button>';	
 							echo '</div>';
 							echo '   <div class="panel-body">';
-							$options='';
+							//$options='';
+                            $rows='';
 							if ($entity && array_key_exists($field[0],$entity)) {
 								foreach($entity[$field[0]] as $child) {
 									// this assumes all child entities have an id and a name - safe assumption?
-									//echo '<div id="' . $field[2] . $child['id'] . '">' . $child['name'];
-									// if ($field[4]) { 	
-									//	echo '&nbsp;<a href="#" onclick="removeChildRow(\'' . $field[2] . $child['id'] . '\');"><span title="remove" class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>';
-									//
-									//echo '<input type="hidden" name=' . $field[2] . ' value=" '.  $child['id'] . ' "/>';
-									//echo '</div>';
-									$options .= '<option value=' . $child['id'] . ' selected>' . $child['name'] . '</option>';
-									
+									//$options .= '<option value=' . $child['id'] . ' selected>' . $child['name'] . '</option>';
+									$rows .= '<tr>
+									               <td><div class="user"><span class="description">' . $child['name'] . '</span></div></td>
+									               <td><div class="btn-group btn-group-sm" role="group" aria-label="...">
+									                       <button type="button" class="btn btn-default" onclick="editChildEntity(\'' . $field[2] .  '\',' . $child['id'] . ');"><span class="glyphicon glyphicon-pencil"></span>&nbsp;</button>
+									                       <button type="button" class="btn btn-default" onclick="deleteChildEntity(\'' . $field[2] .  '\',' . $child['id'] . ');"><span class="glyphicon glyphicon-remove"></span>&nbsp;</button>
+									                       <div id="workingDelete'.$child['id']. '" class="hidden"></div> 
+									                   </div></td></tr>'; 
 								}
 							}
-							// need to style this
-							echo '<select id="' . $field[2] . 'Select" name="' . $field[0] . '" class="form-control" multiple>' . $options . '</select>';
-							echo '   </div>';
-							echo '</div>';
-							break;
+                            echo '<table class="table table-striped table-hover table-responsive">';
+                            //echo '<thead><tr><th>Name</th><th>Actions</th></tr></thead>';
+                            echo '<tbody>' . $rows;
+                            echo '</tbody></table>';
+
+                            echo '   </div>';
+                            echo '</div>';
+                            break;
+                        case "linkedentities":
+                            // need to render special handling for linked entities, differing depending on whether user can add or not when editing parent entity
+                            echo '<div class="panel panel-info">';
+                            echo '   <div class="panel-heading"><div class="col-sm-2">'. ucfirst($field[0]) . '</div>';
+                            $subform='';
+                            if (!$field[3]) {
+                                $child_array = $class->getAvailableChildren($field[0],$tenantID);
+                                $selectName = '';
+                                $options='';
+                                foreach($child_array as $c) {
+                                    $options .= '<option value="'. $c['id'] .'">'. $c['name'] .'</option>';
+                                    }
+                                $selectName = 'add' . $field[0];
+                                echo '<div class="col-sm-3"><select name="' . $selectName . '" class="form-control">' . $options . '</select></div>';
+                                echo '&nbsp;<button type="button" class="btn btn-default" onclick="addChildEntity('. $selectName .','. $field[0] .');">';
+                                echo '<span title="add" class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</button>';                          
+                                }
+                            else {
+                                    // add model form to allow user to create new child entities
+                                    //$subform = Utility::renderChildModal($field[2]);
+                                    // This will be handled afterwords so forms don't get nested
+                                    echo '&nbsp;<button type="button" class="btn btn-default" onclick="createChildEntity(\''. $field[2] .'\');">';
+                                    echo '<span title="add" class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</button>';  
+                            }   
+                            echo '</div>';
+                            echo '   <div class="panel-body">';
+                            $options='';
+                            if ($entity && array_key_exists($field[0],$entity)) {
+                                foreach($entity[$field[0]] as $child) {
+                                    // this assumes all child entities have an id and a name - safe assumption?
+                                    $options .= '<option value=' . $child['id'] . ' selected>' . $child['name'] . '</option>';
+                                }
+                            }
+                            echo '      <select id="' . $field[2] . 'Select" name="' . $field[0] . '" class="form-control" multiple>' . $options . '</select>';
+                            echo '   </div>';
+                            echo '</div>';
+                            break;
 						case "custom":
 							// call into entity class for its edit field
 							echo $class->getCustomEditControl($field[0],$entity[$field[0]],$tenantID);
@@ -453,29 +481,35 @@ class Utility{
 	 * multi-tenant functions
 	 */
 	
+	// not sure if this is kludgey or elegant: but, we are treating the static properties and dynamically-definable settings
+	// as the same thing here - just key/value pairs. All tenants have some keys, other keys may or may not be defined for a tenant
 	public static function getTenantProperty($applicationID, $tenantID, $userID, $property) {
 	    
         Log::debug('retrieving tenant property ' . $property . " for tenant ID=" . $tenantID, 1);
         
 		$class = new Tenant($userID,$tenantID);
-        
-		if (!$class->hasField($property)) {
-            throw new Exception($property . ' is not a valid tenant property.');
-        }
-        
-		$key = $applicationID . ":" . $tenantID . ":" . $property;
-		$value = Cache::getValue($key);
-        if (!$value) {
-            // cache miss. Need to retrieve from tenant
-            $query = 'select ' . $property . ' from tenant where id=' . Database::queryNumber($tenantID);
+        $key = $applicationID . ":" . $tenantID . ":" . $property;
+        $value = Cache::getValue($key); 
+        $query='';       
+		if (!$value) {
+		    // cache miss. Need to retrieve from database
+		    if ($class->hasField($property)) {
+		        // this is one the fields on the tenant table
+                $query = 'select ' . $property . ' from tenant where id=' . Database::queryNumber($tenantID);
+            }
+            else {
+                // this might be a dynamically-set property   
+                $query = 'select value from tenantSetting where setting= ' . Database::queryString($property) . ' and tenantid=' . Database::queryNumber($tenantID);
+            }                
             $data = Database::executeQuery($query);
             if ($data) {
                 if ($row=$data->fetch_row()) {
                     $value = $row[0];
                     Cache::putValue($key,$value);
-                }                
-            }   
-        } 
+                    }                
+                }   
+            }
+         
         return $value;
 	}
 	

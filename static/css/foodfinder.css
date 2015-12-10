@@ -98,6 +98,10 @@
 		border: solid 1px #aaaaaa;
 		text-align: center;
 	}
+	
+.loc-image img {
+	max-width: 100%;
+}
 
 @media (min-width: 768px) {
 	

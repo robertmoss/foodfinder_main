@@ -26,7 +26,26 @@
 	  			<div class="container">
 			      <div class="row">
 			        <div class="col-md-4 homePanel" >
-			          <h2>Find <?php echo ucfirst($finditem) ?></h2>
+			           <?php
+                            $mapheading = Utility::getTenantProperty($applicationID, $tenantID, $userID, 'BigMapHeading');
+                            $maplink = Utility::getTenantProperty($applicationID, $tenantID, $userID, 'BigMapLink');
+                            $maptext = Utility::getTenantProperty($applicationID, $tenantID, $userID, 'BigMapText');
+                            if (!$maplink) {
+                                $maplink = 'finder.php';
+                            }
+                            if (!$maptext) {
+                                $maptext = 'View our collection of the top ' . $finditem . ' around. Our Big ' . ucfirst($finditem) . ' Map has your choices.';
+                            }
+                            if (!$mapheading) {
+                                $mapheading = 'The Big ' . ucfirst($finditem) . ' Map';
+                            }
+                      ?>
+                      <h2><?php echo $mapheading ?></h2>
+                      <p><?php echo $maptext ?></p>
+                      <p><a class="btn btn-default" href=<?php echo $maplink ?> role="button">Go &raquo;</a></p>
+                   </div>
+			        <div class="col-md-4 homePanel" >
+			          <h2><?php echo ucfirst($finditem) ?> Radar</h2>
 			          <p>Looking to find the best <?php echo $finditem ?> near you? Our <?php echo ucfirst($finditem) ?> Finder will map it out for you. </p>
 			          <p><a class="btn btn-default" href="finder.php" role="button">Go &raquo;</a></p>
 			       </div>

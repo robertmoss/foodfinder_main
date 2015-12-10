@@ -322,14 +322,8 @@ function addTenant() {
 }
 
 function editTenant(id) {
-	var headerText= (id>0) ? 'Edit Tenant' : "Add New Tenant";
-	setElementText('tenantHeader',headerText);
-	var serviceURL = "service/formService.php?type=tenant";
-	serviceURL += "&id=" + id;
 	
-	getAndRenderHTML(serviceURL,'tenantFormAnchor','',prepareTenantEdit);
-	hideElement("tenant-message");
-	$('#tenantModal').modal();
+	editEntity(id,'tenant',prepareTenantEdit);
 }
 
 function prepareTenantEdit(status) {
@@ -348,7 +342,7 @@ function saveTenant() {
 function onTenantSave(success) {
 
 	if (success) {
-		$('#tenantModal').modal('hide');
+		$('#tenantEditModal').modal('hide');
 		loadTenants(offset);
 	}
 }

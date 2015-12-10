@@ -359,14 +359,13 @@ function loadLocations(currentLat, currentLng, anchor, ret, start) {
 					}
 				}
 				
-				// PROBLEM: This wipes out earlier locations when adding to list. Need to append, not set
+				// save for later use	
 				if (locations) {
-					locations = locations.concat(view.locations); // save for later use	
+					locations = locations.concat(view.locations); 
 				}
 				else {
 					locations = view.locations;
 				}
-				displayLocationSummary(0);
 				
 				// populate map and wire events on location DIVs
 				for(var i=0; i<view.locations.length; i++) {
@@ -413,8 +412,9 @@ function loadLocations(currentLat, currentLng, anchor, ret, start) {
 					zoomSetBy='script';
 					resizeMap(map,farthestPointToShow);
 				}
-				//centerMap(locid);
-				log('Locations loaded.');
+				displayLocationSummary(locationIndex);
+				centerMap(locations[locationIndex].id);
+				//log('Locations loaded.');
 				}
 			else {
 				setMessage('Unable to retrieve locations: the location service is not available.', 'message', 'message_text', false);
@@ -497,6 +497,8 @@ function applyNewSettings() {
 	
 	// reload location list
 	clearMarkers();
+	locations = [];
+	locationIndex=0;
 	var pos = currentLatLong;
 	marker = dropMarker(map,pos,"Current Location","img/icons/arrow.png",0);
 	numToLoad = document.getElementById('numToDisplay').value;

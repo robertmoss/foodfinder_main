@@ -3,6 +3,7 @@
 include_once 'database.php';
 include_once 'dataentity.php';
 include_once 'utility.php';
+include_once 'cache.php';
 
 class Tenant extends DataEntity {
 		
@@ -20,7 +21,8 @@ class Tenant extends DataEntity {
 			array("welcome","string",10000),
 			array("finditem","string",100),
 			array("css","string",200),
-			array("allowAnonAccess","boolean")
+			array("allowAnonAccess","boolean"),
+			array("settings","childentities","tenantSetting","true","true")
 		);		
 		return $fields;
 	}
@@ -55,6 +57,5 @@ class Tenant extends DataEntity {
 			$query = 'select count(*) from ' . strtolower($this->getName());
 			return $query;
 		}
-	
-	
+    	
 }

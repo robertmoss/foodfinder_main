@@ -18,7 +18,7 @@
                                 <div id="childMessageDiv" class="message hidden">
                                     <span id="childMessageSpan"><p>Your message here!</p></span>
                                 </div>
-                                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
+                                <button type="button" class="btn btn-default" onclick="cancelChild();"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
                                 <button id="childEditSaveButton" type="button" class="btn btn-primary" onclick="saveChild();" disabled>
                                     <span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save
                                 </button>

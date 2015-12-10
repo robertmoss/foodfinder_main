@@ -22,7 +22,8 @@
 	
 	Utility::debug('Form service invoked for type:' . $type . ', method=' . $_SERVER['REQUEST_METHOD'], 5);
 	
-	$knowntypes = array('location','link','media','tenant');
+    // in the future: can remove hardcoded array and query DB or config file to allow dynamic entities
+	$knowntypes = array('location','link','media','tenant','tenantSetting');
 	if(!in_array($type,$knowntypes,false)) {
 		// unrecognized type requested can't do much from here.
 		header(' ', true, 400);
@@ -31,7 +32,7 @@
 	}
 	
 	$classpath = '/../classes/'; 
-	$coretypes = array('tenant');
+	$coretypes = array('tenant','tenantSetting');
 	if(in_array($type,$coretypes,false)) {
 		// core types will be in core subfolder
 		$classpath .= 'core/';
@@ -53,6 +54,7 @@
 	if (isset($_GET["id"])) {
 		$id = $_GET["id"];
 	}
+    $parentid=Utility::getRequestVariable('parentid', 0);
 	
 	$entity='';
 	if ($id>0) {
@@ -65,7 +67,6 @@
 			<input type="hidden" name="tenantid" value="<?php echo $tenantID; ?>"/>
 			<input type="hidden" id="type" name="type" value="<?php echo $type; ?>"/>
 			<?php
-			$parentid=0;
 			Utility::renderForm($class, $entity, $id, $tenantID, $parentid);
 			?>	        			
 		</div>

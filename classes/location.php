@@ -23,8 +23,8 @@
 				array("googlePlacesId","string"),
 				array("status","picklist",20,"locationStatus"),
 				array("properties","properties"),
-				array("categories","childentities","category",false,true),
-				array("links","childentities","link",true,true)
+				array("categories","linkedentities","category",false,true),
+				array("links","linkedentities","link",true,true)
 				//array("visits","childentities","visit",true,true)
 			);
 			

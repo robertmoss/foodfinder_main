@@ -123,6 +123,20 @@ function removeChildRow(id) {
 	}	 
 }
 
+// loads and fills modal form for editing a dataentity
+function editEntity(id,entity,callback) {
+	
+	var headerText= (id>0) ? 'Edit ' + entity : "Add New " + entity;
+	setElementText(entity + 'Header',headerText);
+	var serviceURL = "service/formService.php?type=" + entity;
+	serviceURL += "&id=" + id;
+	
+	getAndRenderHTML(serviceURL,entity + 'FormAnchor','',callback);
+	hideElement(entity+"-message");
+	$('#' +entity + 'EditModal').modal();
+	
+}
+
 function addChildEntity(sourceSelect,destinationSelect) {
 	var opt = document.createElement("option");
 	opt.text = sourceSelect.selectedOptions[0].text;
@@ -131,23 +145,58 @@ function addChildEntity(sourceSelect,destinationSelect) {
 	destinationSelect.add(opt);
 }
 
+
 function createChildEntity(entity) {
-	setElementHTML('childEditHeader','Add ' + entity);
+
+	editChildEntity(entity,0);
+}
+
+function editChildEntity(entity,id) {
+	
+	var header = (id==0) ? 'Add ' : 'Edit ';
+	header += entity;
+	setElementHTML('childEditHeader',header);
+
 	document.getElementById('childType').value = entity;
 	hideElement('childMessageDiv');
 	
-	// need to close location edit modal - may need to abstract this to a parent
-	$("#locationEditModal").modal('hide');
+	// need to close entity edit modal - multiple open modals not supported by bootstrap
+	selector = "#" + document.getElementById('type').value + "EditModal";
+	$(selector).modal('hide');
 	
 	$("#childEditModal").modal({
  	   backdrop: 'static',
     	keyboard: false
 		});
-
+	var parentType = document.getElementById('type').value;
+	var entityId = document.getElementById(parentType + 'id').value;
 	var serviceURL = "service/formService.php?type=" + entity;
-	serviceURL += "&id=0";
+	serviceURL += "&id=" + id;
+	serviceURL += "&parentid=" + entityId;
 	
 	getAndRenderHTML(serviceURL,'childEditContainer','',prepareChildEdit);
+
+}
+
+function deleteChildEntity(entity,id) {
+	
+	var serviceURL = "service/entityService.php?type=" + entity;
+	serviceURL += "&id=" + id;
+	var working = "workingDelete" + id;
+	
+	callDeleteService(serviceURL,working,'Deleting',function(status,text) {
+		if (status==200) {
+			// reload form to remove deleted child entity
+			entity = document.getElementById('type').value;
+			id = document.getElementById(entity + 'id').value;
+
+			editEntity(id,entity);
+		}
+		else {
+			alert('Unable to delete ' +entity+ ': ' + text);
+		}
+	});
+
 }
 
 function prepareChildEdit(status) {
@@ -166,17 +215,17 @@ function cancelChild() {
 	
 	$("#childEditModal").modal('hide');
 
-	// need to re-open location edit modal - may need to abstract this to a parent
-	$("#locationEditModal").modal({
-    		backdrop: 'static',
-    		keyboard: false
-		});
+	// need to re-open edit modal
+	selector = "#" + document.getElementById('type').value + "EditModal";
+	$(selector).modal('show');
 
 }
 
 function childSaveComplete(success) {
 	if (success) {
-		// set values for newly added child into select
+		
+		$("#childEditModal").modal('hide');
+
 		var entity=document.getElementById('childType').value;
 		var id=document.getElementById(entity+'id').value;
 		var name='newly added ' + entity;
@@ -185,20 +234,23 @@ function childSaveComplete(success) {
 		if (textbox) {
 			name = textbox.value;
 		}
+		
 		var selectBox = document.getElementById(entity+'Select');
-		var opt = document.createElement("option");
-		opt.text = name;
-		opt.value =  id;
-		opt.selected=true;
-		selectBox.add(opt);
+		if (selectBox) { // we have a linkedentity: set values for newly added child into select
+			var opt = document.createElement("option");
+			opt.text = name;
+			opt.value =  id;
+			opt.selected=true;
+			selectBox.add(opt);
+		}
+		else {
+			alert('need to add logic to update childentities table.');
+		}
 		
-		$("#childEditModal").modal('hide');
-		
-		// need to re-open location edit modal - may need to abstract this to a parent
-		$("#locationEditModal").modal({
- 	   		backdrop: 'static',
-    		keyboard: false
-		});
+		// reopen edit modal for parent (which has been hiding patiently in the background)
+		var parententity = document.getElementById('type').value;
+		var parentid = document.getElementById(entity + 'id').value;
+		$('#' + parententity + 'EditModal').modal();
 
 	}
 }
