@@ -39,9 +39,10 @@
 				    						<label for="txtOrigin" class="col-sm-3 control-label">Starting Location</label>
 				    						<div class="col-sm-6">
 				    							<div class="input-group">
+                                                    <span class="input-group-addon" id="basic-addon1" data-toggle="tooltip" title="Detect your current location" onclick="detectLocation('resultSpan');"><span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span></span>
 				    								<input id="txtOrigin" type="text" class="form-control" placeholder="Your starting location"></input>
-													<span class="input-group-addon" onclick="detectLocation('resultSpan');"><span class="glyphicon glyphicon-map-marker	`" aria-hidden="true"></span></span>		    							
 				    							</div>
+                                                   
 				    						</div>
 				    					</div>
 				    					<div class="form-group">

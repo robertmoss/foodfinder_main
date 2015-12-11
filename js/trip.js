@@ -64,7 +64,14 @@ function initializeMap(anchor)
 	};
 	map = new google.maps.Map(document.getElementById("mapcanvas"), mapOptions);
 	
-	if(navigator.geolocation) {
+	var userSetLatitude = document.getElementById('txtCurrentLatitude').value;
+	var userSetLongitude = document.getElementById('txtCurrentLongitude').value;
+	if (userSetLatitude!=0 && userSetLongitude !=0) {
+		// user has previously set location via address search. Use that instead of default or actual location
+		currentLatLong = new google.maps.LatLng(userSetLatitude, userSetLongitude);
+	}
+	/* -- for now, don't auto locate. Let user click button to use current loc.
+	 else if(navigator.geolocation) {
 		// see if we can get HTML5 geolocation from browser
 		async = true;
 		navigator.geolocation.getCurrentPosition(function(position) {
@@ -81,12 +88,12 @@ function initializeMap(anchor)
 				log('unable to get current position:' + err.message);
 				hideElement('loading');
 			});	
-	}
+	}*/
 	
 	if (!async) {
 		map.setCenter(currentLatLong);
-		currentMarker = dropMarker(map,currentLatLong,"Current Location 2");
-		var contentString = '<div class="mapInfoWindow">Your current location 2.</div>';
+		currentMarker = dropMarker(map,currentLatLong,"Default starting location");
+		var contentString = '<div class="mapInfoWindow">Default starting location</div>';
 		addInfoWindow(currentMarker,contentString);		
 		hideElement('loading');
 	}
@@ -111,6 +118,7 @@ function populateAddress(control) {
 }
 
 function detectLocation(anchor) {
+	showElement('loading'); 
 	if(navigator.geolocation) {
 		// see if we can get HTML5 geolocation from browser
 		asynch = true;
@@ -129,9 +137,11 @@ function detectLocation(anchor) {
 			setElementValue('txtOrigin','Current Location');
 			setElementValue('txtCurrentLatitude',pos.lat());
 			setElementValue('txtCurrentLongitude',pos.lng());
+			hideElement('loading'); 
 			},
 			function(err) {
 				setMessage('Unable to get current location: ' + err.message, 'message', 'message_text', false);
+				hideElement('loading'); 
 			});			
 	}
 }
