@@ -293,10 +293,19 @@ function renderRoute(set) {
 }
 
 function setInfoWindow(marker, loc) {
-	
+
+		var flag = '';
+		if (loc.status=="Closed"||loc.status=="Temporarily Closed") {
+			flag += '<div class="flag warning"><span class="flag warning"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> ' + loc.status +  '</span></div>';
+		}
+		if (loc.top_category) {
+			flag += '<div><span class="flag">' + loc.top_category +  '</span></div>';
+		}
 		var contentString = '<div class="mapInfoWindow">' + 
 			'<div class="name"><a href="#locationModal" onclick="loadLocation(' + loc.id + ',\'' + escapeSingleQuotes(loc.name) +'\');">' + loc.name + '</a></div>' +
+			flag +
 			'<div class="location">' + loc.city + ' ' + loc.state + '</div>';
+
 		if (loc.selected>0) {
 			contentString +='<div class="select"><input type="button" value="Remove from Route" onclick="removeFromRoute(' + loc.id +');"></div>';
 		}
@@ -304,6 +313,7 @@ function setInfoWindow(marker, loc) {
 			contentString +='<div class="select"><input type="button" value="Add to Route" onclick="addToRoute(' + loc.id +');"></div>';
 		}
 		contentString +='</div>';
+
 		addInfoWindowOnClick(map,marker,contentString);
 	
 }
