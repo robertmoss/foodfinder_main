@@ -440,6 +440,11 @@ function setLocationPrimaryImage(url) {
 function getIconForLocation(location) {
 	// ensures we return consistent set of icons across pages
 	var icon = 'img/icons/ltblue-dot.png';
+	// check to see if a tenant-specific default icon has been specified
+	iconElement = document.getElementById('defaultIcon');
+	if (iconElement) {
+		icon = iconElement.value;
+	}
 	if (location.status=='Closed') {
 		icon = 'img/icons/red-dot.png';
 	}

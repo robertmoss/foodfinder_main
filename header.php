@@ -9,9 +9,20 @@
       		</button>
 			<a class="navbar-brand" href="index.php"><?php echo ucfirst(Utility::getTenantProperty($applicationID, $tenantID, $userID,'title')); ?></a>
 		</div>
+		<?php
+                    $mapheading = Utility::getTenantProperty($applicationID, $tenantID, $userID, 'BigMapHeading');
+                    $maplink = Utility::getTenantProperty($applicationID, $tenantID, $userID, 'BigMapLink');
+                    if (!$maplink) {
+                        $maplink = 'finder.php';
+                    }
+                    if (!$mapheading) {
+                        $mapheading = 'The Big ' . ucfirst($finditem) . ' Map';
+                    }
+                      ?>
 		<div class="collapse navbar-collapse" id="navbar1">
 			<ul class="nav navbar-nav">
-				<li <?php if($thisPage=='finder') echo ' class="active"'?>><a href="finder.php">Explore</a></li>
+				<li <?php if($thisPage=='bigmap') echo ' class="active"'?>><a href="<?php echo $maplink ?>"><?php echo $mapheading ?></a></li>
+				<li <?php if($thisPage=='finder') echo ' class="active"'?>><a href="finder.php">Near Me</a></li>
 				<li <?php if($thisPage=='trip') echo ' class="active"'?>><a href="trip.php">Plan a Trip</a></li>
 				<li <?php if($thisPage=='search') echo ' class="active"'?>><a href="search.php">Search</a></li>
 				<li <?php if($thisPage=='about') echo ' class="active"'?>><a href="about.php">About</a></li>
@@ -24,15 +35,20 @@
 				<li><a href="logout.php">Logout</a></li>
 			 </ul>		
 	         <?php } else { ";" ?>
-			<form class="navbar-form navbar-right" role="search" action="login.php" method="post">
-                <div class="form-group">
-                    <input type="text" id="txtUsername" class="form-control" name="username" placeholder="Username">
-                </div>
-                <div class="form-group">
-                    <input type="password" id="txtPassword" class="form-control" name="password" placeholder="Password">
-                </div>
-                <button type="submit" class="btn btn-default">Sign In</button>
-	         </form>	         
+			<ul class="nav navbar-nav navbar-right">
+			     <li><button class="btn btn-default navbar-btn" data-toggle="collapse" data-target="#loginForm">
+			         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+			     </button></li>
+    			<form id="loginForm" class="navbar-form navbar-right collapse" role="search" action="login.php" method="post">
+                    <div class="form-group">
+                        <input type="text" id="txtUsername" class="form-control" name="username" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="txtPassword" class="form-control" name="password" placeholder="Password">
+                    </div>
+                    <button type="submit" class="btn btn-default">Sign In</button>
+    	         </form>
+	         </ul>	         
 	         <?php } ?>
 	     </div>
 	</div>

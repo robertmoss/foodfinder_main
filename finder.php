@@ -1,7 +1,8 @@
 <?php
 	include dirname(__FILE__) . '/partials/pageCheck.php';
 	include_once dirname(__FILE__) . '/classes/core/utility.php';
-	$thisPage="finder";
+    
+	$thisPage=Utility::getRequestVariable('type', 'finder');
     
     $zoom = Utility::getRequestVariable('zoom', 0);
 
@@ -22,9 +23,15 @@
     <body>
 		<?php include("header.php"); ?>
 			<!-- Modals -->
-			<?php include("partials/configModal.php"); ?>
-	        <?php include("partials/locationModal.php")?>
-	        <?php include("partials/locationEditModal.php")?>
+			<?php  include("partials/configModal.php");
+	               include("partials/locationModal.php");
+	               include("partials/locationEditModal.php");
+                   $defaultIcon = Utility::getTenantProperty($applicationID, $tenantID, $userID, 'defaultIcon');
+	               if (strlen($defaultIcon)>0) {
+	                   echo '<input type="hidden" id="defaultIcon" value="' . $defaultIcon. ' " />';
+                   }       
+	               ?>
+	        
 			<div id="mapwrapper">
         		<div id="mapcanvas"></div>
         		<div id="loading" class="modal"><!-- Place inside div to cover --></div>

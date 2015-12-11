@@ -2,11 +2,14 @@
 	include_once dirname(__FILE__) . '/classes/core/utility.php';
 	session_start();
     // perform all steps to flush user and clear state: right now userID is only remnant
+    // do need to keep tenant, though, for branding
+    $tenantID = $_SESSION['tenantID'];
     session_destroy();
 	
-	// do we need this on logout? Do we preserve tenant ID?
-	//include dirname(__FILE__) . '/partials/pageCheck.php';
-	
+	// create new session to save tenantID
+	session_start();
+    $_SESSION['tenantID'] = $tenantID;
+    
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
