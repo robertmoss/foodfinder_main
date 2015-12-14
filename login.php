@@ -11,6 +11,7 @@
 	$password = '';
 	$remember_choice = false;
 	$successURL = 'index.php';
+    $requestMethod = $_SERVER['REQUEST_METHOD'];
 	if (isset($_POST['username'])) {
 		$username = trim(htmlspecialchars($_POST['username']));
 	}
@@ -23,16 +24,22 @@
 	if (isset($_POST['successURL'])) {
 		$successURL = $_POST['successURL'];
 	}
+    if (isset($_POST['source'])) {
+        $source = $_POST['source'];
+    }
 
-	$errorMessage = '';    	
+	$errorMessage = '';
+    $user = new User(0,$tenantID);    	
 	// attempt to login user;
-	if (strlen($username)<=0 || strlen($password)<=0) {
-		$errorMessage = "You must enter both a username and password.";	
+    if ($requestMethod=="GET") {
+        // not a post, so don't try to load user        
+    }
+    elseif (strlen($username)<=0 || strlen($password)<=0) {
+        $errorMessage = "You must enter both a username and password.";
 	}
 	else {
 		// try to create a new user object
 		try {
-			$user = new User(0,$tenantID);
 			$user->validateUser($username, $password, $tenantID);
 			Utility::debug('User ' . $user->name . 'logged in succesfully.',5);
 			
@@ -67,15 +74,20 @@
     				<?php echo $errorMessage; ?>
     			</div>
     		</div>
+    	<?php } 
+            if ($user->id==0)  { ?>
     		<div class="login_form">
 				<form action="login.php" method="post">
-					<div class="panel">
-						Username: <input id="txtUsername" name="username" type="text" placeholder="Username"></input>								
+				    <input id="txtSource" name="source" type="hidden" value="login.php" />
+					<div class="form-group">
+						<label for="txtUserName">Username</label>
+						<input id="txtUsername" name="username" type="text" class="form-control" placeholder="Username"></input>								
 					</div>
-					<div class="panel">
-						Password: <input id="txtPassword" name="password" type="password" placeholder="Password"></input>								
+					<div class="form-group">
+						<label for="txtPassword">Password</label>
+						<input id="txtPassword" name="password" type="password" class="form-control" placeholder="Password"></input>								
 					</div>
-					<div class="panel">
+					<div class="form-group">
 						<input type="button" class="btn btn-default" value="Cancel" onclick="hideElement('topnav_login');"/>	
                         <input type="submit" class="btn btn-primary" value="Submit"/>
 					</div>

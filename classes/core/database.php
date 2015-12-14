@@ -1,7 +1,7 @@
 <?php
 
 include_once 'utility.php';
-
+include_once 'log.php';
 class Database {
 	
 	public static $server = "localhost";
@@ -70,7 +70,7 @@ class Database {
 	public static function executeQuery($query)
 	{
 		// connect to database
-		Utility::debug('Database::executeQuery() called. Server=' . self::$server . ', user=' .  self::$user, 1);
+		Log::debug('Database::executeQuery() called. Server=' . self::$server . ', user=' .  self::$user, 1);
 		$con = mysqli_connect(self::$server,self::$user,self::$password,self::$database);
 		if (!$con) {
 				Utility::debug('Error connecting to database: ' . mysql_error(), 1);										
@@ -80,20 +80,53 @@ class Database {
 			//Utility::debug('Connected.', 9);	
 		}	
 		
-		Utility::debug('executing query [' . $query . ']', 5);
+		Log::debug('executing query [' . $query . ']', 5);
 		
 		$data = mysqli_query($con,$query);
 
 		if (!$data) {
-			Utility::debug('Error executing query:' . mysqli_error($con),1);
+			Log::debug('Error executing query:' . mysqli_error($con),9);
 			//Utility::errorRedirect('Error connecting to database: ' . mysqli_error());
 			throw new Exception(mysqli_error($con));
 			}
 		else {
-			Utility::debug('Query executed successfully', 1);
+			Log::debug('Query executed successfully', 1);
 			return $data;
 			}
-	}	
+	}
+    
+    // accepts an array of queries and executes them within a transaction
+    // if any query fails, the entire transaction will be rolled back
+    public static function executeQueriesInTransaction($queries) {
+         Log::debug('Database::executeQueriesInTransaction() called. Server=' . self::$server . ', user=' .  self::$user, 1);
+         $con = mysqli_connect(self::$server,self::$user,self::$password,self::$database);
+         if (!$con) {
+                Utility::debug('Error connecting to database: ' . mysql_error(), 9);                                        
+                Utility::errorRedirect('Error connecting to database: ' . mysql_error());                                           
+                }
+         Log::debug('Starting transaction.', 5);
+         mysqli_begin_transaction($con,MYSQLI_TRANS_START_READ_WRITE);
+         $success = true;
+         foreach($queries as $query) {
+                Log::debug('executing query [' . $query . ']', 5); 
+               $data = mysqli_query($con,$query);
+                if (!$data) {
+                    $success=false;
+                    Log::debug('Error executing query:' . mysqli_error($con),9);
+                    break;
+                }    
+         }
+        if (!$success) {
+            Log::debug('Rolling back transaction.', 9);
+            mysqli_rollback($con);
+            throw new Exception(mysqli_error($con));
+        }
+        else {
+            Log::debug('Committing transaction.', 5);
+            mysqli_commit($con);
+        }
+                  
+    }	
 	 
 }
 	

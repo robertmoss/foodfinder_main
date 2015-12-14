@@ -3,6 +3,12 @@
 	include dirname(__FILE__) . '/partials/pageCheck.php';
 	$thisPage = 'admin';
 	
+    // must be an admin for current tenant to access this page
+    if (!$user->hasRole('admin',$tenantID)) {
+        header('Location: 403.php');
+        die();
+    }
+    
 	$newtenant = Utility::getRequestVariable('newtenant', 0);
 
 	// verify user can access requested tenant, then switch & force reload
@@ -186,6 +192,34 @@
 					  </div>
 					</div>
 		        </div>
+		        <div id="manageTenantsModal" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 id="manageTenantsHeader" class="modal-title">Manage User Tenants</h4>
+                              </div>
+                              <div id="manageTenantsAnchor" class="modal-body">Loading form . . .</div>
+                              <div class="modal-footer">
+                                    <div id="manageTenants-message" class="alert alert-danger hidden">
+                                        <a class="close_link" href="#" onclick="hideElement('message');"></a>
+                                        <span id='manageTenants-message_text'>Message goes here.</span>
+                                    </div>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-primary" onclick="saveUserTenants();">Save</button>
+                                    <select id="role-select" class="hidden">
+                                        <?php 
+                                        $roles = Utility::getList('roles',$tenantID,$userID);
+                                        for($i=0;$i<count($roles);$i++) {
+                                            echo '<option value="' . $roles[$i] . '">' . $roles[$i] .'</option>';
+                                       }
+                                        ?>
+                                    </select>
+                             </div>
+                        </div>
+                      </div>
+                    </div>
                 <?php include("partials/childEditModal.php")?>	
         		<?php include("footer.php")?>     		
         	</div>

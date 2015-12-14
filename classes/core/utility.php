@@ -88,13 +88,28 @@ class Utility{
 					}
 				break;
 			case "tenants":
-				$query = "select id,name from tenant";
+                if ($userID==1) {
+    				$query = "select id,name from tenant";
+                }
+                else {
+                    $query = "select * from tenant T
+                            inner join tenantUser TU on TU.tenantid=T.id
+                            inner join tenantUserRole TUR on TUR.tenantuserid=TU.id
+                            inner join role R on R.id=TUR.roleid
+                            where R.name='admin'
+                                and TU.userid=" . Database::queryNumber($userID) . ";";
+                    }
 				$result = Database::executeQuery($query);
 				while ($r=mysqli_fetch_array($result,MYSQLI_NUM))
 				{
 					$return[] = $r;
 				}
 				break;
+            case "roles":
+                // in the future, may want to load dynamically from database, but right now this is a 
+                // known list and can just be hardwired
+                $return = array("standard","admin");
+                break;
 			case "categories":
 				$query = "call getCategories(" . $tenantID . ")";
 				$result = Database::executeQuery($query);

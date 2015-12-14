@@ -1,5 +1,5 @@
 <footer>
-<div id="footer"><p><!--© 2015, Palmetto New Media--></p></div>
+<div id="footer"><p>© 2015, Palmetto New Media</p></div>
 <?php if ($debug==1) { ?>
 <div id="debug">
 	<?php 

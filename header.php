@@ -12,6 +12,7 @@
 		<?php
                     $mapheading = Utility::getTenantProperty($applicationID, $tenantID, $userID, 'BigMapHeading');
                     $maplink = Utility::getTenantProperty($applicationID, $tenantID, $userID, 'BigMapLink');
+                    $finditem = Utility::getTenantProperty($applicationID, $tenantID, $userID, 'finditem');
                     if (!$maplink) {
                         $maplink = 'finder.php';
                     }
@@ -26,13 +27,20 @@
 				<li <?php if($thisPage=='trip') echo ' class="active"'?>><a href="trip.php">Plan a Trip</a></li>
 				<li <?php if($thisPage=='search') echo ' class="active"'?>><a href="search.php">Search</a></li>
 				<li <?php if($thisPage=='about') echo ' class="active"'?>><a href="about.php">About</a></li>
-				<?php if($userID>0) {?><li <?php if($thisPage=='admin') echo ' class="active"'?>><a href="admin.php">Admin</a></li><?php } ?>			
+				<?php if($userID>0 && ($user->hasRole('admin',$tenantID) || $userID==1)) {?><li <?php if($thisPage=='admin') echo ' class="active"'?>><a href="admin.php">Admin</a></li><?php } ?>			
 			</ul>
 			<?php if($userID>0) {?>
 			<!--<span class="nav_text"><?php echo $user->name ?></span>-->
 			 <ul class="nav navbar-nav navbar-right">
-				<li><button type="button" class="btn btn-default navbar-btn" onclick="window.location.href='entityPage.php?type=location&id=0&mode=edit';"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add New</button></li>
-				<li><a href="logout.php">Logout</a></li>
+			    <li class="dropdown">
+			        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $user->name; ?> <span class="caret"></span></a>
+			         <ul class="dropdown-menu">
+			             <li><a href="logout.php">Logout</a></li>
+			         </ul> 
+				</li>
+				<?php if ($user->canAdd('location', $tenantID)) {?> 
+				    <li><button type="button" class="btn btn-default navbar-btn" onclick="window.location.href='entityPage.php?type=location&id=0&mode=edit';"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add New</button></li>
+			    <?php } ?>
 			 </ul>		
 	         <?php } else { ";" ?>
 			<ul class="nav navbar-nav navbar-right">

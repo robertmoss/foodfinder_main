@@ -10,8 +10,6 @@ include_once dirname(__FILE__) . '/../classes/core/utility.php';
 $tenantID = $_SESSION['tenantID'];
 if ($_SERVER['REQUEST_METHOD']=="GET") {
 		
-		
-
 	$numToReturn = Utility::getRequestVariable('return', 10);
 	if ($numToReturn>100) {
 		$numToReturn=100; // let's not get crazy, people.

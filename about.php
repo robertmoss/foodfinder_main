@@ -21,7 +21,7 @@
  			<div id="main" class="container">
 	    		<div class="jumbotron">
 	    			<h2>About <?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'title') ?></h2>
-	    			<p><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'title') ?>: is a prototype site built on 
+	    			<p><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'title') ?> is a prototype site built on 
 	    				Palmetto New Media's Foodfinder platform.</p>
 	    			<p><a class="btn btn-primary" href="mailto:mossr19@gmail.com">Contact Us</a></p>
 	    		</div>

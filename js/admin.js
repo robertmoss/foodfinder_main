@@ -207,6 +207,7 @@ function retrieveUsers(offset) {
 	template += "<button type=\"button\" class=\"btn btn-default\" onclick=\"editUser({{id}});\"><span class=\"glyphicon glyphicon-pencil\"></span>&nbsp;</button>";
 	template += "<button type=\"button\" class=\"btn btn-default\" onclick=\"deleteUser({{id}});\"><span class=\"glyphicon glyphicon-remove\"></span>&nbsp;</button>";
 	template += "<button type=\"button\" class=\"btn btn-default\" onclick=\"resetPassword({{id}});\">Reset Password</button>";
+	template += "<button type=\"button\" class=\"btn btn-default\" onclick=\"manageTenants({{id}});\">Tenant Access</button>";
 	//template += "<a href=\"#\" onclick=\"resetPassword({{id}});\">reset password</a>";
 	template += "</div></td></tr>";
 	template += "{{/users}}</tbody></table>";
@@ -317,6 +318,122 @@ function deleteUser(id) {
 		}
 }
 
+function manageTenants(userid) {
+	
+	hideElement("manageTenants-message");
+	$('#manageTenantsModal').modal();
+
+	var roleList = document.getElementById('role-select');
+	var roles = '';
+	for (i=0;i<roleList.childElementCount;i++) {
+		roles += '<option value="' + roleList.options[i].value + '">' + roleList.options[i].innerText + '</option>';
+	} 
+	
+	var template = "<input id=\"currentUserId\" type=\"hidden\" value=\"" + userid +"\"/>"; 		
+	template += "<table id=\"userTenantsTable\" class=\"table table-striped table-hover table-responsive\">";
+	template += "<thead><tr><th>Tenant</th><th>Role</th><th>Remove</th></tr></thead>";
+	template += "<tbody>{{#tenants}}"; 	
+	template += "<tr><td class=\"hidden\">{{id}}</td><td>{{tenant}}</td>";
+	template += "<td>{{role}}</td>";
+	template += "<td><div class=\"btn-group btn-group-sm\" role=\"group\" aria-label=\"...\">";
+	template += "<button type=\"button\" class=\"btn btn-default\" onclick=\"removeTenant({{index}});\"><span class=\"glyphicon glyphicon-remove\"></span>&nbsp;</button>";
+	template += "</div></td></tr>";
+	template += "{{/tenants}}";
+	template += "<tr><td><select id=\"tenantSelect\" name=\"tenant\" class=\"form-control\"></select></td>";
+	template += "<td><select id=\"roleSelect\" name=\"roles\" class=\"form-control\">" + roles + "</select></td>";
+	template += "<td><button type=\"button\" class=\"btn btn-default\" onclick=\"addUserTenant();\">Add</button></td></tr>";
+	template += "</tbody></table>";
+	
+	var serviceURL = "service/user.php";
+	serviceURL += '?id=' + userid;
+	var working = "Retrieving tenant information . . .";
+	var anchor = "manageTenantsAnchor";
+
+	getAndRenderJSON(serviceURL,template,anchor,working, function(success) {
+		loadTenantSelect();
+	}); 
+	
+}
+
+function addUserTenant() {
+	
+	var sel = document.getElementById('tenantSelect');
+	if (sel.selectedIndex>=0) {
+		var table = document.getElementById('userTenantsTable');
+		var rowIndex = table.rows.length-1; // add new row as second from last.
+		var row = table.insertRow(rowIndex); 
+		var cell=row.insertCell();
+		
+		cell.innerHTML = sel.options[sel.selectedIndex].value;
+		cell.className = "hidden";
+		cell=row.insertCell();
+		cell.innerHTML = sel.options[sel.selectedIndex].innerText;
+		sel = document.getElementById('roleSelect');
+		cell=row.insertCell();
+		cell.innerHTML = sel.options[sel.selectedIndex].value;
+		var button ="<button type=\"button\" class=\"btn btn-default\" onclick=\"removeTenant(" + (rowIndex-1) + ");\"><span class=\"glyphicon glyphicon-remove\"></span>&nbsp;</button>";
+		cell=row.insertCell();
+		cell.innerHTML = button;
+		loadTenantSelect(); 
+	}
+}
+
+function removeTenant(rowindex) {
+	var table = document.getElementById('userTenantsTable');
+	table.deleteRow(rowindex+1); 
+	// have to reset onclicks because row numbers have changed
+	for (var i=1;i<(table.rows.length-1);i++) {
+		var button ="<button type=\"button\" class=\"btn btn-default\" onclick=\"removeTenant(" + (i - 1) + ");\"><span class=\"glyphicon glyphicon-remove\"></span>&nbsp;</button>";
+		table.rows[i].cells[3].innerHTML=button;
+	}
+	loadTenantSelect();		
+}
+
+function loadTenantSelect() {
+	// rather than hitting database again, snag list of available tenants from current tenant select
+	// trimming out any tenants that are already in table
+	var tenantList = document.getElementById('current-tenant');
+	var table = document.getElementById('userTenantsTable');
+	var options = '';
+	for (i=0;i<tenantList.childElementCount;i++) {
+		var rowExists=false;
+		for (j=1;j<(table.rows.length-1);j++) {
+			if (table.rows[j].cells[1].innerText==tenantList.options[i].innerText) {
+				rowExists = true;
+				break;
+			}
+		}				
+		if (!rowExists) {
+			options += '<option value="' + tenantList.options[i].value + '">' + tenantList.options[i].innerText + '</option>';
+		}
+	} 
+	document.getElementById('tenantSelect').innerHTML = options;
+	
+}
+
+function saveUserTenants() {
+	var userid = getElementValue("currentUserId");
+	// build array of existing tenants
+	var data = {};
+	data["id"]=userid;
+	var table = document.getElementById('userTenantsTable');
+	var tenants=[];
+	for (var i=1;i<table.rows.length-1;i++) { // start on one to skip header row
+		var tenant = {tenantid: table.rows[i].cells[0].innerText, 
+					  role: table.rows[i].cells[2].innerText};
+		tenants.push(tenant);
+	}
+	data["tenants"] = tenants;
+	
+	serviceUrl = "service/user.php?action=setTenantAccess";
+	postData(serviceUrl,data,"manageTenants-message","manageTenants-message",function(success) {
+		// close dialog
+		$('#manageTenantsModal').modal('hide');
+	});
+	
+	
+}
+
 function addTenant() {
 	editTenant(0);
 }
@@ -402,7 +519,7 @@ function loadTenants() {
 	template += "<td><div class=\"btn-group btn-group-sm\" role=\"group\" aria-label=\"...\">";
 	//template += "<a href=\"entityService.php?type=tenant&id={{id}}\">edit</a>";
 	template += "<button type=\"button\" class=\"btn btn-default\" onclick=\"editTenant({{id}});\"><span class=\"glyphicon glyphicon-pencil\"></span>&nbsp;</button>";
-	template += "<button type=\"button\" class=\"btn btn-default\" onclick=\"deleteTenant({{id}});\"><span class=\"glyphicon glyphicon-remove\"></span>&nbsp;</button>";
+	//template += "<button type=\"button\" class=\"btn btn-default\" onclick=\"deleteTenant({{id}});\"><span class=\"glyphicon glyphicon-remove\"></span>&nbsp;</button>";
 	template += "</div></td></tr>";
 	template += "{{/tenants}}</tbody></table>";
 
