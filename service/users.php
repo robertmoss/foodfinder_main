@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
 	
 	$query = "call getUsers(" . $userID . "," . $numToReturn . "," . $offset . ")";
 	$data = Database::executeQuery($query);
+    $users=array();
 	while ($r = mysqli_fetch_assoc($data))
 			{
 			$users[] = $r;

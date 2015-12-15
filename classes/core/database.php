@@ -105,7 +105,12 @@ class Database {
                 Utility::errorRedirect('Error connecting to database: ' . mysql_error());                                           
                 }
          Log::debug('Starting transaction.', 5);
-         mysqli_begin_transaction($con,MYSQLI_TRANS_START_READ_WRITE);
+          if (!mysqli_autocommit($con, FALSE)) {
+              Log::debug('Unable to set autocommit off: ' . mysqli_error($con), 9);
+              mysqli_rollback($con);
+              throw new Exception(mysqli_error($con));
+          }
+          Log::debug('Transaction started.', 1);
          $success = true;
          foreach($queries as $query) {
                 Log::debug('executing query [' . $query . ']', 5); 
@@ -119,12 +124,14 @@ class Database {
         if (!$success) {
             Log::debug('Rolling back transaction.', 9);
             mysqli_rollback($con);
+            mysqli_close($con);
             throw new Exception(mysqli_error($con));
         }
         else {
             Log::debug('Committing transaction.', 5);
             mysqli_commit($con);
         }
+        mysqli_close($con);
                   
     }	
 	 
