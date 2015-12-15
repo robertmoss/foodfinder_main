@@ -380,9 +380,8 @@ function loadLocations(currentLat, currentLng, anchor, ret, start) {
 					var locid=location.id;
 					var locname=location.name;
 					var marker=dropMarker(map,pos,locname,icon,locid);
-					if (location.uservisits>0) {
-						// sock away default icon in case user "unvisits"
-						marker.icon = 'img/icons/green-dot.png';
+					if (location.uservisits>0 && document.getElementById('chkMarkVisited').checked) {
+						marker.icon = 'img/icons/visited.png';
 						}
 					
 					setInfoWindow(map,marker,getInfoWindowContent(location),location);

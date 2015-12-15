@@ -1,6 +1,7 @@
 <?php
     $numToLoad = Utility::getRequestVariable('numToLoad', 10);
     $categories =   Utility::getRequestVariable('categories', '');
+    $markVisited = true;
    
 ?>
 
@@ -40,6 +41,9 @@
 				            <label for="numToDisplay"># of Locations to Return</label>
 				            <input id="numToDisplay" type="text" class="form-control" value="<?php echo $numToLoad?>">
 				        </div>
+				        <div class="checkbox">
+                            <label for="chkMarkVisited"><input id="chkMarkVisited" name="markVisited" type="checkbox" <?php if ($markVisited) { echo 'checked';} ?> />Mark Locations I Have Visited</label>
+                        </div>
 				     </form>
 			      </div>
 			      <div class="modal-footer">
