@@ -448,6 +448,9 @@ function getIconForLocation(location) {
 	if (location.status=='Closed') {
 		icon = 'img/icons/red-dot.png';
 	}
+	else if (location.status=='Pending') {
+		icon = 'img/icons/pending.png';
+	}
 	else if (location.icon) {
 		icon = location.icon;
 		}

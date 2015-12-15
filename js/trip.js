@@ -92,9 +92,9 @@ function initializeMap(anchor)
 	
 	if (!async) {
 		map.setCenter(currentLatLong);
-		currentMarker = dropMarker(map,currentLatLong,"Default starting location");
-		var contentString = '<div class="mapInfoWindow">Default starting location</div>';
-		addInfoWindow(currentMarker,contentString);		
+		//currentMarker = dropMarker(map,currentLatLong,"Default starting location");
+		//var contentString = '<div class="mapInfoWindow">Default starting location</div>';
+		//addInfoWindow(currentMarker,contentString);		
 		hideElement('loading');
 	}
 	

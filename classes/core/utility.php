@@ -153,7 +153,8 @@ class Utility{
 				}
 				break;
 			case "locationStatus":
-				$status_values = array("Active","Closed", "Temporarily Closed", "Unknown");
+                // Pending: will be displayed only to certain roles (for now, admins), as they are locations waiting visits and write-ups
+				$status_values = array("Active","Closed", "Temporarily Closed", "Unknown","Pending");
 				foreach ($status_values as $unit)
 					{
 						$return[]= array($unit,$unit);
