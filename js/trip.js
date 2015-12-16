@@ -149,6 +149,7 @@ function detectLocation(anchor) {
 function getRoute() {	
 
 		hideElement('message');
+		showElement('loading'); 
 
 		var origin = getElementValue('txtOrigin');		
 		var destination = getElementValue('txtDestination');
@@ -203,12 +204,17 @@ function getRoute() {
 				
 				processDirections(result.routes[0]);
 
+				// sock these away in case we need to reRender map
+				routeOrigin = originLat + ',' + originLong;
+				routeDestination = destLat + ',' + destLong;
+	
 				//processRoute(originLat,originLong,destLat,destLong,detour,filter);
 				
 				processRouteByPoints(points,detour,filter); 
 			}
 			else {
 				setMessage('Unable to retrieve route:' + status);
+				hideElement('loading'); 
 				}
 		});
 		
@@ -231,10 +237,7 @@ function testOffline() {
 
 function processRoute(originLat,originLong,destLat,destLong,detour,filter) {
 	
-	// sock these away in case we need to reRender map
-	routeOrigin = originLat + ',' + originLong;
-	routeDestination = destLat + ',' + destLong;
-	
+
 	if (window.XMLHttpRequest)
 	  {// code for IE7+, Firefox, Chrome, Opera, Safari
 	  xmlhttp=new XMLHttpRequest();
@@ -251,6 +254,11 @@ function processRoute(originLat,originLong,destLat,destLong,detour,filter) {
 			    locations = set.locations; // save for later use
 				renderRoute(set);
 		    }
+		    else {
+		    	setMessage('Unable to retrieve route:' + xmlhttp.responseText);
+		    }
+			hideElement('loading');
+
 		   }
 		 };
 		 
@@ -287,7 +295,9 @@ function processRouteByPoints(points,detour,filter) {
 		    	}
 		   	else {
 		   		// do something with the error
+				setMessage('Unable to retrieve route:' + request.responseText);
 		   	}
+			hideElement('loading');
 		  }  
 		};
 	request.send(JSON.stringify(data));
