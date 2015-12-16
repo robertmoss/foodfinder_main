@@ -193,9 +193,19 @@ function getRoute() {
 				var destLat = route.end_location.lat();
 				var destLong = route.end_location.lng();
 				
+				// build array of points to represent the route (for more fine grained location matching)
+				var points = [];
+				points.push({lat: originLat,lng: originLong});
+				for (var i=0;i<route.steps.length;i++) {
+					var point = {lat: route.steps[i].end_location.lat(), lng: route.steps[i].end_location.lng()};
+					points.push(point);
+				}
+				
 				processDirections(result.routes[0]);
 
-				processRoute(originLat,originLong,destLat,destLong,detour,filter); 
+				//processRoute(originLat,originLong,destLat,destLong,detour,filter);
+				
+				processRouteByPoints(points,detour,filter); 
 			}
 			else {
 				setMessage('Unable to retrieve route:' + status);
@@ -255,6 +265,33 @@ function processRoute(originLat,originLong,destLat,destLong,detour,filter) {
 		xmlhttp.open("GET",serviceURL,true);
 		xmlhttp.send();
 			
+}
+
+function processRouteByPoints(points,detour,filter) {
+
+	// need to update to pluck return from user config dialog
+	var data = {maxDetour: detour, categories: filter, return: 100, points: points};
+	var serviceUrl = "service/route.php";
+
+	var request = new XMLHttpRequest();
+	request.open("POST",serviceUrl,true);
+	request.setRequestHeader('Content-Type','application/json; charset=UTF8');
+	request.onreadystatechange=function() {
+		 if (request.readyState==4) {
+		 	if (request.status==200) {
+		 		if (request.responseText.length>0) {
+			 		var set = JSON.parse(request.responseText);
+			 		locations = set.locations; // save for later use
+					renderRoute(set);
+				   }
+		    	}
+		   	else {
+		   		// do something with the error
+		   	}
+		  }  
+		};
+	request.send(JSON.stringify(data));
+						
 }
 
 function renderRoute(set) {

@@ -78,11 +78,13 @@
 			        	</div>
 			        	<div id="tenantadmin"  role="tabpanel" class="tab-pane">	
 			        		<h1>Manage Tenants</h1>
+			        		<?php if ($user->hasRole('superuser',$tenantID)) { ?>
 			        		<div id="tenant-buttons" class="btn-group btn-default">
     							<button class="btn btn-default" id="addtenant" onclick="addTenant();">
         							<span class="glyphicon glyphicon-plus"></span> Add Tenant
     							</button>
-							</div>
+                            </div>
+    						<?php } ?>
 							<div id="alertZoneTenant"></div>
 							<div id="tenantList">
 				        		<span id="tenantResultSpan">Loading tenants . . .</span>

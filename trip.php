@@ -66,7 +66,7 @@
 					        			</div>
 				    					<div class="form-group">
 				    						<label for="tripSubmit" class="col-sm-3 control-label"></label>
-				    						<button id="tripSubmit" class="btn btn-primary" onclick="getRoute();">Find Me Some <?php echo ucfirst(Utility::getTenantProperty($applicationID, $tenantID, $userID,'finditem')); ?></button>
+				    						<button id="tripSubmit" class="btn btn-primary" type="submit">Find Me Some <?php echo ucfirst(Utility::getTenantProperty($applicationID, $tenantID, $userID,'finditem')); ?></button>
 				    						<button type="button" class="btn btn-default" onclick="showConfig();"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></button>
 				    					</div>
 				    					<input id="txtCurrentLatitude" type="hidden" value=""/>
