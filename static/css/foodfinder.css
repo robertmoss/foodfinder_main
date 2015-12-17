@@ -46,7 +46,7 @@
 	}
 	
 	#mapwrapper, #mapcanvas {
-		min-height: 300px;
+		min-height: 200px;
 	}
 	
 	#header #logo {
@@ -89,6 +89,10 @@
 	min-height: 200px;
 }
 
+.loc-panel h3 {
+	font-size: 20px;
+}
+
 .loc-panel .caption {
 	overflow: hidden;
 }
@@ -101,6 +105,26 @@
 	
 .loc-image img {
 	max-width: 100%;
+}
+
+.listNav {
+	display: block;
+    min-height: 40px;
+    padding: 3px;
+    margin-left: -15px;
+    margin-right: -15px
+    }
+
+.listNav .left {
+	float: left;
+}
+
+.listNav .right {
+	float: right;
+}
+
+.right {
+	float: right;
 }
 
 @media (min-width: 768px) {

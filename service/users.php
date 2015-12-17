@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
 	$offset = Utility::getRequestVariable('offset', 0);
 	$totalUsers=0;
 	
-	$query = "select count(*) as totalUsers from user where active=1";
+	$query = "call getUsersCount(" . $userID . ")";
 	$data = Database::executeQuery($query);
 	if ($r = mysqli_fetch_row($data))
 			{

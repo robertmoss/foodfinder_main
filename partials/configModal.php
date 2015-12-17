@@ -41,9 +41,11 @@
 				            <label for="numToDisplay"># of Locations to Return</label>
 				            <input id="numToDisplay" type="text" class="form-control" value="<?php echo $numToLoad?>">
 				        </div>
+				        <?php if ($userID>0) { ?>
 				        <div class="checkbox">
                             <label for="chkMarkVisited"><input id="chkMarkVisited" name="markVisited" type="checkbox" <?php if ($markVisited) { echo 'checked';} ?> />Mark Locations I Have Visited</label>
                         </div>
+                        <?php } ?>
 				     </form>
 			      </div>
 			      <div class="modal-footer">

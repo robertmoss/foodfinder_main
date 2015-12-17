@@ -199,9 +199,10 @@ function cleanUp() {
 function retrieveUsers(offset) {
 	
 	var template = "<table class=\"table table-striped table-hover table-responsive\">";
-	template += "<thead><tr><th>Name</th><th>Actions</th></tr></thead>";
+	template += "<thead><tr><th>Name</th><th>Last Sign In</th><th>Actions</th></tr></thead>";
 	template += "<tbody>{{#users}}"; 	
 	template += "<tr><td><div class=\"user\"><span class=\"description\">{{name}}</span></div></td>";
+	template += "<td><div class=\"user\"><span class=\"description\">{{lastSignIn}}</span></div></td>";
 	template += "<td><div class=\"btn-group btn-group-sm\" role=\"group\" aria-label=\"...\">";
 	//template += "<a href=\"user.php?type=user&id={{id}}\">edit</a>";
 	template += "<button type=\"button\" class=\"btn btn-default\" onclick=\"editUser({{id}});\"><span class=\"glyphicon glyphicon-pencil\"></span>&nbsp;</button>";

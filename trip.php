@@ -31,6 +31,7 @@
     		<div id="outer">
     			<div id="main">
     				<div id="searchform">
+    					<div id="loading" class="modal"><!-- Place inside div to cover --></div>
     					<div class="panel panel-default container toppad">
 		    				<div id="formPanel" class="container collapse in">
 		    					<div>
@@ -87,7 +88,6 @@
 			        		</div>
 	        			</div>
 	        			<div id="results" class="container results">
-
 		        			<div class="tripNav">
 			        			<ul class="nav nav-pills" role="tablist">
 									<li role="presentation" class="active"><a href="#mapwrapper" aria-controls="mapwrapper" role="tab" data-toggle="tab">Map</a></li>
@@ -102,7 +102,6 @@
 			    				<div role="tabpanel" class="tab-pane active" id="mapwrapper">
 			    					<div id="mapheading"></div>
 				        			<div id="mapcanvas"></div>
-				        			<div id="loading" class="modal"><!-- Place inside div to cover --></div>
 			        			</div>
 			        			<div role="tabpanel" class="tab-pane"  id="directions">
 			        				<div class="panel-group" id="directions-accordion" role="tablist" aria-multiselectable="true">

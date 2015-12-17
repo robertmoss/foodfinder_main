@@ -64,16 +64,19 @@ function initializeMap(anchor)
 		offlineMode = true;
 	}
 	
+	
 	if (offlineMode) {
 		hideElement('loading');
 		hideElement('list-loader');
 		setMessage('Unable to initialize map. Verify you have an active Internet connection and try again.', 'message', 'message_text', false);
-		// do anything else?
+		loadLocations(33.856453, -79.80855799999999, anchor);
 		return true;
 	}
-	
+
 	// default to Mt. Pleasant SC
 	currentLatLong = new google.maps.LatLng(33.856453, -79.80855799999999);
+	
+
 	
 	var async = false;
 	var mapOptions = {
@@ -329,7 +332,6 @@ function loadLocations(currentLat, currentLng, anchor, ret, start) {
 			start = 0;
 		}
 
-		
 		var serviceURL = "service/service_proto.php";
 		var working = "Retrieving results . . .";
 		var filter=getCategoryFilter();
@@ -368,41 +370,43 @@ function loadLocations(currentLat, currentLng, anchor, ret, start) {
 				}
 				
 				// populate map and wire events on location DIVs
-				for(var i=0; i<view.locations.length; i++) {
-					var location=view.locations[i];
-					var pos = new google.maps.LatLng(location.latitude, location.longitude);
-					if (i<5) {
-						// include closest five points on map
-						farthestPointToShow = pos;
+				if (!offlineMode) {
+					for(var i=0; i<view.locations.length; i++) {
+						var location=view.locations[i];
+						var pos = new google.maps.LatLng(location.latitude, location.longitude);
+						if (i<5) {
+							// include closest five points on map
+							farthestPointToShow = pos;
+						}
+						var icon=getIconForLocation(location);
+						
+						var locid=location.id;
+						var locname=location.name;
+						var marker=dropMarker(map,pos,locname,icon,locid);
+						if (location.uservisits>0 && document.getElementById('chkMarkVisited').checked) {
+							marker.icon = 'img/icons/visited.png';
+							}
+						
+						setInfoWindow(map,marker,getInfoWindowContent(location),location);
+						
+						// this whole context thing is necessary due to javascript scope issue
+						// without it, all loadLoaction functions bound as listener to marker would
+						// invoke the locid and locname from the last iteration through this loop
+						var context = {
+							l: locid,
+							n: locname,
+							callback: function() {
+								loadLocation(this.l,this.n);
+							}
+						};
+						//google.maps.event.addListener(marker,'click',context.callback.bind(context));
+						divid = 'loc' + locid;
+						//console.log(divid);
+						target = document.getElementById(divid);
+						/*$('#' + divid).hover(function(e) {
+							centerMap(e.currentTarget.id);
+							});*/
 					}
-					var icon=getIconForLocation(location);
-					
-					var locid=location.id;
-					var locname=location.name;
-					var marker=dropMarker(map,pos,locname,icon,locid);
-					if (location.uservisits>0 && document.getElementById('chkMarkVisited').checked) {
-						marker.icon = 'img/icons/visited.png';
-						}
-					
-					setInfoWindow(map,marker,getInfoWindowContent(location),location);
-					
-					// this whole context thing is necessary due to javascript scope issue
-					// without it, all loadLoaction functions bound as listener to marker would
-					// invoke the locid and locname from the last iteration through this loop
-					var context = {
-						l: locid,
-						n: locname,
-						callback: function() {
-							loadLocation(this.l,this.n);
-						}
-					};
-					//google.maps.event.addListener(marker,'click',context.callback.bind(context));
-					divid = 'loc' + locid;
-					//console.log(divid);
-					target = document.getElementById(divid);
-					/*$('#' + divid).hover(function(e) {
-						centerMap(e.currentTarget.id);
-						});*/
 				}
 				
 				hideElement('list-loader');
@@ -455,6 +459,8 @@ function centerMap(id) {
 function retrieveResults(addressID,anchor)
 {
 	clearMarkers();
+	locations = [];
+	locationIndex=0;
 	hideElement('message');
 	var address=document.getElementById(addressID).value;
 	setCurrentAddress(address,anchor);
@@ -529,4 +535,8 @@ function loadNextLocation() {
 function displayLocationSummary(index) {
 	var template = getLocationSummaryTemplate();
 	renderTemplate(template,locations[index],'resultSpan',false);
+}
+
+function showSearchForm() {
+	showElement('searchform2');
 }
