@@ -8,7 +8,8 @@ class Config {
 	public static $password = "Password1";
 	public static $database = "food";
 
-	
+	// Just a test
+    
 	// 9 is highest, meaningly only most urgent (level 10) messages will be logged; 0 means all messages will be logged regardless of level
 	public static $debugLevel = "0"; 
 	

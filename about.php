@@ -25,6 +25,7 @@
 	    				the Foodfinder Platform from <a href="http://www.palmettonewmedia.com" target="_blank">Palmetto New Media</a>.</p>
 	    			<p><a class="btn btn-primary" href="mailto:mossr19@gmail.com">Contact Us</a></p>
 	    		</div>
+	    		<p>Version <?php echo Utility::getVersion(); ?></p>
 	    	</div>	
         	<?php include("footer.php")?>
         </div>

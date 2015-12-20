@@ -7,7 +7,16 @@
 	        	<span class="icon-bar"></span>
 	        	<span class="icon-bar"></span>
       		</button>
-			<a class="navbar-brand" href="index.php"><?php echo ucfirst(Utility::getTenantProperty($applicationID, $tenantID, $userID,'title')); ?></a>
+			<a class="navbar-brand" href="index.php"><?php
+			  $icon = Utility::getTenantProperty($applicationID, $tenantID, $userID,'icon');
+              $title = ucfirst(Utility::getTenantProperty($applicationID, $tenantID, $userID,'title'));
+              if (strlen($icon)>0) {
+                  echo '<img src="' . $icon . '" alt=""' . $title . '" />';
+              }
+              else {
+                  echo $title;
+              }
+		    ?></a>
 		</div>
 		<?php
                     $mapheading = Utility::getTenantProperty($applicationID, $tenantID, $userID, 'BigMapHeading');
@@ -17,7 +26,7 @@
                         $maplink = 'finder.php';
                     }
                     if (!$mapheading) {
-                        $mapheading = 'The Big ' . ucfirst($finditem) . ' Map';
+                        $mapheading = 'The Big ' . ucwords($finditem) . ' Map';
                     }
                       ?>
 		<div class="collapse navbar-collapse" id="navbar1">

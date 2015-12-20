@@ -34,10 +34,10 @@
                                 $maplink = 'finder.php';
                             }
                             if (!$maptext) {
-                                $maptext = 'View our collection of the top ' . $finditem . ' around. Our Big ' . ucfirst($finditem) . ' Map has your choices.';
+                                $maptext = 'View our collection of the top ' . $finditem . ' around. Our Big ' . ucwords($finditem) . ' Map has your choices.';
                             }
                             if (!$mapheading) {
-                                $mapheading = 'The Big ' . ucfirst($finditem) . ' Map';
+                                $mapheading = 'The Big ' . ucwords($finditem) . ' Map';
                             }
                       ?>
                       <h2><?php echo $mapheading ?></h2>
@@ -45,8 +45,8 @@
                       <p><a class="btn btn-default" href=<?php echo $maplink ?> role="button">Go &raquo;</a></p>
                    </div>
 			        <div class="col-md-4 homePanel" >
-			          <h2><?php echo ucfirst($finditem) ?> Near Me</h2>
-			          <p>Looking to find the best <?php echo $finditem ?> near you? Our <?php echo ucfirst($finditem) ?> Finder will map it out for you. </p>
+			          <h2><?php echo ucwords($finditem) ?> Near Me</h2>
+			          <p>Looking to find <?php echo strtolower($finditem) ?> near you? Our <?php echo ucwords(strtolower($finditem)) ?> Finder will map it out for you. </p>
 			          <p><a class="btn btn-default" href="finder.php" role="button">Go &raquo;</a></p>
 			       </div>
 			        <div class="col-md-4 homePanel">

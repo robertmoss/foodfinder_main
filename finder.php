@@ -63,9 +63,9 @@
 					   <button class="btn btn-info" class="btn btn-default" onclick="loadNextLocation();"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true" ></span></button>
 				    </div>
 				    <div class="right">
-                        <button id="showSearchBtn" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Show current location controls" onclick="showElement('searchform2');showElement('hideSearchBtn');hideElement('showSearchBtn');"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button>
-                        <button id="hideSearchBtn" type="button" class="btn btn-default hidden" data-toggle="tooltip" data-placement="bottom" title="Hide current location controls" onclick="hideElement('searchform2');showElement('showSearchBtn');hideElement('hideSearchBtn');"><span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span></button>
-    				    <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Change view options" onclick="showConfig();"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></button>
+                        <button id="showSearchBtn" type="button" class="btn btn-default" onclick="showElement('searchform2');showElement('hideSearchBtn');hideElement('showSearchBtn');"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button>
+                        <button id="hideSearchBtn" type="button" class="btn btn-default hidden" onclick="hideElement('searchform2');showElement('showSearchBtn');hideElement('hideSearchBtn');"><span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span></button>
+    				    <button type="button" class="btn btn-default" onclick="showConfig();"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></button>
 	                </div>
 				</div> 
     			<div id="locationlist" class="row">

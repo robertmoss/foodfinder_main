@@ -351,9 +351,6 @@ function toggleElement(ID) {
 function showElement(ID) {
 	var element = document.getElementById(ID);
 	if (element) {
-		if (element.style.display && element.style.display=='none') {
-			element.style.display= "initial";
-		}
 		element.className = element.className.replace("hidden","");
 	}
 }
@@ -361,7 +358,6 @@ function showElement(ID) {
 function hideElement(ID) {
 	var element = document.getElementById(ID);
 	if (element) {
-		element.style.display= "none";
 		if(element.className.indexOf("hidden")==-1) {
 			element.className += " hidden";
 		}

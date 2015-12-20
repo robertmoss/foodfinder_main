@@ -4,7 +4,7 @@
 	$thisPage = 'admin';
 	
     // must be an admin for current tenant to access this page
-    if (!$user->hasRole('admin',$tenantID)) {
+    if ($userID==0 || !$user->hasRole('admin',$tenantID)) {
         header('Location: 403.php');
         die();
     }

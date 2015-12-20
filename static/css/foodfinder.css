@@ -297,6 +297,7 @@
 
 .alert {
 	text-align: center;
+	display: block;
 }
 
 .progress-wrapper {
@@ -322,6 +323,10 @@
 .align-left {
 	float: left;
 	text-align: left;
+}
+
+.modal {
+	    overflow-y: scroll;
 }
 
 /* bootstrap modals don't work well on iPhones (scroll issues) 

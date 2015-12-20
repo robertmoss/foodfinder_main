@@ -7,7 +7,13 @@ include_once 'cache.php';
 include_once 'tenant.php';
 
 class Utility{
-		
+	
+    public static function getVersion() {
+        
+        return "1.0.0";
+        
+    } 
+    	
 	public static function errorRedirect($errorMessage) {
 		$_SESSION['errorMessage'] = $errorMessage;
 		header("Location: error.php");
@@ -168,6 +174,13 @@ class Utility{
 						$return[]= array($unit,$unit);
 					}
 				break;
+            case "entities":
+                // list of system entities that can be managed/expanded with categories, etc.
+                $values = array("location");
+                foreach ($values as $entity) {
+                        $return[]= array($entity,$entity);        
+                    }
+                break;
 			default:
 				echo "unknown list:" . $listID;
 				return false;

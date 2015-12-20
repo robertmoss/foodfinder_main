@@ -1,4 +1,13 @@
 <?php 
+    include dirname(__FILE__) . '/partials/pageCheck.php';
+    $thisPage = 'test';
+    
+    // must be superuser to access this page
+    if ($userID!=1) {
+        header('Location: 403.php');
+        die();
+    }
+    
 
 echo '<p>' . $_SERVER['DOCUMENT_ROOT'];
 

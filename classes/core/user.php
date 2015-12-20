@@ -148,7 +148,7 @@ class User extends DataEntity {
 				if ($userid>0) {
 					$this->id = $userid;
 					$this->name = $name;
-					Utility::debug('Validating user ' .$name . 'validated.', 9);
+					Utility::debug('User ' .$name . 'validated.', 9);
 					}
 				else {
 					throw new Exception("Unable to validate that particular username/password combination.");
@@ -227,6 +227,10 @@ class User extends DataEntity {
 	
 	public function canAccessTenant($tenantID) {
 		
+        if ($this->id==1) {
+            return true; // superuser can access anything
+        }
+        
         // first, check cache for roles
         $rolekey = "UTR:" . $this->id . ':' . $tenantID;
         $roles = Cache::getValue($rolekey);

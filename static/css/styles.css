@@ -456,7 +456,7 @@ td {
 
 /* --- loading --- */
 #loading  {
-    display:    none;
+    display:    block;
     position:   absolute;
     z-index:    1000;
     top:        0px; 
@@ -1126,7 +1126,7 @@ content: "\00d7";
   height: 88px;
   overflow: hidden;
   position: absolute;
-  top: -3px;
+  top: 80px;
   right: -3px;
 }
 

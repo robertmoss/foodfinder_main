@@ -410,13 +410,15 @@ function loadLocations(currentLat, currentLng, anchor, ret, start) {
 				}
 				
 				hideElement('list-loader');
-				if (zoomSetBy!='user') {
-					// only set map size if user hasn't changed the zoom level
+				if (zoomSetBy!='user' && view.locations.length>0) {
+					// only set map size if user hasn't changed the zoom level & we have at least one location
 					zoomSetBy='script';
 					resizeMap(map,farthestPointToShow);
 				}
 				displayLocationSummary(locationIndex);
-				centerMap(locations[locationIndex].id);
+				if (view.locations.length>0) {
+					centerMap(locations[locationIndex].id);
+				}
 				//log('Locations loaded.');
 				}
 			else {
@@ -462,6 +464,9 @@ function retrieveResults(addressID,anchor)
 	locations = [];
 	locationIndex=0;
 	hideElement('message');
+	hideElement('searchform2');
+	hideElement('hideSearchBtn');
+	showElement('showSearchBtn');
 	var address=document.getElementById(addressID).value;
 	setCurrentAddress(address,anchor);
 	
@@ -533,8 +538,14 @@ function loadNextLocation() {
 }
 
 function displayLocationSummary(index) {
-	var template = getLocationSummaryTemplate();
-	renderTemplate(template,locations[index],'resultSpan',false);
+	if (locations[index]) {
+		var template = getLocationSummaryTemplate();
+		renderTemplate(template,locations[index],'resultSpan',false);
+	}
+	else {
+		setElementHTML('resultSpan','<div class="thumbnail loc-panel"><p>No location found.</p></div>');
+	}
+		
 }
 
 function showSearchForm() {

@@ -23,7 +23,7 @@
 	Utility::debug('Form service invoked for type:' . $type . ', method=' . $_SERVER['REQUEST_METHOD'], 5);
 	
     // in the future: can remove hardcoded array and query DB or config file to allow dynamic entities
-	$knowntypes = array('location','link','media','tenant','tenantSetting');
+	$knowntypes = array('location','link','media','tenant','tenantSetting','tenantProperty','category');
 	if(!in_array($type,$knowntypes,false)) {
 		// unrecognized type requested can't do much from here.
 		header(' ', true, 400);
@@ -32,7 +32,7 @@
 	}
 	
 	$classpath = '/../classes/'; 
-	$coretypes = array('tenant','tenantSetting');
+	$coretypes = array('tenant','tenantSetting','tenantProperty','category');
 	if(in_array($type,$coretypes,false)) {
 		// core types will be in core subfolder
 		$classpath .= 'core/';

@@ -33,6 +33,7 @@ function getLocationListTemplate() {
 			template += "</div>";
 		template += "</div>";
 		template += "{{/locations}}";
+		template += "{{^locations}}<p>No matching locations were found.</p>{{/locations}}";
 							
 		
 	return template;
@@ -321,8 +322,25 @@ function placesCallbackDetails(place,status) {
     document.getElementById('txt' + type + 'GoogleReference').value = place.reference;
 }
 
-function lookupLatLng() {
-	alert('Yeah, we\'re kinda still working on that one.');
+function lookupLatLng(type) {
+	
+	var address = '';
+	
+	address+=getElementValue('txt' + type + 'Address');
+    address+=' ' + getElementValue('txt' + type + 'City');
+    address+=' ' + getElementValue('txt' + type + 'State');
+	
+	var geocoder = new google.maps.Geocoder();
+	geocoder.geocode({'address': address}, function(results,status) {
+		if (status==google.maps.GeocoderStatus.OK) {
+			 document.getElementById('txt' + type + 'Latitude').value = results[0].geometry.location.lat();
+    		 document.getElementById('txt' + type + 'Longitude').value = results[0].geometry.location.lng();
+		}
+		else {
+			alert('Unable to geocode the address (' + address + ').');
+		}
+	});
+	
 }
 
 function retrieveLocations(serviceURL,template,anchor,working,callback) {
