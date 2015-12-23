@@ -16,21 +16,24 @@
     Utility::debug('pageCheck executing for ' . $_SERVER["SCRIPT_FILENAME"] . ' - sessionid=' . session_id(), 1);
     date_default_timezone_set('America/New_York');
 	$user = null;
-    $newsession = false; 
+    $newsession = false;
+    $applicationID = 1; // not using for anything right now, but conceivable could be used in future if multiple application share same core and database
     if (!isset($_SESSION['userID'])) {
         $newsession = true;
     }
 
     // look at URL to see if it is custom one for a tenant
     // TO DO: as we add more custom URLs, need to look in DB or elsewhere vs. hardcoding
-    if ($_SERVER['SERVER_NAME']=='www.food-find.com' || $_SERVER['SERVER_NAME']=='www.food-find.com') {
+    if ($_SERVER['SERVER_NAME']=='www.food-find.com' || $_SERVER['SERVER_NAME']=='food-find.com') {
         $_SESSION['tenantID'] = 1;
     }
-    if ($_SERVER['SERVER_NAME']=='bars.food-find.com') {
+    elseif ($_SERVER['SERVER_NAME']=='bars.food-find.com') {
         $_SESSION['tenantID'] = 5;
     }
-	
-	//  set tenant for this application. Will default to 3
+    elseif ($_SERVER['SERVER_NAME']=='bbq.food-find.com') {
+        $_SESSION['tenantID'] = 3;
+    }
+	// set tenant for this application. Will default to 3
 	if (!isset($_SESSION['tenantID'])) {
 		$_SESSION['tenantID'] = 0;
 		// look to see if tenant specified on query string
@@ -66,12 +69,18 @@
 		echo '<p>You are not allowed to access this resource.</p>';
 		exit();
 	}
-	else {
+elseif ($userID==0) {
 		// TO DO: check whether tenant allows anonymous access
 		// for now, assume that they all do
+		$allowAnon = Utility::getTenantProperty($applicationID, $tenantID, $userID, 'allowAnonAccess');
+		if (!$allowAnon && strtolower(basename($_SERVER['PHP_SELF']))!='login.php') {
+		    //echo strtolower(basename($_SERVER['PHP_SELF']));
+		    header('Location: Login.php?context=loginRequired');
+            die();
+		}
 	}
 	
-	$applicationID = 1;
+
 	
 	
 	

@@ -367,7 +367,6 @@ abstract class DataEntity implements iDataEntity {
 						$query .= $separator . Database::queryNumber($value);
 						break;
 					case "boolean":
-                        Log::debug('boolean value=' . $value . ' resolves as ' . Database::queryBoolean($value), 9);
 						$query .= $separator . Database::queryBoolean($value);
 						break;
 					case "picklist":

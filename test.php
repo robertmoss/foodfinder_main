@@ -8,7 +8,6 @@
         die();
     }
     
-
 echo '<p>' . $_SERVER['DOCUMENT_ROOT'];
 
 echo '<p>' . $_SERVER['SERVER_NAME'];

@@ -3,7 +3,7 @@
 ?>
 <footer>
 <div id="footer"><p>© 2015, Palmetto New Media</p></div>
-<?php if (Config::$debugLevel<10) { ?>
+<?php if (Config::$debugLevel<1) { ?>
 <div id="debug">
 	<?php 
 		echo 'tenantID=' . $tenantID . '<br/>';

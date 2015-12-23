@@ -11,6 +11,7 @@
 	$password = '';
 	$remember_choice = false;
 	$successURL = 'index.php';
+    $context = Utility::getRequestVariable('context', '');
     $requestMethod = $_SERVER['REQUEST_METHOD'];
 	if (isset($_POST['username'])) {
 		$username = trim(htmlspecialchars($_POST['username']));
@@ -68,6 +69,7 @@
                     include('header.php');
 
                 ?>
+        <div class="login_form">
     	<?php if(strlen($errorMessage)>0) { ?>
     		<div class="edit">
     			<div class="alert alert-danger">
@@ -75,8 +77,15 @@
     			</div>
     		</div>
     	<?php } 
+            if($context=='loginRequired') { ?>
+            <div class="edit">
+                <div class="alert alert-info">
+                    <p>You must be logged in to access the requested resource.</p>
+                </div>
+            </div>
+        <?php }
             if ($user->id==0)  { ?>
-    		<div class="login_form">
+    		
 				<form action="login.php" method="post">
 				    <input id="txtSource" name="source" type="hidden" value="login.php" />
 					<div class="form-group">
