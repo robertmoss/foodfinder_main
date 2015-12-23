@@ -137,6 +137,7 @@ class User extends DataEntity {
 					
 			$result = Database::executeQuery($query);
 			if (!$result) {
+			    Utility::debug('User ' .$name . ' failed validation.', 9);
 				throw new Exception('Unable to validate that username/password combination.');
 				}
 			else {
@@ -149,6 +150,7 @@ class User extends DataEntity {
 					$this->id = $userid;
 					$this->name = $name;
 					Utility::debug('User ' .$name . 'validated.', 9);
+					Log::setSessionUserId(session_id(), $userid);
 					}
 				else {
 					throw new Exception("Unable to validate that particular username/password combination.");
@@ -209,9 +211,13 @@ class User extends DataEntity {
 		if ($this->id==0) {
 			return false;
 		}
-		else {
-			return ($this->id==1 || $this->hasRole('admin',$tenantid));
+        elseif ($this->id==1 ){
+            // superuser can do anything!
+			return true;
 		}
+        else {
+            return ($this->hasRole('admin',$tenantid)||$this->hasRole('contributor',$tenantid));
+        }
 	}
 		
 	public function canDelete($entityType,$tenantid,$id) {

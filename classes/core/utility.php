@@ -114,7 +114,7 @@ class Utility{
             case "roles":
                 // in the future, may want to load dynamically from database, but right now this is a 
                 // known list and can just be hardwired
-                $return = array("standard","admin");
+                $return = array("standard","admin","contributor");
                 break;
 			case "categories":
 				$query = "call getCategories(" . $tenantID . ")";

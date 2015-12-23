@@ -33,6 +33,62 @@
 				}
 		}		
 	}
+    
+    public static function startSession($sessionid,$tenantid,$userid) {
+        
+        $query = "insert into session(sessionid,startDateTime,tenantid,userid)
+                     values ('". $sessionid. "', now(), " . $tenantid .", " . $userid . ")";
+        try {
+            $con = mysqli_connect(Config::$server,Config::$user,Config::$password, Config::$database);
+        }
+        catch(Exception $e) {
+            $this->debug('unable to write to session table: ' . $e->getMessage(),10);
+        }
+        if ($con) {
+            mysqli_query($con,$query);
+        }
+        else 
+            {
+            $this->debug('unable to connect to database for debug: no connection returned.',10);
+            }
+    }    
+    
+    public static function endSession($sessionid) {
+        Log::debug('ending session ' . $sessionid,1);
+        $query = "update session set endDateTime=now() where sessionid='" . $sessionid . "'";
+        try {
+            $con = mysqli_connect(Config::$server,Config::$user,Config::$password, Config::$database);
+        }
+        catch(Exception $e) {
+            $this->debug('unable to write to session table: ' . $e->getMessage(),10);
+        }
+        if ($con) {
+            mysqli_query($con,$query);
+        }
+        else 
+            {
+            $this->debug('unable to connect to database for debug: no connection returned.',10);
+            }
+    } 
+    
+    public static function setSessionUserId($sessionid,$userid) {
+        Log::debug('updating user id ' . $userid . ' on session record ' . $sessionid,1);
+        $query = "update session set userid= " .$userid . " where sessionid='" . $sessionid . "'";
+        try {
+            $con = mysqli_connect(Config::$server,Config::$user,Config::$password, Config::$database);
+        }
+        catch(Exception $e) {
+            $this->debug('unable to write to session table: ' . $e->getMessage(),10);
+        }
+        if ($con) {
+            mysqli_query($con,$query);
+        }
+        else 
+            {
+            $this->debug('unable to connect to database for debug: no connection returned.',10);
+            }
+    }     
+    
 	
 	private static function logToFile($message) {
 		// may make this more sophisticated in the future; for now, just dump to file

@@ -41,7 +41,7 @@
 		// try to create a new user object
 		try {
 			$user->validateUser($username, $password, $tenantID);
-			Utility::debug('User ' . $user->name . 'logged in succesfully.',5);
+			Utility::debug('User ' . $user->name . ' logged in succesfully.',5);
 			
 			// initiate new user session
 			$_SESSION['userID'] = $user->id;
@@ -50,7 +50,7 @@
 			}
 		catch (Exception $e) {	
 			$errorMessage = $e->getMessage();
-			Utility::debug('Login failed: ' . $errorMessage,5);
+			Utility::debug('Login failed: ' . $errorMessage,9);
 		}
 	}
 

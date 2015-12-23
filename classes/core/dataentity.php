@@ -178,8 +178,8 @@ abstract class DataEntity implements iDataEntity {
 			
 			if ($data->num_rows==0)	{
 				//no match found.
-				//throw new Exception($this->getName() . ' not found.');
-				return array();
+				throw new Exception($this->getName() . ' not found.');
+				//return array();
 			}
 			
 			while ($r = mysqli_fetch_assoc($data))
@@ -367,6 +367,7 @@ abstract class DataEntity implements iDataEntity {
 						$query .= $separator . Database::queryNumber($value);
 						break;
 					case "boolean":
+                        Log::debug('boolean value=' . $value . ' resolves as ' . Database::queryBoolean($value), 9);
 						$query .= $separator . Database::queryBoolean($value);
 						break;
 					case "picklist":
@@ -444,13 +445,11 @@ abstract class DataEntity implements iDataEntity {
 			
 			// this does a very basic update based upon common pattern
 			// override to add custom save functionality
-			
-			// TO-DO: Need to transactionalize this due to the multiple possible queries
-			
-			Utility::debug('dataentity.updateEntity called',9);
-			
+						
+			Utility::debug('dataentity.updateEntity called',5);
+			$queries = array();
 			$this->validateData($data);
-			
+			//$queries = array();
 			$newID = 0;
 			$query = "call update" . $this->getName() . "(" . $id;
 			$followOnQueries = array();
@@ -510,42 +509,35 @@ abstract class DataEntity implements iDataEntity {
 			}
 			
 			$query .= ')';
+			array_push($queries,$query);
 			
-			$result = Database::executeQuery($query);
-			
-			if (!$result) {
-				return false;
-			}
-			else 
-			{
-				// handle user-defined properties
-				if ($this->hasProperties()) {
-					// remove all properties for object - if not specified in the data, assume it's not longer a valid property
-					$this->deleteProperties($id);
-						
-					// get array of properties allowed for this entity & tenant
-					$keys = $this->getPropertyKeys();
-					foreach($keys as $key) {
-						// determine whether data contains a value for this key - field will be prepended with PROP
-						if (property_exists($data,'PROP-' . $key[0])) {
-							// only save if not empty - that's the MO for now
-							$val =  $data->{'PROP-'.$key[0]};
-							if (strlen($val)>0) {
-								$this->saveProperty($id, $key[0], $data->{'PROP-'.$key[0]});
-							}
-						}	
-					}
-				}
+			// handle user-defined properties
+			if ($this->hasProperties()) {
+				// remove all properties for object - if not specified in the data, assume it's not longer a valid property
+				array_push($queries,$this->getDeletePropertiesSQL($id));
 					
-				// execute follow-one queries for child entities
-				foreach($followOnQueries as $q) {
-					$result = Database::executeQuery($q);
+				// get array of properties allowed for this entity & tenant
+				$keys = $this->getPropertyKeys();
+				foreach($keys as $key) {
+					// determine whether data contains a value for this key - field will be prepended with PROP
+					if (property_exists($data,'PROP-' . $key[0])) {
+						// only save if not empty - that's the MO for now
+						$val =  $data->{'PROP-'.$key[0]};
+						if (strlen($val)>0) {
+							array_push($queries,$this->getSavePropertySQL($id, $key[0], $data->{'PROP-'.$key[0]}));
+						  } 
+    					}	
+    				}
+    			}
+    					
+			// add follow-one queries for child entities
+			foreach($followOnQueries as $q) {
+			     array_push($queries,$q);
 				}
-				
-				return true;				
-			}
-		
-		}
+            
+            Database::executeQueriesInTransaction($queries);
+            return true;
+        }
 
 		public function getRemoveChildrenProcName($childentityname) {
 			// override if your class has a different name for the proc that removes all linked child entities
@@ -737,7 +729,7 @@ abstract class DataEntity implements iDataEntity {
 			return $keys;
 			}
 		
-		protected function deleteProperties($id) {
+		protected function getDeletePropertiesSQL($id) {
 			// assumes a pattern to property tables; only override if your object stores properties differently
 			$tablename = lcfirst($this->getName()) . 'Property';
 
@@ -745,14 +737,12 @@ abstract class DataEntity implements iDataEntity {
 			$query .= ' select * from (select distinct T.id from ' . $tablename . ' T where';
 			$query .= ' T.' . lcfirst($this->getName()) . 'id=' . Database::queryNumber($id) . ') as list);';
 
-			return Database::executeQuery($query);
+			return $query;
 
 		}
 		
-		function saveProperty($id,$key,$value) {
-			
-			Utility::debug('saving property ' . $key . "=" . $value,2);
-				
+		function getSavePropertySQL($id,$key,$value) {
+	
 			$tablename = lcfirst($this->getName()) . 'Property';
 			$idname = lcfirst($this->getName()) . 'id';
 
@@ -762,7 +752,7 @@ abstract class DataEntity implements iDataEntity {
 			$query .= ', ' . Database::queryString($key);
 			$query .= ', ' . Database::queryString($value) . ');';
 
-			return Database::executeQuery($query);	
+			return $query;	
 		}
 		
 		public function hasOwner() {

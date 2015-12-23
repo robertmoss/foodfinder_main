@@ -10,6 +10,7 @@
         <title>Food Finder</title>
         <?php include("partials/includes.php"); ?>
         <link rel="stylesheet" type="text/css" href="static/css/search.css" />
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyB9Zbt86U4kbMR534s7_gtQbx-0tMdL0QA"></script>
         <script src="js/search.js"></script>
     </head>
     <body>

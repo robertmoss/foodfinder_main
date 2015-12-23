@@ -33,6 +33,7 @@
 	$classname = ucfirst($type); 	// class names start with uppercase
 	$coretypes = array("user");
 	$path = "";
+    $errorLoading = "";
 	if(in_array($type,$coretypes,false)) {
 		// coretypes in core folder
 		$path = 'core/';
@@ -70,14 +71,28 @@
 	if (!$id) {
 		// assume creating a new entity
 		$id=0;
+        if (!$user->canAdd($type,$tenantID)) {
+            header("Location: 403.php");
+            die();
+        }
 		$entity=null;
 		if (isset($_GET["parentid"])) {
 			$parentid = $_GET["parentid"];
 			}
 		}
 	 elseif ($id>0) {
+	     if (!$user->canEdit($type,$tenantID)) {
+            header("Location: 403.php");
+            die();
+        }
+	     try {
 			$entity = $class->getEntity($id,$tenantID,$userID);
-	 		}
+         }
+         catch(Exception $ex) {
+            $errorLoading = 'Unable to load ' . $type . ': ' . $ex->getMessage();
+            $entity=null;             
+         }
+	 	}
 	
 ?>
 <!DOCTYPE html>
@@ -98,7 +113,7 @@
     	<div id="maincontent">
     		<div id="outer">
 	    		<?php include dirname(__FILE__) . '/header.php';?>
-    			<div id="main">
+    			<div id="main" class="container">
                     <input type="hidden" id="mode" name="mode" value="<?php echo $mode; ?>"/>
     				<?php if ($id>0 && count($entity)==0) {?>
     					<h1>Not found.</h1>
@@ -107,6 +122,7 @@
     				<input type="hidden" id="id" name="id" value="<?php echo $id; ?>"/>
     				<input type="hidden" name="tenantid" value="<?php echo $tenantID; ?>"/>
 				    <input type="hidden" id="type" name="type" value="<?php echo $type; ?>"/>
+                    <input type="hidden" id="<?php echo$type ?>id" name="<?php echo$type ?>id" value="<?php echo $id; ?>"/>
 				    <div class="container">
 				    	<?php echo $class->renderView($entity,$userID,$returnurl)?><button class="btn btn-default" type="button" onclick="history.back();" ><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back</button>
 						<?php if($user && $user->canEdit($type, $tenantID,$id)) {?>
@@ -122,6 +138,7 @@
 				        			<input type="hidden" id="id" name="id" value="<?php echo $id; ?>"/>
 				        			<input type="hidden" name="tenantid" value="<?php echo $tenantID; ?>"/>
 				        			<input type="hidden" id="type" name="type" value="<?php echo $type; ?>"/>
+                                    <input type="hidden" id="<?php echo$type ?>id" name="<?php echo$type ?>id" value="<?php echo $id; ?>"/>
 									<input id="txtCurrentLatitude" type="hidden" value="<?php echo Utility::getSessionVariable('latitude', ''); ?>"/>
 									<input id="txtCurrentLongitude" type="hidden" value="<?php echo Utility::getSessionVariable('longitude', '');; ?>"/>
 				        			<div id="mapcanvas" class="hidden">Placeholder map canvas.</div>

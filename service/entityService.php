@@ -63,6 +63,10 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
 		die();		
 	}
 	
+    if (!$user->canRead($type, $tenantID, $id)) {
+            Service::returnError('You don\'t have permission to acccess this ' . $type . '.',403);
+        }
+    
 	try {
 		$entity = $class->getEntity($id);
 	}
@@ -85,6 +89,13 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST")
 		  Service::returnError('ID must be specified for an update.');   
 		}
 		$id = $data->{'id'};
+        
+        if ($id>0 && !$user->canEdit($type, $tenantID, $id)) {
+            Service::returnError('You don\'t have permission to edit this ' . $type . '.',403);
+        }
+        if ($id==0 && !$user->canAdd($type, $tenantID, $id)) {
+            Service::returnError('You don\'t have permission to create a new ' . $type . '.',403);
+        }
         
         $action = Utility::getRequestVariable('action', '');
         

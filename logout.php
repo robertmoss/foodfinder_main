@@ -4,11 +4,17 @@
     // perform all steps to flush user and clear state: right now userID is only remnant
     // do need to keep tenant, though, for branding
     $tenantID = $_SESSION['tenantID'];
+    Log::endSession(session_id());
     session_destroy();
 	
 	// create new session to save tenantID
 	session_start();
-    $_SESSION['tenantID'] = $tenantID;
+    session_regenerate_id(true);
+    $flushed=true;
+    if (Utility::getRequestVariable('flush', 'no') != 'yes') {
+        $_SESSION['tenantID'] = $tenantID;
+        $flushed=false;
+    }
     
 ?>
 <!DOCTYPE html>
@@ -28,6 +34,7 @@
 	    		?>
 	    		<div id="basic">
     				<h2>You have been logged out.</h2>
+    				<?php if ($flushed) { echo '<p>Tenant has been flushed.</p>'; }  ?>
     				<p><a href="index.php">Return to Home Page</a></p>
 	        	</div>
         		<?php include("footer.php")?>     		

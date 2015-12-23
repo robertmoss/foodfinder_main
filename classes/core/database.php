@@ -56,16 +56,20 @@ class Database {
 	
 	public static function queryBoolean($value) {
 		// booleans are stored as bits in database, so convert to 1 if true, 0 otherwise
-		
-		if ($value) {
-			return 1;
-		}		
-		else {
-			return 0;
-		}
-
-		
-	}
+        if (!$value) {
+            return 0;
+        }
+        else {
+            // gotta parse all the allowable values that could be 'true'
+            $value = strtolower(strval($value));
+            if ($value=='1'||$value=='true'||$value=='yes'||$value=='youbetcha') {
+                return 1;
+            }		
+		    else {
+			     return 0;
+    		}
+        }
+    }
 	
 	public static function executeQuery($query)
 	{

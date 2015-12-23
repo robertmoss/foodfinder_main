@@ -1,3 +1,19 @@
+<?php 
+include_once("analyticstracking.php");
+if (Utility::getTenantProperty($applicationID, $tenantID, $userID, 'showAds')=='yes') {?>
+<div class="adframe">    
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- FoodFinder_Top -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-0081868233628623"
+         data-ad-slot="1225121234"
+         data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+<?php } ?>
 <nav class="navbar navbar-default">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -44,6 +60,7 @@
 			    <li class="dropdown">
 			        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $user->name; ?> <span class="caret"></span></a>
 			         <ul class="dropdown-menu">
+			             <li><a href="profile.php">Profile</a></li>
 			             <li><a href="logout.php">Logout</a></li>
 			         </ul> 
 				</li>
@@ -70,20 +87,3 @@
 	     </div>
 	</div>
 </nav>
-<!--
-	
-	<div id="top_ad">
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
-<!-- Responsive Ad Top 
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-0081868233628623"
-     data-ad-slot="1730879237"
-     data-ad-format="auto"></ins>
-<!-- slow ad serving can delay map load; maybe move ad script to page .js files to trigger after map load -->
-<!--<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>';  
-					</div>    					
-
-    -->

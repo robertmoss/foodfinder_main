@@ -570,7 +570,7 @@ function visitedUpdated(success) {
 		}
 	else {
 		location.uservisits=1;
-		marker.setIcon('img/icons/green-dot.png');
+		marker.setIcon('img/icons/visited.png');
 		showElement('loc' + locationid +'_visited');
 		showElement('loc' + locationid +'_visited_2');
 	}

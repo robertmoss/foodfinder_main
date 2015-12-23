@@ -214,6 +214,9 @@ function submitForm(formID,messageDiv,messageSpan,reloadOnSuccess,idElement,call
 					}
 				data[field.name] = arr;
 			}
+			else if (field.type=='checkbox') {
+				data[field.name] = (field.checked) ? 'true':'false';
+			}
 			else {
 				data[field.name] = field.value;
 			}
