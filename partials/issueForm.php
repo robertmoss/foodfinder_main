@@ -9,6 +9,9 @@
                   <div id="modalDialogBody" class="modal-body">
                     <form id="issueForm" action="service/issue.php" method="post">
                         <input id="txtIssueId" name="title" type="hidden" value="">
+                        <div class="well"><p>As a FoodFinder contributor, you can use this form to submit any issues you discover while using the FoodFinder application. 
+                            Please submit any bugs or usability problems you find as well as any suggestions you may have for improving the application.  </p>
+                        </div>
                         <div class="form-group">
                             <label for="txtIssueTitle">Title</label>
                             <input id="txtIssueTitle" name="title" type="text" class="form-control" placeholder="Title">

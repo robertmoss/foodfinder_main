@@ -1,5 +1,5 @@
 <?php
-
+//http_response_code(500); // set to return error unless explicitly succeeds (handles internal errors)
 include dirname(__FILE__) . '/../partials/pageCheck.php';
 include_once dirname(__FILE__) . '/../classes/core/utility.php';
 include_once dirname(__FILE__) . '/../classes/core/service.php';
@@ -51,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
         if (array_key_exists('number',$returnData)) {
             $response = json_encode(array("id"=>$returnData->{"number"}));
         } 
+        //http_response_code(200); 
         Service::returnJSON($response);
     }
         
