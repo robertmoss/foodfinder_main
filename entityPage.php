@@ -71,7 +71,8 @@
 	if (!$id) {
 		// assume creating a new entity
 		$id=0;
-        if (!$user->canAdd($type,$tenantID)) {
+        if (!$class->userCanAdd($user)) {
+            Log::debug('User without create permissions attempted to add new user. (userid=' . $userID . ', entity=' . $type . ', tenant=' . tenantID , 9);
             header("Location: 403.php");
             die();
         }
@@ -81,12 +82,22 @@
 			}
 		}
 	 elseif ($id>0) {
-	     if (!$user->canEdit($type,$tenantID)) {
+	     if ($mode=="edit") {
+    	    if (!$class->userCanEdit($id,$user)) {
+                Log::debug('User without edit permissions attempted to edit entity. (id=' . $id .', userid=' . $userID . ', entity=' . $type . ', tenant=' . tenantID , 9); 
+             header("Location: 403.php");
+                die();
+            }
+         }
+         elseif (!$class->userCanRead($id,$user)) {
+            Log::debug('User without read permissions attempted to view entity. (id=' . $id .', userid=' . $userID . ', entity=' . $type . ', tenant=' . tenantID , 9); 
             header("Location: 403.php");
             die();
-        }
+            }
+	     
 	     try {
 			$entity = $class->getEntity($id,$tenantID,$userID);
+            $entity["editable"] = $class->userCanEdit($id,$user);
          }
          catch(Exception $ex) {
             $errorLoading = 'Unable to load ' . $type . ': ' . $ex->getMessage();
@@ -125,7 +136,7 @@
                     <input type="hidden" id="<?php echo$type ?>id" name="<?php echo$type ?>id" value="<?php echo $id; ?>"/>
 				    <div class="container">
 				    	<?php echo $class->renderView($entity,$userID,$returnurl)?><button class="btn btn-default" type="button" onclick="history.back();" ><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back</button>
-						<?php if($user && $user->canEdit($type, $tenantID,$id)) {?>
+						<?php if($user && $class->userCanEdit($id,$user)) {?>
 							<button id="editEntity" class="btn btn-default" type="button" onclick="setMode('edit');" ><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</button>
 						<?php } ?>
 					</div>

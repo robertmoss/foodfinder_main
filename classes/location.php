@@ -31,6 +31,25 @@
 			
 			return $fields;
 		}
+        
+        public function getOwner($id) {
+                
+            $ownerid = -1;
+            $ownerkey = "LOCOWN:" . $id;
+            // first check cache
+            $owner = Cache::getValue($ownerkey);
+            if (is_null($owner)) {
+                // not cached: try database
+                $roles = array();
+                $query = "select ownerid from location where id=" . Database::queryNumber($id) . ";";
+                 $results = Database::executeQuery($query);
+                 if ($arr=mysqli_fetch_array($results)) {
+                    $ownerid = $arr[0];
+                 }
+                 Cache::putValue($ownerkey, $ownerid);
+            }
+            return $ownerid;
+        }
 		
 		public function isRequiredField($fieldName) {
 			// override
@@ -72,7 +91,7 @@
 			$location = parent::getEntity($id, $this->tenantid, $this->userid);
 			$location = Utility::addDisplayElements($location);
 			$location["images"] = ''; // blank for now; may want some other value here depending upon how it gets used
-			
+
 			return $location;	
 			}
 		
@@ -98,7 +117,10 @@
 		
 			return array(); 
 		}
-
+    
+        public function hasOwner() {
+            return true;
+        }
 
         public function addEntity($data) {
             
@@ -175,8 +197,7 @@
 				
 				echo '
 					<div>
-						<h2>' . $entity["name"] . '</h2>
-						<div id="locationid" class="hidden">'. $entity["id"] . '</div>';
+						<h2>' . $entity["name"] . '</h2>';
 				if (array_key_exists('categories', $entity)) {
 					echo '		<h3>';
 					$separator='';
@@ -230,12 +251,12 @@
 				}
 				
 				// images
-				echo '	<div class="panel panel-info">
+				if (array_key_exists("editable", $entity) && $entity["editable"]) {
+				    echo '	<div class="panel panel-info">
 							<div class="panel-body">
 								<div id="imageStrip"><p>Loading . . .</p></div>';
-								 include("partials/workingPanel.php");
-                if ($this->userid>0) {                         
-				echo '			<form id="uploadForm" action="service/files.php" method="post" enctype="multipart/form-data" role="form">
+					 include("partials/workingPanel.php");
+				    echo '			<form id="uploadForm" action="service/files.php" method="post" enctype="multipart/form-data" role="form">
 					        		<input id="imageLocationId" name="locationid" type="hidden" value="'. $entity["id"] . '"/> 
 					        		<div class="form-group">
 					        			<label for="importFile">Choose files to upload:</label>
@@ -243,16 +264,50 @@
 					        		</div>
 									<button id="uploadSubmit" type="button" class="btn btn-default" onclick="uploadForm();"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Upload</button> 
 				        		</form>';
-                }
-                echo '      </div>
+                    echo '      </div>
 						</div>
 							';
+                    }        
 								
 			echo '</div>
 				    ';
 		
 		
 				}
+				
+	 public function userCanAdd($user) {
+        // override base to allow contributor role to add
+        
+        if ($user->id==0) {
+            return false;
+        }
+        elseif ($user->id==1 ) {
+            // superuser can do anything!
+            return true;
+        }
+        else {
+            return ($user->hasRole('admin',$this->tenantid)||$user->hasRole('contributor',$this->tenantid));
+        }
+    }
+    
+    public function userCanEdit($id,$user) {
+        // different editing rules for location than other entities thanks to Contributor role
+
+       if ($user->id==0) {
+           // must be authenticated user to edit 
+            return false;
+        }
+       elseif ($user->id==1) {
+           // superuser can always edit 
+           return true;
+       }
+       else {
+            // for locations, you can edit if an admin OR if a contributor and you own the location
+            return (($user->hasRole('admin',$this->tenantid)) || 
+                    (($user->hasRole('contributor',$this->tenantid)) && ($this->userid==$this->getOwner($id)))); 
+            }
+        }
+       
 		
 	}
 

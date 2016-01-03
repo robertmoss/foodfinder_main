@@ -11,32 +11,38 @@ class User extends DataEntity {
 	public $name = null;
 	public $email = null;
 	public $twitterHandle = null;
-	
+    	
 	function __construct($id,$tenantid) {
-		if ($id>0) {
-			// retrieve user from database
-			$query = 'SELECT id, name, email, twitterHandle FROM user where id=' . Database::queryNumber($id);
-			Utility::debug('Creating user object for id=' . $id, 5);
-			$result = Database::executeQuery($query);
-			$row = mysqli_fetch_assoc($result);
-			if (is_null($row)) {
-				throw new Exception("User not found.");
-			}
-			else {
-				$this->tenantid = $tenantid;
-				$this->id = $row["id"];
-				$this->name = $row["name"];
-				$this->email = $row["email"];
-				$this->twitterHandle = $row["twitterHandle"];
-				Utility::debug('User object instantiated for user id ' .$id, 1);
-			}
-		}
+            
+        $this->tenantid = $tenantid;
+        if ($id>0) {
+            $this->id = $id;
+            $this->loadUser($id);
+        }
         else {
-            $this->tenantid = $tenantid;
             $this->id = 0;
-            Utility::debug('New user object instantiated.', 1);
-        } 
+        }
+        
 	}
+    
+    private function loadUser($id) {
+        
+        // retrieve user from database
+        $query = 'SELECT id, name, email, twitterHandle FROM user where id=' . Database::queryNumber($id);
+        Utility::debug('Creating user object for id=' . $id, 5);
+        $result = Database::executeQuery($query);
+        $row = mysqli_fetch_assoc($result);
+        if (is_null($row)) {
+            throw new Exception("User not found.");
+        }
+        else {
+
+            $this->name = $row["name"];
+            $this->email = $row["email"];
+            $this->twitterHandle = $row["twitterHandle"];
+            Utility::debug('User object instantiated for user id ' .$id, 1);
+        }
+    }
 	
 	public function getName() {
 			return "User";
@@ -61,7 +67,7 @@ class User extends DataEntity {
 		
 	public function getEntity($id) {
 		
-		// because our constructor queries DB and builds object we just need to return field values
+		loadUser();
 		$entity	= array(
 			"id" => $this->id,
 			"name" =>$this->name,
@@ -179,57 +185,7 @@ class User extends DataEntity {
 		return (Database::executeQuery($query));
 	}
 	
-	public function canRead($entityType,$tenantid,$id) {
-		
-		// to do: add mechanism for resolving entity/role permissions
-		// for now, any authenticated user read/view any entity
-		if ($this->id==0) {
-			return false;
-		}
-		else {
-			return true;
-		}
-	}
 	
-	public function canEdit($entityType,$tenantid,$id) {
-
-	   if ($this->id==0) {
-	       // must be authenticated user to edit anything
-			return false;
-		}
-		else {
-		    // simple rule for now: to edit an entity within a tenant, you must be an admin within that tenant
-		    return ($this->id==1 || $this->hasRole('admin',$tenantid));
-			
-		}
-		
-	}
-	
-	public function canAdd($entityType,$tenantid) {
-		
-		// rules for now: must be authenticated user to add and must be an admin within the tenant (or superuser)
-		if ($this->id==0) {
-			return false;
-		}
-        elseif ($this->id==1 ){
-            // superuser can do anything!
-			return true;
-		}
-        else {
-            return ($this->hasRole('admin',$tenantid)||$this->hasRole('contributor',$tenantid));
-        }
-	}
-		
-	public function canDelete($entityType,$tenantid,$id) {
-		
-		// for now, only admin user can delete entities
-		if ($this->id==0) {
-			return false;
-		}
-		else {
-			return ($this->id==1 || $this->hasRole('admin',$tenantid));
-		}
-	}
 	
 	public function canAccessTenant($tenantID) {
 		
@@ -286,13 +242,12 @@ class User extends DataEntity {
     public function hasRole($role,$tenantid) {
         $hasRole = false; 
         if ($this->id>0) {
+            $roles = $this->getTenantRoles($tenantid);
             if ($this->id==1) {
-                $hasRole = true; // superuser by definition has all roles
-                }
-            else {
-                $roles = $this->getTenantRoles($tenantid);
-                $hasRole = in_array($role,$roles,false);
-                }                
+                // super user should be admin for any tenant
+                array_push($roles,'admin');
+            }
+            $hasRole = in_array($role,$roles,false);                
             }
         return $hasRole;
     }

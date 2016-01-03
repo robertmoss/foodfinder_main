@@ -1,5 +1,8 @@
 <?php 
     include_once('classes/core/config.php'); 
+    include_once('classes/core/log.php');
+    
+    Log::debug('Rendering footer . . .', 1);
 ?>
 <footer>
 <div id="footer"><p>© 2015, Palmetto New Media</p></div>
@@ -13,5 +16,7 @@
 		echo 'php.ini path=' . $inipath . '<br/>';
 	?>
 </div> 
-<?php } ?>
+<?php } 
+    Log::debug('Footer complete for ' . $_SERVER["SCRIPT_FILENAME"] . ' - sessionid=' . session_id(), 1);
+?>
 </footer>

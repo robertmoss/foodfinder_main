@@ -67,7 +67,7 @@ function deleteMediaCallback(status,response) {
 function setMediaAsPrimary(id) {
 	var serviceUrl = 'service/entityService.php?type=location&action=fieldUpdate';
 	var imageurl = document.getElementById('media'+id).getElementsByTagName("img")[0].src;
-	var locationid = document.getElementById('locationid').innerText;
+	var locationid = document.getElementById('locationid').value;
 	var data = {
 		id: locationid,
 		imageurl: imageurl

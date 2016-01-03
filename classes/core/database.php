@@ -127,9 +127,10 @@ class Database {
          }
         if (!$success) {
             Log::debug('Rolling back transaction.', 9);
+            $err = mysqli_error($con);
             mysqli_rollback($con);
             mysqli_close($con);
-            throw new Exception(mysqli_error($con));
+            throw new Exception($err);
         }
         else {
             Log::debug('Committing transaction.', 5);

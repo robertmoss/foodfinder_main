@@ -132,3 +132,15 @@ a:visited {
 .label-info {
 	background-color: #bb2325;
 }
+
+/* Need to move around if no ads allowed or header a different height, etc. */
+@media screen and (min-width: 1024px) {
+ 	
+	.searchPanel {
+		top: 70px !important; 
+	}
+	
+	.mapcontent {
+		height: 800px !important;
+	}	
+}

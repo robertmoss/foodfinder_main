@@ -1,5 +1,5 @@
 <?php
-    $numToLoad = Utility::getRequestVariable('numToLoad', 10);
+    $numToLoad = Utility::getRequestVariable('numToLoad', 50);
     $categories =   Utility::getRequestVariable('categories', '');
     $markVisited = true;
    

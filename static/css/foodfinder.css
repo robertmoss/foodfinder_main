@@ -9,7 +9,16 @@
 	padding: 10px 0px 10px 0px;
 }
 
+a:visited {
+	color: #337ab7;
+}
 
+.btn-primary:link {
+	color: #ffffff;
+}
+.btn-primary:visited {
+	color: #ffffff;
+}
 
 #main {
 	padding: 0px;
@@ -90,7 +99,7 @@
 }
 
 .loc-panel h3 {
-	font-size: 20px;
+	font-size: 18px;
 }
 
 .loc-panel .caption {
@@ -129,9 +138,8 @@
 
 @media (min-width: 768px) {
 	
-	
 	.loc-image {
-		height: 300px;
+		max-height: 300px;
 		overflow: hidden;
 		vertical-align: middle;
 		border: solid 1px #aaaaaa;

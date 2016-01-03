@@ -12,6 +12,7 @@ include_once dirname(__FILE__) . '/../classes/core/database.php';
 include_once dirname(__FILE__) . '/../classes/core/utility.php';
 include_once dirname(__FILE__) . '/../classes/core/service.php';
 include_once dirname(__FILE__) . '/../classes/media.php';
+include_once dirname(__FILE__) . '/../classes/location.php';
 include_once dirname(__FILE__) . '/../' . Config::$cdn_classfile;
 
 Utility::Debug('files.php invoked ',5);
@@ -27,9 +28,12 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST") {
 	
 	// if a locationid is included on post, all files submitted will be linked to specified location
 	$locationid = Utility::getRequestVariable('locationid', 0);
-	if ($locationid>0 & !$user->canEdit('location', $tenantID, $locationid)) {
-		Service::returnError('User does not have permission to edit specified location',401);
-	}
+	if ($locationid>0) {
+	    $location = new Location($userID,$tenantID);    
+	    if (!$location->userCanEdit($locationid,$user)) {
+		      Service::returnError('User does not have permission to edit specified location',401);
+	       }
+	   }
 	
 	// build array of files. These need to match the Media class fields
 	$files = array();

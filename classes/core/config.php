@@ -7,11 +7,9 @@ class Config {
 	public static $user = "appuser";
 	public static $password = "Password1";
 	public static $database = "food";
-
-	// Just a test
-    
+ 
 	// 9 is highest, meaningly only most urgent (level 10) messages will be logged; 0 means all messages will be logged regardless of level
-	public static $debugLevel = "4"; 
+	public static $debugLevel = "0"; 
 	
 	// database, file, or both - if database, will write to log file only if database cannot be accessed
 	public static $log_mode = 'database'; 
@@ -35,5 +33,10 @@ class Config {
 	
 	// folder the system will use to store temporary images while working on them
 	public static $img_working = '/working';
-	
+    
+    //OAUTH information for GitHub (for logging an issue)
+    public static $github_client_id = 'f5d12db1759d850b9328';
+    public static $github_client_secret = '5ad82ba387192dccce9ff1b6e5a81a03a15d6a21';
+    public static $github_token = '734cf3d20ffd230a473e114aa9bdaa22f143c3e0';
+    public static $github_repo = 'https://api.github.com/repos/robertmoss/foodfinder_main';	
 }

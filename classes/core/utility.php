@@ -542,35 +542,6 @@ class Utility{
         return $value;
 	}
 	
-	public static function userAllowed($user,$entityType,$operation,$tenantID) {
-		// operation: 'read','write' or 'edit' (same thing), 'add' or 'create', 'delete'
-		if (is_null($user)) {
-			return false;
-		}
-		else {
-			switch($operation) {
-				case 'read':
-					return $user->canRead($entityType, $tenantID,0);
-					break;
-				case 'write':
-				case 'edit':
-				case 'update':
-					return $user->canEdit($entityType, $tenantID,0);
-					break;
-				case 'add':
-				case 'create':
-					return $user->canAdd($entityType, $tenantID);
-					break;
-				case 'delete':
-					return $user->canDelete($entityType,$tenantID,0);
-					break;
-				default:
-					return false;
-			}
-		}
-	}			 
-
-	
 	public static function isPositive($term) {
 		$term = strtolower($term);
 		return ($term=="yes" || $term=="y" || $term=="true" || $term=="1");		

@@ -40,7 +40,9 @@
     	</div>
 	    <?php include("partials/locationModal.php")?>
 		<?php
-			if (Utility::userAllowed($user, 'location', 'edit', $tenantID)) { 
+			if ($userID>0) {
+			    // a little brute force, but assume any user can edit locations - will need to put more fine grained checks
+			    // somewhere else 
 				include("partials/locationEditModal.php");
 				}
 		?>	

@@ -760,5 +760,55 @@ abstract class DataEntity implements iDataEntity {
 			// default is false
 			return false;
 		}
+        
+    public function userCanRead($id,$user) {
+        // by default, any user read/view any entity
+        return true;
+    }
+    
+    public function userCanEdit($id,$user) {
+
+       if ($user->id==0) {
+           // must be authenticated user to edit a typical entity
+            return false;
+        }
+       elseif ($user->id==1) {
+           return true;
+       }
+       else {
+            // simple rule for most entities: to edit an entity within a tenant, you must be an admin within that tenant
+            return $user->hasRole('admin',$this->tenantid);
+        }
+    }
+    
+    public function userCanAdd($user) {
+        // rules by default: must be authenticated user to add and must be an admin within the tenant (or superuser)
+        Log::debug('checking user perms ' . $user->id);
+        if ($user->id==0) {
+            return false;
+        }
+        elseif ($user->id==1){
+            // superuser can do anything!
+            return true;
+        }
+        else {
+            return ($user->hasRole('admin',$this->tenantid));
+        }
+    }
+        
+    public function userCanDelete($id,$user) {
+        
+        // by default, only admin user can delete entities
+        if ($user->id==0) {
+            return false;
+        }
+        elseif ($user->id==1 ){
+            // superuser can do anything!
+            return true;
+        }
+        else {
+            return ($user->hasRole('admin',$this->tenantid));
+        }
+    }
 
 }

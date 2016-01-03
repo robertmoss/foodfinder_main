@@ -393,6 +393,14 @@ function loadLocationCallback(location) {
 	chkVisit = document.getElementById('chkVisited');
 	if (chkVisit) {
 		chkVisit.checked=(location.uservisits>0); 
+	}
+	if (location.editable) {
+		showElement('btnViewMaster');
+		showElement('btnEditLocation');
+	}
+	else {
+		hideElement('btnViewMaster');
+		hideElement('btnEditLocation');
 	}	
 }
 
@@ -605,3 +613,23 @@ function getCategoryFilter() {
 	return categoryFilter;
 }
 
+function logIssue() {
+	showElement('modalIssueSubmit');
+	hideElement('modalIssueMessage');
+	setElementText('modalIssueCancel','Cancel');
+	document.getElementById('txtIssueTitle').value='';
+	document.getElementById('txtIssueDescription').value='';
+	$('#modalIssueLog').modal();
+}
+
+function submitIssue() {
+	submitForm('issueForm','modalIssueMessage','modalIssueMessage',false,'txtIssueId',function(success) {
+		if (success) {
+			var issueId = document.getElementById('txtIssueId').value;
+			var message = 'The issue has been successfully logged and has been assigned number ' + issueId +  '. Thanks for helping improve the FoodFinder platform!';
+			setElementText('modalIssueMessage',message);
+			hideElement('modalIssueSubmit');
+			setElementText('modalIssueCancel','Close');
+		}
+	});
+}

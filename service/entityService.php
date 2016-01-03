@@ -4,8 +4,9 @@ include dirname(__FILE__) . '/../partials/pageCheck.php';
 include_once dirname(__FILE__) . '/../classes/core/database.php';
 include_once dirname(__FILE__) . '/../classes/core/utility.php';
 include_once dirname(__FILE__) . '/../classes/core/service.php';
+include_once dirname(__FILE__) . '/../classes/core/dataentity.php';
 
-
+    $type='';
 	if (isset($_GET["type"])) {
 		$type=$_GET["type"];
 	}
@@ -19,18 +20,18 @@ include_once dirname(__FILE__) . '/../classes/core/service.php';
         if ($_SERVER['REQUEST_METHOD']=="GET") {
             // if a GET, check whether anonymous access is allowed by tenant
             if (!Utility::getTenantProperty($applicationID, $tenantID, $userID, 'allowAnonAccess')) {
-                Service::returnError('Service must be invoked by an authenticated user.' );
+                Service::returnError('Service must be invoked by an authenticated user.',403,'entityService?type=' .$type);
             }
         }
         else {
-            Service::returnError('Service must be invoked by an authenticated user.');
+            Service::returnError('Service must be invoked by an authenticated user.',403,'entityService?type=' .$type);
         }
     }
     
 	$knowntypes = array('tenant','location','link','media','tenantSetting','tenantProperty','category');
 	if(!in_array($type,$knowntypes,false)) {
 		// unrecognized type requested can't do much from here.
-		Service::returnError('Unknown type: ' . $type);
+		Service::returnError('Unknown type: ' . $type,400,'entityService?type=' .$type);
 	}
 	
 	$classpath = '/../classes/'; 
@@ -44,7 +45,7 @@ include_once dirname(__FILE__) . '/../classes/core/service.php';
 	$classfile = dirname(__FILE__) . $classpath . $type . '.php';
 	if (!file_exists($classfile)) {
 		Utility::debug('Unable to instantiate class for ' . $type . ' Classfile does not exist.', 9);
-		Service::returnError('Internal error. Unable to process entity.');
+		Service::returnError('Internal error. Unable to process entity.',400,'entityService?type=' .$type);
 	}
 	include_once $classfile;
 	$classname = ucfirst($type); 	// class names start with uppercase
@@ -58,20 +59,20 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
 		$id = $_GET["id"];
 	}
 	if ($id==0) {
-		header(' ', true, 400);
-		echo 'id is required parameter and must be non-zero.';
-		die();		
+		Service::returnError('id is required parameter and must be non-zero.',400,'entityService?type=' .$type);
 	}
+    Log::debug('GET method invoked for ' . $type . ' with ID=' . $id, 5);
 	
-    if (!$user->canRead($type, $tenantID, $id)) {
-            Service::returnError('You don\'t have permission to acccess this ' . $type . '.',403);
+    if (!$class->userCanRead($id,$user)) {
+            Service::returnError('You don\'t have permission to acccess this ' . $type . '.',403,'entityService?type=' .$type);
         }
     
 	try {
 		$entity = $class->getEntity($id);
+        $entity["editable"] = $class->userCanEdit($id,$user);
 	}
 	catch(Exception $ex) {
-		Service::returnError('Unable to retrive requested ' . $type . '. Internal error.');
+		Service::returnError('Unable to retrive requested ' . $type . '. Internal error.',400,'entityService?type=' .$type);
 	}
 	
 	$set = json_encode($entity);
@@ -86,14 +87,14 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST")
 		$json = file_get_contents('php://input');
 		$data = json_decode($json);
 		if (!$data || !array_key_exists('id', $data)) {
-		  Service::returnError('ID must be specified for an update.');   
+		  Service::returnError('ID must be specified for an update.',400,'entityService?type=' .$type);   
 		}
 		$id = $data->{'id'};
         
-        if ($id>0 && !$user->canEdit($type, $tenantID, $id)) {
+        if ($id>0 && !$class->userCanEdit($id,$user)) {
             Service::returnError('You don\'t have permission to edit this ' . $type . '.',403);
         }
-        if ($id==0 && !$user->canAdd($type, $tenantID, $id)) {
+        if ($id==0 && !$class->userCanAdd($id,$user)) {
             Service::returnError('You don\'t have permission to create a new ' . $type . '.',403);
         }
         
@@ -111,7 +112,7 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST")
                 }
                 catch (Exception $ex)
                 {
-                    Service::returnError('Unable to update ' . $type . ': ' . $ex->getMessage());
+                    Service::returnError('Unable to update ' . $type . ': ' . $ex->getMessage(),400,'entityService?type=' .$type);
                 }
             }
         else {
@@ -122,7 +123,7 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST")
 				$class->validateData($data);
 			}
 			catch (Exception $ex) {
-			    Service::returnError('Unable to save ' . $type . ': ' . $ex->getMessage());
+			    Service::returnError('Unable to save ' . $type . ': ' . $ex->getMessage(),400,'entityService?type=' .$type);
 			}
 		
     		if ($id==0) {
@@ -135,14 +136,11 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST")
     			}
     			catch (Exception $ex)
     			{
-    				header(' ', true, 500);
-    				echo 'Unable to save ' . $type . ':' . $ex->getMessage();
-    				die();
+    				Service::returnError('Unable to save ' . $type . ':' . $ex->getMessage(),400,'entityService?type=' .$type);
     			}
     			
     			if ($newID==0) {
-    				header(' ', true, 500);
-    				echo 'Unable to save ' . $type;
+                    Service::returnError('Unable to save ' . $type . ': call returned 0 as ID',400,'entityService?type=' .$type);
     			}
     			else 
     			{

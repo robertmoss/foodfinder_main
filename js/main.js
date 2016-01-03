@@ -1,5 +1,11 @@
 window.onload = function()
 {
+	if ($(window).width()>=1024) {
+		// show search panel for large screens (hidden for smaller)	
+		showElement('searchform2');
+		hideElement('showSearchBtn');	
+	}
+	
 	initializeMap('resultSpan');
 	hideElement('list-loader');            
 };

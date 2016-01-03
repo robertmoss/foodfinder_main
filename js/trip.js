@@ -349,7 +349,7 @@ function setInfoWindow(marker, loc) {
 			flag += '<div><span class="flag">' + loc.top_category +  '</span></div>';
 		}
 		var contentString = '<div class="mapInfoWindow">' + 
-			'<div class="name"><a href="#locationModal" onclick="loadLocation(' + loc.id + ',\'' + escapeSingleQuotes(loc.name) +'\');">' + loc.name + '</a></div>' +
+			'<div class="name"><a href="#locationModal" onclick="loadLocation(' + loc.id + ');">' + loc.name + '</a></div>' +
 			flag +
 			'<div class="location">' + loc.city + ' ' + loc.state + '</div>';
 
@@ -607,19 +607,6 @@ function showRouteSummary() {
 		location.href = "#";
 		location.href = "#searchform";
 }
-
-function loadLocation(id,name) {
-	setElementHTML('locationBody','<div class="ajaxLoading">Loading location . . .</div>');
-	setElementHTML('locationHeader',name);
-	var serviceURL = "service/entityService.php?type=location";
-	serviceURL += "&id=" + id;
-	var template = getLocationTemplate();
-	
-	getAndRenderJSON(serviceURL,template,'locationBody','Retrieving location info . . .');
-	
-	
-	$("#locationModal").modal();
-} 
 
 
 function closeLocation() {

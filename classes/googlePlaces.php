@@ -98,10 +98,10 @@ class GooglePlaces
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($curl, CURLOPT_VERBOSE, 1);
         
-		Utility::debug('executing url via cUrl . . .',9);
+		Utility::debug('executing url via cUrl . . .',1);
         $response = curl_exec($curl);
-		Utility::debug('cUrl complete',9);
-		Utility::debug('GooglePlaces called: response=' . $response,9);
+		Utility::debug('cUrl complete',1);
+		Utility::debug('GooglePlaces called: response=' . $response,5);
         if ($error = curl_error($curl))
         {
         	Utility::debug('cUrl exception:' . $error,3);

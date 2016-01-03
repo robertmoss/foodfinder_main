@@ -8,6 +8,7 @@
 	ini_set('display_errors', 'On'); // switch to off for production deployment
 
 	include_once dirname(__FILE__) . '/../classes/core/user.php';
+    include_once dirname(__FILE__) . '/../classes/core/context.php';
 	include_once dirname(__FILE__) . '/../classes/core/utility.php';
 
 	
@@ -46,6 +47,7 @@
 			}
 		}
 	$tenantID = $_SESSION['tenantID'];
+    Context::$tenantid = $tenantID;
 	
     if (!isset($_SESSION['userID'])) {
 		// set ID to 0 to indicate unauthenticated user
@@ -56,29 +58,31 @@
         $userID=$_SESSION['userID'];
     }
     
-    if ($userID>0) {
-		$user = new User($userID,$tenantID);
-	}
+	$user = new User($userID,$tenantID);
+    Context::$currentUser = $user;
     
     if ($newsession) {
         Log::startSession(session_id(),$tenantID,$userID);
     }
 	
-	if ($user && !$user->canAccessTenant($tenantID)) {
+	if ($userID>0 && !$user->canAccessTenant($tenantID)) {
+	    Log::debug('Unauthorized user attempted to access tenant page. (user=' . $userID . ', tenant=' . $tenantID . ')', 9);
 		header('HTTP/1.0 403 Forbidden');
 		echo '<p>You are not allowed to access this resource.</p>';
 		exit();
 	}
-elseif ($userID==0) {
+    elseif ($userID==0) {
 		// TO DO: check whether tenant allows anonymous access
 		// for now, assume that they all do
 		$allowAnon = Utility::getTenantProperty($applicationID, $tenantID, $userID, 'allowAnonAccess');
 		if (!$allowAnon && strtolower(basename($_SERVER['PHP_SELF']))!='login.php') {
 		    //echo strtolower(basename($_SERVER['PHP_SELF']));
+		    Log::debug('Unauthenticated user attempted to access tenant page. Redirecting to login. (tenant=' . $tenantID . ')', 9);
 		    header('Location: Login.php?context=loginRequired');
             die();
 		}
 	}
+    Utility::debug('pageCheck complete.  (user=' . $userID . ', tenant=' . $tenantID . ')', 1);
 	
 
 	

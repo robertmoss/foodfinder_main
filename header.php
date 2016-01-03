@@ -1,5 +1,7 @@
 <?php 
 include_once("analyticstracking.php");
+include_once("classes/location.php");
+$allowIssueLog = false;
 if (Utility::getTenantProperty($applicationID, $tenantID, $userID, 'showAds')=='yes') {?>
 <div class="adframe">    
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -64,8 +66,13 @@ if (Utility::getTenantProperty($applicationID, $tenantID, $userID, 'showAds')=='
 			             <li><a href="logout.php">Logout</a></li>
 			         </ul> 
 				</li>
-				<?php if ($user->canAdd('location', $tenantID)) {?> 
-				    <li><button type="button" class="btn btn-default navbar-btn" onclick="window.location.href='entityPage.php?type=location&id=0&mode=edit';"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add New</button></li>
+				<?php
+				    $location = new Location($userID,$tenantID);
+				    if ($location->userCanAdd($user)) {
+				        $allowIssueLog=true;
+				        ?> 
+                        <li><button type="button" class="btn btn-default navbar-btn" onclick="logIssue();"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>&nbsp;Log Issue</button>&nbsp;</li>
+    				    <li><button type="button" class="btn btn-default navbar-btn" onclick="window.location.href='entityPage.php?type=location&id=0&mode=edit';"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add New</button></li>
 			    <?php } ?>
 			 </ul>		
 	         <?php } else { ";" ?>
@@ -83,7 +90,12 @@ if (Utility::getTenantProperty($applicationID, $tenantID, $userID, 'showAds')=='
                     <button type="submit" class="btn btn-default">Sign In</button>
     	         </form>
 	         </ul>	         
-	         <?php } ?>
+	         <?php } 
+	         if ($allowIssueLog) {
+	            include("partials/issueForm.php");    
+	         }
+	         
+	         ?>
 	     </div>
 	</div>
 </nav>
