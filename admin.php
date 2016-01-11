@@ -141,7 +141,7 @@
 					        	<div id="user-passwordControls" class="hidden">
 					        		<div id="user-passwordGroup" class="form-group">
 					        			<label for="input-password">Password</label>
-					        			<input type="password" data-minlength="8"class="form-control" id="input-password" name="password" aria-describedby="passwordStatus"></input>
+					        			<input type="password" data-minlength="8" class="form-control" id="input-password" name="password" aria-describedby="passwordStatus"></input>
 										<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
   										<span id="passwordStatus" class="sr-only">(warning)</span>
   										<div class="help-block">Minimum 8 characters</div>

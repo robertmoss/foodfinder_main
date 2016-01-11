@@ -783,7 +783,7 @@ abstract class DataEntity implements iDataEntity {
     
     public function userCanAdd($user) {
         // rules by default: must be authenticated user to add and must be an admin within the tenant (or superuser)
-        Log::debug('checking user perms ' . $user->id);
+        Log::debug('checking user perms ' . $user->id,1);
         if ($user->id==0) {
             return false;
         }

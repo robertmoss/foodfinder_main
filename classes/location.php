@@ -135,6 +135,20 @@
             
             return parent::addEntity($data);
         }
+        
+        public function updateEntity($id,$data) {
+            
+            // need to have special handling depending upon role of user
+            // how inefficient is it to spin up a new user object here? Calling service will already have done just that?
+            
+            // contributor role users can't pending state (for review by admin)
+            $user = new User($this->userid,$this->tenantid);
+            if ($user->hasRole('contributor',$this->tenantid)) {
+                $data->{"status"}='Pending';    
+            }
+            
+            return parent::updateEntity($id,$data);
+        }
 		
 		public function getCustomFormControl($fieldname,$entity) {
 			// philosophical question: should we be merging UI with dataentity logic in the same class?
@@ -277,8 +291,7 @@
 				
 	 public function userCanAdd($user) {
         // override base to allow contributor role to add
-        
-        if ($user->id==0) {
+        if (!$user||$user->id==0) {
             return false;
         }
         elseif ($user->id==1 ) {

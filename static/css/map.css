@@ -100,11 +100,11 @@ html, body {
 	
 	.mapcontent {
 		position: absolute;
-		bottom: 10px;
+		top: 200px;
 		left: 10px;
 		width: 310px;
 		overflow-y: auto;
-		height: 740px;
+		min-height: 740px;
 	}
 	
 	.searchPanel {

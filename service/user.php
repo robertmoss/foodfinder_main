@@ -56,7 +56,7 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST")
         switch ($action) {
             case 'setTenantAccess':
                 Log::debug('Setting tenant access for user ' . $id, 5);
-                if (!$user->canEdit('user', $tenantID, $id)) {
+                if (!$user->userCanEdit($id,$class)) {
                     Service::returnError('Access denied.',403);
                 }
                 try {
@@ -68,6 +68,24 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST")
                 }
                 catch(Exception $ex) {
                     Service::returnError('Unable to set user tenant access: ' . $ex->getMessage());
+                }
+                
+                break;
+            case 'changePass':
+                Log::debug('Changing password for user ' . $id, 9);
+                if (!$user->userCanEdit($id,$class)) {
+                    Service::returnError('Access denied.',403);
+                }
+                try {
+                    $data->{"username"} = $class->email; // we don't require this to be submitted
+                    $class->changePassword($data);
+                    Utility::debug($type . ' updated with new password.' , 9);
+                    $response = '{"id":' . json_encode($id) . "}";
+                    header('Content-Type: application/json');
+                    echo $response;
+                }
+                catch(Exception $ex) {
+                    Service::returnError('Unable to change password: ' . $ex->getMessage());
                 }
                 
                 break;

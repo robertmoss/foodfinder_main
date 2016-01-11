@@ -75,7 +75,15 @@ a:visited {
     outline: none !important;
 }
 
+.btn-primary.disabled {
+	background-color: #cccccc;
+    border-color: #aaaaaa;
+}
 
+.btn-primary.disabled:hover {
+	background-color: #aaaaaa;
+    border-color: #aaaaaa;
+}
 
 .btn-info, .btn-info:active, .btn-info:active:focus, .btn-info.active, .btn-info:focus {
 	background-color: #e74c3c;
@@ -141,6 +149,6 @@ a:visited {
 	}
 	
 	.mapcontent {
-		height: 800px !important;
+		top: 120px !important;
 	}	
 }

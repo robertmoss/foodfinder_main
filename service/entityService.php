@@ -14,7 +14,7 @@ include_once dirname(__FILE__) . '/../classes/core/dataentity.php';
 		Service::returnError('Type is required.');
 	}
 	
-	Utility::debug('entity service invoked for type:' . $type . ', method=' . $_SERVER['REQUEST_METHOD'], 5);
+	Utility::debug('entity service invoked for type:' . $type . ', method=' . $_SERVER['REQUEST_METHOD'] . ' user=' . $user->name, 5);
 	
     if ($userID==0) {
         if ($_SERVER['REQUEST_METHOD']=="GET") {
@@ -94,7 +94,7 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST")
         if ($id>0 && !$class->userCanEdit($id,$user)) {
             Service::returnError('You don\'t have permission to edit this ' . $type . '.',403);
         }
-        if ($id==0 && !$class->userCanAdd($id,$user)) {
+        if ($id==0 && !$class->userCanAdd($user)) {
             Service::returnError('You don\'t have permission to create a new ' . $type . '.',403);
         }
         

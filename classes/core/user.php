@@ -165,6 +165,30 @@ class User extends DataEntity {
 		}
 	}
 
+    private function validatePassword($password,$username, $userid) {
+        // returns true if password if correct for specified user
+        
+        $userDetails = User::getUserDetails($username);
+        $saltedPassword = Utility::saltAndHash($password,$userDetails["password"]);
+       
+        $query = 'call validateUser(' . Database::queryString($username);
+            $query .= ',' . Database::queryString($saltedPassword);
+            $query .= ',' . Database::queryNumber($this->tenantid) . ');';
+                    
+        $result = Database::executeQuery($query);
+        if (!$result) {
+                Utility::debug('User ' .$name . ' failed password validation.', 9);
+                return false;
+            }
+        else {
+            $matchedid=0;
+            while($o = mysqli_fetch_object($result)) {
+                    $matchedid = $o->userid;
+                   }
+            return ($userid==$matchedid); 
+         }
+    }
+
 	public function getAPIKey() {
 		// generates a one-time API Key for user
 		// to do: explore more secure ways to do this
@@ -180,10 +204,39 @@ class User extends DataEntity {
 	//Update the user's password
 	public function updatepassword($pass) {
 		
-		$secure_pass = generateHash($pass);
+		$secure_pass = Utility::generateHash($pass);
 		$query = "UPDATE user SET password = " . Database::queryString($secure_pass) . ' WHERE id = ' . Database::queryNumber($this->id);
 		return (Database::executeQuery($query));
 	}
+    
+    // this function does all the logic to verify a current password and update a new one
+    // data elements should be:
+    //   original: the original password for the user
+    //   new1: the new password to be set
+    //   new2: the new password to be repeated (client side should check this, be we do it again just to be safe)
+    public function changePassword($data) {
+        
+        $userid = $data->{'id'};
+        $username = $data->{'username'};
+        
+        // check change password rules
+        if ($data->{'original'}==$data->{'new1'}) {
+            throw new Exception('The new password cannot be the same as your current one.');
+        }
+        elseif ($data->{'new2'}!=$data->{'new1'}) {
+            throw new Exception('The two versions of the new password do not match');
+        }
+        elseif (strlen($data->{'new1'})<8) {
+            throw new Exception('The new password must be at least 8 characters long.');
+        }
+        
+        // validate original password
+        if (!$this->validatePassword($data->{'original'}, $username, $userid)) {
+            throw new Exception('Original password is incorrect');
+        }
+        
+        return $this->updatepassword($data->{'new1'});
+    }
 	
 	
 	
@@ -250,6 +303,22 @@ class User extends DataEntity {
             $hasRole = in_array($role,$roles,false);                
             }
         return $hasRole;
+    }
+    
+    // overrides standard version in dataentity; 
+    public function userCanEdit($id,$user) {
+
+       if ($user->id==0) {
+           // must be authenticated user to edit a typical entity
+            return false;
+        }
+       elseif ($user->id==1) {
+           return true;
+       }
+       else {
+            // to edit a user, you must be either that user or an admin
+            return ($user->hasRole('admin',$this->tenantid)||$id==$user->id);
+        }
     }
 	
     // returns all the tenant access and roles the user has

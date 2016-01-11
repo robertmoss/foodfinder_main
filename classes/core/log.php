@@ -36,13 +36,34 @@
     
     public static function startSession($sessionid,$tenantid,$userid) {
         
-        $query = "insert into session(sessionid,startDateTime,tenantid,userid)
-                     values ('". $sessionid. "', now(), " . $tenantid .", " . $userid . ")";
+        $session_info = "";
+        if (array_key_exists('HTTP_HOST', $_SERVER)) {
+            $session_info .= "HTTP_Host: " . $_SERVER['HTTP_HOST'];
+        }
+        if (array_key_exists('HTTP_REFERRER', $_SERVER)) {
+            $session_info .= "; HTTP_Referrer: " . $_SERVER['HTTP_REFERRER'];
+        }
+        if (array_key_exists('REMOTE_ADDR', $_SERVER)) {
+            $session_info .= "; Remote_Addr: " . $_SERVER['REMOTE_ADDR'];
+        }
+        if (array_key_exists('REMOTE_HOST', $_SERVER)) {
+            $session_info .= "; Remote_Host: " . $_SERVER['REMOTE_HOST'];
+        }
+         if (array_key_exists('REQUEST_URI', $_SERVER)) {
+            $session_info .= "; Request_Uri: " . $_SERVER['REQUEST_URI'];
+        }
+        if (array_key_exists('HTTP_USER_AGENT', $_SERVER)) {
+            $session_info .= "; User_Agent: " . $_SERVER['HTTP_USER_AGENT'];
+        }        
+        $query = "insert into session(sessionid,startDateTime,tenantid,userid,info)
+                     values ('". $sessionid. "', now(), " . $tenantid . ", " . $userid . ", " . Database::queryString($session_info) . ")";
+                     
+       Log::debug('query=' . $query,1);                     
         try {
             $con = mysqli_connect(Config::$server,Config::$user,Config::$password, Config::$database);
         }
         catch(Exception $e) {
-            $this->debug('unable to write to session table: ' . $e->getMessage(),10);
+           Log::debug('unable to write to session table: ' . $e->getMessage(),10);
         }
         if ($con) {
             mysqli_query($con,$query);

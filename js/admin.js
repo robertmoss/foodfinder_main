@@ -430,9 +430,7 @@ function saveUserTenants() {
 	postData(serviceUrl,data,"manageTenants-message","manageTenants-message",function(success) {
 		// close dialog
 		$('#manageTenantsModal').modal('hide');
-	});
-	
-	
+	});	
 }
 
 function addTenant() {
