@@ -82,7 +82,7 @@ if (Utility::getTenantProperty($applicationID, $tenantID, $userID, 'showAds')=='
 			     </button></li>
     			<form id="loginForm" class="navbar-form navbar-right collapse" role="search" action="login.php" method="post">
                     <div class="form-group">
-                        <input type="text" id="txtUsername" class="form-control" name="username" placeholder="Username">
+                        <input type="email" id="txtUsername" class="form-control" name="username" placeholder="Username">
                     </div>
                     <div class="form-group">
                         <input type="password" id="txtPassword" class="form-control" name="password" placeholder="Password">
