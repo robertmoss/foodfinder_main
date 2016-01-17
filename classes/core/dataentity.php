@@ -538,6 +538,11 @@ abstract class DataEntity implements iDataEntity {
             return true;
         }
 
+        private function saveProperty($id, $key, $value) {
+            $query = $this->getSavePropertySQL($id, $key, $value);
+            Database::executeQuery($query);
+        }
+        
 		public function getRemoveChildrenProcName($childentityname) {
 			// override if your class has a different name for the proc that removes all linked child entities
 			$proc = 'remove' . ucfirst($this->getName()) . ucfirst($childentityname); 

@@ -1,3 +1,4 @@
+        <link rel="shortcut icon" type="image/x-icon" href="img/icons/ff_favicon.ico" />
         <link rel="stylesheet" type="text/css" href="static/css/styles.css" />
         <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css" />	
         <link rel="stylesheet" type="text/css" href="static/css/foodfinder.css" />

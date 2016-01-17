@@ -1067,6 +1067,11 @@ content: "\00d7";
 	 margin: 0px 0px 10px 10px; 	
 }
 
+.centered-column {
+	max-width: 600px;
+	margin: auto;
+}
+
 @media screen and (max-width: 700px) {
     
     .styledpanel {
@@ -1168,6 +1173,9 @@ content: "\00d7";
 .ribbon-green:before {
   left: 0;
 }
+
 .ribbon-green:after {
   right: 0;
 }​
+
+

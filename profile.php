@@ -22,13 +22,19 @@
 	    		<?php include('header.php');?>
     			<div id="main" class="container">
     				<h1><?php echo $user->name; ?></h1>
-    				<p><?php foreach($user->getTenantRoles($tenantID) as $role) {?>
+    				<p><?php 
+    				    if ($userID==1) {
+    				        echo '<h3><span class="label label-primary">Da Supa User!</span></h3>';
+    				    }
+    				    foreach($user->getTenantRoles($tenantID) as $role) {?>
     				    <span class="badge">
     				        <?php echo ucwords($role); ?>
     				    </span>
     				    <?php } ?>
     				</p>
-                    <div class="panel panel-default">
+                    <div><button class="btn btn-default" data-toggle="collapse" data-target="#passwordPanel">Change Password</button>
+                    </div>    
+                    <div id="passwordPanel" class="panel panel-default collapse">
                       <div class="panel-heading">
                         <h3 class="panel-title">Change Password</h3>
                       </div>

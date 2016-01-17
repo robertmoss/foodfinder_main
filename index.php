@@ -22,8 +22,12 @@
         			<h1><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'title') ?></h1>
 			        <p><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'welcome') ?><p><a class="btn btn-primary btn-lg" href="about.php" role="button">Learn more &raquo;</a></p>
       			</div>
-
 	  			<div class="container">
+                <?php if ($user->hasRole('contributor',$tenantID)) { ?>
+                    <div class='alert alert-info'><h3>Welcome contributor!</h3> To learn more about the Food Finder platform and how you can
+                        contribute, <a href="contribute.php">please visit the Contribute page.</a></div>
+                <?php } ?>
+
 			      <div class="row">
 			        <div class="col-md-4 homePanel" >
 			           <?php

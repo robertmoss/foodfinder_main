@@ -54,6 +54,7 @@ if (Utility::getTenantProperty($applicationID, $tenantID, $userID, 'showAds')=='
 				<li <?php if($thisPage=='trip') echo ' class="active"'?>><a href="trip.php">Plan a Trip</a></li>
 				<li <?php if($thisPage=='search') echo ' class="active"'?>><a href="search.php">Search</a></li>
 				<li <?php if($thisPage=='about') echo ' class="active"'?>><a href="about.php">About</a></li>
+				<?php if($userID>0 && ($user->hasRole('contributor',$tenantID) || $userID==1 || $user->hasRole('admin',$tenantID))) {?><li <?php if($thisPage=='contibute') echo ' class="active"'?>><a href="contribute.php">Contribute</a></li><?php } ?>
 				<?php if($userID>0 && ($user->hasRole('admin',$tenantID) || $userID==1)) {?><li <?php if($thisPage=='admin') echo ' class="active"'?>><a href="admin.php">Admin</a></li><?php } ?>			
 			</ul>
 			<?php if($userID>0) {?>

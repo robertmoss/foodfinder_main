@@ -8,9 +8,10 @@ include_once 'tenant.php';
 
 class Utility{
 	
+    
     public static function getVersion() {
         
-        return "1.0.0";
+        return "1.1.0";
         
     } 
     	
@@ -534,10 +535,18 @@ class Utility{
             if ($data) {
                 if ($row=$data->fetch_row()) {
                     $value = $row[0];
-                    Cache::putValue($key,$value);
-                    }                
+                    }
+                else {
+                    Log::debug('Warning: tenant property requested but not found: ' . $property . ' (tenantid= ' . $tenantID . ')',5);
+                    $value = '*undefined*';    
+                }
+                Cache::putValue($key,$value);                
                 }   
             }
+        if ($value=='*undefined*') {
+            // little dance we do here, so we can still cache the null
+            $value = null; 
+        }
          
         return $value;
 	}
