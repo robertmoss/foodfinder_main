@@ -55,9 +55,16 @@ function getAndRenderJSON(serviceURL,template,anchor,working,callback)
 		xmlhttp.onreadystatechange=function() {
 		  if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 		    var view = JSON.parse(xmlhttp.responseText);
+		    var key;
+		    if (!view.count) {
+		    	key=view.id;
+		    }
+		    else {
+		    	key =view.count;
+		    }
 			renderTemplate(template,view,anchor);
 			if (callback) {
-				callback(view.count);
+				callback(key);
 			}
 		   }
 		 };

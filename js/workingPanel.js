@@ -9,6 +9,12 @@
  *							 or when you want to position the working panel in a particular spot
  * overlap: set to true if you want the working panel to sit on top of parent panel; false if you want it to follow inline 
  */
+function hideWorkingPanel() {
+	$('#workingPanel').removeClass();
+	$('#workingPanel').addClass("hidden");
+}
+
+
 function showWorkingPanel(message,parentElement,overlap) {
 	
 	$('#workingPanel').removeClass();

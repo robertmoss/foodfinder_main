@@ -69,7 +69,7 @@ function getLocationTemplate() {
 }
 
 function getLocationSummaryTemplate() {
-		var template = "<div id=\"loc{{id}}\">";
+		var template = "<div id=\"loc{{id}}\" class=\"listItem\">";
 		template += '<div id=\"loc{{id}}_visited\" class="ribbon-wrapper-green {{^visited}}hidden{{/visited}}"><div class="ribbon-green">Visited</div></div>';
 			template += "<div class=\"thumbnail loc-panel\">";
 				template +="<h3><a id=\"link_loc{{id}}\" href=\"#loc{{id}}\" onclick=\"loadLocation({{id}});\">{{name}}</a>&nbsp;";
@@ -113,6 +113,15 @@ function getDirectionsTemplate() {
 	template += "{{#steps}}{{instructions}}{{/steps}}";
 	template += "{{/.}}";
 	
+	return template;
+}
+
+function getUserProfileTemplate() {
+	var template = '<div><label>Name</label>: {{name}}</div>';
+		template += '<div><label>Email</label>: {{email}}</div>';
+		template += '<div><label>Twitter Handle</label>: {{twitterHandle}}</div>';
+		template += '<div><p>{{bio}}</p></div>';
+		template += '<div><label>Sites:</label>{{#tenants}}<p><a href="#">{{tenant}}</a>{{/tenants}}';
 	return template;
 }
  

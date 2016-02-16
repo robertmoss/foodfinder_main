@@ -433,7 +433,7 @@ class Utility{
 								}
 								
 								echo '<div class="form-group">';
-								echo '<label class="col-sm-2 control-label" for="txtPROP-' . $key[0] . '">' . $key[0] .':</label>';
+								echo '<label class="col-sm-4 control-label" for="txtPROP-' . $key[0] . '">' . $key[0] .':</label>';
 				        		echo '	<div class="col-sm-6">';
 				        		echo '     <input id="txtPROP-' . $key['0'] . '" name="PROP-' . $key[0] . '" type="text" class="form-control" placeholder="'. $key[0] .'" value="' . $value . '"/>';
 				        		echo '  </div>';

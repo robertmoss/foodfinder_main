@@ -14,7 +14,9 @@
         <title>User Profile</title>
         <?php include("partials/includes.php"); ?>
         <script type="text/javascript" src="js/validator.js"></script>
+        <script type="text/javascript" src="js/workingPanel.js"></script>
         <script type="text/javascript" src="js/profile.js"></script>
+        
     </head>
     <body>
     	<div id="maincontent">
@@ -22,16 +24,64 @@
 	    		<?php include('header.php');?>
     			<div id="main" class="container">
     				<h1><?php echo $user->name; ?></h1>
-    				<p><?php 
+    				<h3><?php 
     				    if ($userID==1) {
-    				        echo '<h3><span class="label label-primary">Da Supa User!</span></h3>';
+    				        echo '<span class="label label-primary">Da Supa User!</span>';
     				    }
     				    foreach($user->getTenantRoles($tenantID) as $role) {?>
-    				    <span class="badge">
+    				    <span class="label label-primary">
     				        <?php echo ucwords($role); ?>
     				    </span>
     				    <?php } ?>
-    				</p>
+    				</h3>
+    				<div id="profilePanel" class="panel panel-default">
+    				    <div class="panel-heading">Your Profile</div>
+    				    <div id="profileBody" class="panel-body">
+    				        <?php include 'partials/workingPanel.php'; ?>
+    				        <div id="profileView" class="collapse in"></div>
+    				        <div id="profileEdit" class="collapse">
+    				            <form id="frmProfile" class="form-horizontal" action="service/user.php" method="post" role="form">
+                                    <div class="edit">
+                                        <input type="hidden" id="txtProfileUserId" name="id" value="<?php echo $userID; ?>"/>
+                                        <input type="hidden" id="txtProfileUsername" name="email" value="<?php echo $user->email; ?>">
+                                        <input type="hidden" name="txtProfileTenantId" value="<?php echo $tenantID; ?>"/>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="txtName">Name:</label>
+                                            <div class="col-sm-4">
+                                                <input id="txtName" name="name" type="text" class="form-control" placeholder="Your name (for display on site)" value="<?php echo $user->name; ?>"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="txtTwitterHandle">Twitter Handle:</label>
+                                            <div class="col-sm-4">
+                                                <input id="txtTwitterHandle" name="twitterHandle" type="text" class="form-control" placeholder="Your Twitter Handle" value="<?php echo $user->twitterHandle; ?>"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="txtBio">Your Bio:</label>
+                                            <div class="col-sm-4">
+                                                <textarea rows="4" cols="100" id="txtBio" name="bio" type="text" class="form-control" placeholder="A little about yourself"><?php echo $user->bio; ?></textarea> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+    				        </div>
+    				        
+                            <button id="btnEditProfile" class="btn btn-default" onclick="editProfile();">
+                                <span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit
+                            </button>
+                            <button id="btnCancelProfileEdit" class="btn btn-default hidden" onclick="cancelProfileEdit();">
+                                <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+                            </button>
+                            <button id="btnSaveProfile" class="btn btn-primary hidden" onclick="saveProfile();">
+                                <span class="glyphicon glyphicon-ok"></span>&nbsp;Save
+                            </button>
+                            <div id="profileMessage" class="hidden">
+                                <p>message here</p>
+                            </div>
+
+    				    </div>
+    				</div>
                     <div><button class="btn btn-default" data-toggle="collapse" data-target="#passwordPanel">Change Password</button>
                     </div>    
                     <div id="passwordPanel" class="panel panel-default collapse">
@@ -76,7 +126,8 @@
                             </form>
                       </div>
                     </div>
-	        	</div>	
+	        	</div>
+	        	<script>showWorkingPanel('Loading profile...');</script>
         		<?php include("footer.php")?>     		
         	</div>
         </div>

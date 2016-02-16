@@ -8,18 +8,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'title') ?>: Plan a Trip</title>
-        <link rel="stylesheet" type="text/css" href="static/css/styles.css" />
-        <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css" />	
-        <link rel="stylesheet" type="text/css" href="static/css/foodfinder.css" />
+        <?php include("partials/includes.php"); ?>
         <link rel="stylesheet" type="text/css" href="static/css/trip.css" />
-        <link rel="stylesheet" type="text/css" href="<?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'css'); ?>" />	
     
-		<script src="js/jquery-1.10.2.js"></script>
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9Zbt86U4kbMR534s7_gtQbx-0tMdL0QA&sensor=true&libraries=places"></script>	
-		<script src="js/mustache.js"></script>
-		<script src="js/core.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/foodfinder.js"></script>
 		<script src="js/trip.js"></script>
 
 		

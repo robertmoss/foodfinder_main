@@ -5,7 +5,7 @@
     Log::debug('Rendering footer . . .', 1);
 ?>
 <footer>
-<div id="footer"><p>© 2015, Palmetto New Media</p></div>
+<div id="footer"><p>© 2016 Palmetto New Media</p></div>
 <?php if (Config::$debugLevel<1) { ?>
 <div id="debug">
 	<?php 

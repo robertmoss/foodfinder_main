@@ -11,6 +11,7 @@ class User extends DataEntity {
 	public $name = null;
 	public $email = null;
 	public $twitterHandle = null;
+    public $bio = null;
     	
 	function __construct($id,$tenantid) {
             
@@ -28,7 +29,7 @@ class User extends DataEntity {
     private function loadUser($id) {
         
         // retrieve user from database
-        $query = 'SELECT id, name, email, twitterHandle FROM user where id=' . Database::queryNumber($id);
+        $query = 'SELECT id, name, email, twitterHandle,coalesce(bio,\'\') as bio FROM user where id=' . Database::queryNumber($id);
         Utility::debug('Creating user object for id=' . $id, 5);
         $result = Database::executeQuery($query);
         $row = mysqli_fetch_assoc($result);
@@ -40,6 +41,7 @@ class User extends DataEntity {
             $this->name = $row["name"];
             $this->email = $row["email"];
             $this->twitterHandle = $row["twitterHandle"];
+            $this->bio = $row["bio"];
             Utility::debug('User object instantiated for user id ' .$id, 1);
         }
     }
@@ -53,7 +55,8 @@ class User extends DataEntity {
 			array("name","string"),
 			array("email","string"),
 			array("password","string"),
-			array("twitterHandle","string")
+			array("twitterHandle","string"),
+			array("bio","string")
 		);
 		
 		return $fields;
@@ -67,12 +70,13 @@ class User extends DataEntity {
 		
 	public function getEntity($id) {
 		
-		loadUser();
+		//loadUser();
 		$entity	= array(
 			"id" => $this->id,
 			"name" =>$this->name,
 			"email" =>$this->email,
-			"twitterHandle" => $this->twitterHandle
+			"twitterHandle" => $this->twitterHandle,
+			"bio" => $this->bio
 			);
 			
 		return $entity;
