@@ -69,7 +69,15 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
     
 	try {
 		$entity = $class->getEntity($id);
-        $entity["editable"] = $class->userCanEdit($id,$user);
+        if ($entity["owningtenant"] != $tenantID) {
+            // this is an entity shared by another tenant and, therefore, is not editable 
+            $entity["editable"] = false;
+            $entity["shared"] = true;
+        }
+        else {
+            $entity["editable"] = $class->userCanEdit($id,$user);
+            $entity["shared"] = false;
+        }
 	}
 	catch(Exception $ex) {
 		Service::returnError('Unable to retrive requested ' . $type . '. Internal error.',400,'entityService?type=' .$type);

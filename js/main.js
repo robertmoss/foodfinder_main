@@ -557,3 +557,23 @@ function displayLocationSummary(index) {
 function showSearchForm() {
 	showElement('searchform2');
 }
+
+
+function expandMap() {
+	var targetHeight = $(window).height()-$('#topPart').height()-$('#listNav').height()-$('#footer').height();
+	if (targetHeight<200) {
+		targetHeight = 200;
+	}
+	$('#mapwrapper').height(targetHeight);
+	$('#mapcanvas').height(targetHeight);
+	hideElement('expandMap');
+	showElement('shrinkMap');
+
+}
+
+function shrinkMap() {
+	$('#mapwrapper').height(200);
+	$('#mapcanvas').height(200);
+	showElement('expandMap');
+	hideElement('shrinkMap');
+}

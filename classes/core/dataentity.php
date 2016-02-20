@@ -28,13 +28,14 @@ interface iDataEntity {
 
 abstract class DataEntity implements iDataEntity {
 		
-		protected $userid;
-		protected $tenantid;
+		public $userid;
+		public $tenantid;
 				
 		public function __construct($userid,$tenantid) {
 			$this->userid = $userid;
 			$this->tenantid = $tenantid;
 		}
+        
 				
 		public abstract function getName();
 		

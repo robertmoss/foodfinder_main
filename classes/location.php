@@ -25,7 +25,8 @@
 				array("status","picklist",20,"locationStatus"),
 				array("properties","properties"),
 				array("categories","linkedentities","category",false,true),
-				array("links","linkedentities","link",true,true)
+				array("links","linkedentities","link",true,true),
+				array("owningtenant","viewonly")
 				//array("visits","childentities","visit",true,true)
 			);
 			

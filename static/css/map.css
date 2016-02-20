@@ -116,6 +116,41 @@ html, body {
 	}
 	
 }
+
+.mapPane {
+	position: relative;
+}
+
+.mapEnlarge {
+	position: absolute;
+	z-index: 10;
+	left: 4px;
+	top: 4px;
+}
+
+.mapWrapper {
+	position: absolute;
+}
+
+@media only screen and (min-width: 1024px) {
+	.mapPane {
+		position: inherit;
+		height: 100%;
+	}
+
+	.mapEnlarge {
+		display: none;
+		position: inherit;
+		z-index: 0;
+		left: 4px;
+		top: 4px;
+	}
+	
+	.mapWrapper {
+		position: inherit;
+	}
+}
+
 	
 
 
