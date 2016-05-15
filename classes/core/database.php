@@ -28,10 +28,13 @@ class Database {
 	public static function queryDate($value) {
 		
 		
-		if ($value=='') {
+		if (is_null($value)||$value=='') {
 				return "null";
 			} 
 		else {
+		    if (is_a($value,"DateTime")) {
+		        $value = date_format($value, 'Y-m-d H:i:s');
+		    }
 			// format string as MySQL compliant date
 			$time = strtotime($value);
 			$newformat = date('Y-m-d',$time);

@@ -1,17 +1,18 @@
 <?php
 
-include_once 'database.php';
-include_once 'config.php';
-include_once 'log.php';
-include_once 'cache.php';
-include_once 'tenant.php';
+include_once dirname(__FILE__) . '/database.php';
+include_once dirname(__FILE__) . '/config.php';
+include_once dirname(__FILE__) . '/log.php';
+include_once dirname(__FILE__) . '/cache.php';
+include_once dirname(__FILE__) . '/tenant.php';
 
-class Utility{
+
+class Utility {
 	
     
     public static function getVersion() {
         
-        return "1.1.0";
+        return "1.3.0";
         
     } 
     	
@@ -517,12 +518,12 @@ class Utility{
 	    
         Log::debug('retrieving tenant property ' . $property . " for tenant ID=" . $tenantID, 1);
         
-		$class = new Tenant($userID,$tenantID);
-        $key = $applicationID . ":" . $tenantID . ":" . $property;
-        $value = Cache::getValue($key); 
-        $query='';       
+		$key = $applicationID . ":" . $tenantID . ":" . $property;
+        $value = Cache::getValue($key);     
 		if (!$value) {
 		    // cache miss. Need to retrieve from database
+		    $class = new Tenant($userID,$tenantID);
+            $query='';
 		    if ($class->hasField($property)) {
 		        // this is one the fields on the tenant table
                 $query = 'select ' . $property . ' from tenant where id=' . Database::queryNumber($tenantID);
@@ -550,6 +551,32 @@ class Utility{
          
         return $value;
 	}
+
+
+    public static function getTenantMenu($applicationID, $userID,$tenantID) {
+        // returns an array representing the menu for the particular tenant
+        // caches array
+        
+    Log::debug('retrieving menu for tenant ID=' . $tenantID, 1);
+    $key = $applicationID . ":" . $tenantID . ":menu";
+    $value = Cache::getValue($key); 
+    if (!$value) {
+        // retrieve from database
+        $query = 'call getMenuItemsByTenantID(' . $tenantID . ',' . $tenantID . ',' . Database::queryNumber($userID) . ');';
+        $menu = array();
+        $results = Database::executeQuery($query);
+        if ($results) {
+            // build string representation
+            while ($row=$results->fetch_assoc()) {
+                array_push($menu,$row);                
+                 }
+            }
+            $value=$menu;
+            Cache::putValue($key, $value);
+         }
+    return $value;        
+    }
+
 	
 	public static function isPositive($term) {
 		$term = strtolower($term);

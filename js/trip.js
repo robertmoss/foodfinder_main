@@ -104,18 +104,11 @@ function initializeMap(anchor)
 	
 	// set up autocomplete on address boxes
 	auto_origin = new google.maps.places.Autocomplete(document.getElementById('txtOrigin'),{ types: ['geocode']});
-	google.maps.event.addListener(auto_origin, 'place_changed', function() {
-    	populateAddress('txtOrigin');});
     auto_dest = new google.maps.places.Autocomplete(document.getElementById('txtDestination'),{ types: ['geocode']});
-	google.maps.event.addListener(auto_dest, 'place_changed', function() {
-    	populateAddress('txtDestination');});	
     	
 }
 
-function populateAddress(control) {
-	var place = auto_origin.getPlace();
-	// don't really have to do anything if you just want auto-pop		
-}
+
 
 function detectLocation(anchor) {
 	showElement('loading'); 
@@ -158,19 +151,23 @@ function getRoute() {
 		var apiKey = 'AIzaSyB9Zbt86U4kbMR534s7_gtQbx-0tMdL0QA';
 		
 		// validate inputs
+		var valid=true;
 		if (origin=='') {
 			setMessage('Please specify an origin.');
-			return false;
+			valid=false;
 		}
 		if (destination=='') {
 			setMessage('Please specify a destination.');
-			return false;
+			valid=false;
 		}
 		if (detour==''||detour<1) {
 			setMessage('A detour distance must be specified.');
+			valid= false;
+		}
+		if (!valid) {
+			hideElement('loading');
 			return false;
 		}
-		
 		if (origin=='Current Location') {
 			// use longiture & latitude for current location as set on hidden fields
 			origin = getElementValue('txtCurrentLatitude') + "," + getElementValue('txtCurrentLongitude');

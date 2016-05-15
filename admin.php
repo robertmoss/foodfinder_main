@@ -2,6 +2,8 @@
 	
 	include dirname(__FILE__) . '/partials/pageCheck.php';
 	$thisPage = 'admin';
+    $message = '';
+    $messageType='success';
 	
     // must be an admin for current tenant to access this page
     if ($userID==0 || ($user && !$user->hasRole('admin',$tenantID))) {
@@ -22,8 +24,15 @@
 		else {
 			echo 'Sorry - can\'t switch that tenant. No sure how that happened . . .'; 
 		}
-		
-	}
+    }    
+   
+    $flush = Utility::getRequestVariable('flushCache', 'no');
+    if ($flush=="yes" || $flush=="true") {
+        Cache::flushCache();
+        $message = "Cache flushed.";
+        }
+    
+	
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -53,6 +62,10 @@
 		        	<div class="tab-content">
 		        		<div id="general" role="tabpanel" class="tab-pane active">
 		        			<h1>General</h1>
+		        			<div id="message" class="alert alert-<?php echo $messageType;?> alert-dismissible <?php if (!$message) { echo 'hidden';} ?> ">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <span id='message_text'><?php echo $message ?></span>
+                            </div>
 		        			<div class="tenantSwitcher container">
 	    			 			<form id="tenantSwitcherForm" action="#" method="post" role="form" >
 	    			 				<div class="form-group">
@@ -62,6 +75,20 @@
 										</select>
 				    			 	</div>
 				    			 </form>
+	    					</div>
+	    					<div class="panel">
+	    					    <form id="tenantSwitcherForm" action="admin.php?flushCache=yes" method="post" role="form" >
+    	    					    <input class="btn btn-default" type="submit" value="Clear Cache" />
+    	    					    <h3>Tenant Settings</h3>
+                                    <div class="row">
+                                        <div class="col-md-3">Current Tenant Style Sheet (css)</div>
+                                        <div class="col-md-3"><?php echo Utility::getTenantProperty($applicationID, $tenantID, $userID, 'css'); ?></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">Show Ads (showAds)</div>
+                                        <div class="col-md-3"><?php echo Utility::getTenantProperty($applicationID, $tenantID, $userID, 'showAds'); ?></div>
+                                    </div>
+    	    					</form>
 	    					</div>
 	    				</div>
 			        	<div id="useradmin"  role="tabpanel" class="tab-pane">

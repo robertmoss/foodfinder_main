@@ -6,8 +6,11 @@ window.onload = function()
 		hideElement('showSearchBtn');	
 	}
 	
+	
+	
 	initializeMap('resultSpan');
-	hideElement('list-loader');            
+	hideElement('list-loader');     
+	
 };
 
 /*$(window).scroll(function(){
@@ -82,8 +85,6 @@ function initializeMap(anchor)
 	// default to Mt. Pleasant SC
 	currentLatLong = new google.maps.LatLng(33.856453, -79.80855799999999);
 	
-
-	
 	var async = false;
 	var mapOptions = {
 		center: currentLatLong,
@@ -99,7 +100,12 @@ function initializeMap(anchor)
 	       }
 	        
     	};
-	
+    	
+	// set up autocomplete on address boxes
+	if (google.maps.places) {
+		auto_origin = new google.maps.places.Autocomplete(document.getElementById('txtAddress'),{ types: ['geocode']});
+	}
+
 	var userSetLatitude = document.getElementById('txtCurrentLatitude').value;
 	var userSetLongitude = document.getElementById('txtCurrentLongitude').value;
 	if (userSetLatitude!=0 && userSetLongitude !=0) {
@@ -120,6 +126,12 @@ function initializeMap(anchor)
 			var contentString = '<div class="mapInfoWindow">Your current location.</div>';
 			addInfoWindow(marker,contentString);
 			loadLocations(pos.lat(),pos.lng(),anchor);
+			}, function(err) {
+				// error 
+				hideElement('loading');
+				hideElement('list-loader');
+				setMessage('Unable to detect location from your browser.', 'message', 'message_text', false);
+				log('geolocation.getCurrentPosition failed: ' + err.message);
 			});	
 	}
 	
@@ -163,7 +175,7 @@ function setCurrentAddress(address,anchor)
 				var contentString = '<div class="mapInfoWindow">Your selected location.</div>';
 				addInfoWindow(marker,contentString);
 				
-				postCurrentLocation(currentLat,currentLng);
+				postCurrentLocation(currentLat,currentLng,address);
 				
 				loadLocations(currentLat,currentLng,anchor);										
 								
@@ -171,8 +183,16 @@ function setCurrentAddress(address,anchor)
 			else
 				{
 				hideElement('loading');
-				//alert('Couldn\'t find that location or address.');
 				setMessage('Couldn\'t find that location or address.', 'message', 'message_text', false);
+				showElement('message');
+				if ($('#showSearchBtn').hasClass('hidden')) {
+					// we are in large screen mode
+					}
+				else {
+					showElement('searchform2');
+					showElement('hideSearchBtn');
+					hideElement('showSearchBtn');
+				}
 				}
 		});
 		return true;	
@@ -196,12 +216,13 @@ function detectLocation(anchor) {
 			clearMarkers();
 			var pos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
 			map.setCenter(pos);
-			postCurrentLocation(pos.lat(),pos.lng());
+			postCurrentLocation(pos.lat(),pos.lng(),'Your current location');
 			marker = dropMarker(map,pos,"Current Location","img/icons/arrow.png",0);
 			var contentString = '<div class="mapInfoWindow">Your current location.</div>';
 			addInfoWindow(marker,contentString);
 			currentLatLong = pos;
 			loadLocations(pos.lat(),pos.lng(),anchor);
+			document.getElementById('txtAddress').value='Your current location';
 			hideElement('loading');				
 			},
 			function(err) {
@@ -470,9 +491,14 @@ function retrieveResults(addressID,anchor)
 	locations = [];
 	locationIndex=0;
 	hideElement('message');
-	hideElement('searchform2');
-	hideElement('hideSearchBtn');
-	showElement('showSearchBtn');
+	if ($('#hideSearchBtn').hasClass('hidden')) {
+		// we are in large screen mode
+	}
+	else {
+		hideElement('searchform2');
+		hideElement('hideSearchBtn');
+		showElement('showSearchBtn');
+	}
 	var address=document.getElementById(addressID).value;
 	setCurrentAddress(address,anchor);
 	

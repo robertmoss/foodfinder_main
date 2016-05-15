@@ -28,14 +28,14 @@ include_once dirname(__FILE__) . '/../classes/core/dataentity.php';
         }
     }
     
-	$knowntypes = array('tenant','location','link','media','tenantSetting','tenantProperty','category');
+	$knowntypes = array('tenant','location','link','media','tenantSetting','tenantProperty','category','menuItem');
 	if(!in_array($type,$knowntypes,false)) {
 		// unrecognized type requested can't do much from here.
 		Service::returnError('Unknown type: ' . $type,400,'entityService?type=' .$type);
 	}
 	
 	$classpath = '/../classes/'; 
-	$coretypes = array('tenant','tenantSetting','tenantProperty','category');
+	$coretypes = array('tenant','tenantSetting','tenantProperty','category','menuItem');
 	if(in_array($type,$coretypes,false)) {
 		// core types will be in core subfolder
 		$classpath .= 'core/';
@@ -191,7 +191,7 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST")
 	}
 elseif ($_SERVER['REQUEST_METHOD']=="DELETE") {
 
-    $supportedtypes = array('media','tenantSetting','tenantProperty');
+    $supportedtypes = array('media','tenantSetting','tenantProperty','menuItem');
     if(!in_array($type,$supportedtypes,false)) {
         // delete method not supported from all types
         Service::returnError('Method not supported for type: ' . $type);

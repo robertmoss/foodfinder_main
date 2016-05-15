@@ -6,17 +6,17 @@ function getTenantID()
 }
 
 
-function postCurrentLocation(latitude,longitude)
+function postCurrentLocation(latitude,longitude,address)
 {
 	var request = new XMLHttpRequest();
 	request.open('POST','service/currentLocation.php',true);
 	request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-	request.send('latitude='+latitude+'&longitude='+longitude);
+	request.send('latitude='+latitude+'&longitude='+longitude+'&address='+address);
 }
 
 function getLocationListTemplate() {
-	var template = "{{#locations}}"; 
-		template += "<div id=\"loc{{id}}\">";
+	var template = "<div class=\"row\">{{#locations}}"; 
+		template += "<div id=\"loc{{id}}\" class=\"col-md-4\">";
 		template += '<div id=\"loc{{id}}_visited\" class="ribbon-wrapper-green {{^visited}}hidden{{/visited}}"><div class="ribbon-green">Visited</div></div>';
 			template += "<div class=\"thumbnail loc-panel\">";
 				template += "<div class=\"loc-image\">";
@@ -34,6 +34,7 @@ function getLocationListTemplate() {
 		template += "</div>";
 		template += "{{/locations}}";
 		template += "{{^locations}}<p>No matching locations were found.</p>{{/locations}}";
+		template +="</div>";
 							
 		
 	return template;

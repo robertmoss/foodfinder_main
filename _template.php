@@ -14,7 +14,7 @@
     	<div id="maincontent">
     		<div id="outer">
 	    		<?php include('header.php');?>
-    			<div id="main">
+    			<div class="container">
     				This is a template page.
 	        	</div>	
         		<?php include("footer.php")?>     		

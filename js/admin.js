@@ -469,6 +469,10 @@ function deleteTenant(id) {
 
 function resetPassword(id) {
 	
+	if (!confirm('Reset password: are you sure?')) {
+		return;
+	}
+	
 	var serviceURL = "service/user.php";
 	serviceURL += "?reset=true&id=" + id; 				
 		

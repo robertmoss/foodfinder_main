@@ -70,4 +70,11 @@
       }
           
     }
+  
+ 
+ public static function flushCache() {
+      Log::debug('flushing full cache...',7);
+      $_SESSION["cache"] = array();            
+ }
+ 
   }

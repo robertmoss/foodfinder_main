@@ -37,25 +37,29 @@ if (Utility::getTenantProperty($applicationID, $tenantID, $userID, 'showAds')=='
 		    ?></a>
 		</div>
 		<?php
-                    $mapheading = Utility::getTenantProperty($applicationID, $tenantID, $userID, 'BigMapHeading');
-                    $maplink = Utility::getTenantProperty($applicationID, $tenantID, $userID, 'BigMapLink');
                     $finditem = Utility::getTenantProperty($applicationID, $tenantID, $userID, 'finditem');
-                    if (!$maplink) {
-                        $maplink = 'finder.php';
-                    }
-                    if (!$mapheading) {
-                        $mapheading = 'The Big ' . ucwords($finditem) . ' Map';
-                    }
                       ?>
 		<div class="collapse navbar-collapse" id="navbar1">
 			<ul class="nav navbar-nav">
-				<li <?php if($thisPage=='bigmap') echo ' class="active"'?>><a href="<?php echo $maplink ?>"><?php echo $mapheading ?></a></li>
-				<li <?php if($thisPage=='finder') echo ' class="active"'?>><a href="finder.php">Near Me</a></li>
-				<li <?php if($thisPage=='trip') echo ' class="active"'?>><a href="trip.php">Plan a Trip</a></li>
-				<li <?php if($thisPage=='search') echo ' class="active"'?>><a href="search.php">Search</a></li>
-				<li <?php if($thisPage=='about') echo ' class="active"'?>><a href="about.php">About</a></li>
-				<?php if($userID>0 && ($user->hasRole('contributor',$tenantID) || $userID==1 || $user->hasRole('admin',$tenantID))) {?><li <?php if($thisPage=='contibute') echo ' class="active"'?>><a href="contribute.php">Contribute</a></li><?php } ?>
-				<?php if($userID>0 && ($user->hasRole('admin',$tenantID) || $userID==1)) {?><li <?php if($thisPage=='admin') echo ' class="active"'?>><a href="admin.php">Admin</a></li><?php } ?>			
+			    <?php
+			    $menu = Utility::getTenantMenu($applicationID, $userID, $tenantID); 
+                foreach($menu as $item) {
+                    $roles = $item["roles"];
+                    if ($roles=='') {
+                        $className = '';
+                        if ($thisPage==$item["name"]) {
+                            $className ='class="active"';
+                            }
+                    echo '<li ' . $className . '><a href=" ' . $item["link"] . '">' . $item["name"] . '</a></li>';
+                    }
+                }
+                if ($userID>0 && ($user->hasRole('admin',$tenantID) || $userID==1)) 
+                    {
+                ?><li <?php if($thisPage=='admin') echo ' class="active"'?>><a href="admin.php">Admin</a></li>
+                <?php 
+                    }            
+                ?>
+
 			</ul>
 			<?php if($userID>0) {?>
 			<!--<span class="nav_text"><?php echo $user->name ?></span>-->

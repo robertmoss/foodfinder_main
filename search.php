@@ -21,7 +21,7 @@
 				<div class="panel-body">
 					<form id="searchForm" onsubmit="retrieveResults();return false;">
   						<div class="form-group">
-  							<div class="col-lg-6">
+  							<div class="col-md-6">
 							    <div class="input-group">
 								    <span class="input-group-addon glyphicon glyphicon-search" aria-hidden="true"></span>
 								    <input type="text" class="form-control" id="txtSearch" placeholder="Search for ...">

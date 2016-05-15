@@ -155,15 +155,29 @@ class User extends DataEntity {
 				while($o = mysqli_fetch_object($result)) {
 					$userid = $o->userid;
 					$name = $o->name;
+                    $passwordExpires = $o->passwordExpires;
+                    $this->userid=$userid;
+                    $resetPassword = $o->resetPassword;
 					}
 				if ($userid>0) {
+				    if ($resetPassword) {
+				        throw new Exception("Your password has been reset.",2); 
+				    }
+				    if (strtotime($passwordExpires)) {
+				        $now = new DateTime("now");
+                        $passwordExpires=new DateTime($passwordExpires);
+                        Log::debug($now->format('Y-m-d H:i:s') . '>' . $passwordExpires->format('Y-m-d H:i:s'), 5);    
+				        if ($now>$passwordExpires) {
+                            throw new Exception("Your password has expired.",1); 
+				        }
+				    }
 					$this->id = $userid;
 					$this->name = $name;
 					Utility::debug('User ' .$name . 'validated.', 9);
 					Log::setSessionUserId(session_id(), $userid);
 					}
 				else {
-					throw new Exception("Unable to validate that particular username/password combination.");
+					throw new Exception("Unable to validate that username/password combination.");
 					}
 			}
 		}
@@ -173,7 +187,12 @@ class User extends DataEntity {
         // returns true if password if correct for specified user
         
         $userDetails = User::getUserDetails($username);
-        $saltedPassword = Utility::saltAndHash($password,$userDetails["password"]);
+        if ($password!="reset") {
+            $saltedPassword = Utility::saltAndHash($password,$userDetails["password"]);
+        }
+        else {
+            $saltedPassword = 'reset';
+        }
        
         $query = 'call validateUser(' . Database::queryString($username);
             $query .= ',' . Database::queryString($saltedPassword);
@@ -189,8 +208,14 @@ class User extends DataEntity {
             while($o = mysqli_fetch_object($result)) {
                     $matchedid = $o->userid;
                    }
+                  Utility::debug($matchedid . '- ' . $userid, 9);
             return ($userid==$matchedid); 
          }
+    }
+
+    public function resetPassword() {
+        $query = 'update user set password="reset" where id=' . $this->id;
+        Database::executeQuery($query);
     }
 
 	public function getAPIKey() {
@@ -206,10 +231,10 @@ class User extends DataEntity {
 	}
 	
 	//Update the user's password
-	public function updatepassword($pass) {
+	public function updatepassword($pass,$expirationDate) {
 		
-		$secure_pass = Utility::generateHash($pass);
-		$query = "UPDATE user SET password = " . Database::queryString($secure_pass) . ' WHERE id = ' . Database::queryNumber($this->id);
+     	$secure_pass = Utility::generateHash($pass);
+		$query = "UPDATE user SET password = " . Database::queryString($secure_pass) . ", passwordExpires=" . Database::queryDate($expirationDate) . " WHERE id = " . Database::queryNumber($this->id);
 		return (Database::executeQuery($query));
 	}
     
@@ -222,7 +247,21 @@ class User extends DataEntity {
         
         $userid = $data->{'id'};
         $username = $data->{'username'};
-        
+       
+       if (!property_exists($data,"original")) {
+           // if no password was submitted, the assumption must be that it is a reset request.
+           $data->{'original'} = 'reset';
+       }
+       
+       $expirationDays = Utility::getTenantProperty(1, $this->tenantid, $this->id, 'passwordExpires');
+       $expirationDate = null;
+       if ($expirationDays) {
+           $interval = 'P' . $expirationDays . 'D';
+           $expirationDate = new DateTime("now");
+           $expirationDate = $expirationDate->add(new DateInterval($interval));
+       }
+       
+       
         // check change password rules
         if ($data->{'original'}==$data->{'new1'}) {
             throw new Exception('The new password cannot be the same as your current one.');
@@ -236,10 +275,11 @@ class User extends DataEntity {
         
         // validate original password
         if (!$this->validatePassword($data->{'original'}, $username, $userid)) {
+            
             throw new Exception('Original password is incorrect');
         }
         
-        return $this->updatepassword($data->{'new1'});
+        return $this->updatepassword($data->{'new1'},$expirationDate);
     }
 	
 	

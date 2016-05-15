@@ -24,7 +24,8 @@ class Tenant extends DataEntity {
 			array("allowAnonAccess","boolean"),
 			array("settings","childentities","tenantSetting",true,true),
 			array("properties","childentities","tenantProperty",true,true),
-			array("categories","childentities","category",true,true)
+			array("categories","childentities","category",true,true),
+			array("menuItems",'childentities','menuItem',true,true)
 		);		
 		return $fields;
 	}

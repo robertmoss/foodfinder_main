@@ -73,8 +73,14 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST")
                 break;
             case 'changePass':
                 Log::debug('Changing password for user ' . $id, 9);
+                $expiredUserId=Utility::getSessionVariable('expiredUserID', 0);
+                if ($expiredUserId>0) {
+                    $id=$expiredUserId;
+                    $class = new User($id,$tenantID);
+                    $data->id=$id;
+                }
                 if (!$user->userCanEdit($id,$class)) {
-                    Service::returnError('Access denied.',403);
+                    Service::returnError('Unable to change password. Access denied. ' . $expiredUserId,403);
                 }
                 try {
                     $data->{"username"} = $class->email; // we don't require this to be submitted
@@ -162,10 +168,22 @@ elseif ($_SERVER['REQUEST_METHOD']=="PUT")
 	{
 	$reset = $_GET["reset"];
 	$id = $_GET["id"];
+    $class = new User($id,$tenantID);
+	if (!$user->userCanEdit($id,$class)) {
+        Service::returnError('Access denied.',403);
+    }
 	if ($reset=="true") {
-		echo "Password reset not yet implemented.";
+		try {
+             $class = new User($id,$tenantID);
+             $class->resetPassword();
+        }
+    catch (Exception $ex)
+        {
+        header(' ', true, 500);
+        echo 'Unable to reset password:' . $ex->getMessage();
+        die();
+        }
 	}
-	header(' ', true, 400);
 	}
 
 elseif ($_SERVER['REQUEST_METHOD']=="DELETE") 

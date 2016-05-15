@@ -18,7 +18,7 @@
 		<?php include("partials/includes.php"); ?>
 		<link rel="stylesheet" type="text/css" href="static/css/map.css" />
 		<script src="js/main.js"></script>
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyB9Zbt86U4kbMR534s7_gtQbx-0tMdL0QA"></script>
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9Zbt86U4kbMR534s7_gtQbx-0tMdL0QA&libraries=places"></script> 
     </head>
     <body>
         <div id="topPart">
@@ -48,7 +48,7 @@
         				<div class="input-group">
         					<label class = "sr-only" for="txtAddress">Desired location</label>
 							<span class="input-group-addon" id="basic-addon1" data-toggle="tooltip" title="Detect your current location" onclick="detectLocation('resultSpan');"><span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span></span>
-							<input id="txtAddress" type="text" class="form-control" placeholder="Your current or desired address/location" aria-describedby="basic-addon1" >
+							<input id="txtAddress" type="text" class="form-control" placeholder="Your current or desired address/location" aria-describedby="basic-addon1" value="<?php echo Utility::getSessionVariable('currentAddress', ''); ?>"/>
 						</div>
         				<button type="submit" class="btn btn-primary">Find</button>
         			</div>
@@ -57,8 +57,8 @@
 					<input id="txtCurrentLongitude" type="hidden" value="<?php echo Utility::getSessionVariable('longitude', ''); ?>"/>
                     <input id="txtZoom" type="hidden" value="<?php echo $zoom; ?>"/>
     		</form> 
-    		<div id="message" class="alert alert-danger hidden">
-    			<a class="close_link" href="#" onclick="hideElement('message');"></a>
+    		<div id="message" class="alert alert-danger alert-dismissible hidden">
+    			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     			<span id='message_text'>Message goes here.</span>
     		</div>
 		</div>
