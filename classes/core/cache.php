@@ -46,7 +46,7 @@
         for ($i=0;$i<count($cache);$i++) {
             if ($cache[$i][0] == $key) {
                 // already in cache. Update value
-                Log::debug("Updating cache value: " . $key . ' = ' . $value,1);
+                Log::debug("Updating cache value: " . $key . ' = ' . Cache::safeString($value),1);
                 $cache[$i][1] =$key;
                 $inCache = true;
             }

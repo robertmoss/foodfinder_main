@@ -43,14 +43,16 @@ if (Utility::getTenantProperty($applicationID, $tenantID, $userID, 'showAds')=='
 			<ul class="nav navbar-nav">
 			    <?php
 			    $menu = Utility::getTenantMenu($applicationID, $userID, $tenantID); 
-                foreach($menu as $item) {
-                    $roles = $item["roles"];
-                    if ($roles=='') {
-                        $className = '';
-                        if ($thisPage==$item["name"]) {
-                            $className ='class="active"';
-                            }
-                    echo '<li ' . $className . '><a href=" ' . $item["link"] . '">' . $item["name"] . '</a></li>';
+                if (is_array($menu)) {
+                    foreach($menu as $item) {
+                        $roles = $item["roles"];
+                        if ($roles=='') {
+                            $className = '';
+                            if ($thisPage==$item["name"]) {
+                                $className ='class="active"';
+                                }
+                        echo '<li ' . $className . '><a href=" ' . $item["link"] . '">' . $item["name"] . '</a></li>';
+                        }
                     }
                 }
                 if ($userID>0 && ($user->hasRole('admin',$tenantID) || $userID==1)) 

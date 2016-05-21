@@ -73,9 +73,10 @@ abstract class DataEntity implements iDataEntity {
 		 *         0 or not set indictes no max
 		 *  [3+] info varies by field type:
 		 * 		picklist: [3] - name of list to choose values from (as found in Utility::getList method )
-		 * 				  [4] - (optional) boolean indicating whether to show an "add new button" next to pick list to add new items
+		 * 				  [4] - (optional) boolean indicating whether users can add new picklist itmes (e.g. to show an "add new button" 
+         *                      next to pick list to add new items)
 		 * 		linkedentity:
-		 * 				  [3] - same as picklist #3
+		 * 				  [3] - same as picklist #3 
 		 * 				  [4] - same as picklist #4
 		 * 				  [5] - (optional) the class name of the linked entity
 		 * 				  [6] - (optional) index of the hidden or viewonly field in the field array to be used to as label for the linked entity 
@@ -484,13 +485,47 @@ abstract class DataEntity implements iDataEntity {
 						$query .= $separator . Database::queryNumber($data->{$field[0]});
 						break;
 					case "linkedentities":
-						$procname = $this->getRemoveChildrenProcName($field[0]);
-						array_push($followOnQueries,'call ' . $procname . '('. $id . ',' . $this->tenantid . ');');
+                        // a little extra overhead here, but due to sort/sequence keys, etc., don't want to blow away and replace unless we have to
+                        // first, determine whether linkedentities list is different
+                        $peekquery = "call get" . ucfirst($field[0]) . "By" . $this->getName() . 'Id(' . Database::queryNumber($id) . ',' . Database::queryNumber($this->tenantid) . ',' . Database::queryNumber($this->userid) .');';
+                        $results = Database::executeQuery($peekquery); 
+                        $currentSet = array();
+                        $debug = '';
+                        while ($row = $results->fetch_assoc()) {
+                            array_push($currentSet,intval($row["id"]));
+                            $debug .= $row["id"] . '-';   
+                        }
+                        $newSet = array();
+                        $debug .=  '|';
+                        if (is_array($data->{$field[0]})) {
+                            $children = $data->{$field[0]};
+                            foreach ($children as $c) {
+                                array_push($newSet,$c->id);
+                                $debug .= $c->id . '-';
+                            }
+                        }
+                        Log::debug('SETS: ' . $debug, 5);
+                        // first, determine whether we need to remove children
+                        for($i=0;$i<count($currentSet);$i++) {
+                            if (!in_array($currentSet[$i],$newSet)) {
+                                // one of the old children is not in new set; for now, we'll remove all    
+                                $procname = $this->getRemoveChildrenProcName($field[0]);
+                                array_push($followOnQueries,'call ' . $procname . '('. $id . ',' . $this->tenantid . ');');
+                                // blank current set so all children get re-added
+                                $currentSet = array();
+                                break;                                                                                                    
+                            }           
+                        }
+                        
+                        // now, determine which children need to be added
 						if (is_array($data->{$field[0]})) {
 							$children = $data->{$field[0]};
 	 						foreach ($children as $c) {
-								$procname = $this->getAddChildProcName($field[2]);
-								array_push($followOnQueries,'call ' . $procname . '('. $id . ',' . $c->id . ',' . $this->tenantid . ');');
+	 						    if (!in_array($c->id,$currentSet)) {
+	 						        // this child isn't present. Will need to add
+                                    $procname = $this->getAddChildProcName($field[2]);
+                                    array_push($followOnQueries,'call ' . $procname . '('. $id . ',' . $c->id . ',' . $this->tenantid . ');');
+	 						    }
 							}
 						}
 						break;
@@ -652,6 +687,7 @@ abstract class DataEntity implements iDataEntity {
 			// for childentities type fields, override to return a list of eligible child entities that can be linked to this object
 			// if no list is returned (i.e. empty array), controlling code will assume children cannot be added
 			// no need to override if you don't want to specify a specific set of allowable children
+			// should return id in first position, name in second (e.g. "1","Testing")
 			return array(); 
 		}
 		

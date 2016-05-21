@@ -10,6 +10,7 @@
 	include dirname(__FILE__) . '/../partials/pageCheck.php';
 	include_once dirname(__FILE__) . '/../classes/core/database.php';
 	include_once dirname(__FILE__) . '/../classes/core/utility.php';
+    include_once dirname(__FILE__) . '/../classes/core/forms.php';
 
 	if (isset($_GET["type"])) {
 		$type=$_GET["type"];
@@ -23,7 +24,7 @@
 	Utility::debug('Form service invoked for type:' . $type . ', method=' . $_SERVER['REQUEST_METHOD'], 5);
 	
     // in the future: can remove hardcoded array and query DB or config file to allow dynamic entities
-	$knowntypes = array('location','link','media','tenant','tenantSetting','tenantProperty','category','menuItem');
+	$knowntypes = array('location','link','media','tenant','tenantSetting','tenantProperty','category','menuItem',"page");
 	if(!in_array($type,$knowntypes,false)) {
 		// unrecognized type requested can't do much from here.
 		header(' ', true, 400);
@@ -32,7 +33,7 @@
 	}
 	
 	$classpath = '/../classes/'; 
-	$coretypes = array('tenant','tenantSetting','tenantProperty','category','menuItem');
+	$coretypes = array('tenant','tenantSetting','tenantProperty','category','menuItem','page');
 	if(in_array($type,$coretypes,false)) {
 		// core types will be in core subfolder
 		$classpath .= 'core/';
@@ -67,7 +68,7 @@
 			<input type="hidden" name="tenantid" value="<?php echo $tenantID; ?>"/>
 			<input type="hidden" id="type" name="type" value="<?php echo $type; ?>"/>
 			<?php
-			Utility::renderForm($class, $entity, $id, $tenantID, $parentid);
+			Forms::renderForm($class, $entity, $id, $tenantID, $parentid);
 			?>	        			
 		</div>
 	</form>

@@ -264,7 +264,9 @@ function submitForm(formID,messageDiv,messageSpan,reloadOnSuccess,idElement,call
 		   		}
 		   		success=false;
 		   	}
-		   	callback(success);
+		   	if (callback) {
+		   		callback(success);
+		   	}
 		  }  
 		};
 	request.send(JSON.stringify(data));

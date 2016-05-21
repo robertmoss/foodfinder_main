@@ -136,8 +136,11 @@ function removeChildRow(id) {
 	}	 
 }
 
-// loads and fills modal form for editing a dataentity
+
 function editEntity(id,entity,callback) {
+	
+	// loads and fills modal form for editing a dataentity
+	// see admin.php tenant form for calling model
 	
 	var headerText= (id>0) ? 'Edit ' + entity : "Add New " + entity;
 	setElementText(entity + 'Header',headerText);
@@ -148,6 +151,40 @@ function editEntity(id,entity,callback) {
 	hideElement(entity+"-message");
 	$('#' +entity + 'EditModal').modal();
 	
+}
+
+function saveEntity(entity,callback) {
+	
+	// submits a form using the 
+	
+	try {
+		var form = entity + 'Form';
+		var message = entity + '-message';
+		var message_text = entity + '-message_text';
+		var id = entity + 'id';
+		submitForm(form,message,message_text,false,id,callback);
+		}
+		catch(ex) {
+			// do nothing for now - message set in submitForm
+		}	
+}
+
+
+function deleteEntity(entity,id,working,callback) {
+
+	// deletes entity using standard Entity Service delete method
+	// if callback is specified, should have success parameter, which will be set to true if delete succeeds false otherwise
+	
+	var serviceURL = "service/entityService.php?type=" + entity;
+	serviceURL += "&id=" + id;
+	
+	callDeleteService(serviceURL,working,'Deleting',function(status,text) {
+		var success=(status==200);
+		if (callback) {
+			callback(success,text);
+		}
+	});
+
 }
 
 function addChildEntity(sourceSelect,destinationSelect) {

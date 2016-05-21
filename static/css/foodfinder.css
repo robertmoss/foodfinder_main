@@ -397,3 +397,26 @@ a:visited {
 .adframe {
 	text-align: center;
 }
+
+.homePanel {
+
+}
+
+@media (min-width: 992px) {
+	.homePanel {
+		min-height: 350px;
+	}
+}
+
+
+/* floating edit button */
+.floatingControl {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.highlight {
+	border: solid 1px;	
+}
+

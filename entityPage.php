@@ -4,6 +4,7 @@
 	include_once dirname(__FILE__) . '/classes/core/database.php';
 	include_once dirname(__FILE__) . '/classes/core/utility.php';
 	include_once dirname(__FILE__) . '/classes/core/dataentity.php';
+    include_once dirname(__FILE__) . '/classes/core/forms.php';
 	$thisPage = "entityPage";
 	
 	$id=0;
@@ -154,7 +155,7 @@
 									<input id="txtCurrentLongitude" type="hidden" value="<?php echo Utility::getSessionVariable('longitude', '');; ?>"/>
 				        			<div id="mapcanvas" class="hidden">Placeholder map canvas.</div>
 				        			<?php
-										 Utility::renderForm($class, $entity, $id, $tenantID, $parentid);
+										 Forms::renderForm($class, $entity, $id, $tenantID, $parentid);
 				        			?>
 				        			
 			        			</div>
