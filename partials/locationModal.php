@@ -15,7 +15,7 @@
 				      	<div class="checkbox align-left"><label><input id="chkVisited" type="checkbox" value="" onclick="setVisited();"> I've visited this place</label></div>
 				      	<?php } ?>
 				      	<?php if($userID>0) {?>
-				      	<button id="btnViewMaster" type="button" class="btn btn-default" onclick="window.location.href='entityPage.php?type=location&id='+	document.getElementById('locationid').innerText + '&mode=view';">
+				      	<button id="btnViewMaster" type="button" class="btn btn-default" onclick="window.location.href='core/entityPage.php?type=location&id='+	document.getElementById('locationid').innerText + '&mode=view';">
 				      		View Master Record
 				      	</button>
 				      	<button id="btnEditLocation" type="button" class="btn btn-default" onclick="editLocation();">

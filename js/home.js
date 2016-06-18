@@ -124,7 +124,7 @@ function processSort(event,ui) {
 function postSortChange(pageid,sort)
 {
 	var request = new XMLHttpRequest();
-	request.open('POST','service/pageCollectionSort.php',true);
+	request.open('POST','core/service/pageCollectionSort.php',true);
 	request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 	request.send('collection=home&pageid='+pageid+'&sort='+sort);
 }

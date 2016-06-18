@@ -1,5 +1,5 @@
 <?php 
-	include dirname(__FILE__) . '/partials/pageCheck.php';
+	include dirname(__FILE__) . '/core/partials/pageCheck.php';
 	$thisPage="profile";
     if ($userID==0) {
         header('Location: 403.php');
@@ -21,7 +21,7 @@
     <body>
     	<div id="maincontent">
     		<div id="outer">
-	    		<?php include('header.php');?>
+	    		<?php include('partials/header.php');?>
     			<div id="main" class="container">
     				<h1><?php echo $user->name; ?></h1>
     				<h3><?php 
@@ -37,10 +37,10 @@
     				<div id="profilePanel" class="panel panel-default">
     				    <div class="panel-heading">Your Profile</div>
     				    <div id="profileBody" class="panel-body">
-    				        <?php include 'partials/workingPanel.php'; ?>
+    				        <?php include 'core/partials/workingPanel.php'; ?>
     				        <div id="profileView" class="collapse in"></div>
     				        <div id="profileEdit" class="collapse">
-    				            <form id="frmProfile" class="form-horizontal" action="service/user.php" method="post" role="form">
+    				            <form id="frmProfile" class="form-horizontal" action="core/service/user.php" method="post" role="form">
                                     <div class="edit">
                                         <input type="hidden" id="txtProfileUserId" name="id" value="<?php echo $userID; ?>"/>
                                         <input type="hidden" id="txtProfileUsername" name="email" value="<?php echo $user->email; ?>">
@@ -89,7 +89,7 @@
                         <h3 class="panel-title">Change Password</h3>
                       </div>
                       <div class="panel-body">
-                            <form id="frmChangePassword" class="form-horizontal" data-toggle="validator" action="service/user.php?action=changePass" method="POST" onsubmit="changePassword(); return false;">
+                            <form id="frmChangePassword" class="form-horizontal" data-toggle="validator" action="core/service/user.php?action=changePass" method="POST" onsubmit="changePassword(); return false;">
                                 <input type="hidden" id="txtPasswordUserId" name="id" value="<?php echo $userID ?>">
                                 <div class="form-group">
                                     <label for="txtOldPassword" class="col-sm-2 control-label">Old Password:</label>
@@ -128,7 +128,7 @@
                     </div>
 	        	</div>
 	        	<script>showWorkingPanel('Loading profile...');</script>
-        		<?php include("footer.php")?>     		
+        		<?php include("partials/footer.php")?>     		
         	</div>
         </div>
     </body>

@@ -1,9 +1,10 @@
 <?php 
 
-	include dirname(__FILE__) . '/partials/pageCheck.php';
-	include_once dirname(__FILE__) . '/classes/core/database.php';
-	include_once dirname(__FILE__) . '/classes/core/utility.php';
-	include_once dirname(__FILE__) . '/classes/core/user.php';
+    include_once dirname(__FILE__) . '/classes/config.php';
+	include Config::$core_path . '/partials/pageCheck.php';
+	include_once Config::$core_path . '/classes/database.php';
+	include_once Config::$core_path . '/classes/utility.php';
+	include_once Config::$core_path . '/classes/user.php';
     $thisPage="login";
 	
 	Utility::debug("login.php: logging in user.",5);

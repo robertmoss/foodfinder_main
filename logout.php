@@ -1,5 +1,6 @@
 <?php 
-	include_once dirname(__FILE__) . '/classes/core/utility.php';
+    include_once dirname(__FILE__) . '/classes/config.php';
+	include_once Config::$core_path . '/classes/utility.php';
 	session_start();
     // perform all steps to flush user and clear state: right now userID is only remnant
     // do need to keep tenant, though, for branding

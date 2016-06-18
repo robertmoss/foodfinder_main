@@ -141,7 +141,8 @@ function setMode(mode) {
 	var id = document.getElementById('id').value;
 	if (mode=='edit')
 		{
-		var newURL = 'entityPage.php?type=' + type + '&id=' + id + '&mode=edit';
+		var returnURL = 'entityPage.php?type=' + type + '&id=' + id + '&mode=view';
+		var newURL = 'entityPage.php?type=' + type + '&id=' + id + '&mode=edit&return=' + encodeURIComponent(returnURL);
 		window.location = newURL;
 		}
 	else if(mode=='view') {
@@ -194,12 +195,18 @@ function saveEntity() {
 function afterSave(success) {
 	// invoked as callback from submitForm
 	if (success) {
-		// need to reload page with new entity
-		var id = document.getElementById('id').value;
-		var type = document.getElementById('type').value;
-		var url = 'entityPage.php?type=' + type + '&id=' + id + '&mode=view';
+		// need to reload page with new entity or redirect to return Url, if specifiedf
+		var url;
+		var returnUrlElement = document.getElementById('returnUrl');
+		if (returnUrlElement && returnUrlElement.value.length>0) {
+			url = returnUrlElement.value;
+		}
+		else {
+			var id = document.getElementById('id').value;
+			var type = document.getElementById('type').value;
+			url = 'entityPage.php?type=' + type + '&id=' + id + '&mode=view';
+		}
 		window.location = url;
-
 	}
 }
 

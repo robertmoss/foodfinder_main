@@ -1,6 +1,6 @@
 <?php
-	include dirname(__FILE__) . '/partials/pageCheck.php';
-	include_once dirname(__FILE__) . '/classes/core/utility.php';
+	include dirname(__FILE__) . '/core/partials/pageCheck.php';
+	include_once dirname(__FILE__) . '/core/classes/utility.php';
     
 	$thisPage=Utility::getRequestVariable('type', 'finder');
     
@@ -22,7 +22,7 @@
     </head>
     <body>
         <div id="topPart">
-		    <?php include("header.php"); ?>
+		    <?php include("partials/header.php"); ?>
 			<!-- Modals -->
 			<?php  include("partials/configModal.php");
 	               include("partials/locationModal.php");
@@ -85,6 +85,6 @@
     				</div>
 				</div>
 		</div>        		
-		<?php include("footer.php");?>
+		<?php include("partials/footer.php");?>
     </body>
 </html>

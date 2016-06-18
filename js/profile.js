@@ -6,7 +6,7 @@ window.onload = function()
 function loadProfile() {
 	showWorkingPanel('Loading profile...');
 	var id = getElementValue('txtPasswordUserId');
-	var serviceURL = "service/user.php?id=" + id + "&detail=yes";
+	var serviceURL = "core/service/user.php?id=" + id + "&detail=yes";
 	var template = getUserProfileTemplate();
 	getAndRenderJSON(serviceURL, template, 'profileView',null,function(count) {
 		if (!count || count<1) {

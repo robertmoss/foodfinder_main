@@ -137,173 +137,7 @@ function removeChildRow(id) {
 }
 
 
-function editEntity(id,entity,callback) {
-	
-	// loads and fills modal form for editing a dataentity
-	// see admin.php tenant form for calling model
-	
-	var headerText= (id>0) ? 'Edit ' + entity : "Add New " + entity;
-	setElementText(entity + 'Header',headerText);
-	var serviceURL = "service/formService.php?type=" + entity;
-	serviceURL += "&id=" + id;
-	
-	getAndRenderHTML(serviceURL,entity + 'FormAnchor','',callback);
-	hideElement(entity+"-message");
-	$('#' +entity + 'EditModal').modal();
-	
-}
 
-function saveEntity(entity,callback) {
-	
-	// submits a form using the 
-	
-	try {
-		var form = entity + 'Form';
-		var message = entity + '-message';
-		var message_text = entity + '-message_text';
-		var id = entity + 'id';
-		submitForm(form,message,message_text,false,id,callback);
-		}
-		catch(ex) {
-			// do nothing for now - message set in submitForm
-		}	
-}
-
-
-function deleteEntity(entity,id,working,callback) {
-
-	// deletes entity using standard Entity Service delete method
-	// if callback is specified, should have success parameter, which will be set to true if delete succeeds false otherwise
-	
-	var serviceURL = "service/entityService.php?type=" + entity;
-	serviceURL += "&id=" + id;
-	
-	callDeleteService(serviceURL,working,'Deleting',function(status,text) {
-		var success=(status==200);
-		if (callback) {
-			callback(success,text);
-		}
-	});
-
-}
-
-function addChildEntity(sourceSelect,destinationSelect) {
-	var opt = document.createElement("option");
-	opt.text = sourceSelect.selectedOptions[0].text;
-	opt.value =  sourceSelect.selectedOptions[0].value;
-	opt.selected=true;
-	destinationSelect.add(opt);
-}
-
-
-function createChildEntity(entity) {
-
-	editChildEntity(entity,0);
-}
-
-function editChildEntity(entity,id) {
-	
-	var header = (id==0) ? 'Add ' : 'Edit ';
-	header += entity;
-	setElementHTML('childEditHeader',header);
-
-	document.getElementById('childType').value = entity;
-	hideElement('childMessageDiv');
-	
-	// need to close entity edit modal - multiple open modals not supported by bootstrap
-	selector = "#" + document.getElementById('type').value + "EditModal";
-	$(selector).modal('hide');
-	
-	$("#childEditModal").modal({
- 	   backdrop: 'static',
-    	keyboard: false
-		});
-	var parentType = document.getElementById('type').value;
-	var entityId = document.getElementById(parentType + 'id').value;
-	var serviceURL = "service/formService.php?type=" + entity;
-	serviceURL += "&id=" + id;
-	serviceURL += "&parentid=" + entityId;
-	
-	getAndRenderHTML(serviceURL,'childEditContainer','',prepareChildEdit);
-
-}
-
-function deleteChildEntity(entity,id) {
-	
-	var serviceURL = "service/entityService.php?type=" + entity;
-	serviceURL += "&id=" + id;
-	var working = "workingDelete" + id;
-	
-	callDeleteService(serviceURL,working,'Deleting',function(status,text) {
-		if (status==200) {
-			// reload form to remove deleted child entity
-			entity = document.getElementById('type').value;
-			id = document.getElementById(entity + 'id').value;
-
-			editEntity(id,entity);
-		}
-		else {
-			alert('Unable to delete ' +entity+ ': ' + text);
-		}
-	});
-
-}
-
-function prepareChildEdit(status) {
-	hideElement('childEditLoading');
-	document.getElementById('childEditSaveButton').disabled=false;
-}
-
-function saveChild() {
-	var entity=document.getElementById('childType').value;
-	var formid=entity + 'Form';
-	var idfield = entity + 'id';
-	submitForm(formid,'childMessageDiv','childMessageSpan',false,idfield,childSaveComplete);	
-}
-
-function cancelChild() {
-	
-	$("#childEditModal").modal('hide');
-
-	// need to re-open edit modal
-	selector = "#" + document.getElementById('type').value + "EditModal";
-	$(selector).modal('show');
-
-}
-
-function childSaveComplete(success) {
-	if (success) {
-		
-		$("#childEditModal").modal('hide');
-
-		var entity=document.getElementById('childType').value;
-		var id=document.getElementById(entity+'id').value;
-		var name='newly added ' + entity;
-		var nameInput = 'txt' + entity.charAt(0).toUpperCase() + entity.slice(1) + 'Name';
-		var textbox = document.getElementById(nameInput); // this assumes all entities have a name
-		if (textbox) {
-			name = textbox.value;
-		}
-		
-		var selectBox = document.getElementById(entity+'Select');
-		if (selectBox) { // we have a linkedentity: set values for newly added child into select
-			var opt = document.createElement("option");
-			opt.text = name;
-			opt.value =  id;
-			opt.selected=true;
-			selectBox.add(opt);
-		}
-		else {
-			alert('need to add logic to update childentities table.');
-		}
-		
-		// reopen edit modal for parent (which has been hiding patiently in the background)
-		var parententity = document.getElementById('type').value;
-		var parentid = document.getElementById(entity + 'id').value;
-		$('#' + parententity + 'EditModal').modal();
-
-	}
-}
 
 function checkGooglePlaces(entity) {
 	var name = document.getElementById('txt' + entity + 'Name').value;
@@ -422,7 +256,7 @@ function retrieveLocations(serviceURL,template,anchor,working,callback) {
 function loadLocation(id) {
 	
 	setElementHTML('locationBody','<div class="ajaxLoading">Loading location . . .</div>');
-	var serviceURL = "service/entityService.php?type=location";
+	var serviceURL = "core/service/entityService.php?type=location";
 	serviceURL += "&id=" + id;
 	
 	$("#locationModal").modal({
@@ -473,7 +307,7 @@ function editLocation() {
     	keyboard: false
 		});
 
-	var serviceURL = "service/formService.php?type=location";
+	var serviceURL = "core/service/formService.php?type=location";
 	serviceURL += "&id=" + id;
 	
 	getAndRenderHTML(serviceURL,'locationEditContainer','',prepareEdit);

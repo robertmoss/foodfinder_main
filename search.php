@@ -1,5 +1,5 @@
 <?php 
-	include dirname(__FILE__) . '/partials/pageCheck.php';
+	include dirname(__FILE__) . '/core/partials/pageCheck.php';
 	$thisPage="search";	
 ?>
 <!DOCTYPE html>
@@ -14,7 +14,7 @@
         <script src="js/search.js"></script>
     </head>
     <body>
-		<?php include('header.php');?>
+		<?php include('partials/header.php');?>
 		<div id="main" class="container">
 			<div class="panel panel-default">
 				<div class="panel-heading">Find a Location</div>
@@ -46,7 +46,7 @@
 				include("partials/locationEditModal.php");
 				}
 		?>	
-        <?php include("footer.php")?>     		
+        <?php include("partials/footer.php")?>     		
     </body>
 </html>
     

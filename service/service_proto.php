@@ -1,8 +1,8 @@
 <?php
 $thisPage = "service_proto";
-include dirname(__FILE__) . '/../partials/pageCheck.php';
-include_once dirname(__FILE__) . '/../classes/core/database.php';
-include_once dirname(__FILE__) . '/../classes/core/utility.php';
+include dirname(__FILE__) . '/../core/partials/pageCheck.php';
+include_once dirname(__FILE__) . '/../core/classes/database.php';
+include_once dirname(__FILE__) . '/../core/classes/utility.php';
 //session_start();
 
 Utility::debug('Executing service_proto.php', 1);
@@ -17,7 +17,8 @@ $tenantID = $_SESSION['tenantID'];
 Utility::debug('Executing service_proto.php with return=' . $return , 5);
 
 // connect to database
-$con=mysqli_connect(Database::$server,Database::$user,Database::$password,Database::$database);
+//$con=mysqli_connect(Database::$server,Database::$user,Database::$password,Database::$database);
+$con=mysqli_connect(Config::$server, Config::$user, Config::$password, Config::$database);
 
 if (!$con) {
 	header(' ', true, 500);	

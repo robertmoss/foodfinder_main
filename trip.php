@@ -1,5 +1,5 @@
 <?php 
-	include dirname(__FILE__) . '/partials/pageCheck.php';
+	include dirname(__FILE__) . '/core/partials/pageCheck.php';
 	$thisPage="trip";
 ?>
 <!DOCTYPE html>
@@ -18,8 +18,8 @@
     </head>
     <body>
     	<div id="maincontent">
-	    	<?php include('header.php');?>
-			<?php include("partials/configModal.php"); ?>
+	    	<?php include 'partials/header.php';?>
+			<?php include 'partials/configModal.php'; ?>
     		<div id="outer">
     			<div id="main">
     				<div id="searchform">
@@ -104,8 +104,8 @@
 	        			</div>
 	    			</div>
 	        	</div>
-	            <?php include("partials/locationModal.php")?>
-        		<?php include("footer.php")?>     		
+	            <?php include 'partials/locationModal.php' ?>
+        		<?php include 'partials/footer.php'?>     		
         	</div>
         </div>
     </body>

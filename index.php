@@ -1,13 +1,13 @@
 <?php
-	include dirname(__FILE__) . '/partials/pageCheck.php';
-	include_once dirname(__FILE__) . '/classes/core/utility.php';
+	include_once dirname(__FILE__) . '/classes/config.php';
+	include_once Config::$core_path . '/partials/pageCheck.php';
+	include_once Config::$core_path . '/classes/utility.php';
 	$thisPage="index";
     $finditem = Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'finditem');
  ?>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-	
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -18,7 +18,7 @@
     </head>
     <body>
     	<div id="maincontent">
-			<?php include("header.php"); ?>
+			<?php include("partials/header.php"); ?>
 			<div class="jumbotron">
       				<div class="container">
         			<h1><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'title') ?></h1>
@@ -75,7 +75,7 @@
                             ?>
                             <div id="page<?php echo $seq ?>" class="col-md-4 homePanel <?php echo $pageClass ?>">
                                 <p class="hidden"><?php echo $item["id"]?></p>
-                                <h2><?php echo $item["name"]?></h2>
+                                <h2><a href=<?php echo $item["url"] ?>><?php echo $item["name"]?></a></h2>
                                 <p><?php echo $item["shortdesc"] ?></p>
                                 <p><a class="btn btn-default" href=<?php echo $item["url"] ?> role="button">Go &raquo;</a></p>
                             </div>
@@ -91,7 +91,7 @@
 			      </div>
 			   </div>
     		</div>        		
-        	<?php include("footer.php");?>     		
+        	<?php include("partials/footer.php");?>     		
         	</div>
         </div>
         

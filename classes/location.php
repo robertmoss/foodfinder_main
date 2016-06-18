@@ -1,6 +1,6 @@
 <?php
-	include_once 'core/dataentity.php';
-    include_once 'core/user.php';
+	include_once dirname(__FILE__) . '/../core/classes/dataentity.php';
+    include_once dirname(__FILE__) . '/../core/classes/user.php';
 
 	class Location extends DataEntity {
 		

@@ -1,6 +1,7 @@
 <?php
-		include dirname(__FILE__) . '/partials/pageCheck.php';
-		include_once dirname(__FILE__) . '/classes/core/utility.php';
+		include dirname(__FILE__) . '/core/partials/pageCheck.php';
+		include_once dirname(__FILE__) . '/core/classes/utility.php';
+        include_once dirname(__FILE__) . '/classes/application.php';
 		//ini_set('display_errors', 'On');
 		//require_once 'System.php';
 		//var_dump(class_exists('System', false));
@@ -17,7 +18,7 @@
     </head>
     <body>
     	<div>
- 			<?php include('header.php');?>
+ 			<?php include('partials/header.php');?>
  			<div id="main" class="container">
 	    		<div class="jumbotron">
 	    			<h2>About <?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'title') ?></h2>
@@ -25,9 +26,9 @@
 	    				the Foodfinder Platform from <a href="http://www.palmettonewmedia.com" target="_blank">Palmetto New Media</a>.</p>
 	    			<p><a class="btn btn-primary" href="mailto:mossr19@gmail.com">Contact Us</a></p>
 	    		</div>
-	    		<p>Version <?php echo Utility::getVersion(); ?></p>
+	    		<p>Version <?php echo Application::$version ?></p>
 	    	</div>	
-        	<?php include("footer.php")?>
+        	<?php include("partials/footer.php")?>
         </div>
     </body>
 </html>

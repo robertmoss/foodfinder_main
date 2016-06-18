@@ -2,10 +2,10 @@
 
 // a service that allows clients to request and receive lists of locations on a specified route
 
-include dirname(__FILE__) . '/../partials/pageCheck.php';
-include_once dirname(__FILE__) . '/../classes/core/database.php';
-include_once dirname(__FILE__) . '/../classes/core/utility.php';
-include_once dirname(__FILE__) . '/../classes/core/service.php';
+include dirname(__FILE__) . '/../core/partials/pageCheck.php';
+include_once dirname(__FILE__) . '/../core/classes/database.php';
+include_once dirname(__FILE__) . '/../core/classes/utility.php';
+include_once dirname(__FILE__) . '/../core/classes/service.php';
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
 
