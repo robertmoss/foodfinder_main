@@ -29,7 +29,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<button type="button" class="btn btn-primary" onclick="retrieveResults()">Search</button>
+							<button type="button" class="btn btn-primary" onclick="retrieveResults();">Search</button>
 						</div>
 					</form>
 				</div>

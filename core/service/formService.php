@@ -8,6 +8,7 @@
      *      id:     the id of the entity to populate the form with data for; if 0 or unspecified, will create an unfilled form (i.e. for a new entity)  
      */ 
 	include dirname(__FILE__) . '/../partials/pageCheck.php';
+    include Config::$root_path . '/classes/application.php';
 	include_once dirname(__FILE__) . '/../classes/database.php';
 	include_once dirname(__FILE__) . '/../classes/utility.php';
     include_once dirname(__FILE__) . '/../classes/forms.php';
@@ -24,22 +25,20 @@
 	
 	Utility::debug('Form service invoked for type:' . $type . ', method=' . $_SERVER['REQUEST_METHOD'], 5);
 	
-    // in the future: can remove hardcoded array and query DB or config file to allow dynamic entities
-	$knowntypes = array('location','link','media','tenant','tenantSetting','tenantProperty','category','menuItem',"page");
-	if(!in_array($type,$knowntypes,false)) {
-		// unrecognized type requested can't do much from here.
-		Service::returnError('Unknown type: ' . $type);
-	}
-	
-	$classpath = '/../classes/'; 
-	$coretypes = array('tenant','tenantSetting','tenantProperty','category','menuItem','page');
-	if(in_array($type,$coretypes,false)) {
-		// core types will be in core subfolder
-		$classpath = '/../classes/';
-	}
+   $coretypes = array('tenant','tenantSetting','tenantProperty','category','menuItem','page');
+    if(!in_array($type,$coretypes,false) && !in_array($type, Application::$knowntypes,false)) {
+        // unrecognized type requested can't do much from here.
+        Service::returnError('Unknown type: ' . $type,400,'entityService?type=' .$type);
+    }
+    
+    $classpath = Config::$root_path . '/classes/'; 
+    if(in_array($type,$coretypes,false)) {
+        // core types will be in core path as configured in config.php
+        $classpath = Config::$core_path . '/classes/';
+    }
 	
 	// include appropriate dataEntity class & then instantiate it
-	$classfile = dirname(__FILE__) . $classpath . $type . '.php';
+	$classfile = $classpath . $type . '.php';
 	if (!file_exists($classfile)) {
 		header(' ', true, 500);
 		Utility::debug('Unable to instantiate class for ' . $type . ' Classfile does not exist. Looking for: ' . $classfile, 9);

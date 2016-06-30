@@ -72,13 +72,19 @@
                     $seq=0;    
                     foreach($pageCollection as $item) { 
                             $seq++;
+                            $image = $item["imageurl"];
+                            if (strlen($image)<1) {
+                                $image = 'img/placeholder.jpg';
+                            }
                             ?>
-                            <div id="page<?php echo $seq ?>" class="col-md-4 homePanel <?php echo $pageClass ?>">
-                                <p class="hidden"><?php echo $item["id"]?></p>
-                                <h2><a href=<?php echo $item["url"] ?>><?php echo $item["name"]?></a></h2>
-                                <p><?php echo $item["shortdesc"] ?></p>
-                                <p><a class="btn btn-default" href=<?php echo $item["url"] ?> role="button">Go &raquo;</a></p>
-                            </div>
+                           <div id="page<?php echo $seq ?>" class="col-md-4 homePanel <?php echo $pageClass ?>" style="background-image:url('<?php echo $image?>');" onclick="window.location='<?php echo $item["url"] ?>';">
+                                    <p class="hidden"><?php echo $item["id"]?></p>
+                                    <div class="overlay">
+                                        <h2><?php echo $item["name"]?></h2>
+                                        <p class="description"><?php echo $item["shortdesc"] ?></p>
+                                    </div>
+                                    <div class="buttonPane"></div>
+                                </div>
                         <?php
                         }
                     echo('</div>');

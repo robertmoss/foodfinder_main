@@ -10,7 +10,6 @@ html, body {
 #footer {
 	min-height: 20px;
 	padding: 5px;
-	position: fixed;
 	left: 0px;
 	bottom: 0px;
 	width: 100%;

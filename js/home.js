@@ -5,15 +5,17 @@ window.onload = function() {
 		$(this).append(panel);
 		button = document.getElementById('editButton');
 		$(button).off("click");
-		$(button).click(function() {
+		$(button).click(function(e) {
 			var element = $(this).parent().parent().find("p");
 			editPage(element[0].innerHTML);
+			e.stopPropagation();
 		});
 		button = document.getElementById('deleteButton');
 		$(button).off("click");
-		$(button).click(function() {
+		$(button).click(function(e) {
 			var element = $(this).parent().parent().find("p");
 			deletePage(element[0].innerHTML);
+			e.stopPropagation();
 		});
 	}, function() {
 		hideElement('floatingButtons');

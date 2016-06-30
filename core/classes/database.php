@@ -87,7 +87,7 @@ class Database {
 		$data = mysqli_query($con,$query);
 
 		if (!$data) {
-			Log::debug('Error executing query:' . mysqli_error($con),9);
+			Log::debug('Error executing query:' . mysqli_error($con) . ' Query: ' . $query,9);
 			//Utility::errorRedirect('Error connecting to database: ' . mysqli_error());
 			throw new Exception(mysqli_error($con));
 			}

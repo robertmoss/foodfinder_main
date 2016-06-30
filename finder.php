@@ -34,8 +34,8 @@
 	               ?>
         </div>
         <div class="mapPane">
-            <div id="expandMap" class="mapEnlarge" ><button class="btn btn-default btn-sm"  onclick="expandMap();"><span class="glyphicon glyphicon-resize-full" aria-hidden="true"></span></button></div>
-            <div id="shrinkMap" class="mapEnlarge hidden" ><button class="btn btn-default btn-sm"  onclick="shrinkMap();"><span class="glyphicon glyphicon-resize-small" aria-hidden="true"></span></button></div>
+            <div id="expandMap" class="mapEnlarge hidden" ><button class="btn btn-default btn-sm"  onclick="expandMap();"><span class="glyphicon glyphicon-resize-full" aria-hidden="true"></span></button></div>
+            <div id="shrinkMap" class="mapEnlarge" ><button class="btn btn-default btn-sm"  onclick="shrinkMap();"><span class="glyphicon glyphicon-resize-small" aria-hidden="true"></span></button></div>
             <div id="mapwrapper" class="mapWrapper">
         		<div id="mapcanvas"></div>
         		<div id="loading" class="modal"><!-- Place inside div to cover --></div>
@@ -69,8 +69,8 @@
 					   <button class="btn btn-info" onclick="loadNextLocation();"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true" ></span></button>
 				    </div>
 				    <div class="right">
-                        <button id="showSearchBtn" type="button" class="btn btn-default" onclick="showElement('searchform2');showElement('hideSearchBtn');hideElement('showSearchBtn');"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></button>
-                        <button id="hideSearchBtn" type="button" class="btn btn-default hidden" onclick="hideElement('searchform2');showElement('showSearchBtn');hideElement('hideSearchBtn');"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span></button>
+                        <button id="showSearchBtn" type="button" class="btn btn-default" onclick="showSearch();"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></button>
+                        <button id="hideSearchBtn" type="button" class="btn btn-default hidden" onclick="hideSearch();"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span></button>
     				    <button type="button" class="btn btn-default" onclick="showConfig();"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></button>
 	                </div>
 				</div> 

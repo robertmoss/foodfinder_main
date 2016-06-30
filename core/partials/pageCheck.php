@@ -4,9 +4,15 @@
  * pageCheck is an essential routine. It should be included on every page in the application. 
  * It verifies we have a session, sets the tenantid & userid in memory 
  */
-
- 
-	ini_set('display_errors', 'On'); // switch to off for production deployment
+    // need some better way to get to config - right now have to hardwire to assume core is in a certain place 
+    include_once dirname(__FILE__) . '/../../classes/config.php';
+    
+    if (Config::$debugMode) {
+    	ini_set('display_errors', 'On'); 
+    }
+    else {
+        ini_set('display_errors', 'Off'); // switch to off for production deployment
+    }
 
 	//include_once substr(dirname(__FILE__),1,strlen(dirname(__FILE__))-10) . '/classes/user.php';
     include_once dirname(__FILE__) . '/../classes/user.php';

@@ -17,7 +17,7 @@ class Page extends DataEntity {
             array("name","string",300),
             array("shortdesc","string",5000),
             array("url","string",1000),
-            array("imgurl","string",1000),
+            array("imageurl","string",1000),
             array("roles","string",500),
             array("pageCollections","linkedentities","pageCollection",false,false)
         );      

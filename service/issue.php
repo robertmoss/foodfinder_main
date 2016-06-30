@@ -1,9 +1,9 @@
 <?php
 //http_response_code(500); // set to return error unless explicitly succeeds (handles internal errors)
-include dirname(__FILE__) . '/../partials/pageCheck.php';
-include_once dirname(__FILE__) . '/../classes/core/utility.php';
-include_once dirname(__FILE__) . '/../classes/core/service.php';
-include_once dirname(__FILE__) . '/../classes/core/config.php';
+include dirname(__FILE__) . '/../core/partials/pageCheck.php';
+include_once dirname(__FILE__) . '/../core/classes/utility.php';
+include_once dirname(__FILE__) . '/../core/classes/service.php';
+include_once dirname(__FILE__) . '/../classes/config.php';
 
 Utility::debug('Issue service invoked, method=' . $_SERVER['REQUEST_METHOD'], 5);
 
@@ -46,11 +46,14 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
         Service::returnError('Unable to post issue to GitHub: ' . $error,500);
     }
     else {
-        Utility::debug('Issue service completed successfully.', 5);
+        Utility::debug('Issue service call completed successfully.', 5);
         $returnData = json_decode($response);
         if (array_key_exists('number',$returnData)) {
             $response = json_encode(array("id"=>$returnData->{"number"}));
         } 
+        else {
+            Service::returnError('Unable to log issue. Response from repositor: ' . $response);
+        }
         //http_response_code(200); 
         Service::returnJSON($response);
     }

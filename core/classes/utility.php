@@ -316,7 +316,12 @@ class Utility {
         $query = "call getPagesForTenantByCollection(" . Database::queryString($collectionName) . ",$tenantID)";
         $results = Database::executeQuery($query);
         
-        return $results->fetch_all(MYSQLI_ASSOC);
+        $col = array();
+        while ($row = $results->fetch_assoc()) {
+            $col[]=$row;
+        }
+        
+        return $col;
  }
  
 	public static function isPositive($term) {

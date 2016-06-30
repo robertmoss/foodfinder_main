@@ -28,7 +28,7 @@ if (Utility::getTenantProperty($applicationID, $tenantID, $userID, 'showAds')=='
 	        	<span class="icon-bar"></span>
 	        	<span class="icon-bar"></span>
       		</button>
-			<a class="navbar-brand" href="<?php echo Config::$site_root ?>/index.php"><?php
+			<a class="navbar-brand" href="<?php echo Config::getSiteRoot() ?>/index.php"><?php
 			  $icon = Utility::getTenantProperty($applicationID, $tenantID, $userID,'icon');
               $title = ucfirst(Utility::getTenantProperty($applicationID, $tenantID, $userID,'title'));
               if (strlen($icon)>0) {
@@ -49,23 +49,36 @@ if (Utility::getTenantProperty($applicationID, $tenantID, $userID, 'showAds')=='
                 if (is_array($menu)) {
                     foreach($menu as $item) {
                         $roles = $item["roles"];
-                        if ($roles=='') {
+                        $visible = false;
+                        if ($roles=='' || $user->hasRole('admin',$tenantID)) {
+                            $visible = true;
+                        }
+                        else {
+                            $roleSet = explode(',',$roles);
+                            foreach($roleSet as $role) {
+                                if ($user->hasRole($role,$tenantID)) {
+                                    $visible = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if ($visible) { 
                             $className = '';
                             if ($thisPage==$item["name"]) {
                                 $className ='class="active"';
                                 }
-                        $link = $item["link"];
-                        if (strtolower(substr($link,0,4))!="http") {
-                            // assume all links on menus are relative to site root unless they start with http
-                            $link = Config::$site_root . '/' . $link;
-                        }
-                        echo '<li ' . $className . '><a href=" ' . $link . '">' . $item["name"] . '</a></li>';
+                            $link = $item["link"];
+                            if (strtolower(substr($link,0,4))!="http") {
+                                // assume all links on menus are relative to site root unless they start with http
+                                $link = Config::getSiteRoot() . '/' . $link;
+                                }
+                            echo '<li ' . $className . '><a href=" ' . $link . '">' . $item["name"] . '</a></li>';
                         }
                     }
                 }
                 if ($userID>0 && ($user->hasRole('admin',$tenantID) || $userID==1)) 
                     {
-                ?><li <?php if($thisPage=='admin') echo ' class="active"'?>><a href="<?php echo Config::$core_root?>/admin.php">Admin</a></li>
+                ?><li <?php if($thisPage=='admin') echo ' class="active"'?>><a href="<?php echo Config::getCoreRoot() ?>/admin.php">Admin</a></li>
                 <?php 
                     }            
                 ?>
@@ -87,7 +100,7 @@ if (Utility::getTenantProperty($applicationID, $tenantID, $userID, 'showAds')=='
 				        $allowIssueLog=true;
 				        ?> 
                         <li><button type="button" class="btn btn-default navbar-btn" onclick="logIssue();"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>&nbsp;Log Issue</button>&nbsp;</li>
-    				    <li><button type="button" class="btn btn-default navbar-btn" onclick="window.location.href='entityPage.php?type=location&id=0&mode=edit';"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add New</button></li>
+    				    <li><button type="button" class="btn btn-default navbar-btn" onclick="window.location.href='<?php echo Config::$core_root ?>/entityPage.php?type=location&id=0&mode=edit';"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add New</button></li>
 			    <?php } ?>
 			 </ul>		
 	         <?php } else { ";" ?>

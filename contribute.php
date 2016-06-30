@@ -1,6 +1,6 @@
 <?php 
-	include dirname(__FILE__) . '/partials/pageCheck.php';
-	$thisPage="REPLACE ME";	
+	include dirname(__FILE__) . '/core/partials/pageCheck.php';
+	$thisPage="contribute";	
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -8,12 +8,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Food Finder</title>
-        <?php include("partials/includes.php"); ?>
+        <?php include "partials/includes.php"; ?>
     </head>
     <body>
     	<div id="maincontent">
     		<div id="outer">
-	    		<?php include('header.php');?>
+	    		<?php include('partials/header.php');?>
     			<div id="main" class="container">
     			    <div class="panel panel-default centered-column">
     				    <div class="panel-heading">
@@ -52,7 +52,7 @@
     				                I look at it this way: if I am going to be in Lincoln, Nebraska, for a couple of days, what are the handful of restaurants
     				                 that I want to make sure I go visit? Food-Finder, when it's fully built out, will tell me just that.</p>
     				         <h3>And That's Where You Come In</h3>
-    				         <p>As a contributor, you can add new locations into the database (just click the <a href="entityPage.php?type=location&id=0&mode=edit">Add New</a> button 
+    				         <p>As a contributor, you can add new locations into the database (just click the <a href="core/entityPage.php?type=location&id=0&mode=edit">Add New</a> button 
     				             in the menu bar). If you love typing (and who doesn't?), you can key all the information in about a place, but there's a much 
     				             easier way. Just type in the name of the restaurant in the Name field and click the “Check Google Places” button. This will look up the location
     				              in Google Places and, if it finds it, populate all the relevant information for you. 
@@ -74,7 +74,7 @@
     				    </div>
     				</div>
 	        	</div>	
-        		<?php include("footer.php")?>     		
+        		<?php include("partials/footer.php")?>     		
         	</div>
         </div>
     </body>

@@ -24,8 +24,9 @@ function getLocationListTemplate() {
 				template += "</div>";
 				template += "<div class=\"caption\">";
 					//template +="<h3 class=\"non-mobile\"><a id=\"link_loc{{id}}\" href=\"#loc{{id}}\" onclick=\"loadLocation({{id}},\'{{linkname}}\',{{#visited}}true{{/visited}}{{^visited}}false{{/visited}});\">{{name}}</a></h3>";
-					template +="<h3 class=\"non-mobile\"><a id=\"link_loc{{id}}\" href=\"#loc{{id}}\" onclick=\"loadLocation({{id}});\">{{name}}</a></h3>";
-					template +="<h3 class=\"mobile-only\"><a href=\"entityPage.php?type=location&mode=view&id={{id}}\">{{name}}</a></h3>";
+					//template +="<h3 class=\"non-mobile\"><a id=\"link_loc{{id}}\" href=\"#loc{{id}}\" onclick=\"loadLocation({{id}});\">{{name}}</a></h3>";
+					//template +="<h3 class=\"mobile-only\"><a href=\"entityPage.php?type=location&mode=view&id={{id}}\">{{name}}</a></h3>";
+					template +="<h3><a id=\"link_loc{{id}}\" href=\"#loc{{id}}\" onclick=\"loadLocation({{id}});\">{{name}}</a></h3>";
 					template +="{{#distance}}<h3><span class=\"label label-success\">{{distance}} mi</span></h3>{{/distance}}";
 					template += "<address>{{address}}<br/>{{city}}, {{state}}<br/><a href=\"tel:{{clickablephone}}\">{{phone}}</a><br/><a href=\"{{url}}\" target=\"_blank\">{{displayurl}}</a></address>";
 					template += "<p>{{shortdescription}}{{#more}}<a href=\"location.php?id={{id}}\">more</a>{{/more}}</p>";

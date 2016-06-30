@@ -5,6 +5,9 @@ window.onload = function()
 		showElement('searchform2');
 		hideElement('showSearchBtn');	
 	}
+	else {
+		expandMap();
+	}
 	
 	
 	
@@ -463,6 +466,20 @@ function displayLocationSummary(index) {
 		setElementHTML('resultSpan','<div class="thumbnail loc-panel"><p>No location found.</p></div>');
 	}
 		
+}
+
+function showSearch() {
+	shrinkMap();
+	showElement('searchform2');
+	showElement('hideSearchBtn');
+	hideElement('showSearchBtn');
+}
+
+function hideSearch() {
+	hideElement('searchform2');
+	showElement('showSearchBtn');
+	hideElement('hideSearchBtn');
+	expandMap();
 }
 
 function showSearchForm() {

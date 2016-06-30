@@ -1124,8 +1124,8 @@ content: "\00d7";
 }
 
 
-/* corner ribbon */
 
+/* corner ribbon */
 .ribbon-wrapper-green {
   width: 85px;
   height: 88px;
@@ -1177,4 +1177,5 @@ content: "\00d7";
 .ribbon-green:after {
   right: 0;
 }​
+
 

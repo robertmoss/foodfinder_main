@@ -1,5 +1,5 @@
 <?php 
-    include dirname(__FILE__) . '/partials/pageCheck.php';
+    include dirname(__FILE__) . '/core/partials/pageCheck.php';
     $thisPage = 'test';
     
     // must be superuser to access this page
