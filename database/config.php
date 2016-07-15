@@ -69,5 +69,25 @@ class Config {
         else {
             return 'http://' . $_SERVER['SERVER_NAME'] . '/core';
        }
-    } 	
+    }
+      
+      public static function getServiceRoot() {
+        // gotta work on all this, since the custom URLs break everything    
+        if (strtolower($_SERVER['SERVER_NAME'])=='www.palmettonewmedia.com') {
+            return $this::$service_path;
+        }
+        else {
+            return 'http://' . $_SERVER['SERVER_NAME'] . '/service';
+       }
+    }   
+      
+    public static function getCoreServiceRoot() {
+        // gotta work on all this, since the custom URLs break everything    
+        if (strtolower($_SERVER['SERVER_NAME'])=='www.palmettonewmedia.com') {
+            return $this::$core_service_path;
+        }
+        else {
+            return 'http://' . $_SERVER['SERVER_NAME'] . '/core/service';
+       }
+    }    	
 }

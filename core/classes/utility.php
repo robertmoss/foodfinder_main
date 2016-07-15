@@ -324,6 +324,46 @@ class Utility {
         return $col;
  }
  
+ public static function getTenantContent($key,$tenantID) {
+
+        // in the future, we may want to cache content — depends upon how widely it gets used
+        
+        // default to en_US for now. In future add multilanguage support
+        $language = 'en_US';
+        
+        $query = "call getTenantContent(" . Database::queryString($key) . ",$tenantID," . Database::queryString($language) .")";
+        $results = Database::executeQuery($query);
+        
+        $content = array(
+            'id' =>0,
+            'name'=>$key,
+            'contentText'=>'[Content Not Found - ' . $key . ']',
+            'language'=>$language
+            );
+        if ($row = $results->fetch_assoc()) {
+            $content=$row;
+        }
+        
+        return $content;
+     
+ }
+ 
+ public static function renderContent($key,$tenantID,$user) {
+                 
+             
+         // TO DO: update this to retrieve the content object, not just the content - need to ID for saving updates    
+         $content = Utility::getTenantContent($key, $tenantID);
+         $class="";
+         if ($user->hasRole('admin',$tenantID)) {
+             $class=' class="content"';
+         }
+         
+         echo '<div id="content_' . $content['id'] . '"' .$class .'>';
+         echo '<input type="hidden" value="' . $key . '"/>';
+         echo $content['contentText'] .'</div>';
+     
+ }
+ 
 	public static function isPositive($term) {
 		$term = strtolower($term);
 		return ($term=="yes" || $term=="y" || $term=="true" || $term=="1");		

@@ -14,15 +14,17 @@
         <title><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'title') ?></title>
 		<?php include("partials/includes.php"); ?>
         <script src="js/jquery-ui.js"></script>
-        <script type="text/javascript" src="js/home.js"></script>  
+        <script type="text/javascript" src="js/home.js"></script>
+        <script src="js/content.js"></script>  
     </head>
     <body>
     	<div id="maincontent">
 			<?php include("partials/header.php"); ?>
+            <?php include('core/partials/contentControls.php');?>
 			<div class="jumbotron">
       				<div class="container">
         			<h1><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'title') ?></h1>
-			        <p><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'welcome') ?></p>
+			        <p><h3><?php echo Utility::renderContent('home:welcomeText', $_SESSION['tenantID'],$user); ?></h3></p>
                     <p><a class="btn btn-primary btn-lg" href="about.php" role="button">Learn more &raquo;</a>
                     <?php
                         $pageClass="";

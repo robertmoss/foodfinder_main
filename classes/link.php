@@ -1,5 +1,5 @@
 <?php
-	include_once 'core/dataentity.php';
+	include_once dirname(__FILE__) . '/../core/classes/dataentity.php';
 
 	class Link extends DataEntity {
 		

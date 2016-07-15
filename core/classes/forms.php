@@ -34,10 +34,10 @@ class Forms {
                     
                     switch ($field[1]) {
                         case "string":  
-                            echo '<div class="form-group">';
+                            echo '<div id="field_' . $field[0] . '" class="form-group">';
                             $maxlen = '';
                             $collength = 6; 
-                            if (count($field)>2) {
+                            if (count($field)>2 && $field[2]>0 ) {
                                 // add a max-length validator
                                 $maxlen = 'maxlength="' . $field[2] . '"';
                                 if ($field[2]<50) {
@@ -46,8 +46,8 @@ class Forms {
                             }
                             echo $default_label;
                             echo '  <div class="col-sm-' .$collength .'">';
-                            if (count($field)>2 && $field[2]>200) {
-                                echo '     <textarea rows="4" cols="100" id="txt' . $class->getName() . ucfirst($field[0]) . '" name="' . $field[0] . '"  class="form-control" placeholder="'. $class->friendlyName($field[0]) .'" ' . $maxlen . ' ' . $required . '>';
+                            if (count($field)>2 && ($field[2]>200 || $field[2]==0)) { // length of 0 indicates an unlimited (text) field
+                                echo '     <textarea rows="4" cols="200" id="txt' . $class->getName() . ucfirst($field[0]) . '" name="' . $field[0] . '"  class="form-control" placeholder="'. $class->friendlyName($field[0]) .'" ' . $maxlen . ' ' . $required . '>';
                                 echo $value . '</textarea>';
                                 }
                             else {

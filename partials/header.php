@@ -18,7 +18,7 @@ if (Utility::getTenantProperty($applicationID, $tenantID, $userID, 'showAds')=='
     </script>
 </div>
 <?php } ?>
-<input id="coreServiceUrl" type="hidden" value="<?php echo Config::$core_service_path?>" />
+<input id="coreServiceUrl" type="hidden" value="<?php echo Config::getCoreServiceRoot()  ?>" />
 <nav class="navbar navbar-default">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -100,7 +100,7 @@ if (Utility::getTenantProperty($applicationID, $tenantID, $userID, 'showAds')=='
 				        $allowIssueLog=true;
 				        ?> 
                         <li><button type="button" class="btn btn-default navbar-btn" onclick="logIssue();"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>&nbsp;Log Issue</button>&nbsp;</li>
-    				    <li><button type="button" class="btn btn-default navbar-btn" onclick="window.location.href='<?php echo Config::$core_root ?>/entityPage.php?type=location&id=0&mode=edit';"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add New</button></li>
+    				    <li><button type="button" class="btn btn-default navbar-btn" onclick="window.location.href='<?php echo Config::getCoreRoot() ?>/entityPage.php?type=location&id=0&mode=edit';"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add New</button></li>
 			    <?php } ?>
 			 </ul>		
 	         <?php } else { ";" ?>

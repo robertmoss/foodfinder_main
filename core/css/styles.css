@@ -915,6 +915,18 @@ content: "\00d7";
 	}
 }
 
+
+/* dynamic content display */
+.content {	
+	position: relative;
+	min-height: 30px;
+	}
+
+.content:hover {
+	background-color: #eeeeee;
+
+}
+
 /* endorsements */
 .endorsements {
 	border: 2px solid;
@@ -1117,6 +1129,8 @@ content: "\00d7";
 	background-color: #cccccc;
 	text-align: left;
 }
+
+
 
 /* Boostrap additions */
 .glyphicon-large {

@@ -135,6 +135,7 @@ function initializeMap(anchor)
 				hideElement('list-loader');
 				setMessage('Unable to detect location from your browser.', 'message', 'message_text', false);
 				log('geolocation.getCurrentPosition failed: ' + err.message);
+				loadLocations(currentLatLong.lat(),currentLatLong.lng(),anchor);
 			});	
 	}
 	

@@ -30,7 +30,7 @@ include_once dirname(__FILE__) . '/../../classes/application.php';
     }
     
     
-	$coretypes = array('tenant','tenantSetting','tenantProperty','category','menuItem','page');
+	$coretypes = array('tenant','tenantSetting','tenantProperty','category','menuItem','page','tenantContent');
     if(!in_array($type,$coretypes,false) && !in_array($type, Application::$knowntypes,false)) {
 		// unrecognized type requested can't do much from here.
 		Service::returnError('Unknown type: ' . $type,400,'entityService?type=' .$type);

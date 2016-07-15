@@ -657,6 +657,18 @@ function saveEntity(entity,callback) {
 		var message = entity + '-message';
 		var message_text = entity + '-message_text';
 		var id = entity + 'id';
+		if (!callback) {
+			callback = function(success) {
+				if (success) {
+					$('#' +entity + 'EditModal').modal('hide');
+					var count=getElementValue(entity + 'Count');
+					var offset=getElementValue(entity + 'Offset');
+					var setName=getElementValue(entity + 'SetName');
+					var columns=getElementValue(entity + 'Columns');
+					loadEntityList(entity,setName,columns,count,offset);
+				}
+			};
+		}
 		submitForm(form,message,message_text,false,id,callback);
 		}
 		catch(ex) {
@@ -800,4 +812,82 @@ function childSaveComplete(success) {
 	}
 }
 
+function loadEntityList(entity,setName,columns,entitiesPerPage,offset) {
+	
+	if (!columns || columns.length==0) {
+		columns = "Name,Actions";
+	}
+	colArray = columns.split(',');
+	
+	// need to get the template from somewhere.	
+	var template = '<input id="' + entity + 'Count" type="hidden" value="' + entitiesPerPage + '">';
+	template += '<input id="' + entity + 'Offset" type="hidden" value="' + offset + '">';
+	template += '<input id="' + entity + 'SetName" type="hidden" value="' + setName + '">';
+	template += '<input id="' + entity + 'Columns" type="hidden" value="' + columns + '">';
+	template += "<table class=\"table table-striped table-hover table-responsive\"><thead><tr>";
+	for (var i=0;i<colArray.length;i++) {
+		template += "<th>" + colArray[i].trim() + "</th>";
+	}
+	template += "</tr></thead>";
+	template += "<tbody>{{#" + setName + "}}"; 	
+	template += "<tr>";
+	for (var i=0;i<colArray.length;i++) {
+		if (colArray[i].toLowerCase()=='actions') {
+			// this is Action columm. treat special
+				template += "<td><div class=\"btn-group btn-group-sm\" role=\"group\" aria-label=\"...\">";
+				template += "<button type=\"button\" class=\"btn btn-default\" onclick=\"editEntity({{id}},'" + entity + "');\"><span class=\"glyphicon glyphicon-pencil\"></span>&nbsp;</button>";
+				template += "</div></td>";
+		}
+		else {
+			template += "<td><div class=\"entity\"><span class=\"description\">{{" + colArray[i].toLowerCase()  +"}}</span></div></td>";
+		}
+	}
+	template += "</tr>";
+	template += "{{/" + setName + "}}</tbody></table>";
+
+	if (!entitiesPerPage || entitiesPerPage==0) {
+		entitiesPerPage = 10;
+	}
+	
+	var serviceURL = "core/service/entitiesService.php?type=" + entity;
+	serviceURL += '&offset=' + offset;
+	var working = "Retrieving " + entity + " list  . . .";
+	var anchor = entity + "ResultSpan";
+					
+	if (working.length>0)
+		{
+		document.getElementById(anchor).innerHTML = working;
+		}
+		
+	if (window.XMLHttpRequest)
+	  {// code for IE7+, Firefox, Chrome, Opera, Safari
+	  xmlhttp=new XMLHttpRequest();
+	  }
+	else
+	  {// code for IE6, IE5
+	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+	  
+	 xmlhttp.onreadystatechange=function() {
+		  if (xmlhttp.readyState==4) {
+		  	hideElement('loading');
+		  	if (xmlhttp.status==200) {
+			    var view = JSON.parse(xmlhttp.responseText);
+				renderTemplate(template,view,anchor);
+				var totalEntities=view.totalEntities;
+				var numPage = Math.ceil(totalEntities/entitiesPerPage);
+				$('#page-selection' + entity).bootpag({total: numPage}).on("page",function(event,num) {
+					offset = (num-1) * entitiesPerPage;
+					retrieveEntities(offset);
+					});
+				}
+			else {
+				document.getElementById(anchor).innerHTML = 'unable to load ' + entity + ' list:' + xmlhttp.responseText;
+				}
+		    }
+		 };
+	xmlhttp.open("GET",serviceURL,true);
+	xmlhttp.send();
+
+}
 

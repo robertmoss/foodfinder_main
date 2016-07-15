@@ -16,5 +16,5 @@ class Application {
     
     // indicate the known entity types that the Entity Service can manage
     // as you add entities to your application, add them here
-    public static $knowntypes = array('location','link','media','category'); 
+    public static $knowntypes = array('location','link','media','category','feature'); 
 }

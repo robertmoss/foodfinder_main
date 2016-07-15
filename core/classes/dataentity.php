@@ -69,8 +69,10 @@ abstract class DataEntity implements iDataEntity {
 		 *        properties: a dummy placeholder that lets you specify where on forms to place user-defined properties
 		 * 			  custom: core classes don't know what to do with this, so must be handled custom by child
 		 * 
-		 *  [2] max length: maxium length of the field (in characters for text, digits for numbers)
-		 *         0 or not set indictes no max
+		 *  [2] max length: maximum length of the field (in characters for text, digits for numbers)
+		 *         not set will use an arbitrary length (e.g. 100 characters) for database  
+         *         0 indicates no max        
+         *         for field type string, setting length to 0 will make field to a text in database
 		 *  [3+] info varies by field type:
 		 * 		picklist: [3] - name of list to choose values from (as found in Utility::getList method )
 		 * 				  [4] - (optional) boolean indicating whether users can add new picklist itmes (e.g. to show an "add new button" 
@@ -119,7 +121,7 @@ abstract class DataEntity implements iDataEntity {
 		}
 		
 		public function getDataServiceURL() {
-    		return Config::$core_service_path . "/entityService.php?type=" . lcfirst($this->getName());
+    		return Config::getCoreServiceRoot() . "/entityService.php?type=" . lcfirst($this->getName());
 		}
 
 		
@@ -789,6 +791,13 @@ abstract class DataEntity implements iDataEntity {
 
 			return $query;	
 		}
+        
+        public function hasTenant() {
+            // override and return true if you wish your object to be tenant-specific
+            // if true, tenantid will be included in table generation and auto-generated procs
+            // default is true
+            return true;
+        }
 		
 		public function hasOwner() {
 			// override and return true if you wish your object to be ownable by a user

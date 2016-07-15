@@ -32,16 +32,26 @@
 
     // look at URL to see if it is custom one for a tenant
     // TO DO: as we add more custom URLs, need to look in DB or elsewhere vs. hardcoding
-    if ($_SERVER['SERVER_NAME']=='www.food-find.com' || $_SERVER['SERVER_NAME']=='food-find.com') {
-        $_SESSION['tenantID'] = 1;
+    
+    // if the tenant ID is already set on the session, don't change it
+    if (!isset($_SESSION['tenantID'])) {
+        if ($_SERVER['SERVER_NAME']=='www.food-find.com' || $_SERVER['SERVER_NAME']=='food-find.com') {
+            //$_SESSION['tenantID'] = 1;
+            // for now, make bbq default site until food-find is ready
+            $_SESSION['tenantID'] = 3;
+        }
+        elseif ($_SERVER['SERVER_NAME']=='food.food-find.com') {
+            $_SESSION['tenantID'] = 1;
+        }
+        elseif ($_SERVER['SERVER_NAME']=='bars.food-find.com') {
+            $_SESSION['tenantID'] = 5;
+        }
+        elseif ($_SERVER['SERVER_NAME']=='bbq.food-find.com') {
+            $_SESSION['tenantID'] = 3;
+        }
     }
-    elseif ($_SERVER['SERVER_NAME']=='bars.food-find.com') {
-        $_SESSION['tenantID'] = 5;
-    }
-    elseif ($_SERVER['SERVER_NAME']=='bbq.food-find.com') {
-        $_SESSION['tenantID'] = 3;
-    }
-	// set tenant for this application. Will default to 3
+    
+	// if can't determine from URL, look for query string. Will default to 3
 	if (!isset($_SESSION['tenantID'])) {
 		$_SESSION['tenantID'] = 0;
 		// look to see if tenant specified on query string
