@@ -32,6 +32,11 @@ if ($numToReturn>100) {
 }
 $offset = Utility::getRequestVariable('offset', 0);
 
+$listId = Utility::getRequestVariable('list', 0);
+if ($listId==0) {
+    $listId = Utility::getRequestVariable('entityList', 0);
+}
+
     $coretypes = array('user','tenant','entityList');
     if(!in_array($type,$coretypes,false) && !in_array($type, Application::$knowntypes,false)) {
         // unrecognized type requested can't do much from here.
@@ -50,29 +55,44 @@ $classname = ucfirst($type); 	// class names start with uppercase
 $class = new $classname($userID,$tenantID);	
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
-	
-	$totalEntities = $class->getEntityCount($_GET);	
+    
+    if ($listId>0) {
+        // a list was requested here. Different handling than regular entity set
+        try {
 
-	try {
-		// we pass the entire _GET collection in so object classes can extract relevant filters
-		$entities = $class->getEntities($_GET,$numToReturn,$offset);
+            $totalEntities = $class->getEntityCountForList($listId);
+            $entities = $class->getEntitiesFromList($listId,$numToReturn,$offset);
+           
+            }
+        catch (Exception $ex) {
+            $message= 'Unable to retrieve ' . $type . ': ' . $ex->getMessage();
+            Service::returnError($message);
+        }
         
-        $addSequence = (isset($_GET["sequence"])&&(strtolower($_GET["sequence"])=="yes"||strtolower($_GET["sequence"])=="true")); 
-        if ($addSequence) {
-            for ($i=0;$i<count($entities);$i++) {
-                $entities[$i]["sequence"]=$i;
+    }
+    else {
+    	$totalEntities = $class->getEntityCount($_GET);	
+    
+    	try {
+    		// we pass the entire _GET collection in so object classes can extract relevant filters
+    		$entities = $class->getEntities($_GET,$numToReturn,$offset);
+   		
+        	}
+    	catch (Exception $ex) {
+    		$message= 'Unable to retrieve ' . $type . ': ' . $ex->getMessage();
+    		Service::returnError($message);
+    	}
+    }
+
+    $addSequence = (isset($_GET["sequence"])&&(strtolower($_GET["sequence"])=="yes"||strtolower($_GET["sequence"])=="true")); 
+    if ($addSequence) {
+        for ($i=0;$i<count($entities);$i++) {
+            $entities[$i]["sequence"]=$i;
             }
         }
-		
-		//$set = json_encode($entity);
-		$set = '{"count": ' . $totalEntities; 
-		$set .= ', "' . lcfirst($class->getPluralName()) . '": ' . json_encode($entities) . '}';
-	}
-	catch (Exception $ex) {
-		$message= 'Unable to retrieve ' . $type . ': ' . $ex->getMessage();
-		Service::returnError($message);
-	}
 
+    $set = '{"count": ' . $totalEntities; 
+    $set .= ', "' . lcfirst($class->getPluralName()) . '": ' . json_encode($entities) . '}';
 	header("Access-Control-Allow-Origin: *");	
 	header('Content-Type: application/json');
 

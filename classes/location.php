@@ -325,9 +325,44 @@
                     (($user->hasRole('contributor',$this->tenantid)) && ($this->userid==$this->getOwner($id)))); 
             }
         }
-       
-		
+    	
+    public function getEntityCountForList($listId) {
+        
+        $query = 'select count(*) from entityList EL inner join entityListItem ELI on EL.id =ELI.entityListId';
+        $query .= ' where EL.entity="location" and EL.id=' . Database::queryNumber($listId) . ' and EL.tenantid=' . Database::queryNumber($this->tenantid) . ';';  
+        
+        $data = Database::executeQuery($query);
+        if ($data->num_rows==0) {
+                //no match found.
+                return 0;
+            }
+            else {
+                $r = mysqli_fetch_row($data);
+                return $r[0];
+            }   
+        
+        }
+    
+    public function getEntitiesFromList($listId,$return,$offset) {
+        $query = 'call getLocationsByEntityListIdEx(' . $listId . ',' . $this->tenantid . ',' . $offset . ',' . $return . ')';
+        
+        $data = Database::executeQuery($query);
+        $entity = '';
+            
+        if ($data->num_rows==0) {
+                return array();
+            }
+        while ($r = mysqli_fetch_assoc($data))
+            {
+            $entities[] = $r;
+            }
+            
+        return $entities;   
+    }
+        
 	}
+
+
 
 		
 		

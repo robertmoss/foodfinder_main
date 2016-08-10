@@ -9,6 +9,7 @@ interface iDataEntity {
 	public function getFields();
 	public function getEntity($id);
 	public function getEntities($filters, $return, $offset);
+    public function getEntitiesFromList($listId,$return,$offset);
 	public function validateData($data);
 	public function addEntity($data);
 	public function updateEntity($id,$data);
@@ -21,6 +22,7 @@ interface iDataEntity {
 	public function getCustomEditControl($fieldname,$currentvalue,$entityId);
 	public function getCustomFormControl($fieldname, $entity);
 	public function getEntityCount($filters);
+    public function getEntityCountForList($listId);
 	public function hasProperties();
 	public function hasOwner();
 	public function getPropertyKeys();
@@ -523,6 +525,15 @@ abstract class DataEntity implements iDataEntity {
                                 // blank current set so all children get re-added
                                 $currentSet = array();
                                 break;                                                                                                    
+                            }
+                            if ($currentSet[$i]!=$newSet[$i]) {
+                                // the sequence of the members has changed; for now, we'll remove them all, too
+                                // may want more nuanced handling of this in the future if these sets get big or complex
+                                $procname = $this->getRemoveChildrenProcName($field[0]);
+                                array_push($followOnQueries,'call ' . $procname . '('. $id . ',' . $this->tenantid . ');');
+                                // blank current set so all children get re-added
+                                $currentSet = array();
+                                break;    
                             }           
                         }
                         
@@ -867,5 +878,16 @@ abstract class DataEntity implements iDataEntity {
             return ($user->hasRole('admin',$this->tenantid));
         }
     }
+    
+    public function getEntityCountForList($listId) {
+        // must override if your entity supports list
+        throw new Exception('Lists/counts are not supported for this type of entity.');
+        
+    }
+    
+     public function getEntitiesFromList($listId,$return,$offset) {
+         // must override if your entity supports list
+        throw new Exception('Lists are not supported for this type of entity.');
+     }
 
 }

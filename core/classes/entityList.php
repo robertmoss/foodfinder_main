@@ -54,7 +54,8 @@ class EntityList extends DataEntity {
            $separator = '';
            $idList = '';
            foreach($child_array as $c) {
-               $markup .= '<p>' . $c["name"] . ' (' . $c["city"] . ',' . $c["state"] . ')</p>';
+               $markup .= '<p id="listItem' . $c["entityId"] . '"><button type="button" class="btn btn-default btn-xs" onclick="removeListItem(' . $c['entityId'] . ')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button> ';
+               $markup .= $c["name"] . ' (' . $c["city"] . ',' . $c["state"] . ')</p>';
                $idList .= $separator . $c["entityId"];
                $separator=",";
            }

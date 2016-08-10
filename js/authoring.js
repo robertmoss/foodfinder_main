@@ -41,9 +41,16 @@ function addEntityListItem(name,id) {
 	setElementValue('txtEntityListItems',currentValue);
 
 	var newMarkup = '<p>' + name + '</p>';
-	$("#entityListContainer").append(newMarkup);
+	var newMarkup = '<p id="listItem' + id + '"><button type="button" class="btn btn-default btn-xs" onclick="removeListItem(' +id+ ')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button> ';
+	newMarkup += name + '</p>';
 
+	$("#entityListContainer").append(newMarkup);
 	
+	
+}
+
+function afterFeatureFormLoad() {
+	// not sure we need to do anything here
 }
 
 function afterEntityListFormLoad(status) {
@@ -55,8 +62,28 @@ function afterEntityListFormLoad(status) {
 }
 
 function handleSort(event,ui) {
-	alert('sorted!');	
+	resetEntityList();	
 }
+
+function removeListItem(id) {
+	$("#listItem" + id).remove();
+	resetEntityList();
+}
+
+function resetEntityList() {
+	var parentDiv = document.getElementById('entityListContainer');
+	var idList="";
+	var separator="";
+	
+	// cycle through newly sorted <p>s and rebuilt id list
+	for(var i=0;i<parentDiv.children.length;i++) {
+		idList += separator + parentDiv.children[i].id.substring(8); 
+		separator=",";
+	}
+	setElementValue('txtEntityListItems',idList);	
+}
+
+
 
 function txtEntitySearchKeyPress(e) {
 	if (e.keyCode==13) {
