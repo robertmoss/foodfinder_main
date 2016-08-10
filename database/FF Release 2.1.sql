@@ -765,4 +765,50 @@ FROM
 END$$
 DELIMITER ;
 
+
+USE `food`;
+DROP procedure IF EXISTS `getLocationsByEntityListIdEx`;
+
+DELIMITER $$
+USE `food`$$
+
+CREATE PROCEDURE getLocationsByEntityListIdEx(_id int, _tenantid int,_start int, _return int)
+BEGIN
+
+	prepare stmt from "SELECT
+          L.id,
+          L.name,
+          L.address,
+          L.city,
+          L.state,
+          L.phone,
+          L.url,
+          L.imageurl,
+          L.latitude,
+          L.longitude,
+          L.shortdesc,
+          L.googleReference,
+          L.googlePlacesId,
+          L.status
+		FROM
+          entityListItem T1
+          INNER JOIN entityList T2 ON T2.id=T1.entityListId
+          LEFT JOIN location L on L.ID=T1.entityId
+		WHERE
+          T1.entityListId=?
+          and T2.tenantid=?
+		LIMIT ?,?";
+
+	set @listId=_id;
+    set @tenantid = _tenantid;
+	set @start=_start;
+	set @num=_return;
+
+execute stmt using @listId,@tenantid,@start,@num;
+          
+          
+END$$
+DELIMITER ;
+
+
 /* End EntityListItem stored procs */
