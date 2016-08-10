@@ -87,8 +87,9 @@ a:visited {
 	margin-bottom: 0px; 
 }
 
-/* Foodfinder-specific styles */
 
+
+/* Foodfinder-specific styles */
 
 #location_anchor {
 	min-height: 200px;
@@ -231,10 +232,18 @@ a:visited {
 	.location_info .figure {
 		 float: none;
 		 margin-left: 10px;
+	}
+   
 }
 
-    
+.locationSearch {
+	margin-left: 10px;
 }
+
+.ui-sortable-handle {
+	cursor: pointer;
+}
+
 
 .switcher {
 	

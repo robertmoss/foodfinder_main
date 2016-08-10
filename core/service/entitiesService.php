@@ -22,13 +22,17 @@ else {
 
 $search= Utility::getRequestVariable('search', '');
 
-$numToReturn = Utility::getRequestVariable('return', 10);
+// keeping this old parameter for backwards compatibility; return is preferred
+$numToReturn = Utility::getRequestVariable('numToLoad', 0);
+if ($numToReturn==0) {
+    $numToReturn = Utility::getRequestVariable('return', 10);
+}
 if ($numToReturn>100) {
 		$numToReturn=100; // let's not get crazy, people.
 }
 $offset = Utility::getRequestVariable('offset', 0);
 
-    $coretypes = array('user','tenant');
+    $coretypes = array('user','tenant','entityList');
     if(!in_array($type,$coretypes,false) && !in_array($type, Application::$knowntypes,false)) {
         // unrecognized type requested can't do much from here.
         Service::returnError('Unknown type: ' . $type,400,'entityService?type=' .$type);
@@ -52,10 +56,17 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
 	try {
 		// we pass the entire _GET collection in so object classes can extract relevant filters
 		$entities = $class->getEntities($_GET,$numToReturn,$offset);
+        
+        $addSequence = (isset($_GET["sequence"])&&(strtolower($_GET["sequence"])=="yes"||strtolower($_GET["sequence"])=="true")); 
+        if ($addSequence) {
+            for ($i=0;$i<count($entities);$i++) {
+                $entities[$i]["sequence"]=$i;
+            }
+        }
 		
 		//$set = json_encode($entity);
 		$set = '{"count": ' . $totalEntities; 
-		$set .= ', "' . strtolower($class->getPluralName()) . '": ' . json_encode($entities) . '}';
+		$set .= ', "' . lcfirst($class->getPluralName()) . '": ' . json_encode($entities) . '}';
 	}
 	catch (Exception $ex) {
 		$message= 'Unable to retrieve ' . $type . ': ' . $ex->getMessage();

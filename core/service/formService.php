@@ -25,7 +25,7 @@
 	
 	Utility::debug('Form service invoked for type:' . $type . ', method=' . $_SERVER['REQUEST_METHOD'], 5);
 	
-   $coretypes = array('tenant','tenantSetting','tenantProperty','category','menuItem','page','content','tenantContent');
+   $coretypes = array('tenant','tenantSetting','tenantProperty','category','menuItem','page','content','tenantContent','entityList');
     if(!in_array($type,$coretypes,false) && !in_array($type, Application::$knowntypes,false)) {
         // unrecognized type requested can't do much from here.
         Service::returnError('Unknown type: ' . $type,400,'entityService?type=' .$type);

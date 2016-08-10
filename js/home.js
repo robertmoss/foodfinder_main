@@ -1,16 +1,16 @@
-window.onload = function() {
+$(document).ready(function() {
 	$(".editable").hover(function(){
-		showElement('floatingButtons');
-		panel = document.getElementById('floatingButtons');
+		showElement('floatingPageButtons');
+		panel = document.getElementById('floatingPageButtons');
 		$(this).append(panel);
-		button = document.getElementById('editButton');
+		button = document.getElementById('editPageButton');
 		$(button).off("click");
 		$(button).click(function(e) {
 			var element = $(this).parent().parent().find("p");
 			editPage(element[0].innerHTML);
 			e.stopPropagation();
 		});
-		button = document.getElementById('deleteButton');
+		button = document.getElementById('deletePageButton');
 		$(button).off("click");
 		$(button).click(function(e) {
 			var element = $(this).parent().parent().find("p");
@@ -18,7 +18,7 @@ window.onload = function() {
 			e.stopPropagation();
 		});
 	}, function() {
-		hideElement('floatingButtons');
+		hideElement('floatingPageButtons');
 	}
 	
 	);
@@ -28,7 +28,7 @@ window.onload = function() {
 			processSort(event,ui);
 		}
 	});
-};
+});
 
 function addPage() {
 	showElement('btnPageSave');

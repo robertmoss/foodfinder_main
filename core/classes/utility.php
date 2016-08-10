@@ -184,8 +184,16 @@ class Utility {
 					}
 				break;
             case "entities":
-                // list of system entities that can be managed/expanded with categories, etc.
+                // list of system entities that can be managed/expanded with categories, entity lists, etc.
                 $values = array("location");
+                foreach ($values as $entity) {
+                        $return[]= array($entity,$entity);        
+                    }
+                break;
+            case "entityListTypes":
+                // types of entity lists support; currently only "static" (i.e. defined by set members in a table); in future should
+                // support "dynamic" (i.e. list defined by a query)
+                $values = array("static");
                 foreach ($values as $entity) {
                         $return[]= array($entity,$entity);        
                     }

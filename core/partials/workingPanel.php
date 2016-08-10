@@ -11,6 +11,6 @@
             </button>
             <div id="workingPanelMessage">Working message goes here.</div>
             <div id="workingPanelIcon">
-                <img src="img/icons/ajax-loader.gif" />
+                <img src="<?php echo Config::$site_root?>/img/icons/ajax-loader.gif" />
             </div>
         </div>

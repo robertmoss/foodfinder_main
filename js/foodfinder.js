@@ -77,6 +77,7 @@ function getLocationSummaryTemplate() {
 			template += "<div class=\"thumbnail loc-panel\">";
 				template +="<h3><a id=\"link_loc{{id}}\" href=\"#loc{{id}}\" onclick=\"loadLocation({{id}});\">{{name}}</a>&nbsp;";
 				template +="{{#distance}}<span class=\"label label-success right\">{{distance}} mi</span>{{/distance}}</h3>";
+				template += "<p>{{shortdescription}}{{#more}}<a href=\"#loc{{id}}\" onclick=\"loadLocation({{id}},\'{{linkname}}\',{{#visited}}true{{/visited}}{{^visited}}false{{/visited}});\">more</a>{{/more}}</p>";
 				template += "<div class=\"loc-image\">";
 					template += "<img src=\"{{imageurl}}\"/>";
 				template += "</div>";
@@ -85,7 +86,7 @@ function getLocationSummaryTemplate() {
 					//template +="<h3 class=\"non-mobile\"><a id=\"link_loc{{id}}\" href=\"#loc{{id}}\" onclick=\"loadLocation({{id}});\">{{name}}</a></h3>";
 					//template +="<h3 class=\"mobile-only\"><a href=\"entityPage.php?type=location&mode=view&id={{id}}\">{{name}}</a></h3>";
 					template += "<address>{{address}}<br/>{{city}}, {{state}}<br/><a href=\"tel:{{clickablephone}}\">{{phone}}</a><br/><a href=\"{{url}}\" target=\"_blank\">{{displayurl}}</a></address>";
-					template += "<p>{{shortdescription}}{{#more}}<a href=\"#loc{{id}}\" onclick=\"loadLocation({{id}},\'{{linkname}}\',{{#visited}}true{{/visited}}{{^visited}}false{{/visited}});\">more</a>{{/more}}</p>";
+					//template += "<p>{{shortdescription}}{{#more}}<a href=\"#loc{{id}}\" onclick=\"loadLocation({{id}},\'{{linkname}}\',{{#visited}}true{{/visited}}{{^visited}}false{{/visited}});\">more</a>{{/more}}</p>";
 				template += "</div>";
 			template += "</div>";
 		template += "</div>";							

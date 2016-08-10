@@ -7,10 +7,11 @@
  * Symptom is for $_FILES array to be empty if these limits are exceeded
  */
 
-include dirname(__FILE__) . '/../partials/pageCheck.php';
-include_once dirname(__FILE__) . '/../classes/core/database.php';
-include_once dirname(__FILE__) . '/../classes/core/utility.php';
-include_once dirname(__FILE__) . '/../classes/core/service.php';
+include_once dirname(__FILE__) . '/../core/partials/pageCheck.php';
+include_once dirname(__FILE__) . '/../core/classes/database.php';
+include_once dirname(__FILE__) . '/../core/classes/utility.php';
+include_once dirname(__FILE__) . '/../core/classes/service.php';
+include_once dirname(__FILE__) . '/../core/classes/imageHandler.php';
 include_once dirname(__FILE__) . '/../classes/media.php';
 include_once dirname(__FILE__) . '/../classes/location.php';
 include_once dirname(__FILE__) . '/../' . Config::$cdn_classfile;
@@ -31,6 +32,7 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST") {
 	if ($locationid>0) {
 	    $location = new Location($userID,$tenantID);    
 	    if (!$location->userCanEdit($locationid,$user)) {
+	          Log::debug('User ' . $userID . ' attempted unauthorized edit of location id=' . $locationid, 9);
 		      Service::returnError('User does not have permission to edit specified location',401);
 	       }
 	   }
@@ -54,7 +56,7 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST") {
 	// 1. Validate files
 	$errMessage = "";	
 	foreach ($files as $file) {
-		$supported_types = array("image/png","image/jpeg","image/jpg");
+		$supported_types = array("image/png","image/jpeg","image/jpg","image/gif");
 		if (!in_array($file["type"],$supported_types)) {
 			$errMessage .= 'File type not supported. (' .$file["type"] . ')';
 		}
@@ -63,8 +65,22 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST") {
 		Service::returnError('Unable to upload files: ' . $errMessage);
 	}
 	
-	// 2. Create thumbnails
-	
+	// 2. Resize image if it's too large
+	// TO DO: do we need to automatically create thumbnails, too?
+	for ($i=0;$i<count($files);$i++) {
+	     $sourcefile = $files[$i]["tmp_name"];
+        $type = $files[$i]["type"];
+	    $handler = new ImageHandler($sourcefile,$type);
+	    if ($handler->getWidth()> 500 || $handler->getHeight()>500) {
+            try {
+                $destination = $files[$i]["tmp_name"];
+                $handler->resize(500, 500,$destination);
+            }
+            catch(Exception $ex) {
+                Service::returnError('Unable to upload files. Error resizing file: ' . $ex->getMessage());
+            }
+        }
+    }
 	
 	// 3. store in CDN
 	try {

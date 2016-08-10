@@ -125,7 +125,7 @@ function getAndRenderHTML(serviceURL,anchor,working,callback) {
 		   			markup = 'Unable to load form: ' + xmlhttp.responseText;
 		   		}
 		   		document.getElementById(anchor).innerHTML=markup;
-		   		if (callback) {
+		   		if (callback && (typeof callback === "function")) {
 		   			callback(status);
 		   		}
 		   	}
@@ -232,6 +232,18 @@ function submitForm(formID,messageDiv,messageSpan,reloadOnSuccess,idElement,call
 						arr.push(obj);
 					}
 				data[field.name] = arr;
+			}
+			else if (field.className == 'idList') {
+				// convert comma-separate idList to an array
+				if (field.value&&field.value.length>0) {
+					var finalArray = [];
+					var listOfIds = field.value.split(',');
+					for (var j=0;j<listOfIds.length;j++) {
+						var obj = {id:listOfIds[j]};
+						finalArray.push(obj);
+					}
+					data[field.name] = finalArray;
+				}
 			}
 			else if (field.type=='checkbox') {
 				data[field.name] = (field.checked) ? 'true':'false';
@@ -473,7 +485,7 @@ function setValidationState(ID,state,feedback) {
 
 
 // ------------ form handling functions ---------------
-function getAndRenderForm(serviceURL,formID,idPrefix) {
+function getAndRenderForm(serviceURL,formID,idPrefix,callback) {
 	// retrieves JSON object from specified service and uses it to populate fields on a form
 	// serviceURL:	URL of service to call
 	// formID:		ID of the form to be populated
@@ -492,6 +504,9 @@ function getAndRenderForm(serviceURL,formID,idPrefix) {
 		  if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 		    var view = JSON.parse(xmlhttp.responseText);
 			renderForm(formID,view,idPrefix);
+			if (callback) {
+				callback(status);
+			}
 		   }
 		 };
 	xmlhttp.open("GET",serviceURL,true);
@@ -636,6 +651,8 @@ function editEntity(id,entity,callback) {
 	
 	// loads and fills modal form for editing a dataentity
 	// see admin.php tenant form for calling model
+	// callback will be called once form is loaded with status value (e.g. 200 success) from service
+	// 	call to retrieve the entity being edited
 	
 	var headerText= (id>0) ? 'Edit ' + entity : "Add New " + entity;
 	setElementText(entity + 'Header',headerText);
@@ -658,6 +675,7 @@ function saveEntity(entity,callback) {
 		var message_text = entity + '-message_text';
 		var id = entity + 'id';
 		if (!callback) {
+			// assume this saveEntity call came from an entityList partial; try to reload list
 			callback = function(success) {
 				if (success) {
 					$('#' +entity + 'EditModal').modal('hide');
@@ -815,7 +833,7 @@ function childSaveComplete(success) {
 function loadEntityList(entity,setName,columns,entitiesPerPage,offset) {
 	
 	if (!columns || columns.length==0) {
-		columns = "Name,Actions";
+		columns = "Actions,Name";
 	}
 	colArray = columns.split(',');
 	
@@ -835,7 +853,7 @@ function loadEntityList(entity,setName,columns,entitiesPerPage,offset) {
 		if (colArray[i].toLowerCase()=='actions') {
 			// this is Action columm. treat special
 				template += "<td><div class=\"btn-group btn-group-sm\" role=\"group\" aria-label=\"...\">";
-				template += "<button type=\"button\" class=\"btn btn-default\" onclick=\"editEntity({{id}},'" + entity + "');\"><span class=\"glyphicon glyphicon-pencil\"></span>&nbsp;</button>";
+				template += "<button type=\"button\" class=\"btn btn-default\" onclick=\"editEntity({{id}},'" + entity + "',after" + ucfirst(entity) + "FormLoad);\"><span class=\"glyphicon glyphicon-pencil\"></span>&nbsp;</button>";
 				template += "</div></td>";
 		}
 		else {
@@ -874,7 +892,7 @@ function loadEntityList(entity,setName,columns,entitiesPerPage,offset) {
 		  	if (xmlhttp.status==200) {
 			    var view = JSON.parse(xmlhttp.responseText);
 				renderTemplate(template,view,anchor);
-				var totalEntities=view.totalEntities;
+				var totalEntities=view.count;
 				var numPage = Math.ceil(totalEntities/entitiesPerPage);
 				$('#page-selection' + entity).bootpag({total: numPage}).on("page",function(event,num) {
 					offset = (num-1) * entitiesPerPage;

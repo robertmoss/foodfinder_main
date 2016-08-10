@@ -1,8 +1,8 @@
 <?php
 
-include dirname(__FILE__) . '/../partials/pageCheck.php';
-include_once dirname(__FILE__) . '/../classes/core/database.php';
-include_once dirname(__FILE__) . '/../classes/core/utility.php';
+include dirname(__FILE__) . '/../core/partials/pageCheck.php';
+include_once dirname(__FILE__) . '/../core/classes/database.php';
+include_once dirname(__FILE__) . '/../core/classes/utility.php';
 
 //session_start();
 

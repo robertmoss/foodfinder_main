@@ -14,7 +14,7 @@
         <title><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'title') ?></title>
 		<?php include("partials/includes.php"); ?>
         <script src="js/jquery-ui.js"></script>
-        <script type="text/javascript" src="js/home.js"></script>
+        <script src="js/home.js"></script>
         <script src="js/content.js"></script>  
     </head>
     <body>
@@ -34,9 +34,9 @@
                             $sortable = " sortable";
                         ?>
                        <a class="btn btn-default btn-lg" href="#" role="button" onclick="addPage();">Add Page</a>
-                       <div id="floatingButtons" class="floatingControl hidden">
-                           <a id="editButton" class="btn btn-default btn-sm" href="#" role="button" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                           <a id="deleteButton" class="btn btn-default btn-sm" href="#" role="button" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                       <div id="floatingPageButtons" class="floatingControl hidden">
+                           <a id="editPageButton" class="btn btn-default btn-sm" href="#" role="button" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                           <a id="deletePageButton" class="btn btn-default btn-sm" href="#" role="button" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                        </div>
                                     <?php } ?></p>
       			</div>

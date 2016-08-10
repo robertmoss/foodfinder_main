@@ -169,11 +169,15 @@
 		}
 		
 		public function getJavaScript(){
- 			return '<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
- 			<script type="text/javascript" src="js/imagehandler.js"></script>
- 			<script type="text/javascript" src="js/workingPanel.js"></script>
- 			<script type="text/javascript" src="js/jquery.form.min.js"></script>
- 					';
+		    
+            
+		    
+            $script = '<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+ 			<script type="text/javascript" src="[site_root]/js/imagehandler.js"></script>
+ 			<script type="text/javascript" src="[site_root]/js/workingPanel.js"></script>
+ 			<script type="text/javascript" src="[site_root]/js/jquery.form.min.js"></script>';
+            
+            return $script;
  		}		
 		
 		public function getEntitiesQuery($filters,$return,$offset) {
@@ -266,11 +270,12 @@
 				
 				// images
 				if (array_key_exists("editable", $entity) && $entity["editable"]) {
+				    $serviceURL = Config::$service_path . '/files.php';
 				    echo '	<div class="panel panel-info">
 							<div class="panel-body">
 								<div id="imageStrip"><p>Loading . . .</p></div>';
 					 include("partials/workingPanel.php");
-				    echo '			<form id="uploadForm" action="service/files.php" method="post" enctype="multipart/form-data" role="form">
+				    echo '			<form id="uploadForm" action="' .$serviceURL . '" method="post" enctype="multipart/form-data" role="form">
 					        		<input id="imageLocationId" name="locationid" type="hidden" value="'. $entity["id"] . '"/> 
 					        		<div class="form-group">
 					        			<label for="importFile">Choose files to upload:</label>

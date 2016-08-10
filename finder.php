@@ -48,7 +48,7 @@
         				<div class="input-group">
         					<label class = "sr-only" for="txtAddress">Desired location</label>
 							<span class="input-group-addon" id="basic-addon1" data-toggle="tooltip" title="Detect your current location" onclick="detectLocation('resultSpan');"><span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span></span>
-							<input id="txtAddress" type="text" class="form-control" placeholder="Your current or desired address/location" aria-describedby="basic-addon1" value="<?php echo Utility::getSessionVariable('currentAddress', ''); ?>"/>
+							<input id="txtAddress" type="text" class="form-control" placeholder="Your current or desired address/location" aria-describedby="basic-addon1" value="<?php echo Utility::getSessionVariable('currentAddress', 'none'); ?>"/>
 						</div>
         				<button type="submit" class="btn btn-primary">Find</button>
         			</div>

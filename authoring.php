@@ -12,6 +12,8 @@
         <script type="text/javascript" src="<?php echo Config::$site_root?>/js/validator.js"></script>
         <script type="text/javascript" src="<?php echo Config::$site_root?>/js/bootpag.min.js"></script>
         <script type="text/javascript" src="<?php echo Config::$site_root?>/js/jquery.form.min.js"></script>
+        <script type="text/javascript" src="<?php echo Config::$site_root?>/js/jquery-ui.js"></script>
+        <script type="text/javascript" src="<?php echo Config::$site_root?>/js/authoring.js"></script>
     </head>
     <body>
     	<div id="maincontent">
@@ -20,8 +22,9 @@
     			<div class="container">
                     <div>
                         <ul class="nav nav-pills" role="tablist">
-                            <li role="presentation" class="active"><a href="#features" aria-controls="features" role="tab" data-toggle="tab" onclick="loadFeatures">Features</a></li>
-                            <li role="presentation"><a href="#locations" aria-controls="locations" role="tab" data-toggle="tab" onclick="loadLocations">Locations</a></li>
+                            <li role="presentation" class="active"><a href="#features" aria-controls="features" role="tab" data-toggle="tab" onclick="loadFeatureList()">Features</a></li>
+                            <li role="presentation"><a href="#locations" aria-controls="locations" role="tab" data-toggle="tab" onclick="loadLocations()">Locations</a></li>
+                            <li role="presentation"><a href="#lists" aria-controls="lists" role="tab" data-toggle="tab" onclick="loadEntityListList()">Lists</a></li>
                         </ul>                   
                     </div>
                     <div class="tab-content">
@@ -34,6 +37,17 @@
                         </div>    
                         <div id="locations" role="tabpanel" class="tab-pane">
                             <h1>Locations</h1>
+                            <p>Not yet implemented.</p>
+                        </div>
+                        <div id="lists" role="tabpanel" class="tab-pane">
+                            <?php
+                                $entityType="entityList";
+                                $friendlyName="List";
+                                $setName = "entityLists";
+                                $customEditHandler = true;  
+                                include('core/partials/entityList.php');
+                                $customEditHandler = false; 
+                            ?>
                         </div>
                     </div>
                 </div>

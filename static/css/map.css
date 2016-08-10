@@ -91,7 +91,7 @@ html, body {
 	
 	#listNav {
 		top: 0px;
-		width: 310px;
+		width: 400px;
 		height: 40px;
 		background-color: #337ab7;
 		color: #ffffff;
@@ -108,7 +108,7 @@ html, body {
 		position: absolute;
 		top: 200px;
 		left: 10px;
-		width: 310px;
+		width: 400px;
 		overflow-y: auto;
 		min-height: 740px;
 	}

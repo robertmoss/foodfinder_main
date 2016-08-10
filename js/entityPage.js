@@ -43,7 +43,7 @@ function deleteMedia(mediaid) {
 		function() {
 			showWorkingPanel('Deleting file...','media'+mediaid,true);
 			var serviceURL = "service/entityService.php?type=media&id=" + mediaid;
-			callDeleteService(serviceURL,null,deleteMediaCallback);
+			callDeleteService(serviceURL,null,null,deleteMediaCallback);
 		}
 		);
 }

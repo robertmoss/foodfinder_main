@@ -1,0 +1,64 @@
+/* feature styling */
+.featureContainer {
+	max-width: 800px;
+}	
+
+.featureContainer h1 {
+	font-size: 20px;
+		text-transform: uppercase;
+}
+
+.featureContainer h3 {
+	font-size: 16px;
+}
+
+.featureButtonGroup {
+	float: right;
+}
+
+.featureLaunch {
+	max-width: 570px;
+	text-align: center;
+	margin: 20px auto  20px auto;
+}
+
+@media screen and (min-width: 768px) {
+	.featureBodyText, .featureLaunch {
+		max-width: 570px;
+		font-size: 12pt;
+		margin-left: 0;
+		margin-right: 0;
+	}
+	
+}
+
+
+@media screen and (min-width: 768px) {
+	.featureContainer h1 {
+	font-size: 32px;
+	text-transform: none;
+	}
+
+	.featureContainer h3 {
+	font-size: 26px;
+	}
+}
+
+/* location carousel styling */
+.carousel-inner .item img {
+		height: 200px;
+		margin: auto;
+	}
+
+@media screen and (min-width: 600px) {
+	.locationCarouselItem {
+		width: 100%;
+		height: 400px;
+	}
+	
+	.carousel-inner .item img {
+		height: 100%;
+		max-width: 100%;
+		margin: auto;
+	}
+}

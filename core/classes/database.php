@@ -97,6 +97,16 @@ class Database {
 			}
 	}
     
+    public static function executeQueryReturnArray($query) {
+        // executes the specified query and returns a multidimensional associative array with the results
+        $data = Database::executeQuery($query);
+        $resultSet = array();
+        while ($row = mysqli_fetch_assoc($data)) {
+            array_push($resultSet,$row);
+        }
+        return $resultSet;
+    }
+    
     // accepts an array of queries and executes them within a transaction
     // if any query fails, the entire transaction will be rolled back
     public static function executeQueriesInTransaction($queries) {

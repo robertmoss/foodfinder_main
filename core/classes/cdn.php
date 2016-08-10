@@ -6,7 +6,7 @@
  */
  
  include_once 'log.php';
- include_once 'config.php';
+ include_once Config::$root_path . '/classes/config.php';
  
  interface iCDN {
  	

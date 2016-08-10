@@ -240,7 +240,7 @@ DROP procedure IF EXISTS `getFeatureById`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE getFeatureById(id int, tenant int, userid int)
+CREATE PROCEDURE getFeatureById(_id int, _tenantid int, _userid int)
 BEGIN
 
      SELECT id,
@@ -257,7 +257,7 @@ BEGIN
      FROM
           feature
       WHERE
-          id=id AND tenantid=tenantid;
+          id=_id AND tenantid=_tenantid;
 
 END$$
 DELIMITER ;
@@ -308,7 +308,7 @@ DROP procedure IF EXISTS `updateFeature`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE updateFeature(id int, name varchar(100), headline varchar(300), subhead varchar(300), author varchar(200), datePosted datetime, introContent text, closingContent text, locationCriteria varchar(500), locationTemplate text, useLocationDesc bit, tenantid int, userid int)
+CREATE PROCEDURE updateFeature(_id int, name varchar(100), headline varchar(300), subhead varchar(300), author varchar(200), datePosted datetime, introContent text, closingContent text, locationCriteria varchar(500), locationTemplate text, useLocationDesc bit, _tenantid int, _userid int)
 BEGIN
 
      UPDATE feature SET
@@ -323,11 +323,12 @@ BEGIN
           locationTemplate = locationTemplate,
           useLocationDesc = useLocationDesc
      WHERE
-          id=id
-          AND tenantid=tenantid
-          AND userid=userid;
+          id=_id
+          AND tenantid=_tenantid
+          AND userid=_userid;
 END$$
 DELIMITER ;
+
 
 USE `food`;
 DROP procedure IF EXISTS `deleteFeature`;
@@ -380,3 +381,388 @@ DELIMITER ;
 
 /* End Feature stored procs */
 
+
+USE `food`;
+DROP procedure IF EXISTS `getLocations`;
+
+DELIMITER $$
+USE `food`$$
+
+CREATE PROCEDURE getLocations(userid int, numToReturn int,startAt int,tenantid int)
+BEGIN
+
+     prepare stmt from "SELECT id,
+          name,
+          address,
+          city,
+          state,
+          phone,
+          url,
+          imageurl,
+          latitude,
+          longitude,
+          shortdesc,
+          googleReference,
+          googlePlacesId,
+          status
+     FROM
+          location
+      WHERE
+           tenantid=?
+      LIMIT ?,?";
+
+set @tenantid=tenantid;
+set @start=startAt;
+set @num=numToReturn;
+
+execute stmt using @tenantid,@start,@num;
+
+END$$
+DELIMITER ;
+
+USE `food`;
+CREATE TABLE IF NOT EXISTS entityList(
+     `id` int(11) NOT NULL AUTO_INCREMENT,
+     `tenantid` int(11) NOT NULL,
+     `userid` int(11) NOT NULL,
+     `name` varchar(300) NOT NULL,
+     `description` varchar(2000),
+     `type` varchar(100),
+     `entity` varchar(100),
+     PRIMARY KEY (`id`),
+     KEY `fk_entityList_tenant_idx` (`tenantid`),
+     CONSTRAINT `fk_entityList_tenant` FOREIGN KEY (`tenantid`) REFERENCES `tenant` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+
+/* Stored Procedures for EntityList*/
+
+USE `food`;
+DROP procedure IF EXISTS `getEntityListById`;
+
+DELIMITER $$
+USE `food`$$
+
+CREATE PROCEDURE getEntityListById(_id int, _tenantid int, _userid int)
+BEGIN
+
+     SELECT id,
+          name,
+          description,
+          type,
+          entity
+     FROM
+          entityList
+      WHERE
+          id=_id AND tenantid=_tenantid;
+
+END$$
+DELIMITER ;
+
+USE `food`;
+DROP procedure IF EXISTS `getEntityListItemsByEntityListId`;
+
+DELIMITER $$
+USE `food`$$
+
+CREATE PROCEDURE getEntityListItemsByEntityListId(_id int, _tenantid int, userid int)
+BEGIN
+
+     SELECT
+          T1.id,
+          T1.entityId,
+          T1.sequence     
+FROM
+          entityListItem T1
+          INNER JOIN entityList T2 ON T2.id=T1.entityListId
+     WHERE
+          T1.entityListId=_id
+          and T2.tenantid=_tenantid;
+
+END$$
+DELIMITER ;
+
+USE `food`;
+DROP procedure IF EXISTS `removeEntityListEntityListItems`;
+
+DELIMITER $$
+USE `food`$$
+
+CREATE PROCEDURE removeEntityListEntityListItems(_entityListid int, _tenantid int)
+BEGIN
+
+     SET SQL_SAFE_UPDATES = 0;
+     DELETE FROM entityListItem WHERE id in (
+          select * from (select distinct T1.id from
+          entityListItem T1
+          inner join entityList T2 on T2.tenantid=_tenantid and T1.entityListid=T2.id
+     WHERE
+          T1.entityListid=_entityListid) as list);
+     SET SQL_SAFE_UPDATES = 1;
+END$$
+DELIMITER ;
+
+USE `food`;
+DROP procedure IF EXISTS `addEntityListEntityListItem`;
+
+DELIMITER $$
+USE `food`$$
+
+CREATE PROCEDURE addEntityListEntityListItem(_entityListid int, _entityid int, _tenantid int)
+BEGIN
+
+	select coalesce(max(sequence),0)+1 into @sequence from entityListItem where entityListId=_entityListId;
+	
+	insert into entityListItem(tenantid,entityListId,entityId,sequence)
+    values (_tenantid,_entityListId,_entityid, @sequence);
+	
+END$$
+DELIMITER ;
+
+USE `food`;
+DROP procedure IF EXISTS `getEntityLists`;
+
+DELIMITER $$
+USE `food`$$
+
+CREATE PROCEDURE getEntityLists(userid int, numToReturn int,startAt int,tenantid int)
+BEGIN
+
+     prepare stmt from "SELECT id,
+          name,
+          description,
+          type,
+          entity
+     FROM
+          entityList
+      WHERE
+           tenantid=?
+      AND userid=?
+      LIMIT ?,?";
+
+set @tenantid=tenantid;
+set @userid=userid;
+set @start=startAt;
+set @num=numToReturn;
+
+execute stmt using @tenantid, @userid,@start,@num;
+
+END$$
+DELIMITER ;
+
+USE `food`;
+DROP procedure IF EXISTS `addEntityList`;
+
+DELIMITER $$
+USE `food`$$
+
+CREATE PROCEDURE addEntityList(name varchar(300), description varchar(2000), type varchar(100), entity varchar(100), tenantid int, userid int)
+BEGIN
+
+     INSERT INTO entityList(
+          name,
+          description,
+          type,
+          entity,
+          tenantid,
+          userid)
+     VALUES (name,
+          description,
+          type,
+          entity,
+          tenantid,
+          userid);
+
+     SELECT Last_Insert_ID() as newID;
+
+END$$
+DELIMITER ;
+
+USE `food`;
+DROP procedure IF EXISTS `updateEntityList`;
+
+DELIMITER $$
+USE `food`$$
+
+CREATE PROCEDURE updateEntityList(_id int, name varchar(300), description varchar(2000), type varchar(100), entity varchar(100), _tenantid int, _userid int)
+BEGIN
+
+     UPDATE entityList SET
+          name = name,
+          description = description,
+          type = type,
+          entity = entity
+     WHERE
+          id=_id
+          AND tenantid=_tenantid
+          AND userid=_userid;
+END$$
+DELIMITER ;
+
+USE `food`;
+DROP procedure IF EXISTS `deleteEntityList`;
+
+DELIMITER $$
+USE `food`$$
+
+CREATE PROCEDURE deleteEntityList(id int, tenant int, userid int)
+BEGIN
+
+     DELETE FROM entityList WHERE id=id AND tenantid=tenantid;
+
+END$$
+DELIMITER ;
+
+
+
+/* End EntityList stored procs */
+
+
+USE `food`;
+CREATE TABLE IF NOT EXISTS entityListItem(
+     `id` int(11) NOT NULL AUTO_INCREMENT,
+     `tenantid` int(11) NOT NULL,
+     `entityListId` int(11) NOT NULL,
+     `entityId` int(11),
+     `sequence` int(11),
+     PRIMARY KEY (`id`),
+     KEY `fk_entityListItem_tenant_idx` (`tenantid`),
+     CONSTRAINT `fk_entityListItem_tenant` FOREIGN KEY (`tenantid`) REFERENCES `tenant` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+     KEY `fk_entityListItem_entityList_idx` (`entityListId`),
+     CONSTRAINT `fk_entityListItem_entityList` FOREIGN KEY (`entityListId`) REFERENCES `entityList` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+);
+
+/* Stored Procedures for EntityListItem*/
+
+USE `food`;
+DROP procedure IF EXISTS `getEntityListItemById`;
+
+DELIMITER $$
+USE `food`$$
+
+CREATE PROCEDURE getEntityListItemById(_id int, _tenantid int, _userid int)
+BEGIN
+
+     SELECT id,
+          entityListId,
+          entityId,
+          sequence
+     FROM
+          entityListItem
+      WHERE
+          id=_id AND tenantid=_tenantid;
+
+END$$
+DELIMITER ;
+
+USE `food`;
+DROP procedure IF EXISTS `getEntityListItems`;
+
+DELIMITER $$
+USE `food`$$
+
+CREATE PROCEDURE getEntityListItems(userid int, numToReturn int,startAt int,tenantid int)
+BEGIN
+
+     prepare stmt from "SELECT id,
+          entityListId,
+          entityId,
+          sequence
+     FROM
+          entityListItem
+      WHERE
+           tenantid=?
+      LIMIT ?,?";
+
+set @tenantid=tenantid;
+set @start=startAt;
+set @num=numToReturn;
+
+execute stmt using @tenantid, @start,@num;
+
+END$$
+DELIMITER ;
+
+USE `food`;
+DROP procedure IF EXISTS `addEntityListItem`;
+
+DELIMITER $$
+USE `food`$$
+
+CREATE PROCEDURE addEntityListItem(entityListId int(11), entityId int(11), sequence int(11), tenantid int)
+BEGIN
+
+     INSERT INTO entityListItem(
+          entityListId,
+          entityId,
+          sequence,
+          tenantid)
+     VALUES (entityListId,
+          entityId,
+          sequence,
+          tenantid);
+
+     SELECT Last_Insert_ID() as newID;
+
+END$$
+DELIMITER ;
+
+USE `food`;
+DROP procedure IF EXISTS `updateEntityListItem`;
+
+DELIMITER $$
+USE `food`$$
+
+CREATE PROCEDURE updateEntityListItem(_id int, entityListId int(11), entityId int(11), sequence int(11), _tenantid int)
+BEGIN
+
+     UPDATE entityListItem SET
+          entityListId = entityListId,
+          entityId = entityId,
+          sequence = sequence
+     WHERE
+          id=_id
+          AND tenantid=_tenantid;
+END$$
+DELIMITER ;
+
+USE `food`;
+DROP procedure IF EXISTS `deleteEntityListItem`;
+
+DELIMITER $$
+USE `food`$$
+
+CREATE PROCEDURE deleteEntityListItem(id int, tenant int, userid int)
+BEGIN
+
+     DELETE FROM entityListItem WHERE id=id AND tenantid=tenantid;
+
+END$$
+DELIMITER ;
+
+USE `food`;
+DROP procedure IF EXISTS `getLocationsByEntityListId`;
+
+DELIMITER $$
+USE `food`$$
+
+CREATE PROCEDURE getLocationsByEntityListId(_id int, _tenantid int)
+BEGIN
+
+SELECT
+          T1.id,
+          T1.entityId,
+          L.name,
+          L.city,
+          L.state,
+          T1.sequence     
+FROM
+          entityListItem T1
+          INNER JOIN entityList T2 ON T2.id=T1.entityListId
+          LEFT JOIN location L on L.ID=T1.entityId
+     WHERE
+          T1.entityListId=_id
+          and T2.tenantid=_tenantid;
+END$$
+DELIMITER ;
+
+/* End EntityListItem stored procs */

@@ -119,10 +119,10 @@
         <title><?php if ($mode=='edit') { echo "Edit " . $class->getName(); } else { echo $class->getName(); } ?></title>
 		<?php include Config::$root_path . '/partials/includes.php'; ?>
 		<script type="text/javascript" src="<?php echo Config::$site_root?>/js/validator.js"></script>
-        <script type="text/javascript" src="<?php echo Config::$site_root?>js/jquery.form.min.js"></script>
+        <script type="text/javascript" src="<?php echo Config::$site_root?>/js/jquery.form.min.js"></script>
 		<script src="<?php echo Config::$site_root?>/js/modalDialog.js"></script>
 		<script src="<?php echo Config::$site_root?>/js/entityPage.js"></script>
-		<?php echo $class->getJavaScript(); ?>
+		<?php echo str_replace("[site_root]",Config::$site_root,$class->getJavaScript()); ?>
 		
     </head>
     <body>

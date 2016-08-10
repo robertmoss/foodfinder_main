@@ -23,7 +23,7 @@ if (strlen($type)<1) {
     Service::returnError('Please specify a type');
 }
 
-    $coretypes = array('tenant','tenantSetting','tenantProperty','category','menuItem','page','pageCollection','content','tenantContent');
+    $coretypes = array('tenant','tenantSetting','tenantProperty','category','menuItem','page','pageCollection','content','tenantContent','entityList','entityListItem');
     if(!in_array($type,$coretypes,false) && !in_array($type, Application::$knowntypes,false)) {
         // unrecognized type requested can't do much from here.
         Service::returnError('Unknown type: ' . $type,400,'entityService?type=' .$type);
@@ -66,16 +66,21 @@ if (strlen($type)<1) {
         $value = "";
         switch ($field[1]) {
             case "string":
-            case "picklist":
                 $value = stringValue($field); 
                 break;
+            case "picklist":
+                $value = "varchar(100)";
             case "json":
                 break;
             case "boolean":
                 $value = "bit";
                 break;
             case "number":
+                $value = "int(11)";
+            case "parententity":
+                $value = "int(11)";
             case "hidden":
+                $value = "int(11)";
                 break;
             case "date":
                 $value = "datetime";
@@ -84,6 +89,7 @@ if (strlen($type)<1) {
                 $value = 'int';
                 break;
             case "linkedentities":
+            case "childentities":
                 break;
             case "custom":
                 break;
@@ -127,7 +133,7 @@ if (strlen($type)<1) {
                     $fieldarray = $class->getFields();
                     $separator = $tab . "";
                     foreach ($fieldarray as $field) {
-                        if ($field[1]!="linkedentities") {
+                        if ($field[1]!="linkedentities"&&$field[1]!="childentities") {
                             echo $separator . '`' . $field[0] . '` ' . getFieldValue($field);
                             if ($class->isRequiredField($field[0])) {
                                 echo ' NOT NULL';
@@ -139,6 +145,15 @@ if (strlen($type)<1) {
                     if ($class->hasTenant()) {
                         echo $separator . 'KEY `fk_' . lcfirst($class->getName()) . '_tenant_idx` (`tenantid`)';
                         echo $separator . 'CONSTRAINT `fk_' . lcfirst($class->getName()) . '_tenant` FOREIGN KEY (`tenantid`) REFERENCES `tenant` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION';
+                    }
+                    foreach ($fieldarray as $field) {
+                        if ($field[1]=="parententity") {
+                            // create foreign key to parent id
+                            echo $separator . 'KEY `fk_' . lcfirst($class->getName()) . '_' . $field[2] . '_idx` (`' . $field[0] . '`)';
+                        echo $separator . 'CONSTRAINT `fk_' . lcfirst($class->getName()) . '_' . $field[2] . '` FOREIGN KEY (`' . $field[0] . '`) REFERENCES `' . $field[2] . '` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION';
+
+                            $separator = ',<br/>' . $tab;
+                        }
                     }
                     echo '<br/>);<br/>';
 
@@ -159,7 +174,7 @@ if (strlen($type)<1) {
                     $fieldarray = $class->getFields();
                     $separator = $tab . $tab . "";
                     foreach ($fieldarray as $field) {
-                        if ($field[1]!="linkedentities") {
+                        if ($field[1]!="linkedentities"&&$field[1]!="properties"&&$field[1]!="childentities") {
                             echo $separator . $field[0];
                             $separator = ',<br/>' . $tab . $tab;
                         }
@@ -173,10 +188,10 @@ if (strlen($type)<1) {
                     echo 'END$$<br/>DELIMITER ;';
                     echo '<br/><br/>';
                     
-                    /* GET procs and table for any linked entities */
+                    /* GET procs and table for any childentities or linked entities */
                     foreach ($fieldarray as $field) {
                         if ($field[1]=="linkedentities") {
-                             
+                                 
                              $tablename = lcfirst($class->getName()) . ucfirst($field[2]);
                              echo 'CREATE TABLE IF NOT EXISTS `' . Config::$database . '`.`' . $tablename . '` (<br/>';
                              echo $tab . 'id INT NOT NULL AUTO_INCREMENT,</br/>';
@@ -194,6 +209,7 @@ if (strlen($type)<1) {
                              echo $tab . $tab . 'ON DELETE CASCADE<br/>';
                              echo $tab . $tab . 'ON UPDATE NO ACTION);<br/>';               
                              echo $tab . '<br/>';
+    
                             
                              $procname = 'get' . ucfirst($field[0])  . 'By' . $class->getName(). 'Id';
                              $classname = ucfirst($field[2]);    // class names start with uppercase
@@ -227,9 +243,79 @@ if (strlen($type)<1) {
                              echo $tab . $tab . 'and T1.tenantid=_tenantid;<br/><br/>';
                              echo 'END$$<br/>DELIMITER ;';
                              echo '<br/><br/>';
+                        }
+                    elseif ($field[1]=="childentities") {
+                             $tablename = lcfirst($field[2]);  
+                             $procname = 'get' . ucfirst($field[0])  . 'By' . $class->getName(). 'Id';
+                             $classname = ucfirst($field[2]);    // class names start with uppercase
+                             $classpath = dirname(__FILE__) . '/../classes/'; 
+                             if(in_array($field[2],$coretypes,false)) {
+                                    // core types will be in core subfolder
+                                    $classpath = Config::$core_path . '/classes/';
+                                     }
+                             $classfile = $classpath . lcfirst($classname) . '.php';
+                       
+                             include_once $classfile;
+                             $subclass = new $classname($userID,$tenantID);
+                             $subfieldarray = $subclass->getFields();
                              
+                             echo 'USE `' . Config::$database . '`;<br/>';
+                             echo 'DROP procedure IF EXISTS `' . $procname . '`;<br/><br/>';
+                             echo 'DELIMITER $$<br/>';
+                             echo 'USE `' . Config::$database . '`$$<br/><br/>';
+                             echo 'CREATE PROCEDURE ' . $procname . '(_id int, _tenantid int, userid int)<br/>';
+                             echo 'BEGIN<br/><br/>';
+                             echo $tab . 'SELECT<br/>';
+                             echo $tab . $tab . 'T1.id';
+                             $parentkey = '';
+                             foreach ($subfieldarray as $subfield) {
+                                 if ($subfield[1]=="parententity") {
+                                     $parentkey = $subfield[0];
+                                 }
+                                 else {
+                                    echo ',<br/>' . $tab . $tab . 'T1.' . $subfield[0];
+                                 }
+                             }
+                             echo $tab . '<br/>FROM<br/>';
+                             echo $tab . $tab . $tablename . ' T1<br/>';
+                             echo $tab . $tab . 'INNER JOIN ' .  lcfirst($class->getName()) . ' T2 ON T2.id=T1.'.$parentkey.'<br/>' ;
+                             echo $tab . 'WHERE<br/>';
+                             echo $tab . $tab . 'T1.' . lcfirst($class->getName()) . 'Id=_id<br/>';
+                             echo $tab . $tab . 'and T2.tenantid=_tenantid;<br/><br/>';
+                             echo 'END$$<br/>DELIMITER ;';
+                             echo '<br/><br/>';
                              
+                             $procname = 'remove' . $class->getName() .ucfirst($field[0])  ;
+                             echo 'USE `' . Config::$database . '`;<br/>';
+                             echo 'DROP procedure IF EXISTS `' . $procname . '`;<br/><br/>';
+                             echo 'DELIMITER $$<br/>';
+                             echo 'USE `' . Config::$database . '`$$<br/><br/>';
+                             echo 'CREATE PROCEDURE ' . $procname . '(_' . lcfirst($class->getName()) . 'id int, _tenantid int)<br/>';
+                             echo 'BEGIN<br/><br/>';
+                             echo $tab . 'SET SQL_SAFE_UPDATES = 0;<br/>';
+                             echo $tab . 'DELETE FROM '.$tablename .' WHERE id in (<br/>';
+                             echo $tab . $tab . 'select * from (select distinct T1.id from</br/>';
+                             echo $tab . $tab . $tablename . ' T1</br/>';
+                             echo $tab . $tab . 'inner join ' . lcfirst($class->getName()) . ' T2 on T2.tenantid=_tenantid and T1.' . lcfirst($class->getName()) . 'id=T2.id<br/>';
+                             echo $tab . 'WHERE<br/>';
+                             echo $tab . $tab . 'T1.' . lcfirst($class->getName()) . 'id=_' . lcfirst($class->getName()) . 'id) as list);<br/>';
+                             echo $tab . 'SET SQL_SAFE_UPDATES = 1;<br/>';
+                             echo 'END$$<br/>DELIMITER ;';
+                             echo '<br/><br/>';
                              
+                             $procname = 'add' . $class->getName() . $subclass->getName();
+                             echo 'USE `' . Config::$database . '`;<br/>';
+                             echo 'DROP procedure IF EXISTS `' . $procname . '`;<br/><br/>';
+                             echo 'DELIMITER $$<br/>';
+                             echo 'USE `' . Config::$database . '`$$<br/><br/>';
+                             echo 'CREATE PROCEDURE ' . $procname . '(_' . lcfirst($class->getName()) . 'id int, _' . lcfirst($subclass->getName()) . 'id int, _tenantid int)<br/>';
+                             echo 'BEGIN<br/><br/>';
+                            
+                             echo '-- TO DO: INSERT CUSTOM HANDLING HERE -- <br/><br/>';
+                            
+                             echo 'END$$<br/>DELIMITER ;';
+                             echo '<br/><br/>';
+                                            
                         }
                     }
 
@@ -244,7 +330,7 @@ if (strlen($type)<1) {
                     $fieldarray = $class->getFields();
                     $separator = $tab . $tab . "";
                     foreach ($fieldarray as $field) {
-                        if ($field[1]!="linkedentities") {
+                        if ($field[1]!="linkedentities"&&$field[1]!="properties"&&$field[1]!="childentities") {
                             echo $separator . $field[0];
                             $separator = ',<br/>' . $tab . $tab;
                         }
@@ -252,12 +338,28 @@ if (strlen($type)<1) {
                     echo '<br/>' . $tab . 'FROM<BR/>'. $tab . $tab . lcfirst($class->getName()) . '<BR/>';
                     if ($class->hasTenant()) {
                         echo $tab . ' WHERE<br/>' . $tab . $tab;
-                        echo ' tenantid=tenantid';
+                        echo ' tenantid=?';
+                    }
+                    if ($class->hasOwner()) {
+                        echo '<br/>' . $tab . ' AND userid=?';
                     }
                     echo '<br/>' . $tab . ' LIMIT  ?,?";<br/><br/>';
+                    if ($class->hasTenant()) {
+                        echo 'set @tenantid=tenantid;<br/>';
+                    }
+                    if ($class->hasOwner()) {
+                        echo 'set @userid=userid;</br/>';
+                    }
                     echo 'set @start=startAt;<br/>';
                     echo 'set @num=numToReturn;<br/><br/>';
-                    echo 'execute stmt using @start,@num;';
+                    echo 'execute stmt using ';
+                    if ($class->hasTenant()) {
+                        echo '@tenantid, ';
+                    }
+                    if ($class->hasOwner()) {
+                        echo '@userid,';
+                    } 
+                    echo '@start,@num;';
                     echo '<br/><br/>';
                     echo 'END$$<br/>DELIMITER ;';
                     echo '<br/><br/>';
@@ -271,7 +373,7 @@ if (strlen($type)<1) {
                     $fieldarray = $class->getFields();
                     $separator = "";
                     foreach ($fieldarray as $field) {
-                        if ($field[1]!="linkedentities") {
+                        if ($field[1]!="linkedentities"&&$field[1]!="childentities") {
                             echo $separator . $field[0] . ' ';
                             $separator = ", ";
                         }
@@ -288,7 +390,7 @@ if (strlen($type)<1) {
                     echo $tab . 'INSERT INTO ' . lcfirst($class->getName()) . '(<br/>';
                     $separator = $tab . $tab;
                     foreach ($fieldarray as $field) {
-                        if ($field[1]!="linkedentities") {
+                        if ($field[1]!="linkedentities"&&$field[1]!="childentities") {
                             echo $separator . $field[0];
                             $separator = ',<br/>' . $tab . $tab;
                             }
@@ -302,7 +404,7 @@ if (strlen($type)<1) {
                     echo ')<br/>' . $tab . 'VALUES (';
                     $separator="";
                     foreach ($fieldarray as $field) {
-                        if ($field[1]!="linkedentities") {
+                        if ($field[1]!="linkedentities"&&$field[1]!="childentities") {
                             echo $separator . $field[0] ;
                             $separator = ',<br/>' . $tab . $tab;
                             }
@@ -310,7 +412,7 @@ if (strlen($type)<1) {
                     if ($class->hasTenant()) {
                         echo ',<br/>' .$tab . $tab . 'tenantid';
                     }
-                    if ($class->hasTenant()) {
+                    if ($class->hasOwner()) {
                         echo ',<br/>' .$tab . $tab . 'userid';
                     }
                     echo ');';
@@ -331,7 +433,7 @@ if (strlen($type)<1) {
                     $fieldarray = $class->getFields();
                     $separator = ", ";
                     foreach ($fieldarray as $field) {
-                        if ($field[1]!="linkedentities") {
+                        if ($field[1]!="linkedentities"&&$field[1]!="childentities") {
                             echo $separator . $field[0] . ' ';
                         }
                         echo getFieldValue($field);
@@ -346,7 +448,7 @@ if (strlen($type)<1) {
                     echo $tab . 'UPDATE ' . lcfirst($class->getName()) . ' SET<br/>';
                     $separator = $tab . $tab;
                     foreach ($fieldarray as $field) {
-                        if ($field[1]!="linkedentities") {
+                        if ($field[1]!="linkedentities"&&$field[1]!="childentities") {
                             echo $separator . $field[0] . ' = ' . $field[0];
                             $separator = ',<br/>' . $tab . $tab;
                             }

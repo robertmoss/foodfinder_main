@@ -17,7 +17,8 @@ interface iDataEntity {
 	public function renderView($entity,$returnurl);
 	public function getJavaScript();
 	public function getCustomValue($fieldname,$currentvalue,$operationtype);
-	public function getCustomEditControl($fieldname,$currentvalue);
+    public function hasCustomEditControl($fieldname);
+	public function getCustomEditControl($fieldname,$currentvalue,$entityId);
 	public function getCustomFormControl($fieldname, $entity);
 	public function getEntityCount($filters);
 	public function hasProperties();
@@ -50,12 +51,14 @@ abstract class DataEntity implements iDataEntity {
 		 * 	[0] name: name of the field
 		 *  [1] field type: string, number, date, viewonly, picklist, linkedentity, childentities, custom
 		 * 			string: regular varchar/text field
-		 * 			number: integer or decimal number
+		 * 			number: integer number
 		 * 			date: date
 		 *       boolean: a true/false value (1=true/0=false)
 		 * 			viewonly: won't be rendered on edit forms or submitted to database on insert/update
          *            hidden: won't be displayed on forms but will be submitted to database on insert/update and 
          *                      included in get service requests. Assumed to be numeric: use for parents and other keys
+         *      parententity: id of the parent entity for this entity (assumes parent will have childentities field type referring to this object) won't be displayed on most
+         *                    forms but will be submitted to databse on insert/updates; NEED TO RECONCILE WITH OLDER HIDDEN FIELD
 		 * 			picklist: pick from a static list of values, using Utility object's getList method
 		 * 		linkedentity: represents a many-to-one linkage - this field links the current entity to one (and only one) other entity 
          *                      (e.g. order linked to a specified customer, a customer may have multiple orders but an order only has one customer)
@@ -64,7 +67,8 @@ abstract class DataEntity implements iDataEntity {
          *                      used on other orders) 
 		 * 	    childentities: represents one-to-many relationship: a collection of sub-entities to this entity, and those sub-entities are used
          *                      only on this particular entity (e.g. the line items on an order)
-		 * 			  custom: handling of field is deferred to the entity subclass for special treatment 
+		 * 			  custom: handling of field is deferred to the entity subclass for special treatment - can default behavior for data generation to other
+         *                      types, however
 		 *  		   image: an image file that gets uploaded to content server with url stored in database
 		 *        properties: a dummy placeholder that lets you specify where on forms to place user-defined properties
 		 * 			  custom: core classes don't know what to do with this, so must be handled custom by child
@@ -88,6 +92,8 @@ abstract class DataEntity implements iDataEntity {
 		 * 				  [4] - true/false: whether user should be able to delete a linked entities or just de-link the entity from parent 
          *      childentities
          *                [2] - name of the childentity
+         *      parententity
+         *                [2] - name of the parententity
 		 */
 
 		public function getFieldType($fieldName) {
@@ -487,6 +493,7 @@ abstract class DataEntity implements iDataEntity {
 						$query .= $separator . Database::queryNumber($data->{$field[0]});
 						break;
 					case "linkedentities":
+                    case "childentities":
                         // a little extra overhead here, but due to sort/sequence keys, etc., don't want to blow away and replace unless we have to
                         // first, determine whether linkedentities list is different
                         $peekquery = "call get" . ucfirst($field[0]) . "By" . $this->getName() . 'Id(' . Database::queryNumber($id) . ',' . Database::queryNumber($this->tenantid) . ',' . Database::queryNumber($this->userid) .');';
@@ -730,8 +737,13 @@ abstract class DataEntity implements iDataEntity {
 			}
 		}
 
+        public function hasCustomEditControl($fieldname) {
+            // if any fields need custom edit handling, override this function and return true for the relevant fields    
+            return false;
+        }
 
-		public function getCustomEditControl($fieldname, $currentvalue) {
+
+		public function getCustomEditControl($fieldname, $currentvalue,$entityId) {
 			// type is add, update, etc.
 			// override to tell the dataentity the value to use for this field
 			return '<p>Custom edit field for ' . $fieldname . ' not defined. Field value=' . $currentvalue . '</p>';
