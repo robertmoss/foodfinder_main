@@ -1,3 +1,5 @@
+DELIMITER ;
+
 USE `food`;
 CREATE TABLE IF NOT EXISTS content(
      `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -7,15 +9,13 @@ CREATE TABLE IF NOT EXISTS content(
      PRIMARY KEY (`id`)
 );
 
-/* Stored Procedures for Content*/
 
 USE `food`;
 DROP procedure IF EXISTS `getContentById`;
 
 DELIMITER $$
 USE `food`$$
-
-CREATE PROCEDURE getContentById(id int, tenant int, userid int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getContentById`(id int, tenant int, userid int)
 BEGIN
 
      SELECT id,
@@ -35,8 +35,7 @@ DROP procedure IF EXISTS `addContent`;
 
 DELIMITER $$
 USE `food`$$
-
-CREATE PROCEDURE addContent(name varchar(100), defaultText text, language varchar(10), tenantid int)
+CREATE PROCEDURE `addContent`(name varchar(100), defaultText text, language varchar(10), tenantid int)
 BEGIN
 
      INSERT INTO content(
@@ -57,8 +56,7 @@ DROP procedure IF EXISTS `updateContent`;
 
 DELIMITER $$
 USE `food`$$
-
-CREATE PROCEDURE updateContent(id int, name varchar(100), defaultText text, language varchar(10), tenantid int)
+CREATE PROCEDURE `updateContent`(id int, name varchar(100), defaultText text, language varchar(10), tenantid int)
 BEGIN
 
      UPDATE content SET
@@ -69,13 +67,15 @@ BEGIN
           id=id
 ;
 END$$
-DELIMITER ;USE `food`;
+DELIMITER ;
+
+USE `food`;
 DROP procedure IF EXISTS `deleteContent`;
 
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE deleteContent(id int, tenant int, userid int)
+CREATE PROCEDURE `deleteContent`(id int, tenant int, userid int)
 BEGIN
 
      DELETE FROM content WHERE id=id;
@@ -84,11 +84,8 @@ END$$
 DELIMITER ;
 
 
-
-/* End Content stored procs */
-
 USE `food`;
-CREATE TABLE IF NOT EXISTS tenantContent(
+CREATE TABLE IF NOT EXISTS `tenantContent`(
      `id` int(11) NOT NULL AUTO_INCREMENT,
      `tenantid` int(11) NOT NULL,
      `name` varchar(100) NOT NULL,
@@ -99,7 +96,6 @@ CREATE TABLE IF NOT EXISTS tenantContent(
      CONSTRAINT `fk_tenantContent_tenant` FOREIGN KEY (`tenantid`) REFERENCES `tenant` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
-/* Stored Procedures for TenantContent*/
 
 USE `food`;
 DROP procedure IF EXISTS `getTenantContentById`;
@@ -107,7 +103,7 @@ DROP procedure IF EXISTS `getTenantContentById`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE getTenantContentById(id int, tenant int, userid int)
+CREATE PROCEDURE `getTenantContentById`(id int, tenant int, userid int)
 BEGIN
 
      SELECT id,
@@ -128,11 +124,10 @@ DROP procedure IF EXISTS `addTenantContent`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE addTenantContent(_name varchar(100), contentText text, language varchar(10), tenantid int)
+CREATE PROCEDURE `addTenantContent`(_name varchar(100), contentText text, language varchar(10), tenantid int)
 BEGIN
 
-	-- check to see if there is base content for this key; if not, create it
-    SET @baseCount = (select count(*) from content where name=_name);
+	SET @baseCount = (select count(*) from content where name=_name);
     IF @baseCount=0 THEN
 		INSERT INTO content(name,defaultText,language)
 			VALUES (_name,contentText,language);
@@ -159,7 +154,7 @@ DROP procedure IF EXISTS `updateTenantContent`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE updateTenantContent(id int, name varchar(100), contentText text, language varchar(10), tenantid int)
+CREATE PROCEDURE `updateTenantContent`(id int, name varchar(100), contentText text, language varchar(10), tenantid int)
 BEGIN
 
      UPDATE tenantContent SET
@@ -170,13 +165,16 @@ BEGIN
           id=id
           AND tenantid=tenantid;
 END$$
-DELIMITER ;USE `food`;
+
+DELIMITER ;
+USE `food`;
+
 DROP procedure IF EXISTS `deleteTenantContent`;
 
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE deleteTenantContent(id int, tenant int, userid int)
+CREATE PROCEDURE `deleteTenantContent`(id int, tenant int, userid int)
 BEGIN
 
      DELETE FROM tenantContent WHERE id=id AND tenantid=tenantid;
@@ -190,7 +188,7 @@ DROP procedure IF EXISTS `getTenantContent`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE getTenantContent(_name varchar(100), _tenantid int, _language varchar(10))
+CREATE PROCEDURE `getTenantContent`(_name varchar(100), _tenantid int, _language varchar(10))
 BEGIN
 
 	select
@@ -210,10 +208,8 @@ END$$
 DELIMITER ;
 
 
-/* End TenantContent stored procs */
-
 USE `food`;
-CREATE TABLE IF NOT EXISTS feature(
+CREATE TABLE IF NOT EXISTS `feature`(
      `id` int(11) NOT NULL AUTO_INCREMENT,
      `tenantid` int(11) NOT NULL,
      `userid` int(11) NOT NULL,
@@ -232,7 +228,6 @@ CREATE TABLE IF NOT EXISTS feature(
      CONSTRAINT `fk_feature_tenant` FOREIGN KEY (`tenantid`) REFERENCES `tenant` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
-/* Stored Procedures for Feature*/
 
 USE `food`;
 DROP procedure IF EXISTS `getFeatureById`;
@@ -240,7 +235,7 @@ DROP procedure IF EXISTS `getFeatureById`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE getFeatureById(_id int, _tenantid int, _userid int)
+CREATE PROCEDURE `getFeatureById`(_id int, _tenantid int, _userid int)
 BEGIN
 
      SELECT id,
@@ -268,7 +263,7 @@ DROP procedure IF EXISTS `addFeature`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE addFeature(name varchar(100), headline varchar(300), subhead varchar(300), author varchar(200), datePosted datetime, introContent text, closingContent text, locationCriteria varchar(500), locationTemplate text, useLocationDesc bit, tenantid int, userid int)
+CREATE PROCEDURE `addFeature`(name varchar(100), headline varchar(300), subhead varchar(300), author varchar(200), datePosted datetime, introContent text, closingContent text, locationCriteria varchar(500), locationTemplate text, useLocationDesc bit, tenantid int, userid int)
 BEGIN
 
      INSERT INTO feature(
@@ -308,7 +303,7 @@ DROP procedure IF EXISTS `updateFeature`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE updateFeature(_id int, name varchar(100), headline varchar(300), subhead varchar(300), author varchar(200), datePosted datetime, introContent text, closingContent text, locationCriteria varchar(500), locationTemplate text, useLocationDesc bit, _tenantid int, _userid int)
+CREATE PROCEDURE `updateFeature`(_id int, name varchar(100), headline varchar(300), subhead varchar(300), author varchar(200), datePosted datetime, introContent text, closingContent text, locationCriteria varchar(500), locationTemplate text, useLocationDesc bit, _tenantid int, _userid int)
 BEGIN
 
      UPDATE feature SET
@@ -336,7 +331,7 @@ DROP procedure IF EXISTS `deleteFeature`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE deleteFeature(id int, tenant int, userid int)
+CREATE PROCEDURE `deleteFeature`(id int, tenant int, userid int)
 BEGIN
 
      DELETE FROM feature WHERE id=id AND tenantid=tenantid;
@@ -350,7 +345,7 @@ DROP procedure IF EXISTS `getFeatures`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE getFeatures(userid int, numToReturn int,startAt int,tenantid int)
+CREATE PROCEDURE `getFeatures`(userid int, numToReturn int,startAt int,tenantid int)
 BEGIN
 
      prepare stmt from "SELECT id,
@@ -379,7 +374,6 @@ END$$
 DELIMITER ;
 
 
-/* End Feature stored procs */
 
 
 USE `food`;
@@ -388,7 +382,7 @@ DROP procedure IF EXISTS `getLocations`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE getLocations(userid int, numToReturn int,startAt int,tenantid int)
+CREATE PROCEDURE `getLocations`(userid int, numToReturn int,startAt int,tenantid int)
 BEGIN
 
      prepare stmt from "SELECT id,
@@ -421,7 +415,7 @@ END$$
 DELIMITER ;
 
 USE `food`;
-CREATE TABLE IF NOT EXISTS entityList(
+CREATE TABLE IF NOT EXISTS `entityList`(
      `id` int(11) NOT NULL AUTO_INCREMENT,
      `tenantid` int(11) NOT NULL,
      `userid` int(11) NOT NULL,
@@ -434,7 +428,6 @@ CREATE TABLE IF NOT EXISTS entityList(
      CONSTRAINT `fk_entityList_tenant` FOREIGN KEY (`tenantid`) REFERENCES `tenant` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
-/* Stored Procedures for EntityList*/
 
 USE `food`;
 DROP procedure IF EXISTS `getEntityListById`;
@@ -442,7 +435,7 @@ DROP procedure IF EXISTS `getEntityListById`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE getEntityListById(_id int, _tenantid int, _userid int)
+CREATE PROCEDURE `getEntityListById`(_id int, _tenantid int, _userid int)
 BEGIN
 
      SELECT id,
@@ -464,7 +457,7 @@ DROP procedure IF EXISTS `getEntityListItemsByEntityListId`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE getEntityListItemsByEntityListId(_id int, _tenantid int, userid int)
+CREATE PROCEDURE `getEntityListItemsByEntityListId`(_id int, _tenantid int, userid int)
 BEGIN
 
      SELECT
@@ -487,7 +480,7 @@ DROP procedure IF EXISTS `removeEntityListEntityListItems`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE removeEntityListEntityListItems(_entityListid int, _tenantid int)
+CREATE PROCEDURE `removeEntityListEntityListItems`(_entityListid int, _tenantid int)
 BEGIN
 
      SET SQL_SAFE_UPDATES = 0;
@@ -507,7 +500,7 @@ DROP procedure IF EXISTS `addEntityListEntityListItem`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE addEntityListEntityListItem(_entityListid int, _entityid int, _tenantid int)
+CREATE PROCEDURE `addEntityListEntityListItem`(_entityListid int, _entityid int, _tenantid int)
 BEGIN
 
 	select coalesce(max(sequence),0)+1 into @sequence from entityListItem where entityListId=_entityListId;
@@ -524,7 +517,7 @@ DROP procedure IF EXISTS `getEntityLists`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE getEntityLists(userid int, numToReturn int,startAt int,tenantid int)
+CREATE PROCEDURE `getEntityLists`(userid int, numToReturn int,startAt int,tenantid int)
 BEGIN
 
      prepare stmt from "SELECT id,
@@ -555,7 +548,7 @@ DROP procedure IF EXISTS `addEntityList`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE addEntityList(name varchar(300), description varchar(2000), type varchar(100), entity varchar(100), tenantid int, userid int)
+CREATE PROCEDURE `addEntityList`(name varchar(300), description varchar(2000), type varchar(100), entity varchar(100), tenantid int, userid int)
 BEGIN
 
      INSERT INTO entityList(
@@ -583,7 +576,7 @@ DROP procedure IF EXISTS `updateEntityList`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE updateEntityList(_id int, name varchar(300), description varchar(2000), type varchar(100), entity varchar(100), _tenantid int, _userid int)
+CREATE PROCEDURE `updateEntityList`(_id int, name varchar(300), description varchar(2000), type varchar(100), entity varchar(100), _tenantid int, _userid int)
 BEGIN
 
      UPDATE entityList SET
@@ -604,7 +597,7 @@ DROP procedure IF EXISTS `deleteEntityList`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE deleteEntityList(id int, tenant int, userid int)
+CREATE PROCEDURE `deleteEntityList`(id int, tenant int, userid int)
 BEGIN
 
      DELETE FROM entityList WHERE id=id AND tenantid=tenantid;
@@ -614,11 +607,8 @@ DELIMITER ;
 
 
 
-/* End EntityList stored procs */
-
-
 USE `food`;
-CREATE TABLE IF NOT EXISTS entityListItem(
+CREATE TABLE IF NOT EXISTS `entityListItem`(
      `id` int(11) NOT NULL AUTO_INCREMENT,
      `tenantid` int(11) NOT NULL,
      `entityListId` int(11) NOT NULL,
@@ -631,7 +621,6 @@ CREATE TABLE IF NOT EXISTS entityListItem(
      CONSTRAINT `fk_entityListItem_entityList` FOREIGN KEY (`entityListId`) REFERENCES `entityList` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 );
 
-/* Stored Procedures for EntityListItem*/
 
 USE `food`;
 DROP procedure IF EXISTS `getEntityListItemById`;
@@ -639,7 +628,7 @@ DROP procedure IF EXISTS `getEntityListItemById`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE getEntityListItemById(_id int, _tenantid int, _userid int)
+CREATE PROCEDURE `getEntityListItemById`(_id int, _tenantid int, _userid int)
 BEGIN
 
      SELECT id,
@@ -660,7 +649,7 @@ DROP procedure IF EXISTS `getEntityListItems`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE getEntityListItems(userid int, numToReturn int,startAt int,tenantid int)
+CREATE PROCEDURE `getEntityListItems`(userid int, numToReturn int,startAt int,tenantid int)
 BEGIN
 
      prepare stmt from "SELECT id,
@@ -688,7 +677,7 @@ DROP procedure IF EXISTS `addEntityListItem`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE addEntityListItem(entityListId int(11), entityId int(11), sequence int(11), tenantid int)
+CREATE PROCEDURE `addEntityListItem`(entityListId int(11), entityId int(11), sequence int(11), tenantid int)
 BEGIN
 
      INSERT INTO entityListItem(
@@ -712,7 +701,7 @@ DROP procedure IF EXISTS `updateEntityListItem`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE updateEntityListItem(_id int, entityListId int(11), entityId int(11), sequence int(11), _tenantid int)
+CREATE PROCEDURE `updateEntityListItem`(_id int, entityListId int(11), entityId int(11), sequence int(11), _tenantid int)
 BEGIN
 
      UPDATE entityListItem SET
@@ -731,7 +720,7 @@ DROP procedure IF EXISTS `deleteEntityListItem`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE deleteEntityListItem(id int, tenant int, userid int)
+CREATE PROCEDURE `deleteEntityListItem`(id int, tenant int, userid int)
 BEGIN
 
      DELETE FROM entityListItem WHERE id=id AND tenantid=tenantid;
@@ -745,7 +734,7 @@ DROP procedure IF EXISTS `getLocationsByEntityListId`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE getLocationsByEntityListId(_id int, _tenantid int)
+CREATE PROCEDURE `getLocationsByEntityListId`(_id int, _tenantid int)
 BEGIN
 
 SELECT
@@ -772,7 +761,7 @@ DROP procedure IF EXISTS `getLocationsByEntityListIdEx`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE getLocationsByEntityListIdEx(_id int, _tenantid int,_start int, _return int)
+CREATE PROCEDURE `getLocationsByEntityListIdEx`(_id int, _tenantid int,_start int, _return int)
 BEGIN
 
 	prepare stmt from "SELECT
@@ -809,6 +798,3 @@ execute stmt using @listId,@tenantid,@start,@num;
           
 END$$
 DELIMITER ;
-
-
-/* End EntityListItem stored procs */

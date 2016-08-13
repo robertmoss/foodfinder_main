@@ -318,7 +318,7 @@ abstract class DataEntity implements iDataEntity {
 		}
 		
 		protected function getEntityCountQuery($filters) {
-			$query = 'select count(*) from ' . strtolower($this->getName()) . ' where tenantid=' . $this->tenantid;
+			$query = 'select count(*) from ' . lcfirst($this->getName()) . ' where tenantid=' . $this->tenantid;
 			return $query;
 		}
 		

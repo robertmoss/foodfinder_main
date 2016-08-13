@@ -15,7 +15,7 @@ function loadFeatureLocations() {
 	console.log('Loading locations.');
 	hideElement('workingPanel');
 	// for now, assume we have just one location template (the default feature one)
-	var serviceUrl = "core/service/entitiesService?type=location&sequence=true";
+	var serviceUrl = "core/service/entitiesService.php?type=location&sequence=true";
 	var criteria = getElementValue('locationCriteria');
 	if (criteria.length>0) {
 		serviceUrl+='&' + criteria;

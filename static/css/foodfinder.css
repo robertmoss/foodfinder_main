@@ -407,15 +407,20 @@ a:visited {
 	text-align: center;
 }
 
+
 .homePanel {
+	overflow: auto;
+}
+
+.homePanelInner:hover {
+	opacity: .9;
+}
+
+.homePanelInner {
 	background-repeat: no-repeat;
 	background-size: 0;
 	cursor: pointer;
 	opacity: 1; 
-}
-
-.homePanel:hover {
-	opacity: .9;
 }
 
 .homePanel .buttonPane {
@@ -424,17 +429,34 @@ a:visited {
     bottom: 10px;
 }
 
-/*.homePanel .description {
-	position: absolute;
-    bottom: 30px;
-    left: 0px;
-    padding-left: 10px;
-}*/
+.homePanelInner {
+	height: 100%;
+	width: 100%;
+}
 
+.homePanelImage  {
+	display: block;
+	float: left;
+	margin-right: 10px;
+}
 
+.homePanelImage img {
+	width: 100px;
+}
 
+.overlay h2{
+	font-size: 20px;
+	color: #337ab7;	
+}
 
+.overlay p {
+	font-size: 14px;
+}
 @media (min-width: 992px) {
+	
+	.homePanelImage  {
+		display: none;
+	}
 
 	/* overlay for displaying text on images */
 	.overlay h2, .overlay p {
@@ -443,14 +465,28 @@ a:visited {
 	padding: 5px 10px 5px 5px;
 	}
 	
-	.homePanel {
-		min-height: 350px;
-		background-size: cover;
+	.overlay h2 {
+		font-size: 28px;
 	}
 	
-	.homePanel .overlay {
+	.overlay p {
+		font-size: 18px;
+	}
+	
+	.homePanel {
+		min-height: 350px;
+	}
+	
+	.homePanelInner {
+		margin: 0px;
+		min-height: 340px;
+		background-size: cover;
+		position: relative;
+	}
+	
+	.homePanelInner .overlay {
  	   position: absolute;
-    	bottom: 5px;
+       bottom: 5px;
     	left: 0px;
     	width: 100%;
     	color: #ffffff;

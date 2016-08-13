@@ -79,14 +79,17 @@
                                 $image = 'img/placeholder.jpg';
                             }
                             ?>
-                           <div id="page<?php echo $seq ?>" class="col-md-4 homePanel <?php echo $pageClass ?>" style="background-image:url('<?php echo $image?>');" onclick="window.location='<?php echo $item["url"] ?>';">
-                                    <p class="hidden"><?php echo $item["id"]?></p>
-                                    <div class="overlay">
-                                        <h2><?php echo $item["name"]?></h2>
-                                        <p class="description"><?php echo $item["shortdesc"] ?></p>
-                                    </div>
-                                    <div class="buttonPane"></div>
+                           <div id="page<?php echo $seq ?>" class="col-md-4 homePanel <?php echo $pageClass ?>" onclick="window.location='<?php echo $item["url"] ?>';">
+                              <div class="homePanelInner" style="background-image:url('<?php echo $image?>');">  
+                                <p class="hidden"><?php echo $item["id"]?></p>
+                                <div class="homePanelImage"><img src="<?php echo $image?>"/></div>
+                                <div class="overlay">
+                                    <h2><?php echo $item["name"]?></h2>
+                                    <p class="description"><?php echo $item["shortdesc"] ?></p>
                                 </div>
+                                <div class="buttonPane"></div>
+                              </div>
+                           </div>
                         <?php
                         }
                     echo('</div>');
