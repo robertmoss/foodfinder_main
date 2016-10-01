@@ -148,6 +148,7 @@ a:visited {
 		overflow: hidden;
 		vertical-align: middle;
 		border: solid 1px #aaaaaa;
+		position: relative;
 	}
 }
 
@@ -493,6 +494,46 @@ a:visited {
 	}
 }
 
+/* social bar */
+
+.socialList {
+	-webkit-padding-start: 0px;
+	margin-top:5px;
+}
+
+.socialList li {
+	display: inline-block;
+}
+
+.social {
+	display: inline-block;
+
+}
+
+.icon {
+	display: inline-block;
+	vertical-align: middle;
+	min-width: 30px;
+	min-height: 30px;
+	background-repeat: no-repeat;
+	background-size: cover;	
+}
+
+.icon-twitter {
+	background-image: url("../../img/icons/twitter.png");
+
+}
+
+.icon-facebook {
+	background-image: url("../../img/icons/facebook.png");
+}
+
+@media (min-width: 992px) {
+	.icon {
+		min-width: 30px;
+		min-height: 30px;
+	}
+}
 
 /* floating edit button */
 .floatingControl {

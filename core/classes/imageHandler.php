@@ -37,14 +37,35 @@
             }
             
             $currentRatio = $this->imageWidth/$this->imageHeight;
-            if (($maxwidth/$maxheight)>$currentRatio) {
-                // resize to max_height
-                $maxwidth=$maxheight * $currentRatio;
-            }
-            else {
-                $maxheight=$maxwidth * $currentRatio;    
-            }
             
+            $newwidth = $this->imageWidth;
+            $newheight = $this->imageHeight;
+
+            if ($newwidth>$maxwidth||$newheight>$maxheight) {
+                // need to resize
+                
+                if ($currentRatio>1) {
+                    // wider than tall
+                    $newwidth = $maxwidth; 
+                    $newheight = $newwidth * $currentRatio;
+                    if ($newheight>$maxheight) {
+                        $newheight = $maxheight;
+                        $newwidth=$maxheight * $currentRatio;
+                    }
+                }
+                else {
+                    $newheight = $maxheight;
+                    $newwidth=$maxheight * $currentRatio;
+                    if ($newwidth>$maxwidth) {
+                        $newwidth = $maxwidth; 
+                        $newheight = $newwidth * $currentRatio;
+                    }
+                }
+            }
+                                    
+            Log::debug('Will resize to:' . $newwidth . ',' . $newheight, 5);
+            
+            Log::debug('Creating working image for type ' . $this->imageType, 5);
             $workingImage = "";
             switch($this->imageType) {
                 case "image/png":
@@ -52,7 +73,13 @@
                     break;
                 case "image/jpeg":
                 case "image/jpg":
-                    $workingImage = imagecreatefromjpeg($this->imageFile);
+                     Log::debug('Doing the create for file ' . $this->imageFile, 5);
+                    try {
+                        $workingImage = imagecreatefromjpeg($this->imageFile);
+                    }
+                    catch(Exception $ex) {
+                         Log::debug('Unable to create working image: ' . $ex->getMessage(), 5);
+                    }
                     break;
                 case "image/gif":
                     $workingImage = imagecreatefromgif($this->imageFile);
@@ -60,8 +87,10 @@
                 default:
                     throw new Exception('Cannot resize image: Unsupported image type: ' . $this->imageType);
             }
-            $newImage = imagecreatetruecolor($maxwidth, $maxheight);
-            imagecopyresampled($newImage,$workingImage,0,0,0,0,$maxwidth,$maxheight,$this->imageWidth,$this->imageHeight);
+            
+            Log::debug('Copying to new image . . .', 5);
+            $newImage = imagecreatetruecolor($newwidth, $newheight);
+            imagecopyresampled($newImage,$workingImage,0,0,0,0,$newwidth,$newheight,$this->imageWidth,$this->imageHeight);
             
              switch($this->imageType) {
                 case "image/png":

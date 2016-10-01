@@ -37,6 +37,8 @@ if ($listId==0) {
     $listId = Utility::getRequestVariable('entityList', 0);
 }
 
+$descending = Utility::getRequestVariable('desc', 'false');
+
     $coretypes = array('user','tenant','entityList');
     if(!in_array($type,$coretypes,false) && !in_array($type, Application::$knowntypes,false)) {
         // unrecognized type requested can't do much from here.
@@ -84,12 +86,28 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
     	}
     }
 
+    
+   
+
     $addSequence = (isset($_GET["sequence"])&&(strtolower($_GET["sequence"])=="yes"||strtolower($_GET["sequence"])=="true")); 
     if ($addSequence) {
         for ($i=0;$i<count($entities);$i++) {
-            $entities[$i]["sequence"]=$i;
+            // computer nerds can suck it: you being numbering things with 1, not 0
+            $entities[$i]["sequence"]=$i+1;
+            // but since nerds insist on making many things sequence with 0 as first element 
+            // we'll include this just for them
+            $entities[$i]["sequence_zero"]=$i;
             }
         }
+    
+     if (strtolower($descending)=='true' || strtolower($descending)=='yes') {
+        // reverse the sort order
+        $newentities = array();
+         for ($i=count($entities)-1;$i>=0;$i--) {
+             array_push($newentities,$entities[$i]);
+         }
+         $entities=$newentities;
+    }
 
     $set = '{"count": ' . $totalEntities; 
     $set .= ', "' . lcfirst($class->getPluralName()) . '": ' . json_encode($entities) . '}';

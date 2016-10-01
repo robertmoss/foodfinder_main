@@ -14,7 +14,11 @@ $return = Utility::getRequestVariable("return", 10);
 $start = Utility::getRequestVariable("start", 0);
 $categories = Utility::getRequestVariable("categories", '');
 $tenantID = $_SESSION['tenantID'];
-Utility::debug('Executing service_proto.php with return=' . $return , 5);
+$listId = Utility::getRequestVariable('list', 0);
+if ($listId==0) {
+    $listId = Utility::getRequestVariable('entityList', 0);
+}
+Utility::debug('Executing service_proto.php with return=' . $return . " list=" . $listId , 5);
 
 // connect to database
 //$con=mysqli_connect(Database::$server,Database::$user,Database::$password,Database::$database);
@@ -40,12 +44,17 @@ else {
 	}
 	Utility::debug('filter is: ' . $filter,2);
 
-	if (strlen($filter>0)) {
-		$query = "call getLocationsByLatLngAndCategoryIdList(" . $tenantID . "," . $userID . ",". $center_lat . "," . $center_long . "," . $return . "," . $start . "," . Database::queryString($filter) . ")";
-	}
-	else {
-		$query = "call getLocationsByLatLng(" . $tenantID . "," . $userID . ",". $center_lat . "," . $center_long . "," . $return . "," . $start . ")";
-	}
+   if ($listId>0) {
+        // a list was requested here. Different handling than regular entity set
+          $query = 'call getLocationsByEntityListIdEx(' . $listId . ',' . $tenantID . ',' . $start . ',' . $return . ')';    
+    }
+   elseif (strlen($filter>0)) {
+        $query = "call getLocationsByLatLngAndCategoryIdList(" . $tenantID . "," . $userID . ",". $center_lat . "," . $center_long . "," . $return . "," . $start . "," . Database::queryString($filter) . ")";
+    	}
+    else {
+        $query = "call getLocationsByLatLng(" . $tenantID . "," . $userID . ",". $center_lat . "," . $center_long . "," . $return . "," . $start . ")";
+    	}
+    
 	Utility::debug('Executing query: ' . $query , 5);
 	$data = mysqli_query($con,$query) or die(mysqli_error());
 	$rows = array();
@@ -54,6 +63,7 @@ else {
 		{
 		$rows[] = Utility::addDisplayElements($r);
 		}
+   
 	$set = "{\"locations\":" . json_encode($rows) . "}";
 	
 	header('Content-Type: application/json');

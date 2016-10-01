@@ -46,7 +46,7 @@ class EntityList extends DataEntity {
            $markup .= '</div>';
            
            //$child_array = $this->getAvailableChildren($fieldName,$this->tenantid);
-           $query = 'call getLocationsByEntityListId(' . $entityId . ',' . $this->tenantid . ')';
+           $query = 'call getEntitiesByEntityListId(' . $entityId . ',' . $this->tenantid . ')';
            $child_array = Database::executeQueryReturnArray($query);
            
            $markup .= '<div class="panel-body">';
@@ -55,7 +55,8 @@ class EntityList extends DataEntity {
            $idList = '';
            foreach($child_array as $c) {
                $markup .= '<p id="listItem' . $c["entityId"] . '"><button type="button" class="btn btn-default btn-xs" onclick="removeListItem(' . $c['entityId'] . ')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button> ';
-               $markup .= $c["name"] . ' (' . $c["city"] . ',' . $c["state"] . ')</p>';
+               //$markup .= $c["name"] . ' (' . $c["city"] . ',' . $c["state"] . ')</p>';
+               $markup .= $c["displayText"] . '</p>'; 
                $idList .= $separator . $c["entityId"];
                $separator=",";
            }

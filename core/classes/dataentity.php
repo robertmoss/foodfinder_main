@@ -54,6 +54,7 @@ abstract class DataEntity implements iDataEntity {
 		 *  [1] field type: string, number, date, viewonly, picklist, linkedentity, childentities, custom
 		 * 			string: regular varchar/text field
 		 * 			number: integer number
+         *         decimal: decimal number (e.g. for currency)
 		 * 			date: date
 		 *       boolean: a true/false value (1=true/0=false)
 		 * 			viewonly: won't be rendered on edit forms or submitted to database on insert/update
@@ -80,7 +81,10 @@ abstract class DataEntity implements iDataEntity {
          *         0 indicates no max        
          *         for field type string, setting length to 0 will make field to a text in database
 		 *  [3+] info varies by field type:
-		 * 		picklist: [3] - name of list to choose values from (as found in Utility::getList method )
+         *      decimal:  [3] # of decimal points to save. (e.g. for US currency, 2, representing cents)
+         *                [4] special handling: valid range is "decimal","currency"; default is decimal
+         * 
+	 	 * 		picklist: [3] - name of list to choose values from (as found in Utility::getList method )
 		 * 				  [4] - (optional) boolean indicating whether users can add new picklist itmes (e.g. to show an "add new button" 
          *                      next to pick list to add new items)
 		 * 		linkedentity:
@@ -292,7 +296,19 @@ abstract class DataEntity implements iDataEntity {
 		protected function getEntitiesQuery($filters, $return, $offset) {
 			// returns the SQL query used to retrieve multiple entities.
 			// Override if you wish to have a non-standard stored proc or query
-			$query = 'call get' . $this->getPluralName() . '(' . Database::queryNumber($this->userid) . ', ' . Database::queryNumber($return). ', ' . Database::queryNumber($offset) . ', ' . Database::queryNumber($this->tenantid) . ');';				
+			// this is very basic and assumes you are searching just on name
+            $where='';
+            if (array_key_exists('name',$filters)) {
+                // use name
+                $where = ' and name like ' . Database::queryStringWildcard($filters['name']);
+            }
+            if (!$return or $return<=0) {
+                $return = 10;
+            }
+            if ($offset && $offset>0) {
+                $offset = ',' . $offset;
+            }
+			$query = 'select * from ' . lcfirst($this->getName()) . ' where tenantid=' . $this->tenantid . $where . ' limit ' . $return .$offset;
 			return $query;
 		}
 		
@@ -318,7 +334,14 @@ abstract class DataEntity implements iDataEntity {
 		}
 		
 		protected function getEntityCountQuery($filters) {
-			$query = 'select count(*) from ' . lcfirst($this->getName()) . ' where tenantid=' . $this->tenantid;
+		    // this is very basic and assumes you are searching just on name
+		    $where='';
+            if (array_key_exists('name',$filters)) {
+                // use name
+                $where = ' and name like ' . Database::queryStringWildcard($filters['name']);
+            }
+            
+			$query = 'select count(*) from ' . lcfirst($this->getName()) . ' where tenantid=' . $this->tenantid . $where;
 			return $query;
 		}
 		
@@ -375,6 +398,7 @@ abstract class DataEntity implements iDataEntity {
 						$query .= $separator . Database::queryDate($value);
 						break;
 					case "number":
+                    case "decimal":
                     case "hidden":
 						$query .= $separator . Database::queryNumber($value);
 						break;
@@ -482,6 +506,7 @@ abstract class DataEntity implements iDataEntity {
                         $query .= $separator . Database::queryBoolean($data->{$field[0]});
                         break;
 					case "number":
+                    case "decimal":
                     case "hidden":
 						$query .= $separator . Database::queryNumber($data->{$field[0]});
 						break;

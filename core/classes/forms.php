@@ -73,6 +73,7 @@ class Forms {
                                 echo '</div>';
                                 break;
                             case "number":
+                            case "decimal":
                                 echo '<div class="form-group">';
                                 echo $default_label;
                                 $css_class = $field[2] < 10 ? 'col-sm-1' : 'col-sm-2';

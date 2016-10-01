@@ -5,6 +5,8 @@
 	$thisPage=Utility::getRequestVariable('type', 'finder');
     
     $zoom = Utility::getRequestVariable('zoom', 0);
+    $list = Utility::getRequestVariable('list', 0);
+    $selectedLocation = Utility::getRequestVariable('location', 0);
 
  ?>
 
@@ -56,6 +58,8 @@
 					<input id="txtCurrentLatitude" type="hidden" value="<?php echo Utility::getSessionVariable('latitude', ''); ?>"/>
 					<input id="txtCurrentLongitude" type="hidden" value="<?php echo Utility::getSessionVariable('longitude', ''); ?>"/>
                     <input id="txtZoom" type="hidden" value="<?php echo $zoom; ?>"/>
+                    <input id="txtList" type="hidden" value="<?php echo $list; ?>"/>
+                    <input id="txtLocation" type="hidden" value="<?php echo $selectedLocation; ?>"/>
     		</form> 
     		<div id="message" class="alert alert-danger alert-dismissible hidden">
     			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

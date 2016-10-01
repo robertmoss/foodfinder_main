@@ -185,7 +185,7 @@ class Utility {
 				break;
             case "entities":
                 // list of system entities that can be managed/expanded with categories, entity lists, etc.
-                $values = array("location");
+                $values = array("location","product");
                 foreach ($values as $entity) {
                         $return[]= array($entity,$entity);        
                     }
@@ -434,6 +434,44 @@ public static function addDisplayElements($location) {
 	}
 	
 	return $location;
+}
+
+/*
+ * Takes a string and augments it to render correctly as HTML content
+ */
+public static function renderWebContent($content) {
+    
+    // replace location tags with links
+    $index = strpos($content,'<location ');
+    $count = 0;
+    $runningContent="";
+    while ($index>0 && $count<50) {
+        $idindex = $index+9;
+        $id='';
+        $endfound = false;
+        while (!$endfound && $idindex<strlen($content)) {
+            $id .= substr($content,$idindex,1);
+            $idindex++;
+            if (substr($content,$idindex,1)==">") {
+                $endfound=true;
+            }
+        }
+        $endindex = strpos($content,'</location>');
+        $linkURL = Config::$core_root . '/entityPage.php?type=location&id=' . $id;
+        $linktext = substr($content,$idindex+1,$endindex-$idindex-1);
+        $newcontent = substr($content,0,$index);
+        $newcontent .= '<a href="#" onclick="loadLocation(' . $id .');">' . $linktext . '</a>'; 
+        $newcontent .= substr($content,$endindex + 11);
+        $runningContent .= 'Found at: ' .$index . ' through ' . $endindex . ': ' . $linktext . '<hr/>';
+        $content = $newcontent;
+        $index = strpos($content,'<location ');
+        $runningContent .= 'newind=' . $index;        
+        $count++;
+        
+    }
+    //$content=$runningContent;
+    $content = nl2br($content);
+    return $content;
 }
 
 	

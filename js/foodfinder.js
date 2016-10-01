@@ -73,13 +73,13 @@ function getLocationTemplate() {
 
 function getLocationSummaryTemplate() {
 		var template = "<div id=\"loc{{id}}\" class=\"listItem\">";
-		template += '<div id=\"loc{{id}}_visited\" class="ribbon-wrapper-green {{^visited}}hidden{{/visited}}"><div class="ribbon-green">Visited</div></div>';
 			template += "<div class=\"thumbnail loc-panel\">";
 				template +="<h3><a id=\"link_loc{{id}}\" href=\"#loc{{id}}\" onclick=\"loadLocation({{id}});\">{{name}}</a>&nbsp;";
 				template +="{{#distance}}<span class=\"label label-success right\">{{distance}} mi</span>{{/distance}}</h3>";
 				template += "<p>{{shortdescription}}{{#more}}<a href=\"#loc{{id}}\" onclick=\"loadLocation({{id}},\'{{linkname}}\',{{#visited}}true{{/visited}}{{^visited}}false{{/visited}});\">more</a>{{/more}}</p>";
 				template += "<div class=\"loc-image\">";
 					template += "<img src=\"{{imageurl}}\"/>";
+							template += '<div id=\"loc{{id}}_visited\" class="ribbon-wrapper-green {{^visited}}hidden{{/visited}}"><div class="ribbon-green">Visited</div></div>';
 				template += "</div>";
 				template += "<div class=\"caption\">";
 					//template +="<h3 class=\"non-mobile\"><a id=\"link_loc{{id}}\" href=\"#loc{{id}}\" onclick=\"loadLocation({{id}},\'{{linkname}}\',{{#visited}}true{{/visited}}{{^visited}}false{{/visited}});\">{{name}}</a></h3>";
@@ -371,7 +371,10 @@ function getIconForLocation(location) {
 function getInfoWindowContent(location) {
 	
 	var shortdesc = location.shortdescription;
-	if (shortdesc.length>100) {
+	if (!shortdesc) {
+		var shortdesc = location.shortdesc;
+	}
+	if (shortdesc && shortdesc.length>100) {
 		shortdesc = shortdesc.substring(0,100) + "...";
 		}
 	var visited = 'false';

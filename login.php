@@ -5,6 +5,9 @@
 	include_once Config::$core_path . '/classes/database.php';
 	include_once Config::$core_path . '/classes/utility.php';
 	include_once Config::$core_path . '/classes/user.php';
+    
+    include_once Config::$core_path . '/partials/requireSSL.php';
+    
     $thisPage="login";
 	
 	Utility::debug("login.php: logging in user.",5);
@@ -84,7 +87,7 @@
     </head>
     <body>
     	<?php 
-                    include('header.php');
+                include_once('partials/header.php');
 
                 ?>
         <div >

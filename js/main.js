@@ -9,8 +9,6 @@ window.onload = function()
 		expandMap();
 	}
 	
-	
-	
 	initializeMap('resultSpan');
 	hideElement('list-loader');     
 	
@@ -109,6 +107,7 @@ function initializeMap(anchor)
 		auto_origin = new google.maps.places.Autocomplete(document.getElementById('txtAddress'),{ types: ['geocode']});
 	}
 
+	
 	var userSetLatitude = document.getElementById('txtCurrentLatitude').value;
 	var userSetLongitude = document.getElementById('txtCurrentLongitude').value;
 	if (userSetLatitude!=0 && userSetLongitude !=0) {
@@ -135,6 +134,7 @@ function initializeMap(anchor)
 				hideElement('list-loader');
 				setMessage('Unable to detect location from your browser.', 'message', 'message_text', false);
 				log('geolocation.getCurrentPosition failed: ' + err.message);
+				document.getElementById('txtAddress').value="";
 				loadLocations(currentLatLong.lat(),currentLatLong.lng(),anchor);
 			});	
 	}
@@ -261,6 +261,10 @@ function loadLocations(currentLat, currentLng, anchor, ret, start) {
 				var farthestPointToShow;
 				
 				// clean up and enrich data
+				if (view.locations.length==0) {
+					// none found
+					locationIndex--;
+				}
 				for(var i=0; i<view.locations.length; i++) {
 					var location=view.locations[i];
 					
@@ -270,8 +274,11 @@ function loadLocations(currentLat, currentLng, anchor, ret, start) {
 					}
 					view.locations[i].linkname = escapeSingleQuotes(view.locations[i].name);
 					var shortdesc = location.shortdescription;
+					if (!shortdesc) {
+						shortdesc = location.shortdesc;
+					}
 					var maxlen = 240; // characters
-					if (shortdesc.length>maxlen) {
+					if (shortdesc && shortdesc.length>maxlen) {
 						view.locations[i].shortdescription = shortdesc.substring(0,maxlen) + "... ";
 						view.locations[i].more = true;	
 					}
@@ -331,6 +338,15 @@ function loadLocations(currentLat, currentLng, anchor, ret, start) {
 					zoomSetBy='script';
 					resizeMap(map,farthestPointToShow);
 				}
+				var initialLoc = document.getElementById('txtLocation');
+				if (initialLoc && initialLoc.value>0) {
+					for(var i=0; i<view.locations.length; i++) {
+						if (view.locations[i].id==initialLoc.value) {
+							locationIndex=i;
+							initialLoc.value=0;
+						}
+					}
+				}
 				displayLocationSummary(locationIndex);
 				if (view.locations.length>0) {
 					centerMap(locations[locationIndex].id);
@@ -347,6 +363,10 @@ function loadLocations(currentLat, currentLng, anchor, ret, start) {
 		serviceURL += "&center_lng="+ currentLng;
 		serviceURL += "&return=" + ret;
 		serviceURL += "&start=" + start;
+		var listId = document.getElementById('txtList').value;
+		if (listId>0) {
+			serviceURL += "&list=" + listId;
+		}
 		if (filter.length>0) {
 			serviceURL += "&categories=" + filter;
 		}
@@ -464,7 +484,7 @@ function displayLocationSummary(index) {
 		renderTemplate(template,locations[index],'resultSpan',false);
 	}
 	else {
-		setElementHTML('resultSpan','<div class="thumbnail loc-panel"><p>No location found.</p></div>');
+		//setElementHTML('resultSpan','<div class="thumbnail loc-panel"><p>No location found.</p></div>');
 	}
 		
 }

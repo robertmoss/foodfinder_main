@@ -18,7 +18,10 @@
                 array("closingContent","string","0"),
                 array("locationCriteria","string",500),
                 array("locationTemplate","string",0),
-                array("useLocationDesc","boolean")
+                array("useLocationDesc","boolean"),
+                array("numberEntries","boolean"),
+                array("reverseOrder","boolean"),
+                array("coverImage","string",200)
             );
             
             return $fields;

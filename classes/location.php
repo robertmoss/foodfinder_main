@@ -270,7 +270,7 @@
 				
 				// images
 				if (array_key_exists("editable", $entity) && $entity["editable"]) {
-				    $serviceURL = Config::$service_path . '/files.php';
+				    $serviceURL = Config::getServiceRoot() . '/files.php';
 				    echo '	<div class="panel panel-info">
 							<div class="panel-body">
 								<div id="imageStrip"><p>Loading . . .</p></div>';

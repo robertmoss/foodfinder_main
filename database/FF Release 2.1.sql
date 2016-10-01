@@ -103,7 +103,7 @@ DROP procedure IF EXISTS `getTenantContentById`;
 DELIMITER $$
 USE `food`$$
 
-CREATE PROCEDURE `getTenantContentById`(id int, tenant int, userid int)
+CREATE PROCEDURE `getTenantContentById`(_id int, _tenantid int, _userid int)
 BEGIN
 
      SELECT id,
@@ -113,7 +113,7 @@ BEGIN
      FROM
           tenantContent
       WHERE
-          id=id AND tenantid=tenantid;
+          id=_id AND tenantid=_tenantid;
 
 END$$
 DELIMITER ;

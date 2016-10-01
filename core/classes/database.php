@@ -8,6 +8,11 @@ class Database {
 		$value = str_replace("'","''",$value);
 		return "'" . $value . "'";
 	}
+    
+    public static function queryStringWildcard($value) {
+        $value = str_replace("'","''",$value);
+        return "'" . $value . "%'";
+    }
 	
 	public static function queryJSON($value) {
 		// still a work in progress

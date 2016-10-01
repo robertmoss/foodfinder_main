@@ -74,7 +74,7 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST") {
 	    if ($handler->getWidth()> 500 || $handler->getHeight()>500) {
             try {
                 $destination = $files[$i]["tmp_name"];
-                $handler->resize(500, 500,$destination);
+                $handler->resize(500, 500, $destination);
             }
             catch(Exception $ex) {
                 Service::returnError('Unable to upload files. Error resizing file: ' . $ex->getMessage());

@@ -1,6 +1,8 @@
 <?php 
 	include dirname(__FILE__) . '/core/partials/pageCheck.php';
-	$thisPage="authoring";	
+	include_once dirname(__FILE__) . '/partials/permissionCheck.php';
+	$thisPage="authoring";
+    	
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -25,6 +27,8 @@
                             <li role="presentation" class="active"><a href="#features" aria-controls="features" role="tab" data-toggle="tab" onclick="loadFeatureList()">Features</a></li>
                             <li role="presentation"><a href="#locations" aria-controls="locations" role="tab" data-toggle="tab" onclick="loadLocations()">Locations</a></li>
                             <li role="presentation"><a href="#lists" aria-controls="lists" role="tab" data-toggle="tab" onclick="loadEntityListList()">Lists</a></li>
+                            <li role="presentation"><a href="#products" aria-controls="products" role="tab" data-toggle="tab" onclick="loadProductList()">Products</a></li>
+                            <li role="presentation"><a href="#productcollections" aria-controls="productcollections" role="tab" data-toggle="tab" onclick="loadProductCollectionList()">Product Collectionss</a></li>
                         </ul>                   
                     </div>
                     <div class="tab-content">
@@ -47,6 +51,22 @@
                                 $customEditHandler = true;  
                                 include('core/partials/entityList.php');
                                 $customEditHandler = false; 
+                            ?>
+                        </div>
+                        <div id="products" role="tabpanel" class="tab-pane">
+                            <?php
+                                $entityType="product";
+                                $friendlyName="Product";
+                                $setName = "products";
+                                include('core/partials/entityList.php');
+                            ?>
+                        </div>
+                        <div id="productcollections" role="tabpanel" class="tab-pane">
+                            <?php
+                                $entityType="productCollection";
+                                $friendlyName="Product Collection";
+                                $setName = "productCollections";
+                                include('core/partials/entityList.php');
                             ?>
                         </div>
                     </div>

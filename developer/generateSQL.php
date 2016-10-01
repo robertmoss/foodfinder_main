@@ -77,6 +77,18 @@ if (strlen($type)<1) {
                 break;
             case "number":
                 $value = "int(11)";
+                break;
+            case "decimal":
+                $precision = 15;
+                $postdigits = 2;
+                if ($field[2] && $field[2]>0) {
+                    $precision = $field[2];
+                }
+                if ($field[3] && $field[3]>0) {
+                    $postdigits = $field[3];
+                }
+                $value='numeric(' . $precision . ',' . $postdigits . ')';
+                break;
             case "parententity":
                 $value = "int(11)";
             case "hidden":
@@ -122,7 +134,7 @@ if (strlen($type)<1) {
                     
                     /* CREATE table */
                     echo 'USE `' . Config::$database . '`;<br/>';
-                    echo 'CREATE TABLE IF NOT EXISTS ' . lcfirst($class->getName()) . '(<br/>';
+                    echo 'CREATE TABLE IF NOT EXISTS `' . lcfirst($class->getName()) . '`(<br/>';
                     echo $tab . '`id` int(11) NOT NULL AUTO_INCREMENT,<br/>';
                     if ($class->hasTenant()) {
                         echo $tab . '`tenantid` int(11) NOT NULL,<br/>';
@@ -162,19 +174,23 @@ if (strlen($type)<1) {
                     
                 
                      /* GET proc */
-                    echo '/* Stored Procedures for ' . $class->getName() . '*/<BR/><BR/>';
+                    //echo '/* Stored Procedures for ' . $class->getName() . '*/<BR/><BR/>';
                    
                     echo 'USE `' . Config::$database . '`;<br/>';
                     echo 'DROP procedure IF EXISTS `get' . $class->getName() . 'ById`;<br/><br/>';
                     echo 'DELIMITER $$<br/>';
                     echo 'USE `' . Config::$database . '`$$<br/><br/>';
-                    echo 'CREATE PROCEDURE get' . $class->getName() . 'ById(_id int, _tenantid int, _userid int)<br/>';
+                    echo 'CREATE PROCEDURE `get' . $class->getName() . 'ById`(_id int, _tenantid int, _userid int)<br/>';
                     echo 'BEGIN<br/><br/>';
                     echo $tab . 'SELECT id,<br/>';
                     $fieldarray = $class->getFields();
                     $separator = $tab . $tab . "";
                     foreach ($fieldarray as $field) {
-                        if ($field[1]!="linkedentities"&&$field[1]!="properties"&&$field[1]!="childentities") {
+                        if ($field[1]=="boolean") {
+                          echo $separator . 'coalesce(' . $field[0] .',0) as ' . $field[0];
+                          $separator = ',<br/>' . $tab . $tab;   
+                        }
+                        elseif ($field[1]!="linkedentities"&&$field[1]!="properties"&&$field[1]!="childentities") {
                             echo $separator . $field[0];
                             $separator = ',<br/>' . $tab . $tab;
                         }
@@ -324,7 +340,7 @@ if (strlen($type)<1) {
                     echo 'DROP procedure IF EXISTS `get' . $class->getPluralName() . '`;<br/><br/>';
                     echo 'DELIMITER $$<br/>';
                     echo 'USE `' . Config::$database . '`$$<br/><br/>';
-                    echo 'CREATE PROCEDURE get' . $class->getPluralName() . '(userid int, numToReturn int,startAt int,tenantid int)<br/>';
+                    echo 'CREATE PROCEDURE `get' . $class->getPluralName() . '`(userid int, numToReturn int,startAt int,tenantid int)<br/>';
                     echo 'BEGIN<br/><br/>';
                     echo $tab . 'prepare stmt from "SELECT id,<br/>';
                     $fieldarray = $class->getFields();
@@ -482,7 +498,7 @@ if (strlen($type)<1) {
                     echo '<br/><br/>';
                     
                     
-                    echo '<BR/></BR>/* End ' . $class->getName() . ' stored procs */<BR/><BR/>';
+                    echo '<BR/></BR>';
                     
                     ?>
                 </code>

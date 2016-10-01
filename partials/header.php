@@ -103,7 +103,8 @@ if (Utility::getTenantProperty($applicationID, $tenantID, $userID, 'showAds')=='
     				    <li><button type="button" class="btn btn-default navbar-btn" onclick="window.location.href='<?php echo Config::getCoreRoot() ?>/entityPage.php?type=location&id=0&mode=edit';"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add New</button></li>
 			    <?php } ?>
 			 </ul>		
-	         <?php } else { ";" ?>
+	         <?php } else {  
+	         /* ?>
 			<ul class="nav navbar-nav navbar-right">
 			     <li><button class="btn btn-default navbar-btn" data-toggle="collapse" data-target="#loginForm">
 			         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
@@ -118,7 +119,7 @@ if (Utility::getTenantProperty($applicationID, $tenantID, $userID, 'showAds')=='
                     <button type="submit" class="btn btn-default">Sign In</button>
     	         </form>
 	         </ul>	         
-	         <?php } 
+	         <?php */ } 
 	         if ($allowIssueLog) {
 	            include_once Config::$core_path . '/partials/issueForm.php';    
 	         }

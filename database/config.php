@@ -51,43 +51,53 @@ class Config {
     public static $github_token = 'ADD TOKEN HERE';
     public static $github_repo = 'https://api.github.com/repos/robertmoss/foodfinder_main';
     
+     public static function getHTTPS() {
+         if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off") {
+             return "http";
+         }
+         else {
+             return "https";
+         }
+     } 
+     
+     
      public static function getSiteRoot() {
         // gotta work on all this, since the custom URLs break everything    
         if (strtolower($_SERVER['SERVER_NAME'])=='www.palmettonewmedia.com') {
-            return 'http://www.palmettonewmedia.com/foodfinder';
+            return Config::getHTTPS() . '://www.palmettonewmedia.com/foodfinder';
         }
         else {
-            return 'http://' . $_SERVER['SERVER_NAME'];
+            return Config::getHTTPS() . '://' . $_SERVER['SERVER_NAME'];
         }
      }
      
       public static function getCoreRoot() {
         // gotta work on all this, since the custom URLs break everything    
         if (strtolower($_SERVER['SERVER_NAME'])=='www.palmettonewmedia.com') {
-            return $this::$core_root;
+            return Config::getHTTPS() . '//www.palmettonewmedia.com/foodfinder/core';
         }
         else {
-            return 'http://' . $_SERVER['SERVER_NAME'] . '/core';
+            return Config::getHTTPS() . '://' . $_SERVER['SERVER_NAME'] . '/core';
        }
     }
       
       public static function getServiceRoot() {
         // gotta work on all this, since the custom URLs break everything    
         if (strtolower($_SERVER['SERVER_NAME'])=='www.palmettonewmedia.com') {
-            return $this::$service_path;
+            return Config::getHTTPS() . '://www.palmettonewmedia.com/foodfinder/service';
         }
         else {
-            return 'http://' . $_SERVER['SERVER_NAME'] . '/service';
+            return Config::getHTTPS() .'://' . $_SERVER['SERVER_NAME'] . '/service';
        }
     }   
       
     public static function getCoreServiceRoot() {
         // gotta work on all this, since the custom URLs break everything    
         if (strtolower($_SERVER['SERVER_NAME'])=='www.palmettonewmedia.com') {
-            return $this::$core_service_path;
+            return Config::getHTTPS() . '://www.palmettonewmedia.com/foodfinder/core/service';
         }
         else {
-            return 'http://' . $_SERVER['SERVER_NAME'] . '/core/service';
+            return Config::getHTTPS() .'://' . $_SERVER['SERVER_NAME'] . '/core/service';
        }
     }    	
 }
