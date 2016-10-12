@@ -111,13 +111,7 @@
                     <?php if (strlen($feature["locationCriteria"])>0) { ?>
                         <input id="txtList" type="hidden" value="<?php echo $feature["locationCriteria"]; ?>"/>
                     <?php } ?>
-
-                     <div id="workingPanel" class="hidden">
-                        <div id="workingPanelMessage">Loading...</div>
-                        <div id="workingPanelIcon">
-                            <img src="img/icons/ajax-loader3.gif" />
-                         </div>
-                    </div>
+                    <?php include"(partials/workingPanel.php)";?> 
                     <div id="closingContent" class="featureContent hidden">
                         <div class="featureContent">
                             <p class="featureBodyText"><?php echo $feature["closingContent"] ?></p>

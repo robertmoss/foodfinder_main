@@ -1,6 +1,11 @@
 var currentContentKey='';
 
 window.onload = function() {
+	setHoverEvents();
+};
+
+function setHoverEvents() {
+	
 	$(".content").hover(function(){
 		showElement('floatingButtons');
 		panel = document.getElementById('floatingButtons');
@@ -17,8 +22,7 @@ window.onload = function() {
 	}
 	
 	);
-
-};
+}
 
 function editContent(element) {
 	var content_id = element[0].id;

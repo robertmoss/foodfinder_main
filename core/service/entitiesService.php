@@ -39,17 +39,17 @@ if ($listId==0) {
 
 $descending = Utility::getRequestVariable('desc', 'false');
 
-    $coretypes = array('user','tenant','entityList');
-    if(!in_array($type,$coretypes,false) && !in_array($type, Application::$knowntypes,false)) {
-        // unrecognized type requested can't do much from here.
-        Service::returnError('Unknown type: ' . $type,400,'entityService?type=' .$type);
-    }
-    
-    $classpath = Config::$root_path . '/classes/'; 
-    if(in_array($type,$coretypes,false)) {
-        // core types will be in core path as configured in config.php
-        $classpath = Config::$core_path . '/classes/';
-    }
+$coretypes = array('user','tenant','entityList');
+if(!in_array($type,$coretypes,false) && !in_array($type, Application::$knowntypes,false)) {
+    // unrecognized type requested can't do much from here.
+    Service::returnError('Unknown type: ' . $type,400,'entityService?type=' .$type);
+}
+
+$classpath = Config::$root_path . '/classes/'; 
+if(in_array($type,$coretypes,false)) {
+    // core types will be in core path as configured in config.php
+    $classpath = Config::$core_path . '/classes/';
+}
 	
 // include appropriate dataEntity class & then instantiate it
 include_once  $classpath . $type . '.php';
@@ -85,10 +85,7 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
     		Service::returnError($message);
     	}
     }
-
     
-   
-
     $addSequence = (isset($_GET["sequence"])&&(strtolower($_GET["sequence"])=="yes"||strtolower($_GET["sequence"])=="true")); 
     if ($addSequence) {
         for ($i=0;$i<count($entities);$i++) {

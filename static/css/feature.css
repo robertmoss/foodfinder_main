@@ -40,8 +40,21 @@
 	margin-top: 15px;
 	}
 	
+.featureContainer .collectionItem {
+	border: solid 1px;
+	border-color: #cccccc;
+	padding: 10px;
+	margin-bottom: 5px;
+	overflow: auto;
+
+}
+	
 .featureContainer .coverImage img {
 	max-width: 100%;
+}
+
+.featureContainer .description {
+	margin-top: 10px;
 }
 
 .featureContainer .author {
@@ -54,6 +67,16 @@
 
 }
 
+.featureContainer .bookCover {
+	text-align: center;
+	margin: 0px 0px 20px 0px;
+}
+
+.featureContainer .bookCover img {
+	max-width: 100%;
+	max-height: 400px;
+}
+
 @media screen and (min-width: 768px) {
 	.featureBodyText, .featureLaunch {
 		max-width: 570px;
@@ -62,9 +85,6 @@
 		margin-right: 0;
 	}
 	
-}
-
-@media screen and (min-width: 768px) {
 	.featureContainer h1 {
 		font-size: 32px;
 		text-transform: none;
@@ -77,6 +97,19 @@
 	.featureContainer h3 {
 		font-size: 20px;
 	}
+	
+	.featureContainer .bookCover {
+		float: left;
+		margin-right: 10px;
+	}
+	
+	.featureContainer .bookCover img {
+		min-width: 200px;
+		max-width: 200px;
+		max-height: 300px;
+}
+	
+	
 }
 
 /* location carousel styling */
