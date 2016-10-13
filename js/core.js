@@ -336,6 +336,29 @@ function postData(serviceUrl,data,messageDiv,messageSpan,callback)
 	request.send(JSON.stringify(data));
 }
 
+function postEvent(event,entityType,entityId) {
+	var serviceUrl = getCoreServiceUrl() + '/eventLog.php';
+	serviceUrl += "?event=" + event + "&entityType=" +entityType + "&entityId="+entityId;
+
+	var request = new XMLHttpRequest();
+	request.open("POST",serviceUrl,true);
+	request.onreadystatechange=function() {};
+	request.send();
+}
+
+function savePropertyBag(name,properties,messageDiv,messageSpan,callback) {
+	
+	// posts an array of properties for the propertBag identified by name parameter
+
+	var url = getCoreServiceUrl() + '/propertyBag.php';
+	var data = {
+		name: name,
+		properties: properties
+		};
+	postData(url,data,messageDiv,messageSpan,callback);
+
+}
+
 function setMessage(message, container, zone, success) {
 	// find specified message zone, unhide it, and set message text in containter element
 	
@@ -908,4 +931,7 @@ function loadEntityList(entity,setName,columns,entitiesPerPage,offset) {
 	xmlhttp.send();
 
 }
+
+
+
 

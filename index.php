@@ -15,6 +15,7 @@
 		<?php include("partials/includes.php"); ?>
         <script src="js/jquery-ui.js"></script>
         <script src="js/home.js"></script>
+        <script src="js/pageEditor.js"></script>
         <script src="js/content.js"></script>  
     </head>
     <body>
@@ -47,7 +48,7 @@
                         <div class="modal-content">
                               <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 id="pageHeader" class="modal-title">Edit Tenant</h4>
+                                <h4 id="pageHeader" class="modal-title">Edit Page</h4>
                               </div>
                               <div id="pageFormAnchor" class="modal-body">Loading form . . .</div>
                               <div class="modal-footer">
@@ -70,6 +71,7 @@
                 
                 $pageCollection = Utility::getTenantPageCollection($applicationID, $userID, $tenantID, "home"); 
                 if (is_array($pageCollection)) {
+                    echo '     <input id="pageCollectionId" type="hidden" value="home" />';
                     echo '<div id="pageContainer" class="row ' . $sortable . '">';
                     $seq=0;    
                     foreach($pageCollection as $item) { 

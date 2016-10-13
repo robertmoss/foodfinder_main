@@ -31,11 +31,11 @@ function getCollectionTemplate() {
 	var template = '<div class="collection">{{#products}}';
     template += '<div class="collectionItem">';	
 	template += '<div class="bookCover"><img src="{{imageUrl}}"/></div>';
-	template += '<h2><a href="{{url}}" target="_blank">{{name}}</a></h2>';
+	template += '<h2><a href="{{url}}" target="_blank" onclick="logClick({{id}});">{{name}}</a></h2>';
 	template += '<p class="author">By {{author}}</p>';
 	template += '{{#price}}<p class="price">${{price}}</p>{{/price}}';
 	template += '<p class="description">{{description}}</p>';
-	template += '<p><a href="{{url}}" target="_blank">Buy Now</a></p>';
+	template += '<p><a href="{{url}}" target="_blank" onclick="logClick({{id}});">Buy Now</a></p>';
 	template += '</div>';
 	template += '{{/products}}</div>';
 	
@@ -45,4 +45,8 @@ function getCollectionTemplate() {
 
 function afterCollectionEdit() {
 	location.reload();
+}
+
+function logClick(productId) {
+	postEvent('linkClick','product',productId);
 }

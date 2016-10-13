@@ -1,5 +1,6 @@
 var locations = [];
 
+
 function getTenantID()
 {
 	return document.getElementById("txtTenantID").value;
@@ -367,6 +368,7 @@ function getIconForLocation(location) {
 		}
 	return icon;
 }
+
 
 function getInfoWindowContent(location) {
 	

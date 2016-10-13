@@ -183,9 +183,15 @@
 		public function getEntitiesQuery($filters,$return,$offset) {
 			
 			$query='';
+            
+            /* allowable search criteria:
+             *      name = will add wildcard to end
+             *      state = state abbreviation
+             */
 			$name=Utility::getRequestVariable('name', '');
-			if (strlen($name)>0) {
-				$query = "call getLocationsBySearchCriteria(" . $this->tenantid . ", " . Database::queryString($name) . ", " . $return . ", " . $offset . ");";
+            $state=Utility::getRequestVariable('state', '');
+			if (strlen($name)>0 || strlen($state)>0) {
+				$query = "call getLocationsBySearchCriteria(" . $this->tenantid . ", " . Database::queryString($name) . ", " . Database::queryString($state) . ", " . $return . ", " . $offset . ");";
 			}
 			else {
 				$query = parent::getEntitiesQuery($filters, $return, $offset);	

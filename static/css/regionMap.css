@@ -1,0 +1,76 @@
+/* css for pages with maps
+ * 
+ * 
+ */
+
+.mapcontent img {
+	max-width: 100%;
+	margin: auto;
+	}
+
+@media screen and (min-width: 640px) {
+	#mapwrapper, #mapcanvas {
+		width: 100%;
+		}
+		
+	#message {
+		margin-top: 10px;
+	}
+	
+	.mapcontent {
+		width: 450px;
+	}
+
+}
+
+@media screen and (min-width: 992px) {
+ 	#mapwrapper, #mapcanvas {
+		height: 600px;
+		}	
+}
+
+@media screen and (min-width: 1200px) {
+ 	#mapwrapper, #mapcanvas {
+		height: 800px;
+		}
+	
+	
+}
+
+.mapPane {
+	position: relative;
+}
+
+.mapEnlarge {
+	position: absolute;
+	z-index: 10;
+	left: 4px;
+	top: 4px;
+}
+
+.mapWrapper {
+	position: absolute;
+}
+
+@media only screen and (min-width: 992px) {
+	.mapPane {
+		position: inherit;
+		height: 100%;
+	}
+
+	.mapEnlarge {
+		display: none;
+		position: inherit;
+		z-index: 0;
+		left: 4px;
+		top: 4px;
+	}
+	
+	.mapWrapper {
+		position: inherit;
+	}
+}
+
+	
+
+

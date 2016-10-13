@@ -52,19 +52,18 @@
                          <?php if ($user->hasRole('admin',$tenantID)) {
                             $entityType = 'productCollection';
                             $callback = 'afterCollectionEdit';
-                            include dirname(__FILE__) . '/core/partials/entityEditModal.php';
+                            include Config::$core_path . '/partials/entityEditModal.php';
+                         } 
                         ?>
-                        <div id="headline" class="headline"><h1><?php echo $collection["name"]?></h1></div>
+                        <div id="headline" class="headline"><h1><?php echo $collection["name"]?></h1></div>                        
+                         <div id="feature-buttons" class="btn-group btn-default featureButtonGroup">
+                            <button class="btn btn-default" id="editCollection" onclick="editEntity(<?php echo $id?>,'productCollection');"><span class="glyphicon glyphicon-pencil"></span> Edit Collection</button>
+                        </div>
                         <div id="description" class="description"><p><?php echo $collection["description"];?></p></div>
                     <div id="collectionAnchor" class="collectionAnchor"></div>
                     <?php include("core/partials/workingPanel.php"); ?>      
-                    <div id="feature-buttons" class="btn-group btn-default featureButtonGroup">
-                        <button class="btn btn-default" id="editCollection" onclick="editEntity(<?php echo $id?>,'productCollection');"><span class="glyphicon glyphicon-pencil"></span> Edit Collection</button>
-                    </div>
-                    <?php } ?>
                     <?php } ?>
                 </div>
-                <?php include Config::$core_path . '/partials/entityEditModal.php'; ?>
                 <?php include("partials/footer.php")?>          
             </div>
         </div>

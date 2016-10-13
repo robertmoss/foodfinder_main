@@ -75,6 +75,7 @@
         $userID=$_SESSION['userID'];
     }
     
+    Log::debug('instantiating new user for userID=' . $userID,1);
 	$user = new User($userID,$tenantID);
     Context::$currentUser = $user;
     

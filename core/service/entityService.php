@@ -17,6 +17,7 @@ include_once dirname(__FILE__) . '/../../classes/application.php';
 	
 	Utility::debug('entity service invoked for type:' . $type . ', method=' . $_SERVER['REQUEST_METHOD'] . ' user=' . $user->name, 5);
 	
+       
     if ($userID==0) {
         if ($_SERVER['REQUEST_METHOD']=="GET") {
             // if a GET, check whether anonymous access is allowed by tenant

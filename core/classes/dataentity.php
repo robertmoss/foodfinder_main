@@ -480,6 +480,8 @@ abstract class DataEntity implements iDataEntity {
 			
 			// this does a very basic update based upon common pattern
 			// override to add custom save functionality
+			
+			// if simple is true, child entities are ignored
 						
 			Utility::debug('dataentity.updateEntity called',5);
 			$queries = array();
@@ -521,58 +523,62 @@ abstract class DataEntity implements iDataEntity {
 						break;
 					case "linkedentities":
                     case "childentities":
-                        // a little extra overhead here, but due to sort/sequence keys, etc., don't want to blow away and replace unless we have to
-                        // first, determine whether linkedentities list is different
-                        $peekquery = "call get" . ucfirst($field[0]) . "By" . $this->getName() . 'Id(' . Database::queryNumber($id) . ',' . Database::queryNumber($this->tenantid) . ',' . Database::queryNumber($this->userid) .');';
-                        $results = Database::executeQuery($peekquery); 
-                        $currentSet = array();
-                        $debug = '';
-                        while ($row = $results->fetch_assoc()) {
-                            array_push($currentSet,intval($row["id"]));
-                            $debug .= $row["id"] . '-';   
-                        }
-                        $newSet = array();
-                        $debug .=  '|';
-                        if (is_array($data->{$field[0]})) {
-                            $children = $data->{$field[0]};
-                            foreach ($children as $c) {
-                                array_push($newSet,$c->id);
-                                $debug .= $c->id . '-';
+                        // if childentity field is not specified, then don't mess with children; only if child array is specific (even if any)
+                        $handle = (is_array($data->{$field[0]}));
+                        if ($handle) {
+                            // a little extra overhead here, but due to sort/sequence keys, etc., don't want to blow away and replace unless we have to
+                            // first, determine whether linkedentities list is different
+                            $peekquery = "call get" . ucfirst($field[0]) . "By" . $this->getName() . 'Id(' . Database::queryNumber($id) . ',' . Database::queryNumber($this->tenantid) . ',' . Database::queryNumber($this->userid) .');';
+                            $results = Database::executeQuery($peekquery); 
+                            $currentSet = array();
+                            $debug = '';
+                            while ($row = $results->fetch_assoc()) {
+                                array_push($currentSet,intval($row["id"]));
+                                $debug .= $row["id"] . '-';   
                             }
-                        }
-                        Log::debug('SETS: ' . $debug, 5);
-                        // first, determine whether we need to remove children
-                        for($i=0;$i<count($currentSet);$i++) {
-                            if (!in_array($currentSet[$i],$newSet)) {
-                                // one of the old children is not in new set; for now, we'll remove all    
-                                $procname = $this->getRemoveChildrenProcName($field[0]);
-                                array_push($followOnQueries,'call ' . $procname . '('. $id . ',' . $this->tenantid . ');');
-                                // blank current set so all children get re-added
-                                $currentSet = array();
-                                break;                                                                                                    
+                            $newSet = array();
+                            $debug .=  '|';
+                            if (is_array($data->{$field[0]})) {
+                                $children = $data->{$field[0]};
+                                foreach ($children as $c) {
+                                    array_push($newSet,$c->id);
+                                    $debug .= $c->id . '-';
+                                }
                             }
-                            if ($currentSet[$i]!=$newSet[$i]) {
-                                // the sequence of the members has changed; for now, we'll remove them all, too
-                                // may want more nuanced handling of this in the future if these sets get big or complex
-                                $procname = $this->getRemoveChildrenProcName($field[0]);
-                                array_push($followOnQueries,'call ' . $procname . '('. $id . ',' . $this->tenantid . ');');
-                                // blank current set so all children get re-added
-                                $currentSet = array();
-                                break;    
-                            }           
-                        }
-                        
-                        // now, determine which children need to be added
-						if (is_array($data->{$field[0]})) {
-							$children = $data->{$field[0]};
-	 						foreach ($children as $c) {
-	 						    if (!in_array($c->id,$currentSet)) {
-	 						        // this child isn't present. Will need to add
-                                    $procname = $this->getAddChildProcName($field[2]);
-                                    array_push($followOnQueries,'call ' . $procname . '('. $id . ',' . $c->id . ',' . $this->tenantid . ');');
-	 						    }
-							}
-						}
+                            Log::debug('SETS: ' . $debug, 5);
+                            // first, determine whether we need to remove children
+                            for($i=0;$i<count($currentSet);$i++) {
+                                if (!in_array($currentSet[$i],$newSet)) {
+                                    // one of the old children is not in new set; for now, we'll remove all    
+                                    $procname = $this->getRemoveChildrenProcName($field[0]);
+                                    array_push($followOnQueries,'call ' . $procname . '('. $id . ',' . $this->tenantid . ');');
+                                    // blank current set so all children get re-added
+                                    $currentSet = array();
+                                    break;                                                                                                    
+                                }
+                                if ($currentSet[$i]!=$newSet[$i]) {
+                                    // the sequence of the members has changed; for now, we'll remove them all, too
+                                    // may want more nuanced handling of this in the future if these sets get big or complex
+                                    $procname = $this->getRemoveChildrenProcName($field[0]);
+                                    array_push($followOnQueries,'call ' . $procname . '('. $id . ',' . $this->tenantid . ');');
+                                    // blank current set so all children get re-added
+                                    $currentSet = array();
+                                    break;    
+                                }           
+                            }
+                            
+                            // now, determine which children need to be added
+    						if (is_array($data->{$field[0]})) {
+    							$children = $data->{$field[0]};
+    	 						foreach ($children as $c) {
+    	 						    if (!in_array($c->id,$currentSet)) {
+    	 						        // this child isn't present. Will need to add
+                                        $procname = $this->getAddChildProcName($field[2]);
+                                        array_push($followOnQueries,'call ' . $procname . '('. $id . ',' . $c->id . ',' . $this->tenantid . ');');
+    	 						    }
+    							}
+    						}
+    					}
 						break;
 					case "custom":
 						$query .= $separator . $this->getCustomValue($field[0],$data->{$field[0]},'update');

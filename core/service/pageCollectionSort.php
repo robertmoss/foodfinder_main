@@ -8,8 +8,8 @@
  */
 
 include_once dirname(__FILE__) . '/../partials/pageCheck.php';
-include_once dirname(__FILE__) . '/../classes/core/utility.php';
-include_once dirname(__FILE__) . '/../classes/core/service.php';
+include_once dirname(__FILE__) . '/../classes/utility.php';
+include_once dirname(__FILE__) . '/../classes/service.php';
 
 if ($_SERVER['REQUEST_METHOD']=="POST") {
     $collection = Utility::getRequestVariable("collection","");

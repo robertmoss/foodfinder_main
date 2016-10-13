@@ -6,7 +6,8 @@
 		public function getName() {
 			return "Category";
 		}
-	
+
+       
 		public function getFields() {
 			$fields = array(
 				array("name","string"),

@@ -111,7 +111,7 @@
                     <?php if (strlen($feature["locationCriteria"])>0) { ?>
                         <input id="txtList" type="hidden" value="<?php echo $feature["locationCriteria"]; ?>"/>
                     <?php } ?>
-                    <?php include"(partials/workingPanel.php)";?> 
+                    <?php include("core/partials/workingPanel.php");?> 
                     <div id="closingContent" class="featureContent hidden">
                         <div class="featureContent">
                             <p class="featureBodyText"><?php echo $feature["closingContent"] ?></p>
