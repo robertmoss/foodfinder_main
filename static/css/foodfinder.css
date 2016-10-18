@@ -535,6 +535,15 @@ a:visited {
 	}
 }
 
+.logo {
+	max-width: 100%;
+}
+
+.footer-nav .nav {
+	display:inline-block;
+}
+
+
 /* floating edit button */
 .floatingControl {
 	position: absolute;

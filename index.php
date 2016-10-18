@@ -24,24 +24,25 @@
             <?php include('core/partials/contentControls.php');?>
 			<div class="jumbotron">
       				<div class="container">
-        			<h1><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'title') ?></h1>
-			        <p><h3><?php echo Utility::renderContent('home:welcomeText', $_SESSION['tenantID'],$user); ?></h3></p>
-                    <p><a class="btn btn-primary btn-lg" href="about.php" role="button">Learn more &raquo;</a>
-                    <?php
-                        $pageClass="";
-                        $sortable=""; 
-                        if ($user->hasRole('admin',$tenantID)) {
-                            $pageClass=" editable";
-                            $sortable = " sortable";
-                        ?>
-                       <a class="btn btn-default btn-lg" href="#" role="button" onclick="addPage();">Add Page</a>
-                       <div id="floatingPageButtons" class="floatingControl hidden">
-                           <a id="editPageButton" class="btn btn-default btn-sm" href="#" role="button" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                           <a id="deletePageButton" class="btn btn-default btn-sm" href="#" role="button" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
-                       </div>
-                                    <?php } ?></p>
-      			</div>
-      			 <?php if ($user->hasRole('admin',$tenantID)) { ?>
+      				    <?php
+      				      $logoUrl =  Utility::getTenantPropertyEx($applicationID, $_SESSION['tenantID'],$userID,'logo','');
+                          if ($logoUrl == '') {
+                              // show title instead
+                               echo '<h1>' . Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'title') . '</h1>';
+                               }
+                          else {
+                              echo '<img class="logo" src="' . Config::getSiteRoot()  . $logoUrl . '"/>';
+                          }
+                          ?>
+		  	           <h3><?php echo Utility::renderContent('home:welcomeText', $_SESSION['tenantID'],$user); ?></h3>
+          			</div>
+      			 <?php
+      			   $pageClass="";
+                   $sortable="";  
+      			   if ($user->hasRole('admin',$tenantID)) { 
+      			       $pageClass=" editable";
+                       $sortable = " sortable";    			     
+      			     ?>
       			 <div id="pageEditModal" class="modal fade" role="dialog">
                       <div class="modal-dialog">
                         <!-- Modal content-->
@@ -71,10 +72,13 @@
                 
                 $pageCollection = Utility::getTenantPageCollection($applicationID, $userID, $tenantID, "home"); 
                 if (is_array($pageCollection)) {
-                    echo '     <input id="pageCollectionId" type="hidden" value="home" />';
-                    echo '<div id="pageContainer" class="row ' . $sortable . '">';
-                    $seq=0;    
-                    foreach($pageCollection as $item) { 
+                    ?>
+                    <div class="">
+                        <input id="pageCollectionId" type="hidden" value="home" />
+                        <div id="pageContainer" class="row<?php echo $sortable;?>">
+                        <?php
+                        $seq=0;    
+                        foreach($pageCollection as $item) { 
                             $seq++;
                             $image = $item["imageurl"];
                             if (strlen($image)<1) {
@@ -94,11 +98,22 @@
                            </div>
                         <?php
                         }
-                    echo('</div>');
+                        ?>
+                    </div>
+                    <?php
                     }
-                
-                ?>
-                
+                    $pageClass="";
+                    $sortable=""; 
+                    if ($user->hasRole('admin',$tenantID)) {
+                        $pageClass=" editable";
+                        $sortable = " sortable";
+                        ?>
+                       <p><a class="btn btn-default btn-lg" href="#" role="button" onclick="addPage();">Add Page</a></p>
+                       <div id="floatingPageButtons" class="floatingControl hidden">
+                           <a id="editPageButton" class="btn btn-default btn-sm" href="#" role="button" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                           <a id="deletePageButton" class="btn btn-default btn-sm" href="#" role="button" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                       </div>
+                    <?php } ?>
 			     
                     
 			      </div>

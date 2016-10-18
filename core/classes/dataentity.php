@@ -81,6 +81,9 @@ abstract class DataEntity implements iDataEntity {
          *         0 indicates no max        
          *         for field type string, setting length to 0 will make field to a text in database
 		 *  [3+] info varies by field type:
+         *      string:   [3] string/text type - if identify, specifies special handling for the string. Leave undefined for regular
+         *                          string/short blocks of text.
+         *                          "html" - used for web content; specifies may contain markup and needs large format editors
          *      decimal:  [3] # of decimal points to save. (e.g. for US currency, 2, representing cents)
          *                [4] special handling: valid range is "decimal","currency"; default is decimal
          * 

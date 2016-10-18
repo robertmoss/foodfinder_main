@@ -108,13 +108,21 @@
                         <?php } ?> 
                     </div>
                     <div id="locationAnchor" class="hidden"></div>
-                    <?php if (strlen($feature["locationCriteria"])>0) { ?>
+                    <?php
+                        $hideClosing=false; 
+                        if (strlen($feature["locationCriteria"])>0) {
+                            $hideClosing = true;
+                        ?>
                         <input id="txtList" type="hidden" value="<?php echo $feature["locationCriteria"]; ?>"/>
-                    <?php } ?>
+                    <?php }
+                        else {
+                            echo '<hr/>';
+                        }
+                     ?>
                     <?php include("core/partials/workingPanel.php");?> 
-                    <div id="closingContent" class="featureContent hidden">
+                    <div id="closingContent" class="featureContent<?php if ($hideClosing) { echo ' hidden'; }?>">
                         <div class="featureContent">
-                            <p class="featureBodyText"><?php echo $feature["closingContent"] ?></p>
+                            <p class="featureBodyText"><?php echo Utility::renderWebContent($feature["closingContent"]) ?></p>
                         </div>
                         <div class="featureLaunch">
                             <button class="btn btn-primary" id="viewSlideshowAgain" onclick="launchSlideshow();">View Again <span class="glyphicon glyphicon-play"></span></button>

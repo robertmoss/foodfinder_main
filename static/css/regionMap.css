@@ -8,6 +8,10 @@
 	margin: auto;
 	}
 
+#mapwrapper, #mapcanvas {
+		min-height: 450px;
+		}
+
 @media screen and (min-width: 640px) {
 	#mapwrapper, #mapcanvas {
 		width: 100%;

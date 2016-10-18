@@ -14,7 +14,7 @@
                 array("subhead","string",300),
                 array("author","string",200),
                 array("datePosted","date"),
-                array("introContent","string","0"),
+                array("introContent","string","0","html"),
                 array("closingContent","string","0"),
                 array("locationCriteria","string",500),
                 array("locationTemplate","string",0),
@@ -34,6 +34,16 @@
         
         public function hasOwner() {
             return true;
+        }
+        
+        
+        public function getEntities($filters, $return, $offset) {
+            // override base to augment fields
+            $entities = parent::getEntities($filters,$return,$offset);
+            for ($i=0;$i<count($entities);$i++) {
+                $entities[$i]["viewLink"] = "feature.php?id=" . $entities[$i]["id"];
+            }
+            return $entities;
         }
         
     }

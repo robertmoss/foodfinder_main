@@ -880,7 +880,7 @@ function loadEntityList(entity,setName,columns,entitiesPerPage,offset) {
 				template += "</div></td>";
 		}
 		else {
-			template += "<td><div class=\"entity\"><span class=\"description\">{{" + colArray[i].toLowerCase()  +"}}</span></div></td>";
+			template += "<td><div class=\"entity\"><span class=\"description\">{{#viewLink}}<a href=\"{{viewLink}}\">{{/viewLink}}{{" + colArray[i].toLowerCase()  +"}}{{#viewLink}}</a>{{/viewLink}}</span></div></td>";
 		}
 	}
 	template += "</tr>";

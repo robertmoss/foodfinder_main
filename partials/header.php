@@ -23,16 +23,16 @@ if (Utility::getTenantProperty($applicationID, $tenantID, $userID, 'showAds')=='
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar1" aria-expanded="false">
-	        	<span class="sr-only">Toggle navigation</span>
+	        	<span class="sr-only">Toggle menu</span>
 	        	<span class="icon-bar"></span>
 	        	<span class="icon-bar"></span>
 	        	<span class="icon-bar"></span>
       		</button>
 			<a class="navbar-brand" href="<?php echo Config::getSiteRoot() ?>/index.php"><?php
-			  $icon = Utility::getTenantProperty($applicationID, $tenantID, $userID,'icon');
+			  $icon = Utility::getTenantProperty($applicationID, $tenantID, $userID,'smallLogo');
               $title = ucfirst(Utility::getTenantProperty($applicationID, $tenantID, $userID,'title'));
               if (strlen($icon)>0) {
-                  echo '<img src="' . $icon . '" alt=""' . $title . '" />';
+                  echo '<img src="' . Config::getSiteRoot() . $icon . '" alt=""' . $title . '" />';
               }
               else {
                   echo $title;

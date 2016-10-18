@@ -294,6 +294,16 @@ class Utility {
         return $value;
 	}
 
+    /*
+     * Same as getTenantProperty but adds a default value option 
+     */
+    public static function getTenantPropertyEx($applicationID, $tenantID, $userID, $property,$defaultValue) {
+        $value = Utility::getTenantProperty($applicationID, $tenantID, $userID, $property);
+        if (is_null($value)) {
+            $value = $defaultValue;
+        }
+        return $value;
+    }
 
     public static function getTenantMenu($applicationID, $userID,$tenantID) {
         // returns an array representing the menu for the particular tenant
@@ -460,7 +470,7 @@ public static function renderWebContent($content) {
         $linkURL = Config::$core_root . '/entityPage.php?type=location&id=' . $id;
         $linktext = substr($content,$idindex+1,$endindex-$idindex-1);
         $newcontent = substr($content,0,$index);
-        $newcontent .= '<a href="#" onclick="loadLocation(' . $id .');">' . $linktext . '</a>'; 
+        $newcontent .= '<a href="#" onclick="loadLocation(' . $id .');return false;">' . $linktext . '</a>'; 
         $newcontent .= substr($content,$endindex + 11);
         $runningContent .= 'Found at: ' .$index . ' through ' . $endindex . ': ' . $linktext . '<hr/>';
         $content = $newcontent;
@@ -469,6 +479,36 @@ public static function renderWebContent($content) {
         $count++;
         
     }
+
+    // replace feature tags with links
+    $index = strpos($content,'<feature ');
+    $count = 0;
+    $runningContent="";
+    while ($index>0 && $count<50) {
+        $idindex = $index+8;
+        $id='';
+        $endfound = false;
+        while (!$endfound && $idindex<strlen($content)) {
+            $id .= substr($content,$idindex,1);
+            $idindex++;
+            if (substr($content,$idindex,1)==">") {
+                $endfound=true;
+            }
+        }
+        $endindex = strpos($content,'</feature>');
+        $linkURL = Config::$core_root . '/entityPage.php?type=location&id=' . $id;
+        $linktext = substr($content,$idindex+1,$endindex-$idindex-1);
+        $newcontent = substr($content,0,$index);
+        $newcontent .= '<a href="feature.php?id=' . $id .'">' . $linktext . '</a>'; 
+        $newcontent .= substr($content,$endindex + 10);
+        $runningContent .= 'Found at: ' .$index . ' through ' . $endindex . ': ' . $linktext . '<hr/>';
+        $content = $newcontent;
+        $index = strpos($content,'<feature ');
+        $runningContent .= 'newind=' . $index;        
+        $count++;
+    }
+
+
     //$content=$runningContent;
     $content = nl2br($content);
     return $content;

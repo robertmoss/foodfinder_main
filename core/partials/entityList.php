@@ -17,7 +17,7 @@
             if (!isset($friendlyName)) {
                 $friendlyName=$entityType;
             }
-            $columnList = 'Actions,Name';
+            $columnList = 'Actions,Id,Name';
             if (isset($columns)&&strlen($columns)>0) {
                 $columnList .= $columns;
             }

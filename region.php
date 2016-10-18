@@ -6,8 +6,14 @@
      */
     include dirname(__FILE__) . '/core/partials/pageCheck.php';
     include dirname(__FILE__) . '/core/classes/propertyBag.php';
-    $thisPage="region";  
+    include_once Config::$root_path . '/classes/productCollection.php';
+
+    $thisPage="region";
+    $errMessage = "";  
     $region = Utility::getRequestVariable('region', 'none');
+    if ($region=='none') {
+        $errMessage = "Hmm. Something went wrong. No valid region specified.";
+    }
     
     // retrieve properties for this region
     $propertyBag = new PropertyBag($userID,$tenantID);
@@ -20,11 +26,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'title') ?></title>
         <?php include("partials/includes.php"); ?>
+        <link rel="stylesheet" type="text/css" href="static/css/feature.css" />
         <link rel="stylesheet" type="text/css" href="static/css/regionMap.css" />
         <script src="js/jquery-ui.js"></script>
         <script src="js/content.js" type="text/javascript"></script>
         <script src="js/pageEditor.js" type="text/javascript"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9Zbt86U4kbMR534s7_gtQbx-0tMdL0QA&libraries=places" type="text/javascript" ></script> 
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9Zbt86U4kbMR534s7_gtQbx-0tMdL0QA&libraries=places" type="text/javascript" ></script>
+        <script src="js/collection.js" type="text/javascript"></script> 
         <script src="js/regionMap.js" type="text/javascript"></script>
     </head>
     <body>
@@ -33,8 +41,14 @@
                 <?php   include('partials/header.php');
                         include('core/partials/contentControls.php');
                         include("partials/locationModal.php");
-                        include("partials/locationEditModal.php");?>
+                        include("partials/locationEditModal.php");
+                        if (strlen($errMessage)>0) {
+                            echo '<h2>' . $errMessage . '</h2>';
+                        }
+                        else {
+                        ?>
                 <div class="container">
+                    
                    <h1><?php echo Utility::renderContent('region:title' . $region, $_SESSION['tenantID'],$user); ?></h1>
                    <div class="col-md-8"><p><?php echo Utility::renderContent('region:welcomeText' . $region, $_SESSION['tenantID'],$user); ?></p></div>
                 <?php
@@ -46,7 +60,7 @@
                         ?>
                 <div class="col-md-4">
                     <a class="btn btn-default btn-lg" href="#" role="button" onclick="addPage();"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Page</a>
-                    <a class="btn btn-default btn-lg" href="#" role="button" onclick="mapSettings();"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Map Settings</a>
+                    <a class="btn btn-default btn-lg" href="#" role="button" onclick="mapSettings();"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Region Settings</a>
                 </div>
                 <div id="floatingPageButtons" class="floatingControl hidden">
                     <a id="editPageButton" class="btn btn-default btn-sm" href="#" role="button" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
@@ -81,7 +95,7 @@
                         <div class="modal-content">
                               <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 id="pageHeader" class="modal-title">Map Settings</h4>
+                                <h4 id="pageHeader" class="modal-title">Region Settings</h4>
                               </div>
                               <div class="modal-body">
                                   <form id="mapSettingsForm" class="form-horizontal">
@@ -108,6 +122,13 @@
                                               <button id="btnUseCurrentMapSettings" type="button" class="btn btn-primary" onclick="useCurrent();">Use Current Map Settings</button>
                                           </div>
                                       </div>
+                                        <div class="form-group">
+                                          <label class="col-sm-3 control-label" for="txtProductListId">Product List ID:</label>
+                                          <div class="col-sm-2">
+                                              <input id="txtProductListId" type="text" class="form-control" placeholder="product list id" />
+                                          </div>
+                                      </div>
+
                                 </form>
                               </div>
                               <div class="modal-footer">
@@ -158,6 +179,7 @@
                     <input id="mapSettingCenter" type="hidden" value="<?php echo $propertyBag->getProperty($bagName, 'mapSettingCenter', 0); ?>" />
                     <input id="mapSettingZoom" type="hidden" value="<?php echo $propertyBag->getProperty($bagName, 'mapSettingZoom', 0); ?>" />
                     <input id="mapFilterString" type="hidden" value="<?php echo $propertyBag->getProperty($bagName, 'mapFilterString', ''); ?>" /> 
+                    <input id="productListId" type="hidden" value="<?php echo $propertyBag->getProperty($bagName, 'productListId', ''); ?>" /> 
                     <input id="mapSettingPropertyBagName" type="hidden" value="<?php echo $bagName; ?>" />
                     <input id="coreServiceUrl" type="hidden" value="<?php echo Config::getCoreServiceRoot();?>" />
                     <div id="mapwrapper" class="mapWrapper">
@@ -165,7 +187,20 @@
                         <div id="loading" class="modal"><!-- Place inside div to cover --></div>
                     </div>
                 </div>
- 
+                <?php } 
+                    $productListId = $propertyBag->getProperty($bagName, 'productListId', 0);
+                    if ($productListId>0) {
+                        $class = new ProductCollection($userID,$tenantID);
+                        $collection = $class->getEntity($productListId);
+                        ?>
+                        <div class="container featureContainer condensed">
+                            <h3><?php echo Utility::renderContent('region:productListTitle' . $region, $_SESSION['tenantID'],$user); ?></h3>
+                            <p><?php echo Utility::renderContent('region:productListDescription' . $region, $_SESSION['tenantID'],$user); ?></p>
+                            <div id="collectionAnchor" class="collectionAnchor"></div>    
+                        </div>
+                        <?php
+                    }
+                ?>
                  <?php include("partials/footer.php")?>          
             </div>
         </div>

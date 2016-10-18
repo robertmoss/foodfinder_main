@@ -37,10 +37,15 @@ class Forms {
                     }
                     else {
                         switch ($field[1]) {
-                            case "string":  
-                                echo '<div id="field_' . $field[0] . '" class="form-group">';
+                            case "string":
                                 $maxlen = '';
                                 $collength = 6; 
+                                if (count($field)>3 && $field[3]=="html") {
+                                    $collength = 12;
+                                    $default_label="";                                    
+                                    echo '<div class="col-sm-12"><label class="col-sm-3" for="txt' . $field[0] . '"> ' . $class->friendlyName($field[0]) . ':</label></div>';
+                                }  
+                                echo '<div id="field_' . $field[0] . '" class="form-group">';
                                 if (count($field)>2 && $field[2]>0 ) {
                                     // add a max-length validator
                                     $maxlen = 'maxlength="' . $field[2] . '"';
@@ -50,7 +55,12 @@ class Forms {
                                 }
                                 echo $default_label;
                                 echo '  <div class="col-sm-' .$collength .'">';
-                                if (count($field)>2 && ($field[2]>200 || $field[2]==0)) { // length of 0 indicates an unlimited (text) field
+                                if (count($field)>3 && $field[3]=="html") {
+                                    // special handling for HTML content
+                                    echo '     <textarea rows="16" cols="400" id="txt' . $class->getName() . ucfirst($field[0]) . '" name="' . $field[0] . '"  class="form-control" placeholder="'. $class->friendlyName($field[0]) .'" ' . $maxlen . ' ' . $required . '>';
+                                    echo $value . '</textarea>';
+                                }
+                                elseif (count($field)>2 && ($field[2]>200 || $field[2]==0)) { // length of 0 indicates an unlimited (text) field
                                     echo '     <textarea rows="4" cols="200" id="txt' . $class->getName() . ucfirst($field[0]) . '" name="' . $field[0] . '"  class="form-control" placeholder="'. $class->friendlyName($field[0]) .'" ' . $maxlen . ' ' . $required . '>';
                                     echo $value . '</textarea>';
                                     }

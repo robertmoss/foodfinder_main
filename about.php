@@ -24,7 +24,7 @@
 	    		<div class="jumbotron">
 	    			<h2>About <?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'title') ?></h2>
 	    			<p><?php echo Utility::renderContent('about:aboutText', $_SESSION['tenantID'],$user); ?></p>
-	    			<p><a class="btn btn-primary" href="mailto:mossr19@gmail.com">Contact Us</a></p>
+	    			<p><a class="btn btn-primary" href="mailto:<?php echo Utility::getTenantPropertyEx($applicationID, $_SESSION['tenantID'],$userID,'contactEmail','mossr19@gmail.com') ?>">Contact Us</a></p>
 	    		</div>
 	    		<p>Version <?php echo Application::$version ?></p>
 	    	</div>	

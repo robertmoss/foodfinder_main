@@ -1,6 +1,11 @@
 <?php
-        include_once dirname(__FILE__) . '/../classes/config.php'; ?>
-        <link rel="shortcut icon" type="image/x-icon" href="<?php echo Config::getSiteRoot();?>/img/icons/ff_favicon.ico" />
+        include_once dirname(__FILE__) . '/../classes/config.php';
+        include_once dirname(__FILE__) . '/../core/classes/utility.php';  
+        
+        $icon = Utility::getTenantPropertyEx($applicationID, $tenantID, $userID, 'icon', '/img/icons/ff_favicon.ico');
+        
+        ?>
+        <link rel="shortcut icon" type="image/x-icon" href="<?php echo Config::getSiteRoot() . $icon; ?>" />
         <link rel="stylesheet" type="text/css" href="<?php echo Config::getSiteRoot();?>/core/css/styles.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo Config::getSiteRoot();?>/core/css/bootstrap.css" />	
         <link rel="stylesheet" type="text/css" href="<?php echo Config::getSiteRoot();?>/static/css/foodfinder.css" />

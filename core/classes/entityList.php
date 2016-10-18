@@ -46,8 +46,13 @@ class EntityList extends DataEntity {
            $markup .= '</div>';
            
            //$child_array = $this->getAvailableChildren($fieldName,$this->tenantid);
-           $query = 'call getEntitiesByEntityListId(' . $entityId . ',' . $this->tenantid . ')';
-           $child_array = Database::executeQueryReturnArray($query);
+           if ($entityId==0) { // new entityList, so no children}
+               $child_array = array();
+               }
+           else {
+             $query = 'call getEntitiesByEntityListId(' . $entityId . ',' . $this->tenantid . ')';
+             $child_array = Database::executeQueryReturnArray($query);
+           }
            
            $markup .= '<div class="panel-body">';
            $markup .= '<div id="entityListContainer" class="row sortable">';

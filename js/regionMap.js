@@ -2,6 +2,7 @@ window.onload = function()
 {
 	setHoverEvents(); // call to content.js function to enable content control events
 	initializeMap('resultSpan');
+	loadProducts(); // need to fix: clashing with loadLocations
 	hideElement('list-loader');
 	
 };
@@ -65,11 +66,11 @@ function loadLocations(latitude,longitude,anchor) {
 			serviceURL += "&" + filter;
 		}
 				
-		xmlhttp=new XMLHttpRequest();
-		xmlhttp.onreadystatechange=function() {
-		  if (xmlhttp.readyState==4) {
-		  	if (xmlhttp.status==200) {
-			    var view = JSON.parse(xmlhttp.responseText);
+		xmlhttp2=new XMLHttpRequest();
+		xmlhttp2.onreadystatechange=function() {
+		  if (xmlhttp2.readyState==4) {
+		  	if (xmlhttp2.status==200) {
+			    var view = JSON.parse(xmlhttp2.responseText);
 				
 				// clean up and enrich data
 				if (view.locations.length==0) {
@@ -130,8 +131,8 @@ function loadLocations(latitude,longitude,anchor) {
 		   
 		 }; // end onreadystatechange function
 		
-		xmlhttp.open("GET",serviceURL,true);
-		xmlhttp.send();
+		xmlhttp2.open("GET",serviceURL,true);
+		xmlhttp2.send();
 		hideElement('loading');
 	}     
 
@@ -160,6 +161,8 @@ function mapSettings() {
 	document.getElementById('txtMapSettingZoom').value = document.getElementById('mapSettingZoom').value; 
 	document.getElementById('txtMapSettingCenter').value = document.getElementById('mapSettingCenter').value;
 	document.getElementById('txtMapFilterString').value = document.getElementById('mapFilterString').value;
+	document.getElementById('txtMapFilterString').value = document.getElementById('mapFilterString').value;
+	document.getElementById('txtProductListId').value = document.getElementById('productListId').value;
 	hideElement('mapSettings-message');
 	$('#mapSettingsModal').modal();
 }
@@ -176,21 +179,22 @@ function saveMapSettings() {
 	document.getElementById('mapSettingZoom').value = document.getElementById('txtMapSettingZoom').value; 
 	document.getElementById('mapSettingCenter').value = document.getElementById('txtMapSettingCenter').value;
 	document.getElementById('mapFilterString').value = document.getElementById('txtMapFilterString').value;
+	document.getElementById('productListId').value = document.getElementById('txtProductListId').value;
 
 	var bagName = getElementValue('mapSettingPropertyBagName');
 
 	var properties = {
 		mapSettingCenter: document.getElementById('txtMapSettingCenter').value,
 		mapSettingZoom: document.getElementById('txtMapSettingZoom').value,
-		mapFilterString: document.getElementById('txtMapFilterString').value
+		mapFilterString: document.getElementById('txtMapFilterString').value,
+		productListId: document.getElementById('txtProductListId').value
 	};
 	
 	savePropertyBag(bagName,properties,'mapSettings-message','mapSettings-message_text',bagSaved);	 
 }
 
 function bagSaved(success) {
-	if (success) {
 	 	$('#mapSettingsModal').modal('hide');
 	 	initializeMap();	
 	}
-}
+
