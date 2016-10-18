@@ -267,7 +267,7 @@ function loadLocation(id) {
     	keyboard: false
 		});
 	getJSON(serviceURL,null,null,loadLocationCallback,loadLocationError);
-		
+	return false;
 }
 
 function loadLocationCallback(location) {
@@ -384,7 +384,7 @@ function getInfoWindowContent(location) {
 		visited='true';
 	}	
 	//var link =  '<a href="#" onclick="loadLocation('+ location.id +',\'' + escapeSingleQuotes(location.name) + '\'' +  ',' + visited + ');">' + location.name + '</a>';
-	var link =  '<a href="#" onclick="loadLocation('+ location.id + ');">' + location.name + '</a>';
+	var link =  '<a href="#" onclick="loadLocation('+ location.id + ');return false;">' + location.name + '</a>';
 	var flag = '';
 	if (location.status=="Closed"||location.status=="Temporarily Closed") {
 		flag += '<div class="flag warning"><span class="flag warning"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> ' + location.status +  '</span></div>';

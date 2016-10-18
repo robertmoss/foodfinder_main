@@ -658,3 +658,18 @@ execute stmt using @listId,@tenantid,@start,@num;
 END$$
 DELIMITER ;
 
+USE food;
+
+CREATE TABLE IF NOT EXISTS `food`.`event` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `event` VARCHAR(100) NULL,
+  `entityType` VARCHAR(100) NULL,
+  `entityId` INT NULL,
+  `datetime` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `userId` INT NULL,
+  `sessionId` VARCHAR(100) NULL,
+  `tenantId` INT NULL,
+  PRIMARY KEY (`id`));
+
+
+
