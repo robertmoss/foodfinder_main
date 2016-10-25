@@ -27,7 +27,6 @@ class Database {
 	
 	public static function queryDate($value) {
 		
-		
 		if (is_null($value)||$value=='') {
 				return "null";
 			} 
@@ -37,7 +36,7 @@ class Database {
 		    }
 			// format string as MySQL compliant date
 			$time = strtotime($value);
-			$newformat = date('Y-m-d',$time);
+			$newformat = date('Y-m-d H:i:s',$time);
 	
 			return "'" . $newformat . "'";
 		}
@@ -127,10 +126,12 @@ class Database {
               mysqli_rollback($con);
               throw new Exception(mysqli_error($con));
           }
-          Log::debug('Transaction started.', 1);
+         Log::debug('Transaction started.', 1);
          $success = true;
+         Log::debug('Executing ' . count($queries) . ' queries . . .',1);
          foreach($queries as $query) {
-                Log::debug('executing query [' . $query . ']', 5); 
+               Log::debug($query,1);
+               Log::debug('executing query [' . $query . ']', 5); 
                $data = mysqli_query($con,$query);
                 if (!$data) {
                     $success=false;

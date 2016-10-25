@@ -5,6 +5,9 @@
         $icon = Utility::getTenantPropertyEx($applicationID, $tenantID, $userID, 'icon', '/img/icons/ff_favicon.ico');
         
         ?>
+        <meta name="google-site-verification" content="EVseykSDcywsuXfI_yxXRBoOfQ5ijEKZdrTHQmvldD8" />
+        
+        
         <link rel="shortcut icon" type="image/x-icon" href="<?php echo Config::getSiteRoot() . $icon; ?>" />
         <link rel="stylesheet" type="text/css" href="<?php echo Config::getSiteRoot();?>/core/css/styles.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo Config::getSiteRoot();?>/core/css/bootstrap.css" />	

@@ -14,12 +14,15 @@
  
     if (!isset($callback)) {
         $callback = '';
-    }
+        }
+    if (!isset($modalSize)) {
+        $modalSize="";
+        }
  
  ?>
          <!-- Entity Edit Modal -->
          <div id="<?php echo $entityType;?>EditModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
+            <div class="modal-dialog <?php echo $modalSize;?>">
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">

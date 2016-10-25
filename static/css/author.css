@@ -1,0 +1,23 @@
+.articleList {
+	clear: both;
+	padding-top: 10px;
+	padding-bottom: 30px;
+	overflow: auto;
+}
+
+.articleList h3 {
+	font-size: 16px;
+	color: #e68a00;
+	text-transform: uppercase;
+}
+
+.articleList .imageWrapper {
+	height: 200px;
+	overflow:hidden;
+	vertical-align: middle;
+}
+
+.articleList img {
+	width: 100%;
+
+}

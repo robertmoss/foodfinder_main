@@ -1,5 +1,6 @@
 <?php 
 	include dirname(__FILE__) . '/core/partials/pageCheck.php';
+    include_once dirname(__FILE__) . '/core/classes/format.php';
      include_once Config::$root_path . '/classes/feature.php';
 	$thisPage="feature";
     
@@ -77,12 +78,11 @@
     			    <?php if (strlen($feature["subhead"])>0) {
                            echo '<h2>' . $feature["subhead"] . '</h2>'; 
                             }
-                        if (strlen($feature["author"])>0) {
-                                echo '<p class="author">By ' . $feature["author"] . "</p>";
+                        if (strlen($feature["authorName"])>0) {
+                                echo '<p class="author">By <a href="author.php?id=' . $feature["author"] . '">' . $feature["authorName"] . "</a></p>";
                             }
                             if (strlen($feature["datePosted"])>0) {
-                                $postDate = new DateTime($feature["datePosted"]);
-                                echo '<p class="postdate">Posted ' . $postDate->format('F d, Y') . "</p>";
+                                echo '<p class="postdate">Posted ' . Format::formatDateLine($feature["datePosted"], true) . "</p>";
                             }
                     ?>
                     </div>
@@ -124,7 +124,7 @@
                         <div class="featureContent">
                             <p class="featureBodyText"><?php echo Utility::renderWebContent($feature["closingContent"]) ?></p>
                         </div>
-                        <div class="featureLaunch">
+                        <div class="featureLaunch hidden">
                             <button class="btn btn-primary" id="viewSlideshowAgain" onclick="launchSlideshow();">View Again <span class="glyphicon glyphicon-play"></span></button>
                         </div>
                     </div>

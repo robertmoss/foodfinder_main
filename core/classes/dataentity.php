@@ -598,6 +598,7 @@ abstract class DataEntity implements iDataEntity {
 			}
 			
 			$query .= ')';
+            Log::debug('Pushing query ' . $query,1);
 			array_push($queries,$query);
 			
 			// handle user-defined properties

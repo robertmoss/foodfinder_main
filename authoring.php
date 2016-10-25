@@ -9,7 +9,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Food Finder</title>
+        <title><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'title') ?> - Authoring</title>
         <?php include("partials/includes.php"); ?>
         <script type="text/javascript" src="<?php echo Config::$site_root?>/js/validator.js"></script>
         <script type="text/javascript" src="<?php echo Config::$site_root?>/js/bootpag.min.js"></script>
@@ -35,8 +35,10 @@
                         <div id="features" role="tabpanel" class="tab-pane active">
                             <?php
                                 $entityType="feature";
-                                $setName = "features"; 
+                                $setName = "features";
+                                $modalSize = "large"; 
                                 include('core/partials/entityList.php');
+                                $modalSize="";
                             ?>
                         </div>    
                         <div id="locations" role="tabpanel" class="tab-pane">

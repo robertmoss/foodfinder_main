@@ -61,7 +61,9 @@
                         </div>
                         <div id="description" class="description"><p><?php echo $collection["description"];?></p></div>
                     <div id="collectionAnchor" class="collectionAnchor"></div>
-                    <?php include("core/partials/workingPanel.php"); ?>      
+                    <?php
+                        $showWorkingPanel = true; 
+                        include("core/partials/workingPanel.php"); ?>      
                     <?php } ?>
                 </div>
                 <?php include("partials/footer.php")?>          

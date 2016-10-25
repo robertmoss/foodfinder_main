@@ -14,6 +14,16 @@
     if ($region=='none') {
         $errMessage = "Hmm. Something went wrong. No valid region specified.";
     }
+    else { 
+        $stateList = Utility::getTenantProperty($applicationID,$tenantID,$userID,'enabledStates');
+        if (!is_null($stateList)) {
+            $stateArray=explode(",",$stateList);
+            if (!in_array($region,$stateArray)) {
+                $errMessage = "That is not a valid region.";
+            }
+        }
+    }
+    
     
     // retrieve properties for this region
     $propertyBag = new PropertyBag($userID,$tenantID);
@@ -43,7 +53,7 @@
                         include("partials/locationModal.php");
                         include("partials/locationEditModal.php");
                         if (strlen($errMessage)>0) {
-                            echo '<h2>' . $errMessage . '</h2>';
+                            echo '<div class="container"><h2>Oops.</h2><p>' . $errMessage . '</p></div>';
                         }
                         else {
                         ?>
@@ -123,9 +133,9 @@
                                           </div>
                                       </div>
                                         <div class="form-group">
-                                          <label class="col-sm-3 control-label" for="txtProductListId">Product List ID:</label>
+                                          <label class="col-sm-3 control-label" for="txtProductCollectionId">Product Collection ID:</label>
                                           <div class="col-sm-2">
-                                              <input id="txtProductListId" type="text" class="form-control" placeholder="product list id" />
+                                              <input id="txtProductCollectionId" type="text" class="form-control" placeholder="product collection id" />
                                           </div>
                                       </div>
 
@@ -179,7 +189,7 @@
                     <input id="mapSettingCenter" type="hidden" value="<?php echo $propertyBag->getProperty($bagName, 'mapSettingCenter', 0); ?>" />
                     <input id="mapSettingZoom" type="hidden" value="<?php echo $propertyBag->getProperty($bagName, 'mapSettingZoom', 0); ?>" />
                     <input id="mapFilterString" type="hidden" value="<?php echo $propertyBag->getProperty($bagName, 'mapFilterString', ''); ?>" /> 
-                    <input id="productListId" type="hidden" value="<?php echo $propertyBag->getProperty($bagName, 'productListId', ''); ?>" /> 
+                    <input id="productCollectionId" type="hidden" value="<?php echo $propertyBag->getProperty($bagName, 'productCollectionId', '');?>" />
                     <input id="mapSettingPropertyBagName" type="hidden" value="<?php echo $bagName; ?>" />
                     <input id="coreServiceUrl" type="hidden" value="<?php echo Config::getCoreServiceRoot();?>" />
                     <div id="mapwrapper" class="mapWrapper">
@@ -196,6 +206,7 @@
                         <div class="container featureContainer condensed">
                             <h3><?php echo Utility::renderContent('region:productListTitle' . $region, $_SESSION['tenantID'],$user); ?></h3>
                             <p><?php echo Utility::renderContent('region:productListDescription' . $region, $_SESSION['tenantID'],$user); ?></p>
+                            <input id="queryParams" type="hidden" value="<?php echo $collection["queryParams"]; ?>" />
                             <div id="collectionAnchor" class="collectionAnchor"></div>    
                         </div>
                         <?php

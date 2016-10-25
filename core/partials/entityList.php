@@ -17,6 +17,9 @@
             if (!isset($friendlyName)) {
                 $friendlyName=$entityType;
             }
+            if (!isset($modalSize)) {
+                $modalSize="";
+            }
             $columnList = 'Actions,Id,Name';
             if (isset($columns)&&strlen($columns)>0) {
                 $columnList .= $columns;

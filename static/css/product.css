@@ -1,0 +1,23 @@
+.productModal {
+	overflow: auto;
+}
+
+.productModal .author {
+	text-transform:uppercase; 
+}
+
+.productModalImage {
+	text-align: center;
+}
+
+.productModalImage img {
+	max-width: 100%;
+	max-height: 400px;
+}
+
+@media screen and (min-width: 768px) {
+	.productModalImage {
+	float: left;
+	margin-right: 10px;
+}
+}

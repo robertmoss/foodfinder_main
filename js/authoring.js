@@ -107,3 +107,16 @@ function txtEntitySearchKeyPress(e) {
 		return false;
 	}
 }
+
+function lookupProductOnAmazon() {
+	// putting this in authoring.js for now; if needed on other pages may need to pull out into its
+	// own product script
+	
+	var $productName = getElementValue('txtProductName');
+	if (!$productName) {
+		alert('Please enter a product name to search for.');
+	}
+	else {
+		alert('Looking up ' + $productName);
+	}
+}

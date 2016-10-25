@@ -286,6 +286,12 @@ function loadLocationCallback(location) {
 	else {
 		hideElement('btnViewMaster');
 		hideElement('btnEditLocation');
+	}
+	var btnDirections = document.getElementById("btnDirections");
+	if (btnDirections) {
+		// wire href on directions button
+		// this works for Apple. Need to figure out what to use for other platforms
+		btnDirections.href=encodeURI("http://maps.apple.com/?q=" + location.name + "&sll=" +location.latitude + "," + location.longitude + "&daddr=" + location.address + " " + location.city + " " + location.state);
 	}	
 }
 
@@ -374,7 +380,12 @@ function getInfoWindowContent(location) {
 	
 	var shortdesc = location.shortdescription;
 	if (!shortdesc) {
-		var shortdesc = location.shortdesc;
+		shortdesc = location.shortdesc;
+	}
+	if (!shortdesc) {
+		// if no shortdescription has been defined, just leave blank for now; may consider adding
+		// a generic description in future
+		shortdesc = "";
 	}
 	if (shortdesc && shortdesc.length>100) {
 		shortdesc = shortdesc.substring(0,100) + "...";
@@ -473,7 +484,6 @@ function visitedUpdated(success) {
 	}
 	
 }
-
 
 // CONFIG - configuration functions
 function showConfig() {

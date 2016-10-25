@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
     
 	try {
 		$entity = $class->getEntity($id);
-        if ($entity["owningtenant"] != $tenantID) {
+        if (array_key_exists("owningtenant",$entity) && $entity["owningtenant"] != $tenantID) {
             // this is an entity shared by another tenant and, therefore, is not editable 
             $entity["editable"] = false;
             $entity["shared"] = true;

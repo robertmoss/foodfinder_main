@@ -39,9 +39,11 @@ class Forms {
                         switch ($field[1]) {
                             case "string":
                                 $maxlen = '';
-                                $collength = 6; 
+                                $collength = 6;
+                                $indented = ""; 
                                 if (count($field)>3 && $field[3]=="html") {
                                     $collength = 12;
+                                    $indented = " indent";
                                     $default_label="";                                    
                                     echo '<div class="col-sm-12"><label class="col-sm-3" for="txt' . $field[0] . '"> ' . $class->friendlyName($field[0]) . ':</label></div>';
                                 }  
@@ -54,7 +56,7 @@ class Forms {
                                     }
                                 }
                                 echo $default_label;
-                                echo '  <div class="col-sm-' .$collength .'">';
+                                echo '  <div class="col-sm-' .$collength . $indented . '">';
                                 if (count($field)>3 && $field[3]=="html") {
                                     // special handling for HTML content
                                     echo '     <textarea rows="16" cols="400" id="txt' . $class->getName() . ucfirst($field[0]) . '" name="' . $field[0] . '"  class="form-control" placeholder="'. $class->friendlyName($field[0]) .'" ' . $maxlen . ' ' . $required . '>';
@@ -120,7 +122,7 @@ class Forms {
                             case "linkedentity":
                                 $collength = 6;
                                 if (count($field)>2) {
-                                    if ($field[2]<50) {
+                                    if ($field[2]<10) {
                                         $collength = 2;
                                     }
                                 }

@@ -162,7 +162,7 @@ function mapSettings() {
 	document.getElementById('txtMapSettingCenter').value = document.getElementById('mapSettingCenter').value;
 	document.getElementById('txtMapFilterString').value = document.getElementById('mapFilterString').value;
 	document.getElementById('txtMapFilterString').value = document.getElementById('mapFilterString').value;
-	document.getElementById('txtProductListId').value = document.getElementById('productListId').value;
+	document.getElementById('txtProductCollectionId').value = document.getElementById('productCollectionId').value;
 	hideElement('mapSettings-message');
 	$('#mapSettingsModal').modal();
 }
@@ -179,7 +179,7 @@ function saveMapSettings() {
 	document.getElementById('mapSettingZoom').value = document.getElementById('txtMapSettingZoom').value; 
 	document.getElementById('mapSettingCenter').value = document.getElementById('txtMapSettingCenter').value;
 	document.getElementById('mapFilterString').value = document.getElementById('txtMapFilterString').value;
-	document.getElementById('productListId').value = document.getElementById('txtProductListId').value;
+	document.getElementById('productCollectionId').value = document.getElementById('txtProductCollectionId').value;
 
 	var bagName = getElementValue('mapSettingPropertyBagName');
 
@@ -187,7 +187,7 @@ function saveMapSettings() {
 		mapSettingCenter: document.getElementById('txtMapSettingCenter').value,
 		mapSettingZoom: document.getElementById('txtMapSettingZoom').value,
 		mapFilterString: document.getElementById('txtMapFilterString').value,
-		productListId: document.getElementById('txtProductListId').value
+		productListId: document.getElementById('txtProductCollectionId').value
 	};
 	
 	savePropertyBag(bagName,properties,'mapSettings-message','mapSettings-message_text',bagSaved);	 

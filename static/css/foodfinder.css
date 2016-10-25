@@ -351,6 +351,22 @@ a:visited {
 	    overflow-y: scroll;
 }
 
+@media only screen and (min-width: 768px) {
+	.modal .large {
+		width: 90%;
+		max-width: 900px;
+	}
+	
+	.form-group .indent {
+		padding-left: 30px;
+		padding-right: 30px;
+	}
+	
+}
+
+
+
+
 /* bootstrap modals don't work well on iPhones (scroll issues) 
  so these properties show/hide links that drive mobile-specific behavior */
 .non-mobile {
@@ -435,6 +451,8 @@ a:visited {
 	width: 100%;
 }
 
+
+
 .homePanelImage  {
 	display: block;
 	float: left;
@@ -453,10 +471,96 @@ a:visited {
 .overlay p {
 	font-size: 14px;
 }
+
+
+.news h2 {
+	font-size: 20px;
+	color: #337ab7;
+
+}
+
+.news h3 {
+	font-size: 16px;
+	color: #e68a00;
+}
+
+.news .dateline {
+	text-transform:uppercase;
+	margin-top: -5px;
+	font-size: 10px;
+}
+
+.news a, a:visited {
+	color: #e68a00;
+}
+
+.news .author a:visited {
+	color: #337ab7;
+}
+
+.news .more {
+	font-size: 14px;
+	text-transform: uppercase;
+	margin-right: 10px;
+}
+
+.news .more a:visited {
+	color: #337ab7;
+	
+}
+
+.newsItem {
+		margin-bottom: 10px;
+		padding-top: 5px;
+		border-top: solid 1px #cccccc;
+	}
+
+.newsItem h3 {
+	margin-top: 5px;
+	font-size: 20px;
+}
+
+.newsImage img {
+	display: none;
+}
+
+@media (min-width: 768px) {
+	.newsImage {
+		float: left;
+		min-width: 200px;
+		min-height: 200px;
+	}
+	
+	.newsItem h3 {
+		margin-top: 0px;
+		font-size: 26px;
+	}
+
+	
+	.newsImage img {
+		display: block;
+		width: 200px;
+		margin-right: 10px;
+	}
+	
+}
+
 @media (min-width: 992px) {
 	
 	.homePanelImage  {
 		display: none;
+	}
+	
+	.homePanelInner .news {
+		position: absolute;
+		border: solid 1px #aaaaaa;
+    	padding: 10px;
+    	height: 100%;
+    	width: 100%;
+	}
+
+	.homePanelInner .news h2 {	
+		margin-top: 0px;	
 	}
 
 	/* overlay for displaying text on images */
@@ -492,7 +596,19 @@ a:visited {
     	width: 100%;
     	color: #ffffff;
 	}
+	
+	.news .more {
+		text-align: right;
+		font-size: 14px;
+		text-transform: uppercase;
+		position: absolute;
+		bottom: 0px;
+		right: 0px;
+		margin-right: 10px;
 }
+}
+
+
 
 /* social bar */
 

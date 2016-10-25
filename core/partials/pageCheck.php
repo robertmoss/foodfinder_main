@@ -46,7 +46,7 @@
         elseif ($_SERVER['SERVER_NAME']=='bars.food-find.com') {
             $_SESSION['tenantID'] = 5;
         }
-        elseif ($_SERVER['SERVER_NAME']=='bbq.food-find.com') {
+        elseif ($_SERVER['SERVER_NAME']=='bbqhub.net' || $_SERVER['SERVER_NAME']=='www.bbqhub.net' || $_SERVER['SERVER_NAME']=='bbq.food-find.com') {
             $_SESSION['tenantID'] = 3;
         }
     }

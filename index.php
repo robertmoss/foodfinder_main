@@ -2,6 +2,8 @@
 	include_once dirname(__FILE__) . '/classes/config.php';
 	include_once Config::$core_path . '/partials/pageCheck.php';
 	include_once Config::$core_path . '/classes/utility.php';
+    include_once Config::$core_path . '/classes/format.php';
+    include_once dirname(__FILE__). '/classes/feature.php';
 	$thisPage="index";
     $finditem = Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'finditem');
  ?>
@@ -69,7 +71,7 @@
                     <div class='alert alert-info'><h3>Welcome contributor!</h3> To learn more about the Food Finder platform and how you can
                         contribute, <a href="contribute.php">please visit the Contribute page.</a></div>
                 <?php } 
-                
+        
                 $pageCollection = Utility::getTenantPageCollection($applicationID, $userID, $tenantID, "home"); 
                 if (is_array($pageCollection)) {
                     ?>
@@ -84,6 +86,31 @@
                             if (strlen($image)<1) {
                                 $image = 'img/placeholder.jpg';
                             }
+                            if (strtolower($item["name"])=="news") {
+                            ?>
+                           <div id="page<?php echo $seq ?>" class="col-md-4 homePanel <?php echo $pageClass ?>" >
+                              <div class="homePanelInner">  
+                                <p class="hidden"><?php echo $item["id"]?></p>
+                                <div class="news">
+                                    <h2>Latest News</h2>
+                                    <?php 
+                                        // spin up a features collection with latest news
+                                        $class = new feature($userID,$tenantID);
+                                        $filters = array('news'=>'true');
+                                        $newsItems = $class->getEntities($filters,4,0);  
+                                        foreach($newsItems as $newsItem) {
+                                            echo '<h3 class="headline"><a href="feature.php?id=' . $newsItem["id"] . '">' . $newsItem["headline"]. '</a></h3>';
+                                            echo '<p class="dateline">' . Format::formatDateLine($newsItem["datePosted"],true) . '</p>';
+                                        }
+                                    ?>
+                                    <p class="more"><a href="news.php">More <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></p>
+                                </div>
+                                <div class="buttonPane"></div>
+                              </div>
+                           </div>                               
+                            <?php    
+                            }
+                            else {
                             ?>
                            <div id="page<?php echo $seq ?>" class="col-md-4 homePanel <?php echo $pageClass ?>" onclick="window.location='<?php echo $item["url"] ?>';">
                               <div class="homePanelInner" style="background-image:url('<?php echo $image?>');">  
@@ -96,10 +123,11 @@
                                 <div class="buttonPane"></div>
                               </div>
                            </div>
-                        <?php
-                        }
-                        ?>
-                    </div>
+                            <?php
+                            }
+                           }
+                           ?>
+                        </div>
                     <?php
                     }
                     $pageClass="";

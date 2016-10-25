@@ -677,7 +677,7 @@ function editEntity(id,entity,callback) {
 	// callback will be called once form is loaded with status value (e.g. 200 success) from service
 	// 	call to retrieve the entity being edited
 	
-	var headerText= (id>0) ? 'Edit ' + entity : "Add New " + entity;
+	var headerText= (id>0) ? 'Edit ' + ucfirst(entity) : "Add New " + ucfirst(entity);
 	setElementText(entity + 'Header',headerText);
 	var serviceURL = getCoreServiceUrl() + "/formService.php?type=" + entity;
 	serviceURL += "&id=" + id;

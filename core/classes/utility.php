@@ -5,6 +5,7 @@ include_once dirname(__FILE__) . '/database.php';
 include_once dirname(__FILE__) . '/log.php';
 include_once dirname(__FILE__) . '/cache.php';
 include_once dirname(__FILE__) . '/tenant.php';
+include_once dirname(__FILE__) . '/format.php';
 
 
 class Utility {
@@ -79,6 +80,8 @@ class Utility {
 		// others are retrieved from database
 		
 		// in future, need to add caching here since many of these lists will be slowly-changing at best
+		// also, this is now very application specific and needs to get moved out of Utility to some sort
+		// of list server object
 		
 		$return = array();
 		switch ($listID) {
@@ -204,6 +207,16 @@ class Utility {
                     {
                         $return[]= array($type,$type);        
                     }
+                break;
+            case "authorList":
+                Utility::debug('retrieving author list . . .', 5);
+                $query = "call getAuthorListByTenant(" . Database::queryNumber($tenantID) . ")";
+                $types = Database::executeQuery($query);
+                $return[] = array(null,"-- none --",null,null);
+                while ($r=mysqli_fetch_array($types,MYSQLI_NUM))
+                {
+                    $return[] = $r;
+                }
                 break;
 			default:
 				Log::debug("Utility:getList() called with unknown list type:" . $listID,10);
@@ -403,116 +416,17 @@ class Utility {
 		}
 	}
 	
-/* Web display functions */
+/* passthroughs for functions moved to other classes so we don't break calling code */
 public static function addDisplayElements($location) {
-	
-	// adds helping elements to a location or other data set to support web & mobile display
-	// $location is an associative array of data 
-	
-	// format URLs for on-screen display
-	if (array_key_exists("url",$location) && strlen($location["url"])>0) {
-		// strip http & trailing slash
-		$url = $location["url"];
-		$url = str_replace("http://","",$url);
-		$url = str_replace("https://","",$url);
-		if (substr($url,-1)=='/') {
-			$url = rtrim($url,'/');
-		}
-		$location["displayurl"] = $url;
-	}
 
-	// add a version of phonenumber that is clickable on devices
-	if (array_key_exists("phone",$location) && strlen($location["phone"])>0) {
-		// format to remove characters & make clickable
-		$phone = $location["phone"];
-		$phone = str_replace("(","",$phone);
-		$phone = str_replace(")","",$phone);
-		$phone = str_replace("-","",$phone);
-		$phone = str_replace(" ","",$phone);
-		if (substr($phone,1)!='1') {
-			$phone = '+1' . $phone;
-		}
-		$location["clickablephone"] = $phone;
-	}
-	
-	// add a version of phonenumber that is clickable on devices
-	if (array_key_exists("uservisits",$location)) {
-		// format to remove characters & make clickable
-		if ($location["uservisits"]>0) {
-			$location["visited"] = 'yes';
-		}
-	}
-	
-	return $location;
+	return Format::addDisplayElements($location);
 }
 
-/*
- * Takes a string and augments it to render correctly as HTML content
- */
 public static function renderWebContent($content) {
     
-    // replace location tags with links
-    $index = strpos($content,'<location ');
-    $count = 0;
-    $runningContent="";
-    while ($index>0 && $count<50) {
-        $idindex = $index+9;
-        $id='';
-        $endfound = false;
-        while (!$endfound && $idindex<strlen($content)) {
-            $id .= substr($content,$idindex,1);
-            $idindex++;
-            if (substr($content,$idindex,1)==">") {
-                $endfound=true;
-            }
-        }
-        $endindex = strpos($content,'</location>');
-        $linkURL = Config::$core_root . '/entityPage.php?type=location&id=' . $id;
-        $linktext = substr($content,$idindex+1,$endindex-$idindex-1);
-        $newcontent = substr($content,0,$index);
-        $newcontent .= '<a href="#" onclick="loadLocation(' . $id .');return false;">' . $linktext . '</a>'; 
-        $newcontent .= substr($content,$endindex + 11);
-        $runningContent .= 'Found at: ' .$index . ' through ' . $endindex . ': ' . $linktext . '<hr/>';
-        $content = $newcontent;
-        $index = strpos($content,'<location ');
-        $runningContent .= 'newind=' . $index;        
-        $count++;
-        
-    }
-
-    // replace feature tags with links
-    $index = strpos($content,'<feature ');
-    $count = 0;
-    $runningContent="";
-    while ($index>0 && $count<50) {
-        $idindex = $index+8;
-        $id='';
-        $endfound = false;
-        while (!$endfound && $idindex<strlen($content)) {
-            $id .= substr($content,$idindex,1);
-            $idindex++;
-            if (substr($content,$idindex,1)==">") {
-                $endfound=true;
-            }
-        }
-        $endindex = strpos($content,'</feature>');
-        $linkURL = Config::$core_root . '/entityPage.php?type=location&id=' . $id;
-        $linktext = substr($content,$idindex+1,$endindex-$idindex-1);
-        $newcontent = substr($content,0,$index);
-        $newcontent .= '<a href="feature.php?id=' . $id .'">' . $linktext . '</a>'; 
-        $newcontent .= substr($content,$endindex + 10);
-        $runningContent .= 'Found at: ' .$index . ' through ' . $endindex . ': ' . $linktext . '<hr/>';
-        $content = $newcontent;
-        $index = strpos($content,'<feature ');
-        $runningContent .= 'newind=' . $index;        
-        $count++;
-    }
-
-
-    //$content=$runningContent;
-    $content = nl2br($content);
-    return $content;
+    return Format::renderWebContent($content);
 }
+
 
 	
 /* Batch functions */	

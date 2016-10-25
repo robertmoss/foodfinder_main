@@ -64,6 +64,19 @@
             return $entities;   
     }
     
+        public function getCustomFormControl($fieldname,$entity) {
+         
+            $control = '';  
+            if ($fieldname=='name') {
+                $control = '<div class="form-group">';
+                $control .= '    <div class="col-sm-2 col-sm-offset-2"><button type="button" class="btn btn-primary" onclick="lookupProductOnAmazon();">Search Amazon</button></div>';
+                $control .= '</div>';
+            }
+                
+            return $control;
+        }
+        
+
         
         
     }

@@ -1,3 +1,19 @@
 .navbar-brand {
 	padding: 0px 15px;
 }
+
+.jumbotron {
+    padding-top: 10px;
+    padding-bottom: 48px;
+}
+
+
+.jumbotron .logo {
+		margin-left: -20px;
+}
+
+@media screen and (min-width: 768px) {
+	.jumbotron .logo {
+		margin-left: -60px;
+}
+}

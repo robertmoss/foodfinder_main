@@ -11,7 +11,8 @@ class Utility{
 	
 	public static function errorRedirect($errorMessage) {
 		$_SESSION['errorMessage'] = $errorMessage;
-		header("Location: error.php");
+        $errorUrl = Config::getSiteRoot() . "/error.php";
+		header("Location: " . $errorUrl);
 		die();	
 	}
 	

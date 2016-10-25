@@ -12,7 +12,7 @@ class Application {
     public static $name = "Food Finder";
     
     // version
-    public static $version = "2.0.0";
+    public static $version = "2.1.3";
     
     // indicate the known entity types that the Entity Service can manage
     // as you add entities to your application, add them here
