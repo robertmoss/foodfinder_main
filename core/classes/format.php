@@ -15,20 +15,24 @@ class Format {
      $output = date("F j, Y",$timestamp);
      if ($friendlyValues && $interval->days<2 && $interval->d<2) {
         if ($interval->d==0 && $interval->i<2) {
-            $output = 'Newly posted';
+            $output = 'just now';
         }    
         elseif ($interval->d==0 && $interval->h<1) {
             $output = $interval->i . ' minutes ago';
         }    
         elseif ($interval->d==0 && $interval->h<4) {
-             $output = $interval->h . ' hours ago';
+            $period= "hours";    
+            if ($interval->h==1) {
+                $period = "hour"; 
+            }
+             $output = $interval->h . ' ' . $period . ' ago';
          }
         else {
              // see if these are the same day
              if ($currentTime->format('Y-m-d')==$targetDateTime->format('Y-m-d')) {
                  $output="Today at " . date("g:i a",$timestamp);
              }
-             else {
+            elseif (($currentTime->format('w') - $targetDateTime->format('w'))==1) {
                 $output="Yesterday at " . date("g:i a",$timestamp);
              }            
          }
@@ -77,7 +81,7 @@ public static function renderWebContent($content) {
     $count = 0;
     $runningContent="";
     while ($index>0 && $count<50) {
-        $idindex = $index+8;
+        $idindex = $index+9;
         $id='';
         $endfound = false;
         while (!$endfound && $idindex<strlen($content)) {
@@ -124,6 +128,34 @@ public static function renderWebContent($content) {
         $runningContent .= 'Found at: ' .$index . ' through ' . $endindex . ': ' . $linktext . '<hr/>';
         $content = $newcontent;
         $index = strpos($content,'<product ');
+        $runningContent .= 'newind=' . $index;        
+        $count++;
+    }
+    
+    // replace product tags with links
+    $index = strpos($content,'<author ');
+    $count = 0;
+    $runningContent="";
+    while ($index>0 && $count<50) {
+        $idindex = $index+8;
+        $id='';
+        $endfound = false;
+        while (!$endfound && $idindex<strlen($content)) {
+            $id .= substr($content,$idindex,1);
+            $idindex++;
+            if (substr($content,$idindex,1)==">") {
+                $endfound=true;
+            }
+        }
+        $endindex = strpos($content,'</author>');
+        $linkURL = Config::getSiteRoot() . '/author.php?id=' . $id;
+        $linktext = substr($content,$idindex+1,$endindex-$idindex-1);
+        $newcontent = substr($content,0,$index);
+        $newcontent .= '<a href="'. $linkURL . '">' . $linktext . '</a>'; 
+        $newcontent .= substr($content,$endindex + 9);
+        $runningContent .= 'Found at: ' .$index . ' through ' . $endindex . ': ' . $linktext . '<hr/>';
+        $content = $newcontent;
+        $index = strpos($content,'<author ');
         $runningContent .= 'newind=' . $index;        
         $count++;
     }

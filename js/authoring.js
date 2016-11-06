@@ -3,7 +3,7 @@
  */
 
 $(document).ready(function() {
-	loadFeatureList();
+	loadAssignmentList();
 });
 
 function searchEntities() {
@@ -67,6 +67,10 @@ function afterProductFormLoad() {
 }
 
 function afterProductCollectionFormLoad() {
+	// not sure we need to do anything here
+}
+
+function afterAssignmentFormLoad() {
 	// not sure we need to do anything here
 }
 

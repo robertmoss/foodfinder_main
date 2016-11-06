@@ -46,7 +46,7 @@ else {
 
    if ($listId>0) {
         // a list was requested here. Different handling than regular entity set
-          $query = 'call getLocationsByEntityListIdEx(' . $listId . ',' . $tenantID . ',' . $start . ',' . $return . ')';    
+          $query = 'call getLocationsByEntityListIdEx(' . $listId . ',' . $tenantID . ',' . $start . ',' . $return . ',' . $userID .')';    
     }
    elseif (strlen($filter>0)) {
         $query = "call getLocationsByLatLngAndCategoryIdList(" . $tenantID . "," . $userID . ",". $center_lat . "," . $center_long . "," . $return . "," . $start . "," . Database::queryString($filter) . ")";

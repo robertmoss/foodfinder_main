@@ -16,6 +16,9 @@ if (Utility::getTenantProperty($applicationID, $tenantID, $userID, 'showAds')=='
     <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
+    
+ 
+</script>
 </div>
 <?php } ?>
 <input id="coreServiceUrl" type="hidden" value="<?php echo Config::getCoreServiceRoot()  ?>" />

@@ -29,7 +29,6 @@
 }
 
 .featureLaunch {
-	max-width: 570px;
 	text-align: center;
 	margin: 20px auto  20px auto;
 }
@@ -39,6 +38,14 @@
 	margin-bottom: 5px;
 	margin-top: 15px;
 	}
+	
+.featureContent blockquote {
+	padding: 20px 20px 20px 20px;
+    margin: 0 0 0px;
+    font-size: 11pt;
+    border-left: 5px solid #eee;
+    -webkit-margin-after: 0;
+}
 	
 .featureContainer .collectionItem {
 	border: solid 1px;
@@ -79,7 +86,7 @@
 
 
 @media screen and (min-width: 768px) {
-	.featureBodyText, .featureLaunch {
+	.featureBodyText {
 		max-width: 570px;
 		font-size: 12pt;
 		margin-left: 0;
@@ -97,6 +104,10 @@
 
 	.featureContainer h3 {
 		font-size: 20px;
+	}
+	
+	.featureContainer .coverImage img {
+		max-width: 570px;
 	}
 	
 	.featureContainer .bookCover {
@@ -152,4 +163,11 @@
 		max-width: 100%;
 		margin: auto;
 	}
+}
+
+.caption {
+	font-style: italic;
+    font-size: 12px;
+	position: relative;
+    top: -15px;
 }

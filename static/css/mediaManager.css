@@ -1,0 +1,52 @@
+.mediaManager .mediaItem {
+	height: 260px;
+}
+
+.mediaManager .mediaItem img {
+
+}
+
+.mediaManager .mediaItem .description {
+    position: relative;
+    bottom: 40px;
+    left: 0px;
+    background-color: #eeeeee;
+    width: 100%;
+    display: block;
+    padding: 5px 3px 5px 10px;
+}
+
+.mediaManager .buttons {
+	float: right;
+    margin-right: 30px;
+}
+
+.mediaManager .thumb {
+	height: 250px;
+	width: 250px;
+	margin: 0px auto;
+	border: solid 1px #cccccc;
+}
+
+.mediaImagePanel img {
+	width: 100%;
+}
+
+.mediaButtons {
+	margin: 10px 0px 10px 10px;
+	padding-bottom: 10px;
+	width: 100%;
+	border-bottom: solid 1px #cccccc;
+}
+
+.mediaButtons ul {
+	display: block;
+}
+
+.mediaButtons .pad-left {
+	margin-left: 10px;
+}
+
+#mediaFormAnchor {
+	margin-top: 20px;
+}

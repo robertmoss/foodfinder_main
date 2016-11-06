@@ -1,5 +1,6 @@
 <?php
     include_once dirname(__FILE__) . '/../core/classes/dataentity.php';
+    include_once dirname(__FILE__) . '/../core/classes/format.php';
 
     class Feature extends DataEntity {
         
@@ -22,7 +23,8 @@
                 array("numberEntries","boolean"),
                 array("reverseOrder","boolean"),
                 array("isNewsItem","boolean"),
-                array("coverImage","string",200)
+                array("coverImage","string",200),
+                array("status","picklist",100,"featureStatus",false)
             );
             
             return $fields;
@@ -37,6 +39,9 @@
             if ($fieldName=="isNewsItem") {
                 return "Is a News Item";
             }
+            elseif ($fieldName=="datePostedFriendly") {
+                return "Date Posted";
+            }
             else {
                 return ucfirst($fieldName);
                 }
@@ -48,8 +53,10 @@
         
         protected function getEntitiesQuery($filters, $return, $offset) {
             
-            $authorid = 0;
-            $newsItems = false;
+            $authorid = null;
+            $newsItems = null;
+            $status = null;
+            $extended = false;
             
             if (array_key_exists('author',$filters)) {
                 // use author
@@ -64,15 +71,16 @@
                 $newsItems = (strtolower($filters['news'])=="true" || strtolower($filters['news'])=="yes");
             }
             
-            if ($newsItems) {
-                return 'call getFeaturesNewsItems(' . $this->userid . ',' . $return . ',' . $offset . ',' . $this->tenantid . ');';
+             if (array_key_exists('extended',$filters)) {
+                $extended= (strtolower($filters['extended'])=="true" || strtolower($filters['extended'])=="yes");
             }
-            elseif ($authorid==0) {
-                return 'call getFeatures(' . $this->userid . ',' . $return . ',' . $offset . ',' . $this->tenantid . ');';
-                }
-            else {
-                return 'call getFeaturesByAuthor(' . $authorid . ',' . $this->userid . ',' . $return . ',' . $offset . ',' . $this->tenantid . ');';
+            
+            if (array_key_exists('status',$filters)) {
+                $status=$filters['status'];
             }
+            
+            return 'call getFeaturesEx(' . Database::queryNumber($authorid) . ',' . Database::queryBoolean($newsItems) . ',' . Database::queryString($status) . ','. Database::queryBoolean($extended) . ',' . $this->userid . ',' . $return . ',' . $offset . ',' . $this->tenantid . ');';
+            
             return $query;
                        
         }
@@ -82,9 +90,11 @@
             $entities = parent::getEntities($filters,$return,$offset);
             for ($i=0;$i<count($entities);$i++) {
                 $entities[$i]["viewLink"] = "feature.php?id=" . $entities[$i]["id"];
+                $entities[$i]["post date"] = Format::formatDateLine($entities[$i]["datePosted"], true);
             }
             return $entities;
         }
+        
         
         protected function getEntityCountQuery($filters) {
             // override base to allow searching for features by the following:
@@ -93,7 +103,8 @@
             if (array_key_exists('news',$filters)) {
                 $where = ' and isNewsItem=1';
             }
-            elseif (array_key_exists('author',$filters)) {
+            
+            if (array_key_exists('author',$filters)) {
                 // use author
                 $where = ' and author = ' . Database::queryNumber($filters['author']);
             }

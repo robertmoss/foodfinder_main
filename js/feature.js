@@ -1,5 +1,6 @@
 var firstID;
 var lastID;
+var currentID;
 
 function afterFeatureEdit(success) {
 	$('#featureEditModal').modal('hide');
@@ -39,28 +40,30 @@ function locationsLoaded(locations) {
 		$(".locationCarouselItem").first().addClass("active");
 		$(".locationCarouselIndicator").first().addClass("active");
 		$(".locationInfo").first().removeClass("hidden");
+		showElement('featureNav');
+		showElement('viewNext');
 		
 		firstID=locations.locations[0].id;
 		lastID=locations.locations[locations.count-1].id;
+		currentID = 'location' + firstID;
 		
 		// wire up carousel events
 		$('#location-carousel').on('slide.bs.carousel', function (e) {
 			// hide all location info panes
 		  	$(".locationInfo").addClass("hidden");
-		  	
 		  	if (e.direction=="right" && e.relatedTarget.id==('location')+lastID)  {
-		  		hideElement('locationAnchor');
-		  		showElement('openingContent');
-		  		showElement('subhead');
-		  		showElement('coverImage');
+				restartSlideshow();
 	  	}
 		  	else if (e.direction=="left" && e.relatedTarget.id==('location')+firstID)  {
 		  		hideElement('locationAnchor');
 		  		showElement('closingContent');
+		  		showElement('featureNav');
+		  		hideElement('viewNext');
 		  	}
 		  	else {
 			  	// show selected location info pane
 			  	$("#" + e.relatedTarget.id + "Info").removeClass("hidden");
+			  	currentID=e.relatedTarget.id;
 			  }
 		});
 		
@@ -81,6 +84,18 @@ function launchSlideshow() {
 	hideElement('coverImage');
 	window.scrollTo(0,0);
 	loadFeatureLocations();
+}
+
+function restartSlideshow() {
+	hideElement('locationAnchor');
+	hideElement('featureNav');
+	hideElement('closingContent');
+	showElement('openingContent');
+	showElement('subhead');
+	showElement('coverImage');
+	$('html, body').animate({
+        scrollTop: 0
+    }, 500);
 }
 
 function getDefaultFeatureTemplate(showIndicators,numberEntries) {
@@ -125,9 +140,27 @@ function getDefaultFeatureTemplate(showIndicators,numberEntries) {
     }
 	template += '{{name}}</h3>';
 	template += '<p>{{shortdesc}}</p>';
-	template += buttonLink;
-	template += '<p><address>{{address}}<br/>{{city}}, {{state}}<br/><a href="tel:{{clickablephone}}">{{phone}}</a><br/><a href="{{url}}" target="_blank">{{displayurl}}</a></address></div>{{/locations}}';
+	//template += buttonLink;
+	template += '<p><address>{{address}}<br/>{{city}}, {{state}}<br/>';
+	template += '<a href="tel:{{clickablephone}}">{{phone}}</a>';
+	template += '{{#url}}<br/><a href="{{url}}" target="_blank">{{displayurl}}</a>{{/url}}</address>';
+	template += '</div>{{/locations}}';
 	
 	return template;
 	
+}
+
+function moveNextSlide() {
+	$('#location-carousel').carousel('next');
+	// scroll up to headline
+	$('html, body').animate({
+        scrollTop: $("#headline").offset().top
+    }, 500);
+}
+
+function viewOnMap() {
+	var id = right(currentID,currentID.length-8);
+	var listText = document.getElementById('txtList').value;
+	var url = "finder.php?" + listText + "&location=" + id;
+	window.open(url, '_blank');
 }

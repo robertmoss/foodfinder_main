@@ -7,6 +7,8 @@
     $zoom = Utility::getRequestVariable('zoom', 0);
     $list = Utility::getRequestVariable('list', 0);
     $selectedLocation = Utility::getRequestVariable('location', 0);
+    
+    Log::logPageView('finder', 0,'list=' . $list . '&selectedLocation=' . $selectedLocation);
 
  ?>
 
@@ -26,7 +28,9 @@
         <div id="topPart">
 		    <?php include("partials/header.php"); ?>
 			<!-- Modals -->
-			<?php  include("partials/configModal.php");
+			<?php  
+        		   $showNumLocations = true;
+			       include("partials/configModal.php");
 	               include("partials/locationModal.php");
 	               include("partials/locationEditModal.php");
                    $defaultIcon = Utility::getTenantProperty($applicationID, $tenantID, $userID, 'defaultIcon');
@@ -50,7 +54,7 @@
         				<div class="input-group">
         					<label class = "sr-only" for="txtAddress">Desired location</label>
 							<span class="input-group-addon" id="basic-addon1" data-toggle="tooltip" title="Detect your current location" onclick="detectLocation('resultSpan');"><span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span></span>
-							<input id="txtAddress" type="text" class="form-control" placeholder="Your current or desired address/location" aria-describedby="basic-addon1" value="<?php echo Utility::getSessionVariable('currentAddress', 'none'); ?>"/>
+							<input id="txtAddress" type="text" class="form-control" placeholder="Enter your current (or desired) location" aria-describedby="basic-addon1" value="<?php echo Utility::getSessionVariable('currentAddress', 'none'); ?>"/>
 						</div>
         				<button type="submit" class="btn btn-primary">Find</button>
         			</div>
@@ -62,7 +66,7 @@
                     <input id="txtLocation" type="hidden" value="<?php echo $selectedLocation; ?>"/>
     		</form> 
     		<div id="message" class="alert alert-danger alert-dismissible hidden">
-    			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    			<button type="button" class="close" aria-label="Close" onclick="hideElement('message');"><span aria-hidden="true">&times;</span></button>
     			<span id='message_text'>Message goes here.</span>
     		</div>
 		</div>

@@ -95,9 +95,7 @@ a:visited {
 	min-height: 200px;
 }
 
-.loc-panel {
-	min-height: 200px;
-}
+
 
 .loc-panel h3 {
 	font-size: 18px;
@@ -143,12 +141,20 @@ a:visited {
 
 @media (min-width: 768px) {
 	
+	.loc-panel {
+		overflow-y: scroll;
+	}
+	
 	.loc-image {
 		max-height: 300px;
 		overflow: hidden;
 		vertical-align: middle;
 		border: solid 1px #aaaaaa;
 		position: relative;
+	}
+	
+	.loc-image img {
+		max-height: 400px;
 	}
 }
 
@@ -270,7 +276,7 @@ a:visited {
 	background: url('../../img/icons/collapse.png') center right no-repeat;
 	background-color: white;
 	height: 30px;
-	width 30px;
+	width: 30px;
 }
 
 
@@ -475,8 +481,6 @@ a:visited {
 
 .news h2 {
 	font-size: 20px;
-	color: #337ab7;
-
 }
 
 .news h3 {
@@ -490,23 +494,25 @@ a:visited {
 	font-size: 10px;
 }
 
-.news a, a:visited {
+.news a, .news a:visited {
 	color: #e68a00;
 }
 
+.news .headline a, .news .headline a:visited {
+    color: #337ab7;
+}
+.news .author a {
+	color: #000000;
+}
+
 .news .author a:visited {
-	color: #337ab7;
+	color: #000000;
 }
 
 .news .more {
 	font-size: 14px;
 	text-transform: uppercase;
 	margin-right: 10px;
-}
-
-.news .more a:visited {
-	color: #337ab7;
-	
 }
 
 .newsItem {

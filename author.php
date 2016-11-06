@@ -11,11 +11,12 @@
     }
     else {
         try {
-            $class = new User($userID,$tenantID);
+            $class = new User($id,$tenantID);
             $author = $class->getEntity($id);
+            Log::logPageView('author', $id,'');
             $feature = new Feature($userID,$tenantID);
-            $filters = array("author"=>$author["id"]);
-            $features = $feature->getEntities($filters, 10, 0);
+            $filters = array("author"=>$author["id"],"status"=>"Published");
+            $features = $feature->getEntities($filters, 9, 0);
         }
         catch(Exception $ex) {
             $errorMsg="Unable to load requested author: " . $ex->getMessage();

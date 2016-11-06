@@ -96,7 +96,7 @@
                                     <?php 
                                         // spin up a features collection with latest news
                                         $class = new feature($userID,$tenantID);
-                                        $filters = array('news'=>'true');
+                                        $filters = array('news'=>'true','status'=>'Published');
                                         $newsItems = $class->getEntities($filters,4,0);  
                                         foreach($newsItems as $newsItem) {
                                             echo '<h3 class="headline"><a href="feature.php?id=' . $newsItem["id"] . '">' . $newsItem["headline"]. '</a></h3>';

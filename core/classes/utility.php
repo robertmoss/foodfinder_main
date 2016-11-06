@@ -86,7 +86,7 @@ class Utility {
 		$return = array();
 		switch ($listID) {
 			case "states":
-				$states = array("","AK","AL","AZ","CA","CO","CT","DC","DE","FL","GA","HI","ID","IA","IL","IN","KS","KY","LA","MA","MD","ME","MI","MO","MS","NC","ND","NE","NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","WA","WI","WY");
+				$states = array("","AK","AL","AZ","CA","CO","CT","DC","DE","FL","GA","HI","ID","IA","IL","IN","KS","KY","LA","MA","MD","ME","MI","MO","MS","NC","ND","NE","NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","VT","WA","WI","WY");
 				// for states, we want to use the abbreviation as both display and data value, so create multi
 				foreach ($states as $state)
 					{
@@ -172,7 +172,7 @@ class Utility {
 				break;
 			case "locationStatus":
                 // Pending: will be displayed only to certain roles (for now, admins), as they are locations waiting visits and write-ups
-				$status_values = array("Active","Closed", "Temporarily Closed", "Unknown","Pending");
+				$status_values = array("Active","Closed", "Temporarily Closed", "Unknown","Pending","Coming Soon");
 				foreach ($status_values as $unit)
 					{
 						$return[]= array($unit,$unit);
@@ -206,6 +206,27 @@ class Utility {
                 foreach ($types as $type)
                     {
                         $return[]= array($type,$type);        
+                    }
+                break;
+             case "featureStatus":
+                // list of system entities that can be managed/expanded with categories, entity lists, etc.
+                $values = array("Draft","Awaiting Review","Published");
+                foreach ($values as $entity) {  
+                        $return[]= array($entity,$entity);        
+                    }
+                break;
+            case "assignmentStatus":
+                // list of system entities that can be managed/expanded with categories, entity lists, etc.
+                $values = array("Unassigned","Assigned","Complete");
+                foreach ($values as $entity) {  
+                        $return[]= array($entity,$entity);        
+                    }
+                break;
+            case "assignmentType":
+                // list of system entities that can be managed/expanded with categories, entity lists, etc.
+                $values = array("Feature","Other");
+                foreach ($values as $entity) {  
+                        $return[]= array($entity,$entity);        
                     }
                 break;
             case "authorList":
@@ -391,7 +412,7 @@ class Utility {
          
          echo '<div id="content_' . $content['id'] . '"' .$class .'>';
          echo '<input type="hidden" value="' . $key . '"/>';
-         echo $content['contentText'] .'</div>';
+         echo Format::renderWebContent($content['contentText']) .'</div>';
      
  }
  

@@ -259,6 +259,33 @@ class Forms {
                                     echo '</div>';
                                 }
                                 break;
+                            case "propertybag":
+                                   $markup = '<div class="panel panel-default propertyBagPanel"><div class="panel-heading">' . $class->friendlyName($field[0]) ;
+                                   $markup .= '</div>';
+                                   $markup .= '<div class="panel-body">';
+                                   $bagIdentifier =  $field[0] . 'PropertyBag';
+                                   $markup .= '<div id="' . $bagIdentifier . '">';
+                                   $count=0;
+                                   if (is_object($value)) {
+                                       foreach ($value as $key => $propertyValue) {
+                                           $itemid = $bagIdentifier . $count;
+                                           $markup .= '<div id="' . $itemid . '" class="row propertyBagRow">';
+                                           $markup .= '<div class="col-sm-3">' . $key . "</div> "; 
+                                           $markup .= '<div class="col-sm-6 form-inline">'; 
+                                           $markup .= '<input name="' . $key .'" type="input" class="form-control propertyBagValue" value="' . $propertyValue . '">';
+                                           $markup .= ' <button type="button" class="btn btn-default btn-sm" onclick="removePropertyBagItem(\'' . $itemid . '\')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>';  
+                                           $markup .= "</div>";
+                                           $markup .= '</div>';
+                                           $count++;
+                                       } 
+                                   }
+                          
+                                   $markup .= '</div><a class="btn btn-default" onclick="addPropertyBagItem(\''. $bagIdentifier . '\');"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Add ' . $class->friendlyName($field[0]) . ' Item</a>';
+                                   $markup .= '<input type="hidden" id ="' . $bagIdentifier . 'ItemCount" value="' . $count . '">';
+                                   $markup .= '<input type="hidden" class ="propertyBag" name="' . $field[0] . '" >';
+                                   $markup .= '</div>';
+                                   echo $markup;
+                                break;
                             default:
                                 echo '<p>Unknown field type:' . $field[1];
                                 }

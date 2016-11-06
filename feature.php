@@ -1,11 +1,14 @@
 <?php 
 	include dirname(__FILE__) . '/core/partials/pageCheck.php';
+    include_once dirname(__FILE__) . '/core/classes/log.php';
     include_once dirname(__FILE__) . '/core/classes/format.php';
-     include_once Config::$root_path . '/classes/feature.php';
+    include_once Config::$root_path . '/classes/feature.php';
+	
 	$thisPage="feature";
     
     $id = Utility::getRequestVariable('id', 0);
     $errorMsg = "";
+    $preview="";
     if ($id==0) {
         $errorMsg ="You must specify a valid feature id.";
     }
@@ -13,6 +16,19 @@
         try {
             $class = new Feature($userID,$tenantID);
             $feature = $class->getEntity($id);
+            if (strtolower($feature["status"])!="published") {
+                // if contributor, allow  to preview and add preview stripe
+                if ($user->hasRole("admin", $tenantID) || $user->hasRole("contributor", $tenantID)) {
+                    $preview = "You are previewing a feature that is currently in <strong>" . $feature["status"] . '</strong> status.';    
+                }
+                else {
+                    $errorMsg="We don't seem to be able to find what you're looking for.";
+                }
+            }
+            else {
+                // don't log page views for unpublished feature: distorts counts
+                Log::logPageView('feature', $id,'');
+            }
         }
         catch(Exception $ex) {
             $errorMsg="Unable to load requested feature: " . $ex->getMessage();
@@ -30,8 +46,20 @@
         <script type="text/javascript" src="js/feature.js"></script>
         <?php include("partials/facebookMeta.php"); ?>
         <meta property="og:title"       content="<?php echo $feature['headline'] ?>" />
+        <meta property="og:type"        content="article" />
         <meta property="og:description" content="<?php echo $feature['subhead'] ?>" />
-        <meta property="og:image" content="<?php echo Config::getSiteRoot() . '/' . $feature['coverImage'] ?>" />
+        <meta property="og:image"       content="<?php echo Config::getSiteRoot() . '/' . $feature['coverImage'] ?>" />
+        <meta property="og:image:width" content="" />
+        <meta property="og:image:height" content="" />
+        <meta property="og:url"         content="<?php echo Config::getSiteRoot();?>/feature.php?id=<?php echo $id?>" />
+        <?php include("partials/twitterScript.php"); ?>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-0081868233628623",
+            enable_page_level_ads: true
+          });
+        </script>
     </head>
     <body>
     	<div id="maincontent">
@@ -42,6 +70,7 @@
                 ?>
     			<div class="container featureContainer">
     			    <?php if (strlen($errorMsg)>0) {
+    			        echo '<h2>Hmm . . .</h2>';
     			        echo '<br/><p>' . $errorMsg . '<p>';
     			    }
                     else {
@@ -64,10 +93,15 @@
     			    ?>
     			    <input id="maxLocations" type="hidden" value="<?php echo $return; ?>"/>
     			    <input id="numberEntries" type="hidden" value="<?php echo $feature["numberEntries"]; ?>"/>
-    			    <?php if ($user->hasRole('admin',$tenantID)) {
+    			    <?php if (strlen($preview)>0) {
+                            echo '<div class="alert alert-warning" role="alert">' . $preview .'</div>';
+                        }
+                    if ($user->hasRole('admin',$tenantID)) {
     			        $entityType = 'feature';
                         $callback = "afterFeatureEdit";
+                        $modalSize = "large";
     			        include dirname(__FILE__) . '/core/partials/entityEditModal.php';
+                        $modalSize = "";
     			        ?>
     			    <div id="feature-buttons" class="btn-group btn-default featureButtonGroup">
                         <button class="btn btn-default" id="editFeature" onclick="editEntity(<?php echo $id?>,'feature');"><span class="glyphicon glyphicon-pencil"></span> Edit Feature</button>
@@ -89,21 +123,21 @@
     			    <div id="featureSocialBar">
     			        <?php
     			             $text = urlencode($feature["headline"]);
-                             $url = urlencode(Config::getSiteRoot() . $_SERVER['REQUEST_URI']);
+                             $url = urlencode(Config::getSiteRoot() . '/feature.php?id='. $id .  '&ch=t');
     			        ?>
     			        <ul class="socialList">
-    			             <li><a class="social icon icon-twitter" href="http://twitter.com/intent/tweet?text=<?php echo $text; ?>&amp;via=bbqhub&amp;url"=<?php echo $url;?>" target="_blank" rel="nofollow" title="Share on Twitter" aria-label="Share on Twitter"></a></li>
+     			             <li><a class="social icon icon-twitter" href="http://twitter.com/intent/tweet?text=<?php echo $text; ?>&amp;url=<?php echo $url;?>&amp;via=thebbqhub" target="_blank" rel="nofollow" title="Share on Twitter" aria-label="Share on Twitter"></a></li>
     			             <li><a class="social icon icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $url; ?>" target="_blank" rel="nofollow" title="Share on Facebook" aria-label="Share on Facebook"></a></li>
     			        </ul>
     			   </div>
                     <div id="coverImage" class="coverImage"><img src="<?php echo $feature["coverImage"];?>"/></div>
     				<div id="openingContent">
     				    <div class="featureContent">
-                            <p class="featureBodyText"><?php echo Utility::renderWebContent($feature["introContent"]); ?></p>
+                            <div class="featureBodyText"><?php echo Utility::renderWebContent($feature["introContent"]); ?></div>
                         </div>
                         <?php if (strlen($feature["locationCriteria"])>0) { ?>
                         <div class="featureLaunch">
-                            <button class="btn btn-primary" id="viewSlideshow" onclick="launchSlideshow();">Let's Get Started <span class="glyphicon glyphicon-play"></span></button>
+                            <button class="btn btn-primary" id="viewSlideshow" onclick="launchSlideshow();"><span class="glyphicon glyphicon-play"></span> Let's Get Started</button>
                         </div>
                         <?php } ?> 
                     </div>
@@ -123,10 +157,13 @@
                     <div id="closingContent" class="featureContent<?php if ($hideClosing) { echo ' hidden'; }?>">
                         <div class="featureContent">
                             <p class="featureBodyText"><?php echo Utility::renderWebContent($feature["closingContent"]) ?></p>
+                            <?php include("partials/twitterFollowButton.php");?> 
                         </div>
-                        <div class="featureLaunch hidden">
-                            <button class="btn btn-primary" id="viewSlideshowAgain" onclick="launchSlideshow();">View Again <span class="glyphicon glyphicon-play"></span></button>
-                        </div>
+                    </div>
+                    <div id="featureNav" class="featureLaunch hidden">
+                            <button class="btn btn-default" id = "viewOnMap" onclick="viewOnMap();"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Map View</button>
+                            <button class="btn btn-default" id="viewSlideshowAgain" onclick="restartSlideshow();"><span class="glyphicon glyphicon-repeat"></span> Restart</button>
+                            <button class="btn btn-primary" id="viewNext" onclick="moveNextSlide();"><span class="glyphicon glyphicon-play"></span> Next</button>
                     </div>
                     <?php } ?>
 	        	</div>	

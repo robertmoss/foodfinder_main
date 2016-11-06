@@ -170,9 +170,7 @@
 		
 		public function getJavaScript(){
 		    
-            
-		    
-            $script = '<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+            $script = '<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB9Zbt86U4kbMR534s7_gtQbx-0tMdL0QA&libraries=places"></script>
  			<script type="text/javascript" src="[site_root]/js/imagehandler.js"></script>
  			<script type="text/javascript" src="[site_root]/js/workingPanel.js"></script>
  			<script type="text/javascript" src="[site_root]/js/jquery.form.min.js"></script>';
@@ -350,7 +348,7 @@
         }
     
     public function getEntitiesFromList($listId,$return,$offset) {
-        $query = 'call getLocationsByEntityListIdEx(' . $listId . ',' . $this->tenantid . ',' . $offset . ',' . $return . ')';
+        $query = 'call getLocationsByEntityListIdEx(' . $listId . ',' . $this->tenantid . ',' . $offset . ',' . $return . ', ' . $this->userid . ')';
         
         $data = Database::executeQuery($query);
         $entity = '';
@@ -360,13 +358,14 @@
             }
         while ($r = mysqli_fetch_assoc($data))
             {
-            $entities[] = $r;
+            $entities[] = Format::addDisplayElements($r);
             }
             
         return $entities;   
     }
-        
-	}
+
+ 
+}
 
 
 

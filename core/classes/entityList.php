@@ -72,7 +72,7 @@ class EntityList extends DataEntity {
            return $markup;
            }
        else {
-        return '<p>Custom Edit Control Not Defined for Field</p>';        
+            return '<p>Custom Edit Control Not Defined for Field</p>';        
         }
     }
      

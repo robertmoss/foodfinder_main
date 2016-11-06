@@ -14,7 +14,7 @@
             $class = new ProductCollection($userID,$tenantID);
             $collection = $class->getEntity($id);
             $title = $collection["name"];
-             
+            Log::logPageView('collection', $id,'');
         }
         catch(Exception $ex) {
             $errorMsg="Unable to load requested collection: " . $ex->getMessage();

@@ -304,7 +304,7 @@ function processRouteByPoints(points,detour,filter) {
 function renderRoute(set) {
 	
 	// first, render list panel
-	var template = getLocationListTemplate();
+	var template = getLocationListTemplate(true);
 	
 	renderTemplate(template,set,'locationList');
 	
@@ -374,15 +374,16 @@ function processDirections(route) {
 			markup+='  <div class=\"panel-heading\" role=\"tab\" id=\"heading' + (i+1) + '\">';
 			markup+='    <h4 class=\"panel-title\">';
 			markup+='       <a role=\"button\" data-toggle=\"collapse\" data-parent="#directions-accordion" href="#collapse' + (i+1) + '\" aria-expanded=\"true\" aria-controls=\"collapse' + (i+1) + '\">';
+			markup+='		<span class="glyphicon glyphicon-collapse-down" aria-hidden="true"></span> ';
 			markup+=         getWaypointName(i-1,route.waypoint_order, legs[i].start_address) + ' to ' + getWaypointName(i, route.waypoint_order,legs[i].end_address);
 			markup+='      </a>';       
 			markup+='    </h4>';
 			markup+='    <p><b>Distance:</b> ' +legs[i].distance.text + '<br/> <b>Duration:</b> ' + legs[i].duration.text + '</p>';
 			markup+='  </div>';
 			markup+='  <div id=\"collapse' + (i+1) + '\" class=\"panel-collapse collapse';
-			/*if (i==0) {
+			if (i==0) {
 				markup += ' in'; // expand only first set
-				}*/ 
+				} 
 			markup+= '\" data-parent=\"directions-accordion\">';
 			markup+='    <div class=\"panel-body\">';
 			
@@ -538,16 +539,22 @@ function setMarkerIcon(index,icon) {
 function setMapHeader(route) {
 	var distance=0;
 	var duration=0;
-	var origin = getElementValue('txtOrigin');		
+	var origin = getElementValue('txtOrigin');
+	if (right(origin,15).toLowerCase()==', united states') {
+		origin=origin.substring(0,origin.length-15);
+	}		
 	var destination = getElementValue('txtDestination');
+	if (right(destination,15).toLowerCase()==', united states') {
+		destination=destination.substring(0,destination.length-15);
+	}
 
 	for(var i=0;i<route.legs.length;i++) {
 		 distance += route.legs[i].distance.value/1609.34; // convert distance from meters to miles
 		 duration += route.legs[i].duration.value;
 	}
 	var markup = 'From <span class=\"origin\">' + origin + '</span> to <span class=\"destination\">' + destination + '</span>.'; 
-	markup += ' Total distance: ' + distance.toFixed(1) + ' miles';
-	markup += ' Total duration: ' + formatDuration(duration) + ' ';
+	markup += ' (' + distance.toFixed(1) + ' miles /';
+	markup += ' ' + formatDuration(duration) + ')';
 	setElementHTML('tripSummaryText',markup);
 }
 
@@ -573,16 +580,7 @@ function reRenderMap () {
 		});
 }
 
-function getLocationListTemplate() {
-	var template = "{{#locations}}"; 
-		template += "<div class=\"panel\"><div class=\"inner\"><div class=\"figure\"><img src=\"{{imageurl}}\"/></div><div class=\"bd\">";
-		template += "<div class=\"prime\"><h2>{{name}}</h2></div>";
-		template += "<div class=\"secondary\"><p>{{address}}</p><p>{{city}}, {{state}}</p><p>{{phone}}</p><p><a href=\"{{url}}\" target=\"_blank\">{{url}}</a></p></div></div>";
-		template += "<div class=\"description\"><span class=\"description\">{{shortdescription}}</span></div></div></div>";
-		template += "{{/locations}}";
-		
-	return template;
-}
+
 
 
 function hideRouteSummary() {
@@ -612,9 +610,10 @@ function closeLocation() {
 }	
 
 function toggleForm(mode) {
+	showElement("toggleLink");
 	var link = document.getElementById("toggleLink");
 	if (mode == 'show') { 
-		link.innerHTML = "<span class=\"glyphicon glyphicon-chevron-down\" aria-hidden=\"true\"></span> Show";
+		link.innerHTML = "<span class=\"glyphicon glyphicon-chevron-down\" aria-hidden=\"true\"></span> Edit";
 	}
 	else {
 		link.innerHTML = "<span class=\"glyphicon glyphicon-chevron-up\" aria-hidden=\"true\"></span> Hide";

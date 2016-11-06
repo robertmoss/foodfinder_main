@@ -70,11 +70,16 @@ abstract class DataEntity implements iDataEntity {
          *                      used on other orders) 
 		 * 	    childentities: represents one-to-many relationship: a collection of sub-entities to this entity, and those sub-entities are used
          *                      only on this particular entity (e.g. the line items on an order)
+         *       propertybag: a bag of key-value pair properties; field should be a varchar(300) in the database and will hold the name of the property bag to use
+         *                      Each entity is responsible for coming up with the naming scheme to be used for its property bag, but it should either ensure
+         *                          a unique name for each entity or (where property bags can be shared) a reliable way to ID the bag
+         *                      doesn't currently use the property bag entity but follows same concept; might merge in the future
+         *                      will be rendered in object graph json with name supplied for field (e.g. "metadata" for media object)
 		 * 			  custom: handling of field is deferred to the entity subclass for special treatment - can default behavior for data generation to other
-         *                      types, however
-		 *  		   image: an image file that gets uploaded to content server with url stored in database
+         *                      types, however; core classes don't know what to do with this, so must be handled custom by child
+		 *  		   image: an image file that gets uploaded to content server with url stored in database [not implemented yet]
 		 *        properties: a dummy placeholder that lets you specify where on forms to place user-defined properties
-		 * 			  custom: core classes don't know what to do with this, so must be handled custom by child
+		 * 			  
 		 * 
 		 *  [2] max length: maximum length of the field (in characters for text, digits for numbers)
 		 *         not set will use an arbitrary length (e.g. 100 characters) for database  
@@ -220,13 +225,17 @@ abstract class DataEntity implements iDataEntity {
 				}
 			}
 				
-			// query child entities, if any exist
+			// query child entities and property bags, if any exist
 			$fieldarray = $this->getFields();
 			$separator = "";
 			foreach ($fieldarray as $field) {
 				if ($field[1]=='childentities'||$field[1]=='linkedentities') {
-					// add .
-					$query = "call get" . ucfirst($field[0]) . "By" . $this->getName() . "ID(" . $id . "," . $this->tenantid . "," . $this->userid . ")";
+					if ($field[1]=='childentities'||$field[1]=='linkedentities') {
+    					$query = "call get" . ucfirst($field[0]) . "By" . $this->getName() . "ID(" . $id . "," . $this->tenantid . "," . $this->userid . ")";
+                    }
+                    else {
+                        $query = "select properties from propertyBag where id=" . Database::queryNumber($entity[$field[0]]) . " and tenantid=" . $this->tenantid;
+                    }
 					$data = Database::executeQuery($query);
 					if ($data->num_rows>0) {
 						$subs = array();
@@ -238,6 +247,10 @@ abstract class DataEntity implements iDataEntity {
 							}
 					}		
 				}
+                elseif ($field[1]=='propertybag' && strlen($entity[$field[0]])>0) {
+                    $propertyBag = unserialize($entity[$field[0]]);
+                    $entity[$field[0]] = $propertyBag;
+                }
 			} 
 			
 			
@@ -283,6 +296,7 @@ abstract class DataEntity implements iDataEntity {
 			return $entities;		
 		}
 
+       
 		protected function getEntityQuery($id) {
 			// returns the SQL query used to retrieve multiple entities.
 			// by default, all data entities should have a GET stored procedure named get<Entity>ById with params id, userid and tenantid
@@ -423,7 +437,10 @@ abstract class DataEntity implements iDataEntity {
 							}
 						}
 						break;
-					
+					case "propertybag":
+                        $propertyBag = serialize($data->{$field[0]});
+                        $query .= $separator . Database::queryString($propertyBag);
+                        break; 
 					case "custom":
 						$query .= $separator . $this->getCustomValue($field[0],$data->{$field[0]},'add');
 					}
@@ -583,6 +600,10 @@ abstract class DataEntity implements iDataEntity {
     						}
     					}
 						break;
+                    case "propertybag":
+                        $propertyBag = serialize($data->{$field[0]});
+                        $query .= $separator . Database::queryString($propertyBag);
+                        break; 
 					case "custom":
 						$query .= $separator . $this->getCustomValue($field[0],$data->{$field[0]},'update');
 					}

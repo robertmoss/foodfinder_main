@@ -55,6 +55,7 @@ class User extends DataEntity {
 			array("name","string"),
 			array("email","string"),
 			array("password","string"),
+			array("twitterHandle","string"),
 			array("bio","string")
 		);
 		

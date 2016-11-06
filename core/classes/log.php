@@ -108,6 +108,31 @@ include_once dirname(__FILE__) . '/../../classes/config.php';
             {
             $this->debug('unable to connect to database for debug: no connection returned.',10);
             }
+    }
+
+    public static function logPageView($pagetype,$pageid,$additionalData) {
+        // logs a page view in the database - in the future may want to offload these to memcached in a queue approach if writes
+        // get too intensive
+        $sessionid = session_id();
+        Log::debug('Logging page view for ' . $pagetype . '-' . $pageid . ' on session record ' . $sessionid,1);
+        $query = "insert into pageView(sessionId,pageType,pageId,additionalData) values (";
+        $query .=  "'" . $sessionid . "'";
+        $query .=  ",'" . $pagetype . "'";
+        $query .=  "," . $pageid;
+        $query .=  ",'" . $additionalData . "');";
+        try {
+            $con = mysqli_connect(Config::$server,Config::$user,Config::$password, Config::$database);
+        }
+        catch(Exception $e) {
+            Log::debug('unable to write to pageView table: ' . $e->getMessage(),10);
+        }
+        if ($con) {
+            mysqli_query($con,$query);
+        }
+        else 
+            {
+            Log::debug('unable to connect to database for debug: no connection returned.',10);
+            }
     }     
     
 	

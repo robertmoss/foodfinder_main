@@ -6,6 +6,7 @@
      */
     include dirname(__FILE__) . '/core/partials/pageCheck.php';
     include dirname(__FILE__) . '/core/classes/propertyBag.php';
+    include_once dirname(__FILE__) . '/core/classes/log.php';
     include_once Config::$root_path . '/classes/productCollection.php';
 
     $thisPage="region";
@@ -17,12 +18,15 @@
     else { 
         $stateList = Utility::getTenantProperty($applicationID,$tenantID,$userID,'enabledStates');
         if (!is_null($stateList)) {
-            $stateArray=explode(",",$stateList);
-            if (!in_array($region,$stateArray)) {
+            $stateArray=explode(",",strtoupper($stateList));
+            if (!in_array(strtoupper($region),$stateArray)) {
                 $errMessage = "That is not a valid region.";
             }
+            else {
+                Log::logPageView('region', 0,$region);
+            }
         }
-    }
+      }
     
     
     // retrieve properties for this region

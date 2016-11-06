@@ -27,7 +27,7 @@
 			     	      	<?php } ?>
 			     	      	<div class="buttons">
 	                           <button id="btnClose" type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Close</button>
-                               <a href="#" target="_blank" id="btnDirections" type="button" class="btn btn-default" ><span class="glyphicon glyphicon-road" aria-hidden="true"></span> Directions</a>
+                               <a href="#" target="_blank" id="btnDirections" type="button" class="btn btn-default hidden" ><span class="glyphicon glyphicon-road" aria-hidden="true"></span> Directions</a>
                             </div>
 				        </div>
 			      	</form>

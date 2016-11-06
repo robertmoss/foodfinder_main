@@ -5,8 +5,13 @@ include_once 'log.php';
 class Database {
 	
 	public static function queryString($value) {
-		$value = str_replace("'","''",$value);
-		return "'" . $value . "'";
+	    if (is_null($value)) {
+            return "null";
+        }
+        else {
+    		$value = str_replace("'","''",$value);
+	       	return "'" . $value . "'";
+        }
 	}
     
     public static function queryStringWildcard($value) {
@@ -57,8 +62,11 @@ class Database {
 	}
 	
 	public static function queryBoolean($value) {
-		// booleans are stored as bits in database, so convert to 1 if true, 0 otherwise
-        if (!$value) {
+		// booleans are stored as bits in database, so convert to 1 if true, 0 otherwise (and allow nulls)
+		if (is_null($value)) {
+		    return "null";
+		}
+        elseif (!$value) {
             return 0;
         }
         else {

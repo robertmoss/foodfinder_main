@@ -15,7 +15,7 @@ function postCurrentLocation(latitude,longitude,address)
 	request.send('latitude='+latitude+'&longitude='+longitude+'&address='+address);
 }
 
-function getLocationListTemplate() {
+function getLocationListTemplate(addToRoute) {
 	var template = "<div class=\"row\">{{#locations}}"; 
 		template += "<div id=\"loc{{id}}\" class=\"col-md-4\">";
 		template += '<div id=\"loc{{id}}_visited\" class="ribbon-wrapper-green {{^visited}}hidden{{/visited}}"><div class="ribbon-green">Visited</div></div>';
@@ -31,6 +31,9 @@ function getLocationListTemplate() {
 					template +="{{#distance}}<h3><span class=\"label label-success\">{{distance}} mi</span></h3>{{/distance}}";
 					template += "<address>{{address}}<br/>{{city}}, {{state}}<br/><a href=\"tel:{{clickablephone}}\">{{phone}}</a><br/><a href=\"{{url}}\" target=\"_blank\">{{displayurl}}</a></address>";
 					template += "<p>{{shortdescription}}{{#more}}<a href=\"location.php?id={{id}}\">more</a>{{/more}}</p>";
+					if (addToRoute) {
+						template += "<button class=\"btn btn-default\">Add To Route</button>";
+					}
 				template += "</div>";
 			template += "</div>";
 		template += "</div>";
@@ -368,6 +371,9 @@ function getIconForLocation(location) {
 	}
 	else if (location.status=='Pending') {
 		icon = 'img/icons/pending.png';
+	}
+	else if (location.status=='Coming Soon') {
+		icon = 'img/icons/gray-dot.png';
 	}
 	else if (location.icon) {
 		icon = location.icon;

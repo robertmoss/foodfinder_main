@@ -486,12 +486,12 @@ if (strlen($type)<1) {
                     echo 'DROP procedure IF EXISTS `delete' . $class->getName() . '`;<br/><br/>';
                     echo 'DELIMITER $$<br/>';
                     echo 'USE `' . Config::$database . '`$$<br/><br/>';
-                    echo 'CREATE PROCEDURE delete' . $class->getName() . '(id int, tenant int, userid int)<br/>';
+                    echo 'CREATE PROCEDURE delete' . $class->getName() . '(_id int, _tenantid int, _userid int)<br/>';
                     echo 'BEGIN<br/><br/>';
                     echo $tab . 'DELETE FROM ' . lcfirst($class->getName());
-                    echo ' WHERE id=id';
+                    echo ' WHERE id=_id';
                     if ($class->hasTenant()) {
-                        echo ' AND tenantid=tenantid';
+                        echo ' AND tenantid=_tenantid';
                     }
                     echo ';<br/><br/>';
                     echo 'END$$<br/>DELIMITER ;';

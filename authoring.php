@@ -24,21 +24,36 @@
     			<div class="container">
                     <div>
                         <ul class="nav nav-pills" role="tablist">
-                            <li role="presentation" class="active"><a href="#features" aria-controls="features" role="tab" data-toggle="tab" onclick="loadFeatureList()">Features</a></li>
+                            <li role="presentation" class="active"><a href="#assignments" aria-controls="assignments" role="tab" data-toggle="tab" onclick="loadAssignmentList()">Schedule</a></li>
+                            <li role="presentation"><a href="#features" aria-controls="features" role="tab" data-toggle="tab" onclick="loadFeatureList()">Features</a></li>
                             <li role="presentation"><a href="#locations" aria-controls="locations" role="tab" data-toggle="tab" onclick="loadLocations()">Locations</a></li>
                             <li role="presentation"><a href="#lists" aria-controls="lists" role="tab" data-toggle="tab" onclick="loadEntityListList()">Lists</a></li>
                             <li role="presentation"><a href="#products" aria-controls="products" role="tab" data-toggle="tab" onclick="loadProductList()">Products</a></li>
-                            <li role="presentation"><a href="#productcollections" aria-controls="productcollections" role="tab" data-toggle="tab" onclick="loadProductCollectionList()">Product Collectionss</a></li>
+                            <li role="presentation"><a href="#productcollections" aria-controls="productcollections" role="tab" data-toggle="tab" onclick="loadProductCollectionList()">Product Collections</a></li>
                         </ul>                   
                     </div>
                     <div class="tab-content">
-                        <div id="features" role="tabpanel" class="tab-pane active">
+                        <div id="assignments" role="tabpanel" class="tab-pane active">
+                            <?php
+                                $entityType="assignment";
+                                $setName = "assignments";
+                                $friendlyName = "Schedule Assignment";
+                                $columns="Status,AssignedToName,TargetDate";
+                                $columnLabels="Status,Assigned To,Target Date"; 
+                                include('core/partials/entityList.php');
+                            ?>
+                        </div>  
+                        <div id="features" role="tabpanel" class="tab-pane">
                             <?php
                                 $entityType="feature";
                                 $setName = "features";
-                                $modalSize = "large"; 
+                                $modalSize = "large";
+                                $filters = "extended=true";
+                                $columns="Status,Post Date,Views"; 
                                 include('core/partials/entityList.php');
                                 $modalSize="";
+                                $columns="";
+                                $filters = "";
                             ?>
                         </div>    
                         <div id="locations" role="tabpanel" class="tab-pane">

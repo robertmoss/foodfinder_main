@@ -36,7 +36,6 @@
                             <span id='<?php echo $entityType;?>-message_text'>Message goes here.</span>
                         </div>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-default" onclick="resetForm();">Reset</button>
                         <?php
                             $saveOnClick = "saveEntity('" . $entityType . "'";
                             if ($callback && strlen($callback)>0) {

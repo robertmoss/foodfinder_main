@@ -39,6 +39,9 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST") {
 	
 	// build array of files. These need to match the Media class fields
 	$files = array();
+    if (!array_key_exists("importFile",$_FILES)) {
+        Service::returnError('Unable to find "importFile" key in $FILES array.',400);
+    }
 	for ($i=0;$i<count($_FILES["importFile"]["name"]);$i++) {
 		$file = array(
 			"id"=>0,	

@@ -8,8 +8,8 @@
 	
     // must be an admin for current tenant to access this page
     if ($userID==0 || ($user && !$user->hasRole('admin',$tenantID))) {
-        Log::debug('Non admin user (id=' . $userID . ') attempted to access admin.php page', 10);
-        header('Location: 403.php');
+        Log::debug('Non admin user (id=' . $userID . ', session_id=' . session_id() . ') attempted to access admin.php page', 10);
+        header('Location: ../403.php');
         die();
     }
     
@@ -153,7 +153,7 @@
 					        <button type="button" class="close" data-dismiss="modal">&times;</button>
 					        <h4 id="userHeader" class="modal-title">Edit User</h4>
 					      </div>
-					      <form id="userForm" action="core/service/user.php" method="post" role="form" >
+					      <form id="userForm" action="service/user.php" method="post" role="form" >
 						      <div id="userBody" class="modal-body locationModal">
 					        	<input type="hidden" class="form-control" id="input-id" name="id"></input>
 					        	<div class="form-group">

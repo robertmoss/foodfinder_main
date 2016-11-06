@@ -17,24 +17,31 @@
 				array("url","string"),
 				array("name","string"),
 				array("description","string",65000),
-				array("metadata","json"),
-				array("public","boolean")
+				array("public","boolean"),
+				array("thumbnailurl","string"),
+				array("width","number",20000),
+				array("height","number",20000),
+				array("metadata","propertybag")
 			);
 			
 			return $fields;
 		}
+        
+        public function friendlyName($fieldName) {
+           if ($fieldName=='thumbnailurl') {
+               return 'Thumbnail Url';
+           }
+           else {
+            return ucfirst($fieldName);
+            }
+        }
 		
 		public function isRequiredField($fieldName) {
 			// override
 			return ($fieldName=='name'||$fieldName=='url');
 		}
         
-         public function isUpdatableField($fieldName) {
-            // and updatable field can be set on a new entity but after that cannot be updated through the API
-            // override and return true for any field needing such handling
-            return ($fieldName!='url');
-        }
-		
+        		
 		public function hasOwner() {
 			return true;
 		}
@@ -61,7 +68,13 @@
 				return $query;
 			}
 			else {
-				throw new Exception('To retrieve media a filter must be set.');
+				$query = "call getMediaItems(" .
+                    Database::queryNumber($this->tenantid) . "," .
+                    Database::queryNumber($this->userid) . "," .
+                    Database::queryNumber($return) . "," .
+                    Database::queryNumber($offset) . ");";
+                
+                return $query;
 			}
 			
 	
@@ -70,12 +83,15 @@
 		public function getEntityCountQuery($filters) {
 			if (isset($filters["locationid"])) {
 				$query = 'select count(*) from locationMedia where locationid=' . Database::queryNumber($filters["locationid"]) . ';';
-				return $query;
-			}
+			     }
 			else {
-				throw new Exception('To retrieve media a filter must be set.');
+                $query = 'select count(*) from media where tenantid=' . Database::queryNumber($this->tenantid) . ';';
 			}
+            return $query;
+            
 		}
+        
+       
 	
 	}
 	

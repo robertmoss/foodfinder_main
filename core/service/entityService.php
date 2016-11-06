@@ -71,6 +71,7 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
     
 	try {
 		$entity = $class->getEntity($id);
+
         if (array_key_exists("owningtenant",$entity) && $entity["owningtenant"] != $tenantID) {
             // this is an entity shared by another tenant and, therefore, is not editable 
             $entity["editable"] = false;
@@ -82,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
         }
 	}
 	catch(Exception $ex) {
-		Service::returnError('Unable to retrive requested ' . $type . '. Internal error.',400,'entityService?type=' .$type);
+		Service::returnError('Unable to retrive requested ' . $type . ': ' .  $ex->getMessage(),400,'entityService?type=' .$type);
 	}
 	
 	$set = json_encode($entity);
