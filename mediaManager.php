@@ -40,6 +40,7 @@
                         <div id="mediaPageSelectorTop" class="pageSelector"></div>
                         <div class="pad-left">
                             <button type="button" class="btn btn-default" onclick="showUploadModal();"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Upload Media File</button>
+                            <button type="button" class="btn btn-default" onclick="showAddMedia();"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Media Manually</button>
                         </div>
                     </div>
                     <div class="row">
@@ -54,10 +55,16 @@
                         <div id="media<?php echo $item["id"];?>" class="col-md-3 mediaItem">
                             <div class="thumb" onclick="showMedia(<?php echo $item['id']?>,'<?php echo $item['url']?>','<?php echo $item['name']?>');">
                                 <img src="<?php echo $thumbnail;?>">
-                                <span class="description"><?php echo $item["name"];?></span>
+                                <span class="description"><?php echo $item["name"];?> (<?php echo $item["id"];?>)</span>
                             </div>
                         </div>        
                         <?php } ?>
+                    </div>
+                    <div class="mediaButtons">
+                            <div id="mediaPageSelectorBottom" class="pageSelector"></div>
+                            <div class="pad-left">
+                            <button type="button" class="btn btn-default" onclick="showUploadModal();"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Upload Media File</button>
+                            </div>
                     </div>
                 </div>  
                 <?php include("partials/footer.php")?>          

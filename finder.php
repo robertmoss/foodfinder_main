@@ -44,9 +44,9 @@
             <div id="shrinkMap" class="mapEnlarge" ><button class="btn btn-default btn-sm"  onclick="shrinkMap();"><span class="glyphicon glyphicon-resize-small" aria-hidden="true"></span></button></div>
             <div id="mapwrapper" class="mapWrapper">
         		<div id="mapcanvas"></div>
+        		<?php //include "partials/mapOptions.php";?>
         		<div id="loading" class="modal"><!-- Place inside div to cover --></div>
     		</div>
-
 		</div>	
     	<div id="searchform2" class="container searchPanel hidden">
     		<form class="form-inline" action="#" onsubmit="retrieveResults('txtAddress','resultSpan');return false;">

@@ -8,6 +8,7 @@
  *      $columns (optional): comman separated list of columns to include in list (besides name, which gets included automatically)
  *      $columnLabels (optional): text values to use for labels (in case field names aren't user friendly)
  *      $filters: filter string to pass to EntityService - should be get parameters, will simply be appended to URL for service call
+ *      $afterLoad: name of javacsript function to be called after the list finishes loading;
  * 
  * NOTE: Any page that uses this partial needs the following javascript includes:
  *      <script type="text/javascript" src="<?php echo Config::$site_root?>/js/validator.js"></script>
@@ -37,8 +38,7 @@
                     $labelList .= ',' . $columns;
                 }
             }
-
-            
+ 
          ?>
          <h1><?php echo ucfirst($friendlyName) . 's' ?></h1>
          <div id="feature-buttons" class="btn-group btn-default">
@@ -51,7 +51,7 @@
          </div>
          <div id="page-selection<?php echo lcfirst($entityType);?>"></div>
          <script type="text/javascript">function load<?php echo ucfirst($entityType)?>List() {
-            loadEntityList('<?php echo $entityType;?>','<?php echo $setName;?>','<?php echo $columnList;?>','<?php echo $columnList;?>',10,0,'<?php echo $filters;?>');
+            loadEntityList('<?php echo $entityType;?>','<?php echo $setName;?>','<?php echo $columnList;?>','<?php echo $columnList;?>',10,0,'<?php echo $filters;?>'<?php if (isset($afterLoad) && strlen($afterLoad)>0) {echo ',' . $afterLoad;} ?>);
             }
          </script>
          <?php 
@@ -63,6 +63,7 @@
              $entityType="";
              $setName="";
              $friendlyName="";
+             $afterLoad="";
          
          ?>
                         

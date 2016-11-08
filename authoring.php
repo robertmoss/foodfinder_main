@@ -11,6 +11,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'title') ?> - Authoring</title>
         <?php include("partials/includes.php"); ?>
+        <link rel="stylesheet" type="text/css" href="static/css/authoring.css" />
         <script type="text/javascript" src="<?php echo Config::$site_root?>/js/validator.js"></script>
         <script type="text/javascript" src="<?php echo Config::$site_root?>/js/bootpag.min.js"></script>
         <script type="text/javascript" src="<?php echo Config::$site_root?>/js/jquery.form.min.js"></script>
@@ -39,7 +40,8 @@
                                 $setName = "assignments";
                                 $friendlyName = "Schedule Assignment";
                                 $columns="Status,AssignedToName,TargetDate";
-                                $columnLabels="Status,Assigned To,Target Date"; 
+                                $columnLabels="Status,Assigned To,Target Date";
+                                $afterLoad="afterAssignmentListLoad"; 
                                 include('core/partials/entityList.php');
                             ?>
                         </div>  

@@ -84,6 +84,10 @@
 	max-height: 400px;
 }
 
+.featureContainer .coverImage .caption {
+	margin-top: 5px;
+	}
+	
 
 @media screen and (min-width: 768px) {
 	.featureBodyText {
@@ -110,6 +114,10 @@
 		max-width: 570px;
 	}
 	
+	.featureContainer .coverImage .caption {
+		max-width: 570px;
+	}
+	
 	.featureContainer .bookCover {
 		float: left;
 		margin-right: 10px;
@@ -128,10 +136,39 @@
 	}
 
 	.condensed .bookCover img {
-		max-height: 150px;
+		max-width: 150px;
 		min-width: 0px;
+		max-height: 150px;
 	}
 	
+	.condensed p {
+		font-size: 14px;
+	}
+	
+}
+
+/* recipe styling */
+
+.featureContainer .recipe {
+	border-left: solid 5px #eeeeee;
+    padding: 10px;
+}
+
+.featureContainer .recipe h3 {
+	text-transform: uppercase;
+    font-size: 16px;
+    color: #e68a00;
+}
+
+.featureContainer .servings {
+	display: block;
+	margin-bottom: 10px;
+}
+
+.featureContainer .ingredients {
+	display: block
+	font-size: 16px;
+    font-style: italic;
 }
 
 /* location carousel styling */
@@ -169,5 +206,4 @@
 	font-style: italic;
     font-size: 12px;
 	position: relative;
-    top: -15px;
 }

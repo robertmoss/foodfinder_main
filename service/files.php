@@ -68,21 +68,31 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST") {
 		Service::returnError('Unable to upload files: ' . $errMessage);
 	}
 	
-	// 2. Resize image if it's too large
-	// TO DO: do we need to automatically create thumbnails, too?
+	// 2. Create thumbnail and resize image if it's too large
 	for ($i=0;$i<count($files);$i++) {
-	     $sourcefile = $files[$i]["tmp_name"];
+	    $sourcefile = $files[$i]["tmp_name"];
         $type = $files[$i]["type"];
 	    $handler = new ImageHandler($sourcefile,$type);
-	    if ($handler->getWidth()> 500 || $handler->getHeight()>500) {
+        $files[$i]["thumb_file"] = $handler->getAppendedFileName($files[$i]["tmp_name"], "_thumb",true);
+        $files[$i]["thumb_name"] = $handler->getAppendedFileName($files[$i]["name"], "_thumb",false);
+	    if ($handler->getWidth()> 800 || $handler->getHeight()>800) {
             try {
                 $destination = $files[$i]["tmp_name"];
-                $handler->resize(500, 500, $destination);
+                $handler->resize(800, 800, $destination);
             }
             catch(Exception $ex) {
                 Service::returnError('Unable to upload files. Error resizing file: ' . $ex->getMessage());
             }
         }
+        $files[$i]["width"] = $handler->getWidth();
+        $files[$i]["height"] = $handler->getHeight();
+        try {
+            $destination = $files[$i]["thumb_file"];
+            $handler->resize(250, 250, $destination);
+            }
+        catch(Exception $ex) {
+            Service::returnError('Unable to upload files. Error creating thumbnail: ' . $ex->getMessage());
+            }
     }
 	
 	// 3. store in CDN
@@ -93,10 +103,13 @@ elseif ($_SERVER['REQUEST_METHOD']=="POST") {
         Service::returnError('Unable to save media file. Unable to create interface to CDN.');
     }
 	for ($i=0;$i<count($files);$i++) {
-		$sourcefile = $files[$i]["tmp_name"];	
+		$sourcefile = $files[$i]["tmp_name"];
+        $sourcethumb = 	$files[$i]["thumb_file"];
 		$key = $files[$i]["name"];
+        $thumbkey = $files[$i]["thumb_name"];
         try {
     		$files[$i]["url"] = $cdn->putContent($sourcefile,$key,'');
+            $files[$i]["thumbnailurl"] = $cdn->putContent($sourcethumb,$thumbkey,'');
         }
         catch(Exception $ex) {
             Service::returnError('Unable to store file in CDN: ' . $ex->getMessage());

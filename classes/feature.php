@@ -23,7 +23,8 @@
                 array("numberEntries","boolean"),
                 array("reverseOrder","boolean"),
                 array("isNewsItem","boolean"),
-                array("coverImage","string",200),
+                array("coverImage","linkedentity",20,false,'','media'),
+                //array("coverImage","string",200),
                 array("status","picklist",100,"featureStatus",false)
             );
             
@@ -41,6 +42,9 @@
             }
             elseif ($fieldName=="datePostedFriendly") {
                 return "Date Posted";
+            }
+            if ($fieldName=="coverImage") {
+                return "Cover Image";
             }
             else {
                 return ucfirst($fieldName);

@@ -20,8 +20,9 @@
                             <span id='media-message-text'>Message goes here.</span>
                         </div>
                         <div class="buttons">
+                           <button id="btnDelete" type="button" class="btn btn-danger" onclick="deleteMedia();"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete Media</button>
 	                       <button id="btnClose" type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
-                           <button id="mediaSave" type="button" class="btn btn-default" onclick="saveMedia();">Save</button> 
+                           <button id="mediaSave" type="button" class="btn btn-primary" onclick="saveMedia();"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save</button> 
                         </div>
 			      </div>
 			    </div>

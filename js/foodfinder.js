@@ -538,3 +538,7 @@ function submitIssue() {
 		}
 	});
 }
+
+function logClick(productId) {
+	postEvent('linkClick','product',productId);
+}

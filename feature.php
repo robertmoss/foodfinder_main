@@ -3,6 +3,7 @@
     include_once dirname(__FILE__) . '/core/classes/log.php';
     include_once dirname(__FILE__) . '/core/classes/format.php';
     include_once Config::$root_path . '/classes/feature.php';
+     include_once Config::$root_path . '/classes/display.php';
 	
 	$thisPage="feature";
     
@@ -130,10 +131,14 @@
     			             <li><a class="social icon icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $url; ?>" target="_blank" rel="nofollow" title="Share on Facebook" aria-label="Share on Facebook"></a></li>
     			        </ul>
     			   </div>
-                    <div id="coverImage" class="coverImage"><img src="<?php echo $feature["coverImage"];?>"/></div>
+    			   <?php
+    			         if ($feature["coverImage"]>0) {
+    			             Display::showMediaItem($feature["coverImage"],$userID,$tenantID);
+                         }
+    			   ?>
     				<div id="openingContent">
     				    <div class="featureContent">
-                            <div class="featureBodyText"><?php echo Utility::renderWebContent($feature["introContent"]); ?></div>
+                            <div class="featureBodyText"><?php echo Display::renderWebContent($feature["introContent"],$userID,$tenantID); ?></div>
                         </div>
                         <?php if (strlen($feature["locationCriteria"])>0) { ?>
                         <div class="featureLaunch">
@@ -156,7 +161,7 @@
                     <?php include("core/partials/workingPanel.php");?> 
                     <div id="closingContent" class="featureContent<?php if ($hideClosing) { echo ' hidden'; }?>">
                         <div class="featureContent">
-                            <p class="featureBodyText"><?php echo Utility::renderWebContent($feature["closingContent"]) ?></p>
+                            <p class="featureBodyText"><?php echo Display::renderWebContent($feature["closingContent"],$userID,$tenantID) ?></p>
                             <?php include("partials/twitterFollowButton.php");?> 
                         </div>
                     </div>

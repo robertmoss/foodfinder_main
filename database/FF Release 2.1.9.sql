@@ -307,5 +307,121 @@ BEGIN
 END$$
 DELIMITER ;
 
+USE `food`;
+DROP procedure IF EXISTS `getMediaItemsEx`;
+
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getMediaItemsEx`(_name varchar(200), _description text, _tenantid int, _userid int, _return int, _offset int)
+BEGIN
+
+	set @where = "";
+    IF _name IS NOT NULL THEN
+		set @where = CONCAT(" and M.name like '",_name,"%'");
+    END IF;
+    
+    IF _description IS NOT NULL THEN
+		set @where = CONCAT(@where," and M.description like '",_description,"%'");
+    END IF;
+
+	set @sql = "select M.id,M.url,M.name,M.description,
+		M.metadata,M.public,M.thumbnailurl,M.height,M.width 
+		from media M
+	where
+		M.tenantid=?";
+	
+    set @sql = CONCAT(@sql,@where,
+		" and (M.public=1 or M.ownerid=?) LIMIT ?,?;");
+	
+    prepare stmt from @sql;
+    
+    #select @sql;
+    
+    set @tenantid=_tenantid;
+    set @userid = _userid;
+    set @return = coalesce(_return,10);
+    set @offset = coalesce(_offset,0);
+    
+    execute stmt using @tenantid,@userid,@offset,@return;
+            
+
+END$$
+DELIMITER ;
+
+USE `food`;
+DROP procedure IF EXISTS `getMediaItemsCountEx`;
+
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getMediaItemsCountEx`(_name varchar(200), _description text, _tenantid int, _userid int)
+BEGIN
+
+	set @where = "";
+    IF _name IS NOT NULL THEN
+		set @where = CONCAT(" and M.name like '",_name,"%'");
+    END IF;
+    
+    IF _description IS NOT NULL THEN
+		set @where = CONCAT(@where," and M.description like '",_description,"%'");
+    END IF;
+
+	set @sql = "select count(*)
+		from media M
+	where
+		M.tenantid=?";
+	
+    set @sql = CONCAT(@sql,@where,
+		" and (M.public=1 or M.ownerid=?);");
+	
+    prepare stmt from @sql;
+    
+    #select @sql;
+    
+    set @tenantid=_tenantid;
+    set @userid = _userid;
+    
+    execute stmt using @tenantid,@userid;
+            
+
+END$$
+DELIMITER ;
+
+USE `food`;
+DROP procedure IF EXISTS `getFeatureById`;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getFeatureById`(_id int, _tenantid int, _userid int)
+BEGIN
+
+     SELECT F.id,
+          F.name,
+          headline,
+          subhead,
+          U.id as author,
+          U.name as authorName,
+          datePosted,
+          introContent,
+          closingContent,
+          locationCriteria,
+          locationTemplate,
+          coalesce(useLocationDesc,0) as useLocationDesc,
+          coalesce(numberEntries,0) as numberEntries,
+          coalesce(reverseOrder,0) as reverseOrder,
+		  coalesce(isNewsItem,0) as isNewsItem,
+          coverImage,
+          M.name as coverImageName,
+          M.url as coverImageUrl,
+          IF(F.status="Published",IF(F.datePosted>NOW(),"Scheduled","Published"),F.status) as status
+     FROM	
+          feature F
+          left join user U on U.id=F.author
+          left join media M on F.coverImage = M.id
+      WHERE
+		F.id=_id AND F.tenantid=_tenantid;
+
+END$$
+DELIMITER ;
+
+
 
 

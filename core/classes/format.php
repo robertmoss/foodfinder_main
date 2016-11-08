@@ -1,7 +1,8 @@
 <?php
 /*
  *  The Format class provides an array of utility functions for formatting text, content, and data for
- *  onscreen presentation
+ *  onscreen presentation - this needs to move out of core: very specific to foodfinder entities
+ *  Need a core formatter and then application specific wrapper that calls into it
  */ 
 class Format {
  
@@ -47,122 +48,8 @@ class Format {
  */
 public static function renderWebContent($content) {
     
-    // replace location tags with links
-    $index = strpos($content,'<location ');
-    $count = 0;
-    $runningContent="";
-    while ($index>0 && $count<50) {
-        $idindex = $index+9;
-        $id='';
-        $endfound = false;
-        while (!$endfound && $idindex<strlen($content)) {
-            $id .= substr($content,$idindex,1);
-            $idindex++;
-            if (substr($content,$idindex,1)==">") {
-                $endfound=true;
-            }
-        }
-        $endindex = strpos($content,'</location>');
-        $linkURL = Config::$core_root . '/entityPage.php?type=location&id=' . $id;
-        $linktext = substr($content,$idindex+1,$endindex-$idindex-1);
-        $newcontent = substr($content,0,$index);
-        $newcontent .= '<a href="#" onclick="loadLocation(' . $id .');return false;">' . $linktext . '</a>'; 
-        $newcontent .= substr($content,$endindex + 11);
-        $runningContent .= 'Found at: ' .$index . ' through ' . $endindex . ': ' . $linktext . '<hr/>';
-        $content = $newcontent;
-        $index = strpos($content,'<location ');
-        $runningContent .= 'newind=' . $index;        
-        $count++;
-        
-    }
-
-    // replace feature tags with links
-    $index = strpos($content,'<feature ');
-    $count = 0;
-    $runningContent="";
-    while ($index>0 && $count<50) {
-        $idindex = $index+9;
-        $id='';
-        $endfound = false;
-        while (!$endfound && $idindex<strlen($content)) {
-            $id .= substr($content,$idindex,1);
-            $idindex++;
-            if (substr($content,$idindex,1)==">") {
-                $endfound=true;
-            }
-        }
-        $endindex = strpos($content,'</feature>');
-        $linkURL = Config::$core_root . '/entityPage.php?type=location&id=' . $id;
-        $linktext = substr($content,$idindex+1,$endindex-$idindex-1);
-        $newcontent = substr($content,0,$index);
-        $newcontent .= '<a href="feature.php?id=' . $id .'">' . $linktext . '</a>'; 
-        $newcontent .= substr($content,$endindex + 10);
-        $runningContent .= 'Found at: ' .$index . ' through ' . $endindex . ': ' . $linktext . '<hr/>';
-        $content = $newcontent;
-        $index = strpos($content,'<feature ');
-        $runningContent .= 'newind=' . $index;        
-        $count++;
-    }
-    
-    // replace product tags with links
-    $index = strpos($content,'<product ');
-    $count = 0;
-    $runningContent="";
-    while ($index>0 && $count<50) {
-        $idindex = $index+8;
-        $id='';
-        $endfound = false;
-        while (!$endfound && $idindex<strlen($content)) {
-            $id .= substr($content,$idindex,1);
-            $idindex++;
-            if (substr($content,$idindex,1)==">") {
-                $endfound=true;
-            }
-        }
-        $endindex = strpos($content,'</product>');
-        $linkURL = Config::$core_root . '/entityPage.php?type=product&id=' . $id;
-        $linktext = substr($content,$idindex+1,$endindex-$idindex-1);
-        $newcontent = substr($content,0,$index);
-        $newcontent .= '<a href="#" onclick="loadProduct(' . $id .');return false;">' . $linktext . '</a>'; 
-        $newcontent .= substr($content,$endindex + 10);
-        $runningContent .= 'Found at: ' .$index . ' through ' . $endindex . ': ' . $linktext . '<hr/>';
-        $content = $newcontent;
-        $index = strpos($content,'<product ');
-        $runningContent .= 'newind=' . $index;        
-        $count++;
-    }
-    
-    // replace product tags with links
-    $index = strpos($content,'<author ');
-    $count = 0;
-    $runningContent="";
-    while ($index>0 && $count<50) {
-        $idindex = $index+8;
-        $id='';
-        $endfound = false;
-        while (!$endfound && $idindex<strlen($content)) {
-            $id .= substr($content,$idindex,1);
-            $idindex++;
-            if (substr($content,$idindex,1)==">") {
-                $endfound=true;
-            }
-        }
-        $endindex = strpos($content,'</author>');
-        $linkURL = Config::getSiteRoot() . '/author.php?id=' . $id;
-        $linktext = substr($content,$idindex+1,$endindex-$idindex-1);
-        $newcontent = substr($content,0,$index);
-        $newcontent .= '<a href="'. $linkURL . '">' . $linktext . '</a>'; 
-        $newcontent .= substr($content,$endindex + 9);
-        $runningContent .= 'Found at: ' .$index . ' through ' . $endindex . ': ' . $linktext . '<hr/>';
-        $content = $newcontent;
-        $index = strpos($content,'<author ');
-        $runningContent .= 'newind=' . $index;        
-        $count++;
-    }
-
-
     //$content=$runningContent;
-    $content = nl2br($content);
+    $content = nl2br($content); 
     return $content;
 }
     

@@ -80,7 +80,7 @@ html, body {
 		height: 95%;
 		width: 100%;
 		margin: 0px 0px;
-		position: static;
+		position: relative;
 		}
 	
 	#mapcanvas {
@@ -138,6 +138,10 @@ html, body {
 	position: absolute;
 }
 
+.mapOptions {
+	display: none;
+}
+
 @media only screen and (min-width: 1024px) {
 	.mapPane {
 		position: inherit;
@@ -152,6 +156,24 @@ html, body {
 		top: 4px;
 	}
 	
+	.mapOptions {
+		display: block;
+		position: absolute;
+	    right: 45px;
+	    width: 160px;
+	    min-height: 100px;
+	    top: 10px;
+	    z-index: 100;
+	    background-color: #ffffff;
+		border: solid 1px #cccccc;
+		text-align: left;
+		padding: 2px 5px 2px 5px;
+	}
+	
+	.mapOptions img {
+		height: 24px;
+		width: 24px;
+	 }
 	.mapWrapper {
 		position: inherit;
 	}

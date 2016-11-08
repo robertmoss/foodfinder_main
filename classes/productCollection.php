@@ -28,8 +28,8 @@
             return true;
         }
         
-                 public function getEntities($filters, $return, $offset) {
-            // override base to add vieLink field
+        public function getEntities($filters, $return, $offset) {
+            // override base to add viewLink field
             $entities = parent::getEntities($filters,$return,$offset);
             for ($i=0;$i<count($entities);$i++) {
                 $entities[$i]["viewLink"] = "collection.php?id=" . $entities[$i]["id"];

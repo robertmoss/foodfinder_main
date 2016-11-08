@@ -3,10 +3,10 @@
 // this is the multi-type core service page for querying a list of entities based upon filter criteria
 
 include dirname(__FILE__) . '/../partials/pageCheck.php';
-include_once Config::$root_path . '/classes/application.php';
 include_once dirname(__FILE__) . '/../classes/database.php';
 include_once dirname(__FILE__) . '/../classes/utility.php';
 include_once dirname(__FILE__) . '/../classes/service.php';
+include_once dirname(__FILE__) . '/../classes/classFactory.php';
 include_once dirname(__FILE__) . '/../partials/checkAPIKey.php';
 
 
@@ -39,22 +39,12 @@ if ($listId==0) {
 
 $descending = Utility::getRequestVariable('desc', 'false');
 
-$coretypes = array('user','tenant','entityList');
-if(!in_array($type,$coretypes,false) && !in_array($type, Application::$knowntypes,false)) {
-    // unrecognized type requested can't do much from here.
-    Service::returnError('Unknown type: ' . $type,400,'entityService?type=' .$type);
+try {
+    $class = ClassFactory::getClass($type, $userID, $tenantID);
 }
-
-$classpath = Config::$root_path . '/classes/'; 
-if(in_array($type,$coretypes,false)) {
-    // core types will be in core path as configured in config.php
-    $classpath = Config::$core_path . '/classes/';
+catch(Exception $ex) {
+    Service::returnError('Unknown or uncreatable type: ' . $type,400,'entitiesService?type=' .$type);
 }
-	
-// include appropriate dataEntity class & then instantiate it
-include_once  $classpath . $type . '.php';
-$classname = ucfirst($type); 	// class names start with uppercase
-$class = new $classname($userID,$tenantID);	
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
     
@@ -67,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
            
             }
         catch (Exception $ex) {
-            $message= 'Unable to retrieve ' . $type . ': ' . $ex->getMessage();
+            $message= 'Unable to retrieve ' . $type . ' set count: ' . $ex->getMessage();
             Service::returnError($message);
         }
         
@@ -81,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD']=="GET") {
    		
         	}
     	catch (Exception $ex) {
-    		$message= 'Unable to retrieve ' . $type . ': ' . $ex->getMessage();
+    		$message= 'Unable to retrieve ' . $type . ' set: ' . $ex->getMessage();
     		Service::returnError($message);
     	}
     }

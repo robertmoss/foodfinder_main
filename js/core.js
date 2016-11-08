@@ -68,7 +68,7 @@ function getAndRenderJSON(serviceURL,template,anchor,working,callback)
 		  if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 		    var view = JSON.parse(xmlhttp.responseText);
 		    var key;
-		    if (!view.count) {
+		    if (typeof view.count=='undefined') {
 		    	key=view.id;
 		    }
 		    else {
@@ -874,7 +874,7 @@ function childSaveComplete(success) {
 	}
 }
 
-function loadEntityList(entity,setName,columns,labels,entitiesPerPage,offset,filters) {
+function loadEntityList(entity,setName,columns,labels,entitiesPerPage,offset,filters,callback) {
 	
 	if (!columns || columns.length==0) {
 		columns = "Actions,Name";
@@ -887,7 +887,7 @@ function loadEntityList(entity,setName,columns,labels,entitiesPerPage,offset,fil
 	template += '<input id="' + entity + 'SetName" type="hidden" value="' + setName + '">';
 	template += '<input id="' + entity + 'Columns" type="hidden" value="' + columns + '">';
 	template += '<input id="' + entity + 'Labels" type="hidden" value="' + labels + '">';
-	template += "<table class=\"table table-striped table-hover table-responsive\"><thead><tr>";
+	template += '<table id="' + entity + 'Table" class=\"table table-striped table-hover table-responsive\"><thead><tr>';
 	for (var i=0;i<colArray.length;i++) {
 		template += "<th>" + colArray[i].trim() + "</th>";
 	}
@@ -947,8 +947,11 @@ function loadEntityList(entity,setName,columns,labels,entitiesPerPage,offset,fil
 				var numPage = Math.ceil(totalEntities/entitiesPerPage);
 				$('#page-selection' + entity).bootpag({total: numPage}).on("page",function(event,num) {
 					offset = (num-1) * entitiesPerPage;
-					loadEntityList(entity,setName,columns,entitiesPerPage,offset);
+					loadEntityList(entity,setName,columns,labels,entitiesPerPage,offset);
 					});
+				if (callback) {
+					callback();
+					}
 				}
 			else {
 				document.getElementById(anchor).innerHTML = 'unable to load ' + entity + ' list:' + xmlhttp.responseText;
@@ -992,5 +995,44 @@ function propertyBagKeyChange(inputID,keyID) {
 	document.getElementById(inputID).name=document.getElementById(keyID).value;
 }
 
+function removeLinkedEntity(entity) {
+	setElementValue('search' + ucfirst(entity) + 'Placeholder','');
+	setElementValue('search' + ucfirst(entity) + 'Value','');
+}
 
+function searchForLinkedEntity(entity,searchPanelId) {
+	// activates the specified searchPanel to search for the the specified entity
+	$('#' + searchPanelId).toggle(200);
+}
+
+function searchEntity(entity) {
+	var serviceUrl = getCoreServiceUrl();
+	var searchTypeSelect = document.getElementById(entity + 'SearchType');
+	var searchType = lcfirst(searchTypeSelect.options[searchTypeSelect.selectedIndex].text);
+	var searchValue = document.getElementById(entity + 'SearchBox').value;
+	var filter = searchType + "=" + searchValue;
+	serviceUrl += "/entitiesService.php?type=" + entity + "&" + filter + "&return=10";
+
+	var anchor = entity + 'SearchResults';
+	var template = '{{#' + entity + '}}<p><a href="#" onclick="selectSearchResultItem(\'' + entity + '\',{{id}},\'{{name}}\');" onmouseover="showSearchResultPreview(\'' + entity + '\');">{{name}}</a></p>{{/' + entity + '}}';
+	var working = '<div class="ajaxLoading"></div>';
+	
+	getAndRenderJSON(serviceUrl,template,anchor, working,function(key) {
+		if (key==0) {
+			setElementHTML(anchor,'<p>no matches found.</p>');
+		}
+	});
+	
+}
+
+function showSearchResultPreview(entity) {
+	showElement(entity + 'SearchPreview');
+}
+
+function selectSearchResultItem(entity,id,name) {
+	setElementValue('search' + ucfirst(entity) + 'Placeholder',name);
+	setElementValue('search' + ucfirst(entity) + 'Value',id);
+	setElementHTML(entity + 'SearchResults','');
+	$('.entitySearchPanel').toggle(200);
+}
 

@@ -71,7 +71,29 @@ function afterProductCollectionFormLoad() {
 }
 
 function afterAssignmentFormLoad() {
-	// not sure we need to do anything here
+	
+}
+
+function afterAssignmentListLoad() {
+	// set color coding based upon Status field
+	$('#assignmentTable tr').each(function(i,row) {
+		var row=$(row);
+		var status=row[0].childNodes[3].textContent;
+		classValue='';
+		if (status=='Published'||status=='Complete') {
+			classValue='complete';	
+		}
+		else if (status=='Assigned' || status=='Unassigned') {
+			var dueDate=new Date(row[0].childNodes[5].textContent);
+			var currentDate = new Date();
+			if (dueDate.getTime()<currentDate.getTime()) {
+				classValue='late';
+			}
+		}
+		if (classValue.length>0) {
+			$(row).addClass(classValue);
+		}
+	});
 }
 
 

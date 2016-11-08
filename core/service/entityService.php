@@ -5,7 +5,7 @@ include_once dirname(__FILE__) . '/../classes/database.php';
 include_once dirname(__FILE__) . '/../classes/utility.php';
 include_once dirname(__FILE__) . '/../classes/service.php';
 include_once dirname(__FILE__) . '/../classes/dataentity.php';
-include_once dirname(__FILE__) . '/../../classes/application.php';
+include_once dirname(__FILE__) . '/../classes/classFactory.php';
 
     $type='';
 	if (isset($_GET["type"])) {
@@ -30,28 +30,12 @@ include_once dirname(__FILE__) . '/../../classes/application.php';
         }
     }
     
-    
-	$coretypes = array('tenant','tenantSetting','tenantProperty','category','menuItem','page','tenantContent','entityList');
-    if(!in_array($type,$coretypes,false) && !in_array($type, Application::$knowntypes,false)) {
-		// unrecognized type requested can't do much from here.
-		Service::returnError('Unknown type: ' . $type,400,'entityService?type=' .$type);
+    try {
+        $class = ClassFactory::getClass($type, $userID, $tenantID);
+    }
+    catch(Exception $ex) {
+		Service::returnError('Unknown or uncreatable type: ' . $type,400,'entityService?type=' .$type);
 	}
-	
-	$classpath = Config::$root_path . '/classes/'; 
-	if(in_array($type,$coretypes,false)) {
-		// core types will be in core path as configured in config.php
-		$classpath = Config::$core_path . '/classes/';
-	}
-	
-	// include appropriate dataEntity class & then instantiate it
-	$classfile = $classpath . $type . '.php';
-	if (!file_exists($classfile)) {
-		Utility::debug('Unable to instantiate class for ' . $type . ' Classfile does not exist. Looking for ' . $classfile, 9);
-		Service::returnError('Internal error. Unable to process entity.',400,'entityService?type=' .$type);
-	}
-	include_once $classfile;
-	$classname = ucfirst($type); 	// class names start with uppercase
-	$class = new $classname($userID,$tenantID);	
 
 if ($_SERVER['REQUEST_METHOD']=="GET") {
 	
@@ -206,10 +190,13 @@ elseif ($_SERVER['REQUEST_METHOD']=="DELETE") {
     }
     
     try {
-        $entity = $class->deleteEntity($id);
+        $result = $class->deleteEntity($id);
+        if (!$result) {
+            Service::returnError('Unable to delete requested ' . $type . '. Unknown error.');
+        }
     }
     catch(Exception $ex) {
-        Service::returnError('Unable to delete requested ' . $type . '. Internal error.');
+        Service::returnError('Unable to delete requested ' . $type . '. ' . $ex->getMessage());
     }
     $set = json_encode(array('deleted'=> $id));
 

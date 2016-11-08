@@ -26,10 +26,20 @@
 	width: 250px;
 	margin: 0px auto;
 	border: solid 1px #cccccc;
+	text-align: center;
+}
+
+.mediaManager .thumb img {
+	max-height: 250px;
+	max-width: 250px;
+}
+
+.mediaImagePanel {
+	text-align: center;
 }
 
 .mediaImagePanel img {
-	width: 100%;
+	max-width: 100%;
 }
 
 .mediaButtons {

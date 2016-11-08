@@ -5,6 +5,8 @@ include_once dirname(__FILE__) . '/../../classes/config.php';
 include_once dirname(__FILE__) . '/log.php';
 include_once dirname(__FILE__) . '/cache.php';
 include_once dirname(__FILE__) . '/tenant.php';
+include_once dirname(__FILE__) . '/classFactory.php';
+
 
 /* 
  * a utility class for managing and rendering forms from data entities
@@ -119,6 +121,7 @@ class Forms {
                                 echo '  <div class="help-block with-errors"></div>';
                                 echo '</div>';
                                 break;
+                                
                             case "linkedentity":
                                 $collength = 6;
                                 if (count($field)>2) {
@@ -128,21 +131,46 @@ class Forms {
                                 }
                                 echo '<div class="form-group">';
                                 echo $default_label;
-                                echo '<div class="col-sm-' . $collength . '"><select id="' . $field[0] . '" name="' . $field[0] . '" class="form-control">';
-                                $list = Utility::getList($field[3],$tenantID,0);
-                                foreach ($list as $r) {
-                                    $selected = "";
-                                    if (($id>0 && $r[0]==$entity[$field[0]]) || ($id==0 && $r[0]==$parentid)) {
-                                        $selected = "selected";
+                                echo '<div class="col-sm-' . $collength . '">';
+                                if (strlen($field[3])>0) {
+                                    echo '<select id="' . $field[0] . '" name="' . $field[0] . '" class="form-control">';
+                                    $list = Utility::getList($field[3],$tenantID,0);
+                                    foreach ($list as $r) {
+                                        $selected = "";
+                                        if (($id>0 && $r[0]==$entity[$field[0]]) || ($id==0 && $r[0]==$parentid)) {
+                                            $selected = "selected";
+                                            }
+                                        echo '<option value="' . $r[0].'"' . $selected . '>' . $r[1] . '</option>';
                                         }
-                                    echo '<option value="' . $r[0].'"' . $selected . '>' . $r[1] . '</option>';
+                                    echo '</select>';
                                     }
-                                echo '</select></div>';
+                                else {
+                                    $fieldname = $class->friendlyName($field[0]);
+                                    $searchPanelId = 'search' . ucfirst($field[0]);
+                                    $displayValueKey = $field[0] . 'Name';
+                                    $displayValue="";
+                                    if ($id>0 && key_exists($displayValueKey,$entity)) {
+                                        $displayValue = $entity[$displayValueKey];
+                                    }
+                                    else {
+                                        if ($id>0 && $entity[$field[0]]>0) {
+                                            $displayValue = $field[5] . ' #' . $entity[$field[0]];
+                                        }
+                                    }
+                                    echo '<input id="search' . ucfirst($field[5])  . 'Value" name="'. $field[0] .'" type="hidden" value="'. $value .'">';
+                                    echo '<div class="input-group"><input id="search' . ucfirst($field[5])  . 'Placeholder" type="text" class="form-control" value="'. $displayValue .'" readonly>';
+                                    echo '<span class="input-group-addon btn btn-default" id="'. $searchPanelId . 'Button" onclick="searchForLinkedEntity(\'' . $field[5] . '\',\'' . $searchPanelId .'\');"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span>';
+                                    echo '<span class="input-group-addon btn btn-default" id="'. $searchPanelId . 'Remove" onclick="removeLinkedEntity(\'' . $field[5] . '\');"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>';
+                                    echo '</div>';
+                                    Forms::renderSearchPanel($searchPanelId,$fieldname,$field[5],$tenantID);
+                                }
+                                echo '</div>';
                                 if (isset($field[4]) && $field[4]) {
                                     echo '<a href="#add' . $field[0]  . '" onclick="addSubEntity(\'add' . $field[0]  . '\');">Add New</a>'; 
                                     }
                                 echo '</span></div>';
                                 break;
+                                
                             case "image":
                                 //echo '<div class="row">';
                                 //echo '<span class="label">' . $field[0] . ':</span>';
@@ -294,6 +322,30 @@ class Forms {
                         }
 
 
+        }
+
+        public static function renderSearchPanel($searchPanelId,$fieldname,$entityClass,$tenantid) {
+            
+             $class = ClassFactory::getClass($entityClass,0,$tenantid);
+             $searchFields = $class->getSearchFields();
+             echo '<div id="' . $searchPanelId . '" class="panel panel-default entitySearchPanel" style="display:none">
+                        <div class="panel-body">
+                            <div class="input-group"><span class="input-group-addon" id="basic-addon3">Search by:</span>
+                                <select id="' . $entityClass . 'SearchType" class="form-control">';                                       
+            $selected='';
+             foreach($searchFields as $searchField) {
+                 echo '<option value="' . $searchField.'"' . $selected . '>' . $class->friendlyName($searchField) . '</option>';
+             }
+             echo '         </select></div><br/>';
+             echo '         <div class="input-group">';
+             echo '             <input id="' . $entityClass . 'SearchBox" id= type="text" class="form-control" value="" placeholder="enter search criteria">';                 
+             echo '             <span class="btn btn-primary input-group-addon" onclick="searchEntity(\'' . $entityClass . '\');">Search</span>';            
+             echo '        </div></br>';
+             echo '         <div id="' . $entityClass . 'SearchResults" class="searchResults"></div>';
+             echo '         <div id="' . $entityClass . 'SearchPreview" class="searchPreview hidden">PREVIEW!</div>';
+             echo '                                 
+                        </div>
+                   </div>';
         }
 
         public static function renderMultifileUpload($url,$prompt,$buttonText) {

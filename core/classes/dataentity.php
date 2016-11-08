@@ -7,6 +7,7 @@ interface iDataEntity {
     public function getFriendlyName();
 	public function getDataServiceURL();
 	public function getFields();
+    public function getSearchFields();
 	public function getEntity($id);
 	public function getEntities($filters, $return, $offset);
     public function getEntitiesFromList($listId,$return,$offset);
@@ -95,12 +96,15 @@ abstract class DataEntity implements iDataEntity {
 	 	 * 		picklist: [3] - name of list to choose values from (as found in Utility::getList method )
 		 * 				  [4] - (optional) boolean indicating whether users can add new picklist itmes (e.g. to show an "add new button" 
          *                      next to pick list to add new items)
+         * 
 		 * 		linkedentity:
-		 * 				  [3] - same as picklist #3 
+		 * 				  [3] - same as picklist #3 - if not specified (empty string) will assume you don't pick from list but rather have to search
+         *                          for the entity to ented; in this case param [5] is required and [4] is ignored
 		 * 				  [4] - same as picklist #4
-		 * 				  [5] - (optional) the class name of the linked entity
-		 * 				  [6] - (optional) index of the hidden or viewonly field in the field array to be used to as label for the linked entity 
-		 * 		linkedentities
+		 * 				  [5] - (optional unless list not specified) the class name of the linked entity
+		 * 				  [6] - (optional) index of the hidden or viewonly field in the field array to be used to as label for the linked entity
+         *  
+		 * 		linkedentities:
 		 * 				  [2] - name of the linked entity
 		 * 				  [3] - true/false: whether user should be allowed to dynamically create new entities to be linked (if false, user can only select from a defined list of existing entities)
 		 * 				  [4] - true/false: whether user should be able to delete a linked entities or just de-link the entity from parent 
@@ -121,6 +125,14 @@ abstract class DataEntity implements iDataEntity {
 		    }
             return "unknown fieldName";
 		}
+        
+        public function getSearchFields() {
+            // returns an array of fields for which this entity supports searching by
+            // by default, assume only name is searchable
+            // override to return array of fieldnames that support searching
+            $searchFields = array('name');
+            return $searchFields;
+        }
         
         public function hasField($fieldName) {
             // returns true if the specified entity has the named field; false otherwise

@@ -32,6 +32,24 @@
         public function resize($maxwidth,$maxheight,$targetFile) {
             Log::debug('Resizing image ' .$this->imageFile . ' (' . $maxwidth . ',' . $maxheight .')', 5);
             
+            $rotateDegrees=0;
+            $exif = exif_read_data($this->imageFile);
+            if (key_exists('Orientation',$exif)) {
+                // picture has orientation info in it - may need to rotate if from digital camera
+                switch($exif['Orientation']) {
+                    case 3:
+                        $rotateDegrees=180;
+                        break;    
+                    case 6:
+                        $rotateDegrees=-90;
+                        break;    
+                    case 8:
+                        $rotateDegrees=90;
+                        break;
+                }
+            }
+            Log::debug('Must rotate ' . $rotateDegrees . ' degrees.',5);           
+         
             if ($maxwidth==0 && $maxheight==0) {
                 throw new Exception('Cannot resize image: either maxwidth or maxheight must be non-zero');
             }
@@ -41,31 +59,32 @@
             $newwidth = $this->imageWidth;
             $newheight = $this->imageHeight;
 
-            if ($newwidth>$maxwidth||$newheight>$maxheight) {
-                // need to resize
+            //if ($newwidth>$maxwidth||$newheight>$maxheight) {
+            // assume we always need to resize?
                 
                 if ($currentRatio>1) {
                     // wider than tall
                     $newwidth = $maxwidth; 
-                    $newheight = $newwidth * $currentRatio;
+                    $newheight = $newwidth / $currentRatio;
                     if ($newheight>$maxheight) {
+                        // still too tall, so resize for height
                         $newheight = $maxheight;
-                        $newwidth=$maxheight * $currentRatio;
+                        $newwidth = $newheight * $currentRatio;
+                        }
                     }
-                }
                 else {
                     $newheight = $maxheight;
                     $newwidth=$maxheight * $currentRatio;
                     if ($newwidth>$maxwidth) {
-                        $newwidth = $maxwidth; 
-                        $newheight = $newwidth * $currentRatio;
+                        // still too wide. Resize for width
+                        $newwidth = $maxwidth;
+                        $newheight = $newwidth/$currentRatio;
                     }
                 }
-            }
                                     
             Log::debug('Will resize to:' . $newwidth . ',' . $newheight, 5);
             
-            Log::debug('Creating working image for type ' . $this->imageType, 5);
+            Log::debug('Creating working image for type ' . $this->imageType, 1);
             $workingImage = "";
             switch($this->imageType) {
                 case "image/png":
@@ -73,7 +92,7 @@
                     break;
                 case "image/jpeg":
                 case "image/jpg":
-                     Log::debug('Doing the create for file ' . $this->imageFile, 5);
+                     Log::debug('Doing the create for file ' . $this->imageFile, 1);
                     try {
                         $workingImage = imagecreatefromjpeg($this->imageFile);
                     }
@@ -88,9 +107,21 @@
                     throw new Exception('Cannot resize image: Unsupported image type: ' . $this->imageType);
             }
             
-            Log::debug('Copying to new image . . .', 5);
+            Log::debug('Copying to new image . . .', 1);
+            
             $newImage = imagecreatetruecolor($newwidth, $newheight);
             imagecopyresampled($newImage,$workingImage,0,0,0,0,$newwidth,$newheight,$this->imageWidth,$this->imageHeight);
+            
+            if ($rotateDegrees!=0) {
+                // rotate image
+                $newImage = imagerotate($newImage,$rotateDegrees,0);
+                if (abs($rotateDegrees)==90) {
+                    // rotated quarter turn so flip height & width
+                    $temp = $newwidth;
+                    $newwidth=$newheight;
+                    $newheight=$temp;
+                }
+            }
             
              switch($this->imageType) {
                 case "image/png":
@@ -106,6 +137,8 @@
                 default:
                     throw new Exception('Cannot output image: Unsupported image type: ' . $this->imageType);
             }
+            $this->imageWidth = $newwidth;
+            $this->imageHeight = $newheight;
             Log::debug('File resized.', 5);
 
         }
@@ -116,6 +149,26 @@
         
         public function getHeight() {
             return $this->imageHeight;
+        }
+        
+        public function getAppendedFileName($filename,$appendText,$includeDirectory) {
+            // utility function for appending suffixes to filenames but preserving
+            // the extension (e.g. appending '_tmp' to '/path/myFile.png' to create '/path/myFile_tmp.png')
+            // $filename - original filename
+            // $appendText - text to be appended just in front of the file extension
+            // $includeDirectory - if true, will create the full path; otherwise will just return the file name w/o path
+            $parts = pathinfo($filename);
+            
+            $newName = '';
+            if ($includeDirectory && key_exists('dirname',$parts)) {
+                $newName .= $parts['dirname'] . '/';     
+            }
+            $newName .= $parts['filename'] . $appendText;
+            if (key_exists('extension',$parts)) {
+                $newName .= '.' . $parts['extension'];
+            }
+            
+            return $newName;
         }
         
     }
