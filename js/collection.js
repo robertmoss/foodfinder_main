@@ -47,6 +47,4 @@ function afterCollectionEdit() {
 	location.reload();
 }
 
-function logClick(productId) {
-	postEvent('linkClick','product',productId);
-}
+

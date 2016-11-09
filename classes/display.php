@@ -21,50 +21,56 @@ include_once Config::$root_path . '/classes/product.php';
             $class = new Media($userID,$tenantID);
              try {
                  $media=$class->getEntity($mediaId);
-                 $caption='';
-                 $metadata = $media["metadata"];
-                 if (!is_null($metadata)) {
-                     $openSep = '';
-                     $closeSep = '';
-                     if (property_exists($metadata, 'caption') && strlen($metadata->{'caption'})>0) {
-                         $caption .= $metadata->{'caption'};
-                         $openSep = ' (';
-                     }
-                     if (property_exists($metadata, 'credit') && strlen($metadata->{'credit'})>0) {
-                         $caption .= $openSep . 'Courtesy ';
-                         $endTag = '';
-                         if (property_exists($metadata, 'crediturl') && strlen($metadata->{'crediturl'})>0) {
-                             $caption .= '<a href="' . $metadata->{'crediturl'} . '" target="_blank">';
-                             $endTag = "</a>";
-                         }
-                         $caption .= $metadata->{'credit'} . $endTag;
-                         if ($openSep==" (") {
-                            $closeSep = ')';
-                            $openSep = ' ';
-                         }
-                     }
-                     if (property_exists($metadata, 'license') && strlen($metadata->{'license'})>0) {
-                         $caption .= $openSep . 'under ';
-                         $endTag = '';
-                         if (property_exists($metadata, 'licenseurl') && strlen($metadata->{'licenseurl'})>0) {
-                             $caption .= '<a href="' . $metadata->{'licenseurl'} . '" target="_blank">';
-                             $endTag = "</a>";
-                         }
-                         $caption.= $metadata->{'license'}.$endTag;
-                        }
-                     $caption .= $closeSep;
-                     }
-                 $markup = '<div id="coverImage" class="coverImage">';
-                 $markup .= '<img src="' . $media["url"] . '"/>';
-                 $markup .= '<div class="caption">' . $caption . '</div>';
-                 $markup .= '</div>';
-                 return $markup;
+                 return Display::getMediaMarkup($media); 
              }
              catch(Exception $ex) {
                  // do anything or just ignore if we can't load? Ignoring for now
                  //echo '<p>unable to load: ' . $ex->getMessage() . '</p>';
                  return '<p class="hidden">Unable to load media id=' .$mediaId . '<p>';
                  }  
+         }
+
+        public static function getMediaMarkup($media) {
+        
+             $caption='';
+             $metadata = $media["metadata"];
+             if (!is_null($metadata)) {
+                 $openSep = '';
+                 $closeSep = '';
+                 if (property_exists($metadata, 'caption') && strlen($metadata->{'caption'})>0) {
+                     $caption .= $metadata->{'caption'};
+                     $openSep = ' (';
+                 }
+                 if (property_exists($metadata, 'credit') && strlen($metadata->{'credit'})>0) {
+                     $caption .= $openSep . 'Courtesy ';
+                     $endTag = '';
+                     if (property_exists($metadata, 'crediturl') && strlen($metadata->{'crediturl'})>0) {
+                         $caption .= '<a href="' . $metadata->{'crediturl'} . '" target="_blank">';
+                         $endTag = "</a>";
+                     }
+                     $caption .= $metadata->{'credit'} . $endTag;
+                     if ($openSep==" (") {
+                        $closeSep = ')';
+                        $openSep = ' ';
+                     }
+                 }
+                 if (property_exists($metadata, 'license') && strlen($metadata->{'license'})>0) {
+                     $caption .= $openSep . 'under ';
+                     $endTag = '';
+                     if (property_exists($metadata, 'licenseurl') && strlen($metadata->{'licenseurl'})>0) {
+                         $caption .= '<a href="' . $metadata->{'licenseurl'} . '" target="_blank">';
+                         $endTag = "</a>";
+                     }
+                     $caption.= $metadata->{'license'}.$endTag;
+                    }
+                 $caption .= $closeSep;
+                 }
+             $markup = '<div id="coverImage" class="coverImage">';
+             $markup .= '<img src="' . $media["url"] . '"/>';
+             $markup .= '<div class="caption">' . $caption . '</div>';
+             $markup .= '</div>';
+             return $markup;
+
          }
 
         public static function renderWebContent($content,$userID,$tenantID) {

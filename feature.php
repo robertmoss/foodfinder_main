@@ -3,10 +3,12 @@
     include_once dirname(__FILE__) . '/core/classes/log.php';
     include_once dirname(__FILE__) . '/core/classes/format.php';
     include_once Config::$root_path . '/classes/feature.php';
-     include_once Config::$root_path . '/classes/display.php';
+    include_once Config::$root_path . '/classes/media.php';
+    include_once Config::$root_path . '/classes/display.php';
 	
 	$thisPage="feature";
     
+    $siteName = Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'title');
     $id = Utility::getRequestVariable('id', 0);
     $errorMsg = "";
     $preview="";
@@ -17,6 +19,7 @@
         try {
             $class = new Feature($userID,$tenantID);
             $feature = $class->getEntity($id);
+            $hasImage=false;
             if (strtolower($feature["status"])!="published") {
                 // if contributor, allow  to preview and add preview stripe
                 if ($user->hasRole("admin", $tenantID) || $user->hasRole("contributor", $tenantID)) {
@@ -30,6 +33,11 @@
                 // don't log page views for unpublished feature: distorts counts
                 Log::logPageView('feature', $id,'');
             }
+            if (key_exists('coverImage',$feature) && $feature["coverImage"]>0) {
+                $class=new Media($userID,$tenantID);                    
+                $media=$class->getEntity($feature["coverImage"]);
+                $hasImage = true;
+            }
         }
         catch(Exception $ex) {
             $errorMsg="Unable to load requested feature: " . $ex->getMessage();
@@ -41,19 +49,20 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title><?php echo Utility::getTenantProperty($applicationID, $_SESSION['tenantID'],$userID,'title') . ': ' . $feature["headline"] ?></title>
+        <title><?php echo $siteName . ': ' . $feature["headline"] ?></title>
         <?php include("partials/includes.php"); ?>
         <link rel="stylesheet" type="text/css" href="static/css/feature.css" />
         <script type="text/javascript" src="js/feature.js"></script>
         <?php include("partials/facebookMeta.php"); ?>
+        <meta property="og:siteName"      content="<?php echo $siteName;?>" />
         <meta property="og:title"       content="<?php echo $feature['headline'] ?>" />
         <meta property="og:type"        content="article" />
         <meta property="og:description" content="<?php echo $feature['subhead'] ?>" />
-        <meta property="og:image"       content="<?php echo Config::getSiteRoot() . '/' . $feature['coverImage'] ?>" />
-        <meta property="og:image:width" content="" />
-        <meta property="og:image:height" content="" />
-        <meta property="og:url"         content="<?php echo Config::getSiteRoot();?>/feature.php?id=<?php echo $id?>" />
-        <?php include("partials/twitterScript.php"); ?>
+        <?php if ($hasImage) {?><meta property="og:image"       content="<?php echo $media["url"]?>" />
+        <meta property="og:image:width" content="<?php echo $media["width"]?>" />
+        <meta property="og:image:height" content="<?php echo $media["height"]?>" />
+        <?php } ?>
+        <script type="text/javascript" src="js/social.js"></script>
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <script>
           (adsbygoogle = window.adsbygoogle || []).push({
@@ -65,7 +74,9 @@
     <body>
     	<div id="maincontent">
     		<div id="outer">
-	    		<?php include('partials/header.php');
+	    		<?php 
+	    		    include("partials/facebookScript.php");
+	    		    include('partials/header.php');
                     include("partials/locationModal.php");
                     include("partials/locationEditModal.php");
                 ?>
@@ -124,16 +135,17 @@
     			    <div id="featureSocialBar">
     			        <?php
     			             $text = urlencode($feature["headline"]);
-                             $url = urlencode(Config::getSiteRoot() . '/feature.php?id='. $id .  '&ch=t');
+                             $url = urlencode(Config::getSiteRoot() . '/feature.php?id='. $id);
+                             $twitterHandle = Utility::getTenantProperty($applicationID, $tenantID, $userID, 'twitterHandle');
     			        ?>
     			        <ul class="socialList">
-     			             <li><a class="social icon icon-twitter" href="http://twitter.com/intent/tweet?text=<?php echo $text; ?>&amp;url=<?php echo $url;?>&amp;via=thebbqhub" target="_blank" rel="nofollow" title="Share on Twitter" aria-label="Share on Twitter"></a></li>
-    			             <li><a class="social icon icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $url; ?>" target="_blank" rel="nofollow" title="Share on Facebook" aria-label="Share on Facebook"></a></li>
+     			             <li><a class="social icon icon-twitter" href="http://twitter.com/intent/tweet?text=<?php echo $text; ?>&amp;url=<?php echo $url . '&ch=t';?>&amp;via=<?php echo $twitterHandle?>" target="_blank" rel="nofollow" title="Share on Twitter" aria-label="Share on Twitter"></a></li>
+    			             <li><div class="fb-like" data-layout="button" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div></li>
     			        </ul>
     			   </div>
     			   <?php
     			         if ($feature["coverImage"]>0) {
-    			             Display::showMediaItem($feature["coverImage"],$userID,$tenantID);
+                            echo Display::getMediaMarkup($media);
                          }
     			   ?>
     				<div id="openingContent">

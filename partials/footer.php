@@ -35,10 +35,11 @@
     	<?php 
     		echo 'tenantID=' . $tenantID . '<br/>';
     		echo 'userID=' . $userID . '<br/>';
+            echo 'version=' . Application::$version . '<br/>';
     		echo 'Debug Level=' . Config::$debugLevel . '<br/>';
     		$inipath = php_ini_loaded_file();
     		echo 'php.ini path=' . $inipath . '<br/>';
-            echo 'version=' . Application::$version . '<br/>';
+            echo 'php version=' . phpversion() . '<br/>';
             echo 'deviceType=' . Context::deviceType() . '<br/>';
             echo 'OS Class=' . Context::deviceOSClass() . '<br/>';
             echo 'OS Type=' . Context::deviceOSType() . '<br/>';

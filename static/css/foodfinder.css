@@ -643,7 +643,8 @@ a:visited {
 
 .icon-twitter {
 	background-image: url("../../img/icons/twitter.png");
-
+	top: -5px;
+    position: relative;
 }
 
 .icon-facebook {

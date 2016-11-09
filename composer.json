@@ -1,5 +1,7 @@
 {
     "require": {
-        "google/apiclient": "1.0.*@beta"
+        "google/apiclient": "1.0.*@beta",
+        "facebook/graph-sdk": "~5.0",
+        "abraham/twitteroauth": "0.7.*"
     }
 }
